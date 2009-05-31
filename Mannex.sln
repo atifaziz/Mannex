@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mannex", "src\Mannex.csproj", "{F577B73C-2D61-4D06-A641-7610D173C1E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mannex.Tests", "tests\Mannex.Tests.csproj", "{3729AB0B-288A-4752-9807-3C6997B51502}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{F577B73C-2D61-4D06-A641-7610D173C1E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F577B73C-2D61-4D06-A641-7610D173C1E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F577B73C-2D61-4D06-A641-7610D173C1E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3729AB0B-288A-4752-9807-3C6997B51502}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3729AB0B-288A-4752-9807-3C6997B51502}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3729AB0B-288A-4752-9807-3C6997B51502}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3729AB0B-288A-4752-9807-3C6997B51502}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
