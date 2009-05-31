@@ -23,7 +23,12 @@
 
 namespace Mannex
 {
+    #region Imports
+
+    using System.Diagnostics;
     using System.Globalization;
+
+    #endregion
 
     static partial class Int32Extensions
     {
@@ -32,6 +37,7 @@ namespace Mannex
         /// invariant culture.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static string ToInvariantString(this int value)
         {
             return value.ToString(CultureInfo.InvariantCulture);
