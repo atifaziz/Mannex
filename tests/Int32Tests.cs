@@ -21,12 +21,23 @@
 //
 #endregion
 
-namespace Mannex
+namespace Mannex.Tests
 {
-    public static partial class Int32Extensions { }
-}
+    #region Improts
 
-namespace Mannex.Collections.Generic
-{
-    public static partial class DictionaryExtensions {}
+    using System;
+    using System.Collections.Generic;
+    using Mannex.Collections.Generic;
+    using Xunit;
+
+    #endregion
+
+    public class Int32Tests
+    {
+        [Fact]
+        public void ToInvariantString()
+        {
+            Assert.Equal("1234", 1234.ToInvariantString());
+        }
+    }
 }
