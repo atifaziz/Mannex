@@ -42,7 +42,7 @@ using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
 
 #if DEBUG
 [assembly: AssemblyConfiguration("DEBUG")]
-#elif
+#else
 [assembly: AssemblyConfiguration("RELEASE")]
 #endif
 
