@@ -27,6 +27,11 @@ namespace Mannex
 
     static partial class Int32Extensions
     {
+        /// <summary>
+        /// Converts <see cref="int"/> to its string representation in the
+        /// invariant culture.
+        /// </summary>
+
         public static string ToInvariantString(this int value)
         {
             return value.ToString(CultureInfo.InvariantCulture);

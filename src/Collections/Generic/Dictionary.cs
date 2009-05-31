@@ -32,10 +32,20 @@ namespace Mannex.Collections.Generic
 
     static partial class DictionaryExtensions
     {
+        /// <summary>
+        /// Finds the value for a key, returning the default value for 
+        /// <typeparamref name="TKey"/> if the key is not present.
+        /// </summary>
+
         public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key)
         {
             return Find(dict, key, default(TValue));
         }
+
+        /// <summary>
+        /// Finds the value for a key, returning a given default value for 
+        /// <typeparamref name="TKey"/> if the key is not present.
+        /// </summary>
 
         public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key, TValue @default)
         {
