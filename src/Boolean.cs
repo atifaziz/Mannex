@@ -27,11 +27,21 @@ namespace Mannex
 
     static partial class BooleanExtensions
     {
+        /// <summary>
+        /// Converts a <see cref="bool"/> to <see cref="string"/> with a given
+        /// value for true and false states.
+        /// </summary>
+
         [DebuggerStepThrough]
         public static string ToString(this bool value, string trueString, string falseString)
         {
             return value ? trueString : falseString;
         }
+
+        /// <summary>
+        /// Converts a <see cref="bool"/> to <see cref="int"/> with a given
+        /// value for true and false states.
+        /// </summary>
 
         [DebuggerStepThrough]
         public static int ToInt32(this bool value, int trueValue, int falseValue)
