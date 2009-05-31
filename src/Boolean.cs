@@ -23,7 +23,11 @@
 
 namespace Mannex
 {
+    #region Imports
+
     using System.Diagnostics;
+
+    #endregion
 
     static partial class BooleanExtensions
     {

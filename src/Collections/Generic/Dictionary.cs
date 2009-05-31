@@ -27,6 +27,7 @@ namespace Mannex.Collections.Generic
 
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     #endregion
 
@@ -37,6 +38,7 @@ namespace Mannex.Collections.Generic
         /// <typeparamref name="TKey"/> if the key is not present.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key)
         {
             return Find(dict, key, default(TValue));
@@ -47,6 +49,7 @@ namespace Mannex.Collections.Generic
         /// <typeparamref name="TKey"/> if the key is not present.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key, TValue @default)
         {
             if (dict == null) throw new ArgumentNullException("dict");
