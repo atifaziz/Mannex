@@ -23,10 +23,13 @@
 
 namespace Mannex
 {
-    public static partial class Int32Extensions { }
-}
+    using System.Globalization;
 
-namespace Mannex.Collections.Generic
-{
-    public static partial class DictionaryExtensions {}
+    static partial class Int32Extensions
+    {
+        public static string ToInvariantString(this int value)
+        {
+            return value.ToString(CultureInfo.InvariantCulture);
+        }
+    }
 }
