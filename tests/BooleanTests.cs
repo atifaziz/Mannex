@@ -21,13 +21,26 @@
 //
 #endregion
 
-namespace Mannex
+namespace Mannex.Tests
 {
-    public static partial class BooleanExtensions { }
-    public static partial class Int32Extensions { }
-}
+    #region Improts
 
-namespace Mannex.Collections.Generic
-{
-    public static partial class DictionaryExtensions {}
+    using Xunit;
+
+    #endregion
+
+    public class BooleanTests
+    {
+        [Fact]
+        public void ToStringReturnsTrueStringWhenTrue()
+        {
+            Assert.Equal("yes", true.ToString("yes", "no"));
+        }
+
+        [Fact]
+        public void ToStringReturnsFalseStringWhenFalse()
+        {
+            Assert.Equal("no", false.ToString("yes", "no"));
+        }
+    }
 }
