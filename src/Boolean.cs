@@ -32,5 +32,11 @@ namespace Mannex
         {
             return value ? trueString : falseString;
         }
+
+        [DebuggerStepThrough]
+        public static int ToInt32(this bool value, int trueValue, int falseValue)
+        {
+            return value ? trueValue : falseValue;
+        }
     }
 }

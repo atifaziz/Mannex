@@ -42,5 +42,17 @@ namespace Mannex.Tests
         {
             Assert.Equal("no", false.ToString("yes", "no"));
         }
+
+        [Fact]
+        public void ToInt32ReturnsTrueIntegerWhenTrue()
+        {
+            Assert.Equal(12, true.ToInt32(12, 34));
+        }
+
+        [Fact]
+        public void ToInt32ReturnsFalseIntegerWhenFalse()
+        {
+            Assert.Equal(34, false.ToInt32(12, 34));
+        }
     }
 }
