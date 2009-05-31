@@ -32,6 +32,10 @@ namespace Mannex
 
     static partial class PredicateExtensions
     {
+        /// <summary>
+        /// Combines two <see cref="Predicate{T}"/> to form a logical AND.
+        /// </summary>
+
         [DebuggerStepThrough]
         public static Predicate<T> And<T>(this Predicate<T> lhs, Predicate<T> rhs)
         {
@@ -39,6 +43,10 @@ namespace Mannex
             if (rhs == null) throw new ArgumentNullException("rhs");
             return obj => lhs(obj) && rhs(obj);
         }
+
+        /// <summary>
+        /// Combines two <see cref="Predicate{T}"/> to form a logical OR.
+        /// </summary>
 
         [DebuggerStepThrough]
         public static Predicate<T> Or<T>(this Predicate<T> lhs, Predicate<T> rhs)
