@@ -32,27 +32,15 @@ namespace Mannex.Tests
     public class BooleanTests
     {
         [Fact]
-        public void ToStringReturnsTrueStringWhenTrue()
+        public void ToReturnsTrueIntegerWhenTrue()
         {
-            Assert.Equal("yes", true.ToString("yes", "no"));
+            Assert.Equal("yes", true.To("yes", "no"));
         }
 
         [Fact]
-        public void ToStringReturnsFalseStringWhenFalse()
+        public void ToReturnsFalseIntegerWhenFalse()
         {
-            Assert.Equal("no", false.ToString("yes", "no"));
-        }
-
-        [Fact]
-        public void ToInt32ReturnsTrueIntegerWhenTrue()
-        {
-            Assert.Equal(12, true.ToInt32(12, 34));
-        }
-
-        [Fact]
-        public void ToInt32ReturnsFalseIntegerWhenFalse()
-        {
-            Assert.Equal(34, false.ToInt32(12, 34));
+            Assert.Equal("no", false.To("yes", "no"));
         }
     }
 }
