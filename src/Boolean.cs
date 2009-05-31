@@ -23,11 +23,14 @@
 
 namespace Mannex
 {
-    public static partial class BooleanExtensions { }
-    public static partial class Int32Extensions { }
-}
+    using System.Diagnostics;
 
-namespace Mannex.Collections.Generic
-{
-    public static partial class DictionaryExtensions {}
+    static partial class BooleanExtensions
+    {
+        [DebuggerStepThrough]
+        public static string ToString(this bool value, string trueString, string falseString)
+        {
+            return value ? trueString : falseString;
+        }
+    }
 }

@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Boolean.cs" />
     <Compile Include="Collections\Generic\Dictionary.cs" />
     <Compile Include="Int32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

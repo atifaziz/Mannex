@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\Generic\DictionaryTests.cs" />
+    <Compile Include="BooleanTests.cs" />
     <Compile Include="Int32Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
