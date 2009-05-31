@@ -23,12 +23,29 @@
 
 namespace Mannex
 {
-    public static partial class BooleanExtensions { }
-    public static partial class Int32Extensions { }
-    public static partial class PredicateExtensions { }
-}
+    #region Imports
 
-namespace Mannex.Collections.Generic
-{
-    public static partial class DictionaryExtensions {}
+    using System;
+    using System.Diagnostics;
+
+    #endregion
+
+    static partial class PredicateExtensions
+    {
+        [DebuggerStepThrough]
+        public static Predicate<T> And<T>(this Predicate<T> lhs, Predicate<T> rhs)
+        {
+            if (lhs == null) throw new ArgumentNullException("lhs");
+            if (rhs == null) throw new ArgumentNullException("rhs");
+            return obj => lhs(obj) && rhs(obj);
+        }
+
+        [DebuggerStepThrough]
+        public static Predicate<T> Or<T>(this Predicate<T> lhs, Predicate<T> rhs)
+        {
+            if (lhs == null) throw new ArgumentNullException("lhs");
+            if (rhs == null) throw new ArgumentNullException("rhs");
+            return obj => lhs(obj) || rhs(obj);
+        }
+    }
 }
