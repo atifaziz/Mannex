@@ -46,6 +46,7 @@ namespace Mannex
         namespace UI
         {
             public static partial class ControlExtensions { }
+            public static partial class DataBindingExtensions { }
         }
     }
 }
