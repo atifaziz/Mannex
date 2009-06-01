@@ -31,6 +31,10 @@ namespace Mannex.Web.UI
 
     #endregion
 
+    /// <summary>
+    /// Extension methods for <see cref="Control"/>.
+    /// </summary>
+
     static partial class ControlExtensions
     {
         /// <summary>
