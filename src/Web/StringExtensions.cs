@@ -21,26 +21,25 @@
 //
 #endregion
 
-namespace Mannex
-{
-    public static partial class BooleanExtensions { }
-    public static partial class EventHandlerExtensions { }
-    public static partial class Int32Extensions { }
-    public static partial class PredicateExtensions { }
-    public static partial class StringExtensions { }
-}
-
-namespace Mannex.Reflection
-{
-    public static partial class ICustomAttributeProviderExtensions { }
-}
-
 namespace Mannex.Web
 {
-    public static partial class StringExtensions { }
-}
+    #region Imports
 
-namespace Mannex.Collections.Generic
-{
-    public static partial class DictionaryExtensions {}
+    using System;
+    using System.Web;
+
+    #endregion
+
+    static partial class StringExtensions
+    {
+        /// <summary>
+        /// Converts a string into an HTML-encoded string.
+        /// </summary>
+
+        public static string HtmlEncode(this string str)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            return HttpUtility.HtmlEncode(str);
+        }
+    }
 }

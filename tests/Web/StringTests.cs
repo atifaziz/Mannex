@@ -21,26 +21,29 @@
 //
 #endregion
 
-namespace Mannex
+namespace Mannex.Tests.Web
 {
-    public static partial class BooleanExtensions { }
-    public static partial class EventHandlerExtensions { }
-    public static partial class Int32Extensions { }
-    public static partial class PredicateExtensions { }
-    public static partial class StringExtensions { }
-}
+    #region Improts
 
-namespace Mannex.Reflection
-{
-    public static partial class ICustomAttributeProviderExtensions { }
-}
+    using System;
+    using Mannex.Web;
+    using Xunit;
 
-namespace Mannex.Web
-{
-    public static partial class StringExtensions { }
-}
+    #endregion
 
-namespace Mannex.Collections.Generic
-{
-    public static partial class DictionaryExtensions {}
+    public class StringTests
+    {
+        [Fact]
+        public void HtmlEncodeFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.HtmlEncode(null));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void HtmlEncode()
+        {
+            Assert.Equal("&lt;foo&gt; &amp; &quot;bar&quot;", "<foo> & \"bar\"".HtmlEncode());
+        }
+    }
 }
