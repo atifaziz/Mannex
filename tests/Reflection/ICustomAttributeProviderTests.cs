@@ -53,7 +53,15 @@ namespace Mannex.Tests.Reflection
             Assert.False(typeof(Test).IsDefined<CategoryAttribute>(true));
         }
 
+        [Fact]
+        public void IsDefinedReturnsFalseForSubclasWhenAttributeInheritanceIsNotRequested()
+        {
+            Assert.False(typeof(Subtest).IsDefined<DescriptionAttribute>(false));
+        }
+
         [Description]
         class Test {}
+
+        class Subtest { }
     }
 }
