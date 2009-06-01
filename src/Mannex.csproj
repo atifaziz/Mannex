@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Boolean.cs" />
     <Compile Include="Collections\Generic\Dictionary.cs" />
+    <Compile Include="EventHandler.cs" />
     <Compile Include="Int32.cs" />
     <Compile Include="PredicateExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

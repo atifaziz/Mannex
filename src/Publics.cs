@@ -24,6 +24,7 @@
 namespace Mannex
 {
     public static partial class BooleanExtensions { }
+    public static partial class EventHandlerExtensions { }
     public static partial class Int32Extensions { }
     public static partial class PredicateExtensions { }
 }
