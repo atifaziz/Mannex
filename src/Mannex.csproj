@@ -49,7 +49,7 @@
     <Compile Include="Collections\Generic\Dictionary.cs" />
     <Compile Include="EventHandler.cs" />
     <Compile Include="Int32.cs" />
-    <Compile Include="PredicateExtensions.cs" />
+    <Compile Include="Predicate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publics.cs" />
   </ItemGroup>
