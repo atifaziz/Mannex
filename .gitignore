@@ -6,3 +6,4 @@ bin/**
 *.suo
 obj/**
 _ReSharper.*
+*.orig
