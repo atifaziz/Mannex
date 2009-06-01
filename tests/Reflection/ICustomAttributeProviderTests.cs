@@ -28,6 +28,7 @@ namespace Mannex.Tests.Reflection
     using System;
     using System.ComponentModel;
     using System.Linq;
+    using System.Reflection;
     using Mannex.Reflection;
     using Xunit;
 
@@ -72,7 +73,7 @@ namespace Mannex.Tests.Reflection
         {
             var attributes = typeof(Test).GetCustomAttributes<TestAttribute>(true);
             Assert.NotNull(attributes);
-            Assert.Equal(new[] { 12, 34 }, attributes.Select(a => a.Value).ToArray());
+            Assert.Equal(new[] { 12, 34 }, attributes.Select(a => a.Value).OrderBy(x => x).ToArray());
         }
 
         [Fact]
@@ -89,6 +90,40 @@ namespace Mannex.Tests.Reflection
             var attributes = typeof(Subtest).GetCustomAttributes<TestAttribute>(false);
             Assert.NotNull(attributes);
             Assert.Equal(0, attributes.Length);
+        }
+
+        [Fact]
+        public void GetCustomAttributeFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                ICustomAttributeProviderExtensions.GetCustomAttribute<object>(null, true));
+        }
+
+        [Fact]
+        public void GetCustomAttributeFailsForDuplicateAttribtueApplication()
+        {
+            Assert.Throws<AmbiguousMatchException>(() =>
+                typeof(Test).GetCustomAttribute<TestAttribute>(true));
+        }
+
+        [Fact]
+        public void GetCustomAttributeReturnsRequestedAttributeWhenAttributesApplied()
+        {
+            var attribute = typeof(Test).GetCustomAttribute<DescriptionAttribute>(true);
+            Assert.NotNull(attribute);
+            Assert.Equal("foo", attribute.Description);
+        }
+
+        [Fact]
+        public void GetCustomAttributeReturnsEmptyWhenAttributesAbsent()
+        {
+            Assert.Null(typeof(Test).GetCustomAttribute<CategoryAttribute>(true));
+        }
+
+        [Fact]
+        public void GetCustomAttributeReturnsEmptyForSubclassWhenAttributeInheritanceIsNotRequested()
+        {
+            Assert.Null(typeof(Subtest).GetCustomAttribute<DescriptionAttribute>(true));
         }
 
         [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]

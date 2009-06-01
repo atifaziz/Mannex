@@ -57,5 +57,20 @@ namespace Mannex.Reflection
             if (provider == null) throw new ArgumentNullException("provider");
             return (T[]) provider.GetCustomAttributes(typeof(T), inherit);
         }
+
+        /// <summary>
+        /// Returns a specific custom attribute defined on this member.
+        /// </summary>
+
+        public static T GetCustomAttribute<T>(this ICustomAttributeProvider provider, bool inherit) where T : class
+        {
+            if (provider == null) throw new ArgumentNullException("provider");
+            var attributes = provider.GetCustomAttributes<T>(inherit);
+            if (attributes.Length == 0)
+                return null;
+            if (attributes.Length > 1)
+                throw new AmbiguousMatchException();
+            return attributes[0];
+        }
     }
 }
