@@ -28,24 +28,24 @@ namespace Mannex
     public static partial class Int32Extensions { }
     public static partial class PredicateExtensions { }
     public static partial class StringExtensions { }
-}
 
-namespace Mannex.Reflection
-{
-    public static partial class ICustomAttributeProviderExtensions { }
-}
+    namespace Collections.Generic
+    {
+        public static partial class DictionaryExtensions { }
+    }
 
-namespace Mannex.Web
-{
-    public static partial class StringExtensions { }
-}
+    namespace Reflection
+    {
+        public static partial class ICustomAttributeProviderExtensions { }
+    }
 
-namespace Mannex.Web.UI
-{
-    public static partial class ControlExtensions { }
-}
+    namespace Web
+    {
+        public static partial class StringExtensions { }
 
-namespace Mannex.Collections.Generic
-{
-    public static partial class DictionaryExtensions {}
+        namespace UI
+        {
+            public static partial class ControlExtensions { }
+        }
+    }
 }
