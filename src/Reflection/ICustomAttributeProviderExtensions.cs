@@ -21,21 +21,30 @@
 //
 #endregion
 
-namespace Mannex
-{
-    public static partial class BooleanExtensions { }
-    public static partial class EventHandlerExtensions { }
-    public static partial class Int32Extensions { }
-    public static partial class PredicateExtensions { }
-    public static partial class StringExtensions { }
-}
-
 namespace Mannex.Reflection
 {
-    public static partial class ICustomAttributeProviderExtensions { }
-}
+    #region Imports
 
-namespace Mannex.Collections.Generic
-{
-    public static partial class DictionaryExtensions {}
+    using System;
+    using System.Reflection;
+
+    #endregion
+
+    /// <summary>
+    /// Extension methods for <see cref="ICustomAttributeProvider"/>.
+    /// </summary>
+
+    static partial class ICustomAttributeProviderExtensions
+    {
+        /// <summary>
+        /// Indicates whether one or more instance of <typeparamref name="T"/> 
+        /// is defined on this member.
+        /// </summary>
+
+        public static bool IsDefined<T>(this ICustomAttributeProvider provider, bool inherit) where T : class
+        {
+            if (provider == null) throw new ArgumentNullException("provider");
+            return provider.IsDefined(typeof(T), inherit);
+        }
+    }
 }
