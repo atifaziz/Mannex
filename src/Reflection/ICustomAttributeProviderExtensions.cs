@@ -46,5 +46,16 @@ namespace Mannex.Reflection
             if (provider == null) throw new ArgumentNullException("provider");
             return provider.IsDefined(typeof(T), inherit);
         }
+
+        /// <summary>
+        /// Returns <typeparamref name="T"/> custom attributes defined on 
+        /// this member.
+        /// </summary>
+
+        public static T[] GetCustomAttributes<T>(this ICustomAttributeProvider provider, bool inherit) where T : class
+        {
+            if (provider == null) throw new ArgumentNullException("provider");
+            return (T[]) provider.GetCustomAttributes(typeof(T), inherit);
+        }
     }
 }
