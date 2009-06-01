@@ -1,4 +1,4 @@
-﻿#region License, Terms and Author(s)
+#region License, Terms and Author(s)
 //
 // Mannex - Extension methods for .NET
 // Copyright (c) 2009 Atif Aziz. All rights reserved.
@@ -41,7 +41,7 @@ namespace Mannex
 
     namespace Web
     {
-        public static partial class StringExtensions { }
+        public static partial class HtmlStringExtensions { }
 
         namespace UI
         {
