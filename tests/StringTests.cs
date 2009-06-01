@@ -21,16 +21,32 @@
 //
 #endregion
 
-namespace Mannex
+namespace Mannex.Tests
 {
-    public static partial class BooleanExtensions { }
-    public static partial class EventHandlerExtensions { }
-    public static partial class Int32Extensions { }
-    public static partial class PredicateExtensions { }
-    public static partial class StringExtensions { }
-}
+    #region Improts
 
-namespace Mannex.Collections.Generic
-{
-    public static partial class DictionaryExtensions {}
+    using Xunit;
+
+    #endregion
+
+    public class StringTests
+    {
+        [Fact]
+        public void MaskEmptyReturnsMaskWithEmptyThis()
+        {
+            Assert.Equal("foo", string.Empty.MaskEmpty("foo"));
+        }
+
+        [Fact]
+        public void MaskEmptyReturnsMaskWithNullThis()
+        {
+            Assert.Equal("foo", StringExtensions.MaskEmpty(null, "foo"));
+        }
+
+        [Fact]
+        public void MaskEmptyReturnsThisWithNonEmptyThis()
+        {
+            Assert.Equal("foo", "foo".MaskEmpty("bar"));
+        }
+    }
 }
