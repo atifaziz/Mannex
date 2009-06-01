@@ -27,6 +27,7 @@ namespace Mannex.Tests.Reflection
 
     using System;
     using System.ComponentModel;
+    using System.Linq;
     using Mannex.Reflection;
     using Xunit;
 
@@ -54,12 +55,54 @@ namespace Mannex.Tests.Reflection
         }
 
         [Fact]
-        public void IsDefinedReturnsFalseForSubclasWhenAttributeInheritanceIsNotRequested()
+        public void IsDefinedReturnsFalseForSubclassWhenAttributeInheritanceIsNotRequested()
         {
             Assert.False(typeof(Subtest).IsDefined<DescriptionAttribute>(false));
         }
 
-        [Description]
+        [Fact]
+        public void GetCustomAttributesFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                ICustomAttributeProviderExtensions.GetCustomAttributes<object>(null, true));
+        }
+
+        [Fact]
+        public void GetCustomAttributesReturnsRequestedAttributeWhenAttributesApplied()
+        {
+            var attributes = typeof(Test).GetCustomAttributes<TestAttribute>(true);
+            Assert.NotNull(attributes);
+            Assert.Equal(new[] { 12, 34 }, attributes.Select(a => a.Value).ToArray());
+        }
+
+        [Fact]
+        public void GetCustomAttributesReturnsEmptyWhenAttributesAbsent()
+        {
+            var attributes = typeof(Test).GetCustomAttributes<CategoryAttribute>(true);
+            Assert.NotNull(attributes);
+            Assert.Equal(0, attributes.Length);
+        }
+
+        [Fact]
+        public void GetCustomAttributesReturnsEmptyForSubclassWhenAttributeInheritanceIsNotRequested()
+        {
+            var attributes = typeof(Subtest).GetCustomAttributes<TestAttribute>(false);
+            Assert.NotNull(attributes);
+            Assert.Equal(0, attributes.Length);
+        }
+
+        [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
+        class TestAttribute : Attribute
+        {
+            public int Value { get; set; }
+
+            public TestAttribute(int value)
+            {
+                Value = value;
+            }
+        }
+
+        [Description("foo"), Test(12), Test(34)]
         class Test {}
 
         class Subtest { }
