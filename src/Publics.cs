@@ -40,6 +40,11 @@ namespace Mannex.Web
     public static partial class StringExtensions { }
 }
 
+namespace Mannex.Web.UI
+{
+    public static partial class ControlExtensions { }
+}
+
 namespace Mannex.Collections.Generic
 {
     public static partial class DictionaryExtensions {}
