@@ -25,6 +25,7 @@ namespace Mannex
 {
     #region Imports
 
+    using System;
     using System.Diagnostics;
 
     #endregion
@@ -46,6 +47,79 @@ namespace Mannex
         public static string MaskEmpty(this string str, string mask)
         {
             return !string.IsNullOrEmpty(str) ? str : mask;
+        }
+
+        /// <summary>
+        /// Returns a section of a string from a give starting point on.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="start"/> is negative, it is  treated as 
+        /// <c>length</c> + <paramref name="start" /> where <c>length</c> 
+        /// is the length of the string. If <paramref name="start"/>
+        /// is greater or equal to the length of the string then 
+        /// no characters are copied to the new string.
+        /// </remarks>
+
+        [DebuggerStepThrough]
+        public static string Slice(this string str, int start)
+        {
+            return Slice(str, start, null);
+        }
+
+        /// <summary>
+        /// Returns a section of a string.
+        /// </summary>
+        /// <remarks>
+        /// This method copies up to, but not including, the element
+        /// indicated by <paramref name="end"/>. If <paramref name="start"/> 
+        /// is negative, it is  treated as <c>length</c> + <paramref name="start" /> 
+        /// where <c>length</c> is the length of the string. If 
+        /// <paramref name="end"/> is negative, it is treated as <c>length</c> + 
+        /// <paramref name="end"/> where <c>length</c> is the length of the
+        /// string. If <paramref name="end"/> occurs before <paramref name="start"/>, 
+        /// no characters are copied to the new string.
+        /// </remarks>
+
+        [DebuggerStepThrough]
+        public static string Slice(this string str, int start, int? end)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            return SliceImpl(str, start, end ?? str.Length);
+        }
+
+        private static string SliceImpl(this string str, int start, int end)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            var length = str.Length;
+
+            if (start < 0)
+            {
+                start = length + start;
+                if (start < 0)
+                    start = 0;
+            }
+            else
+            {
+                if (start > length)
+                    start = length;
+            }
+
+            if (end < 0)
+            {
+                end = length + end;
+                if (end < 0)
+                    end = 0;
+            }
+            else
+            {
+                if (end > length)
+                    end = length;
+            }
+
+            var sliceLength = end - start;
+
+            return sliceLength > 0 ?
+                str.Substring(start, sliceLength) : string.Empty;
         }
     }
 }

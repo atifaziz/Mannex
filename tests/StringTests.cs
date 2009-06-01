@@ -25,6 +25,7 @@ namespace Mannex.Tests
 {
     #region Improts
 
+    using System;
     using Xunit;
 
     #endregion
@@ -47,6 +48,28 @@ namespace Mannex.Tests
         public void MaskEmptyReturnsThisWithNonEmptyThis()
         {
             Assert.Equal("foo", "foo".MaskEmpty("bar"));
+        }
+
+        [Fact]
+        public void SliceFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => StringExtensions.Slice(null, 0));
+            Assert.Throws<ArgumentNullException>(() => StringExtensions.Slice(null, 0, null));
+            Assert.Throws<ArgumentNullException>(() => StringExtensions.Slice(null, 0, 0));
+        }
+
+        [Fact]
+        public void SliceReturnsSection()
+        {
+            const string str = "quick brown fox";
+            Assert.Equal("brown", str.Slice(6, 11));
+            Assert.Equal(str, str.Slice(0));
+            Assert.Equal(str, str.Slice(0, str.Length + 5));
+            Assert.Equal(string.Empty, str.Slice(str.Length + 5));
+            Assert.Equal("fox", str.Slice(-3));
+            Assert.Equal("brown", str.Slice(6, -4));
+            Assert.Equal("brown", str.Slice(-9, -4));
+            Assert.Equal(string.Empty, str.Slice(1, 0));
         }
     }
 }
