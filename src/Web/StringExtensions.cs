@@ -30,6 +30,10 @@ namespace Mannex.Web
 
     #endregion
 
+    /// <summary>
+    /// Extension methods for <see cref="string"/>.
+    /// </summary>
+
     static partial class StringExtensions
     {
         /// <summary>
