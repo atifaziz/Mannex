@@ -31,6 +31,10 @@ namespace Mannex.Collections.Generic
 
     #endregion
 
+    /// <summary>
+    /// Extension methods for <see cref="Dictionary{TKey,TValue}"/>.
+    /// </summary>
+
     static partial class DictionaryExtensions
     {
         /// <summary>

@@ -29,6 +29,10 @@ namespace Mannex
 
     #endregion
 
+    /// <summary>
+    /// Extension methods for <see cref="bool"/>.
+    /// </summary>
+
     static partial class BooleanExtensions
     {
         /// <summary>
