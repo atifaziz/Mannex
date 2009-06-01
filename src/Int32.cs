@@ -30,6 +30,10 @@ namespace Mannex
 
     #endregion
 
+    /// <summary>
+    /// Extension methods for <see cref="int"/>.
+    /// </summary>
+
     static partial class Int32Extensions
     {
         /// <summary>

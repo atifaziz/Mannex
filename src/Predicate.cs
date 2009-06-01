@@ -30,6 +30,10 @@ namespace Mannex
 
     #endregion
 
+    /// <summary>
+    /// Extension methods for <see cref="Predicate{T}"/>.
+    /// </summary>
+
     static partial class PredicateExtensions
     {
         /// <summary>

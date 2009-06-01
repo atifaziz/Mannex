@@ -29,6 +29,11 @@ namespace Mannex
 
     #endregion
 
+    /// <summary>
+    /// Extension methods for <see cref="EventHandler"/> and
+    /// <see cref="EventHandler{TEventArgs}"/>.
+    /// </summary>
+
     static partial class EventHandlerExtensions
     {
         /// <summary>
