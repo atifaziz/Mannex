@@ -57,7 +57,7 @@
     <Compile Include="Predicate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publics.cs" />
-    <Compile Include="Web\StringExtensions.cs" />
+    <Compile Include="Web\StringHtmlExtensions.cs" />
     <Compile Include="Web\UI\ControlExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

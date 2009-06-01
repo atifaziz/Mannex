@@ -21,29 +21,29 @@
 //
 #endregion
 
-namespace Mannex.Web
+namespace Mannex.Tests.Web
 {
-    #region Imports
+    #region Improts
 
     using System;
-    using System.Web;
+    using Mannex.Web;
+    using Xunit;
 
     #endregion
 
-    /// <summary>
-    /// Extension methods for <see cref="string"/>.
-    /// </summary>
-
-    static partial class StringExtensions
+    public class HtmlStringTests
     {
-        /// <summary>
-        /// Converts a string into an HTML-encoded string.
-        /// </summary>
-
-        public static string HtmlEncode(this string str)
+        [Fact]
+        public void HtmlEncodeFailsWithNullThis()
         {
-            if (str == null) throw new ArgumentNullException("str");
-            return HttpUtility.HtmlEncode(str);
+            var e = Assert.Throws<ArgumentNullException>(() => HtmlStringExtensions.HtmlEncode(null));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void HtmlEncode()
+        {
+            Assert.Equal("&lt;foo&gt; &amp; &quot;bar&quot;", "<foo> & \"bar\"".HtmlEncode());
         }
     }
 }

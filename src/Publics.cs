@@ -41,7 +41,7 @@ namespace Mannex
 
     namespace Web
     {
-        public static partial class StringExtensions { }
+        public static partial class HtmlStringExtensions { }
 
         namespace UI
         {
