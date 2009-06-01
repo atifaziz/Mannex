@@ -1,7 +1,8 @@
+bin/**
 *.dll
 *.pdb
 *.user
 *.cache
 *.suo
-obj
+obj/**
 _ReSharper.*
