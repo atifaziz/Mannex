@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Collections\Generic\DictionaryTests.cs" />
     <Compile Include="BooleanTests.cs" />
+    <Compile Include="Reflection\ICustomAttributeProviderTests.cs" />
     <Compile Include="StringTests.cs" />
     <Compile Include="EventHandlerTests.cs" />
     <Compile Include="PredicateTests.cs" />
