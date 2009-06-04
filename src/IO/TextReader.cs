@@ -31,6 +31,10 @@ namespace Mannex.IO
 
     #endregion
 
+    /// <summary>
+    /// Extension methods for <see cref="TextReader"/>.
+    /// </summary>
+
     static partial class TextReaderExtensions
     {
         /// <summary>
