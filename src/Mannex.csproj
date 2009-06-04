@@ -58,6 +58,7 @@
     <Compile Include="IO\String.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IO\TextReader.cs" />
     <Compile Include="Reflection\ICustomAttributeProviderExtensions.cs" />
     <Compile Include="String.cs" />
     <Compile Include="EventHandler.cs" />
