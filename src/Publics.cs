@@ -35,6 +35,14 @@ namespace Mannex
         public static partial class ListExtensions { }
     }
 
+    namespace Net
+    {
+        namespace Mime
+        {
+            public static partial class ContentTypeExtensions { }
+        }
+    }
+
     namespace IO
     {
         public static partial class ArrayExtensions { }

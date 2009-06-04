@@ -61,6 +61,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IO\TextReader.cs" />
+    <Compile Include="Net\Mime\ContentType.cs" />
     <Compile Include="Reflection\ICustomAttributeProviderExtensions.cs" />
     <Compile Include="String.cs" />
     <Compile Include="EventHandler.cs" />
