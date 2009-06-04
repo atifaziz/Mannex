@@ -44,6 +44,14 @@ namespace Mannex
     {
         public static partial class HtmlStringExtensions { }
 
+        namespace Script
+        {
+            namespace Serialization
+            {
+                public static partial class StringExtensions { }
+            }
+        }
+
         namespace UI
         {
             public static partial class ControlExtensions { }
