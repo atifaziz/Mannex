@@ -39,6 +39,7 @@ namespace Mannex
     {
         public static partial class StreamExtensions { }
         public static partial class StringExtensions { }
+        public static partial class TextReaderExtensions { }
     }
 
     namespace Reflection
