@@ -53,6 +53,7 @@ namespace Mannex
 
     namespace Reflection
     {
+        public static partial class AssemblyExtensions { }
         public static partial class ICustomAttributeProviderExtensions { }
     }
 
