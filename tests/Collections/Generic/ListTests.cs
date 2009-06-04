@@ -159,5 +159,74 @@ namespace Mannex.Tests.Collections.Generic
         {
             Assert.Equal(12, new[] { 12, 34, 56 }.TryPeek());
         }
+
+        [Fact]
+        public void UnshiftFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.Unshift(null, new object()));
+        }
+
+        [Fact]
+        public void UnshiftPrepends()
+        {
+            var list = new List<int>();
+            list.Unshift(12);
+            Assert.Equal(12, list[0]);
+            list.Unshift(34);
+            Assert.Equal(34, list[0]);
+            Assert.Equal(12, list[1]);
+        }
+
+        [Fact]
+        public void ShiftFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.Shift<object>(null));
+        }
+
+        [Fact]
+        public void ShiftFailsWithEmptyList()
+        {
+            Assert.Throws<InvalidOperationException>(() => new List<object>().Shift());
+        }
+
+        [Fact]
+        public void ShiftReturnsAndRemovesFirstValue()
+        {
+            var list = new List<int>(new[] { 12, 34, 56 });
+            Assert.Equal(3, list.Count);
+            Assert.Equal(12, list.Shift());
+            Assert.Equal(2, list.Count);
+            Assert.Equal(34, list.Shift());
+            Assert.Equal(1, list.Count);
+            Assert.Equal(56, list.Shift());
+            Assert.Equal(0, list.Count);
+        }
+
+        [Fact]
+        public void TryShiftFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.TryShift<object>(null));
+        }
+
+        [Fact]
+        public void TryShiftReturnsDefaultForEmptyList()
+        {
+            var list = new List<int?>();
+            Assert.Null(list.TryShift());
+            Assert.Equal(-1, list.TryShift(-1));
+        }
+
+        [Fact]
+        public void TryShiftReturnsAndRemovesFirstValue()
+        {
+            var list = new List<int>(new[] { 12, 34, 56 });
+            Assert.Equal(3, list.Count);
+            Assert.Equal(12, list.TryShift());
+            Assert.Equal(2, list.Count);
+            Assert.Equal(34, list.TryShift());
+            Assert.Equal(1, list.Count);
+            Assert.Equal(56, list.TryShift());
+            Assert.Equal(0, list.Count);
+        }
     }
 }
