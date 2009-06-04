@@ -36,6 +36,11 @@ namespace Mannex
         public static partial class ListExtensions { }
     }
 
+    namespace Json
+    {
+        public static partial class StringExtensions { }
+    }
+
     namespace Net
     {
         namespace Mime
