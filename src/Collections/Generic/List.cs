@@ -142,5 +142,57 @@ namespace Mannex.Collections.Generic
             if (list == null) throw new ArgumentNullException("list");
             return list.Count > 0 ? list.Peek() : emptyValue;
         }
+
+        //
+        // ECMAScript Array.shift/unshift semantics
+        //
+
+        /// <summary>
+        /// Adds <paramref name="value"/> to beginning of the list.
+        /// </summary>
+
+        public static void Unshift<T>(this IList<T> list, T value)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            list.Insert(0, value);
+        }
+
+        /// <summary>
+        /// Removes and returns the first value of the list.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if list is empty.
+        /// </exception>
+
+        public static T Shift<T>(this IList<T> list)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            var value = list.First();
+            list.RemoveAt(0);
+            return value;
+        }
+
+        /// <summary>
+        /// Removes and returns the first value of the list, returning
+        /// the default value for <typeparamref name="T"/> if the
+        /// list is empty.
+        /// </summary>
+        
+        public static T TryShift<T>(this IList<T> list)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            return list.TryShift(default(T));
+        }
+
+        /// <summary>
+        /// Removes and returns the first value of the list, returning
+        /// <paramref name="emptyValue"/> if the list is empty.
+        /// </summary>
+
+        public static T TryShift<T>(this IList<T> list, T emptyValue)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            return list.Count > 0 ? list.Shift() : emptyValue;
+        }
     }
 }
