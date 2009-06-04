@@ -26,6 +26,9 @@ namespace Mannex.Web.UI
     #region Imports
 
     using System;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Web;
     using System.Web.UI;
 
     #endregion
@@ -90,6 +93,81 @@ namespace Mannex.Web.UI
                 return obj;
             var value = DataBinder.Eval(obj, expression);
             return Convert.IsDBNull(value) ? null : value;
+        }
+
+        /// <summary>
+        /// Format string using <paramref name="args"/> as sources for
+        /// data-binding replacements.
+        /// </summary>
+        /// <remarks>
+        /// This method implements most of what is described in
+        /// <a href="http://www.python.org/dev/peps/pep-3101/">PEP 3101 (Advanced String Formatting)</a> 
+        /// from Python.
+        /// </remarks>
+
+        public static string FormatWith(this string format, params object[] args)
+        {
+            return format.FormatWith(null, null, args);
+        }
+
+        /// <summary>
+        /// Format string using <paramref name="args"/> as sources for
+        /// data-binding replacements and <paramref name="provider"/> 
+        /// for cultural formatting.
+        /// </summary>
+        /// <remarks>
+        /// This method implements most of what is described in
+        /// <a href="http://www.python.org/dev/peps/pep-3101/">PEP 3101 (Advanced String Formatting)</a> 
+        /// from Python.
+        /// </remarks>
+
+        public static string FormatWith(this string format, IFormatProvider provider, params object[] args)
+        {
+            return format.FormatWith(provider, FormatTokenBinder, args);
+        }
+
+        private static string FormatTokenBinder(string token, object[] args, IFormatProvider provider)
+        {
+            Debug.Assert(token != null);
+
+            var source = args[0];
+            var dotIndex = token.IndexOf('.');
+            int sourceIndex;
+            if (dotIndex > 0 && int.TryParse(token.Substring(0, dotIndex), NumberStyles.None, CultureInfo.InvariantCulture, out sourceIndex))
+            {
+                source = args[sourceIndex];
+                token = token.Substring(dotIndex + 1);
+            }
+
+            var format = string.Empty;
+
+            var colonIndex = token.IndexOf(':');
+            if (colonIndex > 0)
+            {
+                format = "{0:" + token.Substring(colonIndex + 1) + "}";
+                token = token.Substring(0, colonIndex);
+            }
+
+            if (int.TryParse(token, NumberStyles.None, CultureInfo.InvariantCulture, out sourceIndex))
+            {
+                source = args[sourceIndex];
+                token = null;
+            }
+
+            object result;
+
+            try
+            {
+                result = source.DataBind(token) ?? string.Empty;
+            }
+            catch (HttpException e)
+            {
+                throw new FormatException(e.Message, e);
+            }
+
+            return !string.IsNullOrEmpty(format)
+                 ? string.Format(provider, format, result)
+                 : result.ToString();
         }
     }
 }
