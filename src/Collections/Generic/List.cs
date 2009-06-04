@@ -43,6 +43,7 @@ namespace Mannex.Collections.Generic
         /// list is empty.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static int LastIndex<T>(this IList<T> list)
         {
             if (list == null) throw new ArgumentNullException("list");
@@ -59,6 +60,7 @@ namespace Mannex.Collections.Generic
         /// the list.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static void Push<T>(this IList<T> list, T value)
         {
             if (list == null) throw new ArgumentNullException("list");
@@ -73,6 +75,7 @@ namespace Mannex.Collections.Generic
         /// Thrown if list is empty.
         /// </exception>
 
+        [DebuggerStepThrough]
         public static T Pop<T>(this IList<T> list)
         {
             if (list == null) throw new ArgumentNullException("list");
@@ -89,6 +92,7 @@ namespace Mannex.Collections.Generic
         /// the default value for <typeparamref name="T"/> is returned.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static T TryPop<T>(this IList<T> list)
         {
             return list.TryPop(default(T));
@@ -100,6 +104,7 @@ namespace Mannex.Collections.Generic
         /// <paramref name="emptyValue"/> is returned instead.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static T TryPop<T>(this IList<T> list, T emptyValue)
         {
             if (list == null) throw new ArgumentNullException("list");
@@ -114,6 +119,7 @@ namespace Mannex.Collections.Generic
         /// Thrown if list is empty.
         /// </exception>
 
+        [DebuggerStepThrough]
         public static T Peek<T>(this IList<T> list)
         {
             if (list == null) throw new ArgumentNullException("list");
@@ -126,6 +132,7 @@ namespace Mannex.Collections.Generic
         /// the default value for <typeparamref name="T"/> is returned.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static T TryPeek<T>(this IList<T> list)
         {
             return list.TryPeek(default(T));
@@ -151,6 +158,7 @@ namespace Mannex.Collections.Generic
         /// Adds <paramref name="value"/> to beginning of the list.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static void Unshift<T>(this IList<T> list, T value)
         {
             if (list == null) throw new ArgumentNullException("list");
@@ -164,6 +172,7 @@ namespace Mannex.Collections.Generic
         /// Thrown if list is empty.
         /// </exception>
 
+        [DebuggerStepThrough]
         public static T Shift<T>(this IList<T> list)
         {
             if (list == null) throw new ArgumentNullException("list");
@@ -177,7 +186,8 @@ namespace Mannex.Collections.Generic
         /// the default value for <typeparamref name="T"/> if the
         /// list is empty.
         /// </summary>
-        
+
+        [DebuggerStepThrough]
         public static T TryShift<T>(this IList<T> list)
         {
             if (list == null) throw new ArgumentNullException("list");
@@ -189,6 +199,7 @@ namespace Mannex.Collections.Generic
         /// <paramref name="emptyValue"/> if the list is empty.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static T TryShift<T>(this IList<T> list, T emptyValue)
         {
             if (list == null) throw new ArgumentNullException("list");
@@ -203,6 +214,7 @@ namespace Mannex.Collections.Generic
         /// Treats list like a queue, appending <see cref="value"/>.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static void Enqueue<T>(this IList<T> list, T value)
         {
             list.Push(value);
@@ -216,6 +228,7 @@ namespace Mannex.Collections.Generic
         /// Thrown if list is empty.
         /// </exception>
 
+        [DebuggerStepThrough]
         public static T Dequeue<T>(this IList<T> list)
         {
             return list.Shift();
@@ -227,6 +240,7 @@ namespace Mannex.Collections.Generic
         /// if the list is empty.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static T TryDequeue<T>(this IList<T> list)
         {
             return list.TryShift();
@@ -237,7 +251,8 @@ namespace Mannex.Collections.Generic
         /// first value or <paramref name="emptyValue"/> if the 
         /// list is empty.
         /// </summary>
-        
+
+        [DebuggerStepThrough]
         public static T TryDequeue<T>(this IList<T> list, T emptyValue)
         {
             return list.TryShift(emptyValue);
@@ -259,6 +274,7 @@ namespace Mannex.Collections.Generic
         /// This method uses defered semantics.</para>
         /// </remarks>
 
+        [DebuggerStepThrough]
         public static IEnumerable<T> Slice<T>(this IList<T> list, int start)
         {
             if (list == null) throw new ArgumentNullException("list");
@@ -283,6 +299,7 @@ namespace Mannex.Collections.Generic
         /// This method uses defered semantics.</para>
         /// </remarks>
 
+        [DebuggerStepThrough]
         public static IEnumerable<T> Slice<T>(this IList<T> list, int start, int end /* exclusive */)
         {
             if (list == null) throw new ArgumentNullException("list");
