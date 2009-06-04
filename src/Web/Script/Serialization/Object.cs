@@ -27,27 +27,34 @@ namespace Mannex.Web.Script.Serialization
 
     using System;
     using System.Diagnostics;
+    using System.Web.Script.Serialization;
     using System.Text;
 
     #endregion
 
-    static partial class StringExtensions
+    public static class ObjectExtensions
     {
+        #pragma warning disable 618
+
+        // warning CS0618: 
+        // 'System.Web.Script.Serialization.JavaScriptSerializer.JavaScriptSerializer()' is obsolete: 
+        // 'The recommended alternative is System.Runtime.Serialization.DataContractJsonSerializer.'
+
+        private static readonly JavaScriptSerializer _serializer = new JavaScriptSerializer();
+
+        #pragma warning restore 618
+
         [DebuggerStepThrough]
-        public static string ToJsonString(this string str, char quote)
+        public static string ToJsonString(this object obj)
         {
-            if (quote == '"')
-                return str.ToJsonString();
+            return new JavaScriptSerializer().Serialize(obj);
+        }
 
-            if (quote != '\'')
-                throw new ArgumentException("Quote character must be a single or double quote.", "quote");
-
-            var sb = new StringBuilder(str.Length + 10);
-            str.BuildJsonStringTo(sb);
-            Debug.Assert(str.Length >= 2);
-            sb[0] = quote;
-            sb[sb.Length - 1] = quote;
-            return sb.ToString();
+        [DebuggerStepThrough]
+        public static void BuildJsonStringTo(this object obj, StringBuilder output)
+        {
+            if (output == null) throw new ArgumentNullException("output");
+            _serializer.Serialize(obj, output);
         }
     }
 }
