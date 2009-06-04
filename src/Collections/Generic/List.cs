@@ -69,6 +69,9 @@ namespace Mannex.Collections.Generic
         /// Treats list like a stack, popping (removing and returning)
         /// the last value on the list.
         /// </summary>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if list is empty.
+        /// </exception>
 
         public static T Pop<T>(this IList<T> list)
         {
@@ -77,6 +80,30 @@ namespace Mannex.Collections.Generic
             var value = list.Last();
             list.RemoveAt(list.LastIndex());
             return value;
+        }
+
+
+        /// <summary>
+        /// Treats list like a stack, popping (removing and returning)
+        /// the last value on the list. If the list is empty, then
+        /// the default value for <typeparamref name="T"/> is returned.
+        /// </summary>
+
+        public static T TryPop<T>(this IList<T> list)
+        {
+            return list.TryPop(default(T));
+        }
+
+        /// <summary>
+        /// Treats list like a stack, popping (removing and returning)
+        /// the last value on the list. If the list is empty, then
+        /// <paramref name="emptyValue"/> is returned instead.
+        /// </summary>
+
+        public static T TryPop<T>(this IList<T> list, T emptyValue)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            return list.Count > 0 ? list.Pop() : emptyValue;
         }
     }
 }

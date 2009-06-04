@@ -94,5 +94,32 @@ namespace Mannex.Tests.Collections.Generic
             Assert.Equal(12, list.Pop());
             Assert.Equal(0, list.Count);
         }
+
+        [Fact]
+        public void TryPopFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.TryPop<object>(null));
+        }
+
+        [Fact]
+        public void TryPopReturnsDefaultForEmptyList()
+        {
+            var list = new List<int?>();
+            Assert.Null(list.TryPop());
+            Assert.Equal(-1, list.TryPop(-1));
+        }
+
+        [Fact]
+        public void TryPopReturnsAndRemovesLastValue()
+        {
+            var list = new List<int>(new[] { 12, 34, 56 });
+            Assert.Equal(3, list.Count);
+            Assert.Equal(56, list.TryPop());
+            Assert.Equal(2, list.Count);
+            Assert.Equal(34, list.TryPop());
+            Assert.Equal(1, list.Count);
+            Assert.Equal(12, list.TryPop());
+            Assert.Equal(0, list.Count);
+        }
     }
 }
