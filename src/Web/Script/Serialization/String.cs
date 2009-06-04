@@ -28,11 +28,21 @@ namespace Mannex.Web.Script.Serialization
     using System;
     using System.Diagnostics;
     using System.Text;
+    using System.Web.Script.Serialization;
 
     #endregion
 
+    /// <summary>
+    /// Extension methods for <see cref="string"/>.
+    /// </summary>
+
     static partial class StringExtensions
     {
+        /// <summary>
+        /// Formats string as JSON text using <see cref="JavaScriptSerializer"/>, 
+        /// permitting either a single or double quote as the quoting character.
+        /// </summary>
+
         [DebuggerStepThrough]
         public static string ToJsonString(this string str, char quote)
         {

@@ -32,6 +32,10 @@ namespace Mannex.Web.Script.Serialization
 
     #endregion
 
+    /// <summary>
+    /// Extension methods for <see cref="object"/>.
+    /// </summary>
+
     public static class ObjectExtensions
     {
         #pragma warning disable 618
@@ -44,11 +48,20 @@ namespace Mannex.Web.Script.Serialization
 
         #pragma warning restore 618
 
+        /// <summary>
+        /// Formats object as JSON text using <see cref="JavaScriptSerializer"/>.
+        /// </summary>
+
         [DebuggerStepThrough]
         public static string ToJsonString(this object obj)
         {
             return new JavaScriptSerializer().Serialize(obj);
         }
+
+        /// <summary>
+        /// Formats object as JSON text using <see cref="JavaScriptSerializer"/>,
+        /// sending result to <paramref name="output"/> cref="output"/>.
+        /// </summary>
 
         [DebuggerStepThrough]
         public static void BuildJsonStringTo(this object obj, StringBuilder output)
