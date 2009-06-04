@@ -65,7 +65,7 @@ namespace Mannex.Json
         /// </remarks>
 
         [DebuggerStepThrough]
-        public static void WriteJsonStringTo(string str, TextWriter writer)
+        public static void WriteJsonStringTo(this string str, TextWriter writer)
         {
             if (writer == null) throw new ArgumentNullException("writer");
 
