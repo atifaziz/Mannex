@@ -61,7 +61,7 @@ namespace Mannex.Tests.Collections.Generic
         }
 
         [Fact]
-        public void PushAddsToThenEnd()
+        public void PushAddsToTheEnd()
         {
             var list = new List<int>();
             list.Push(12);
@@ -227,6 +227,54 @@ namespace Mannex.Tests.Collections.Generic
             Assert.Equal(1, list.Count);
             Assert.Equal(56, list.TryShift());
             Assert.Equal(0, list.Count);
+        }
+
+        [Fact]
+        public void EnqueueFailsWithNullThis()
+        {
+            PushFailsWithNullThis();
+        }
+
+        [Fact]
+        public void EnqueueAddsToTheEnd()
+        {
+            PushAddsToTheEnd();
+        }
+
+        [Fact]
+        public void DequeueFailsWithNullThis()
+        {
+            ShiftFailsWithNullThis();
+        }
+
+        [Fact]
+        public void DequeueFailsWithEmptyList()
+        {
+            ShiftFailsWithEmptyList();
+        }
+
+        [Fact]
+        public void DequeueReturnsAndRemovesFirstValue()
+        {
+            ShiftReturnsAndRemovesFirstValue();
+        }
+
+        [Fact]
+        public void TryDequeueFailsWithNullThis()
+        {
+            TryShiftFailsWithNullThis();
+        }
+
+        [Fact]
+        public void TryDequeueReturnsDefaultForEmptyList()
+        {
+            TryShiftReturnsDefaultForEmptyList();
+        }
+
+        [Fact]
+        public void TryDequeueReturnsAndRemovesFirstValue()
+        {
+            TryShiftReturnsAndRemovesFirstValue();
         }
     }
 }
