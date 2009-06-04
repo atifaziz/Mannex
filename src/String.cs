@@ -180,11 +180,6 @@ namespace Mannex
         /// replacements and a function, <paramref name="binder"/>, that
         /// determines how to bind and resolve replacement tokens.
         /// </summary>
-        /// <remarks>
-        /// This method implements most of what is described in
-        /// <a href="http://www.python.org/dev/peps/pep-3101/">PEP 3101 (Advanced String Formatting)</a> 
-        /// from Python.
-        /// </remarks>
 
         public static string FormatWith(this string format, 
             Func<string, object[], IFormatProvider, string> binder, params object[] args)
@@ -199,11 +194,6 @@ namespace Mannex
         /// addition, <paramref name="provider"/> is used for cultural
         /// formatting.
         /// </summary>
-        /// <remarks>
-        /// This method implements most of what is described in
-        /// <a href="http://www.python.org/dev/peps/pep-3101/">PEP 3101 (Advanced String Formatting)</a> 
-        /// from Python.
-        /// </remarks>
 
         public static string FormatWith(this string format,
             IFormatProvider provider, Func<string, object[], IFormatProvider, string> binder, params object[] args)
