@@ -152,5 +152,15 @@ namespace Mannex.IO
             if (replacement.IndexOfAny(badChars) >= 0) throw new ArgumentException(null, "replacement");
             return Regex.Replace(str, badPattern, replacement);
         }
+
+        /// <summary>
+        /// Returns a <see cref="TextReader"/> for reading string.
+        /// </summary>
+
+        public static TextReader Read(this string str)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            return new StringReader(str);
+        }
     }
 }
