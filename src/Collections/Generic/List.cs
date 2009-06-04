@@ -194,5 +194,53 @@ namespace Mannex.Collections.Generic
             if (list == null) throw new ArgumentNullException("list");
             return list.Count > 0 ? list.Shift() : emptyValue;
         }
+
+        //
+        // Queue semantics
+        //
+
+        /// <summary>
+        /// Treats list like a queue, appending <see cref="value"/>.
+        /// </summary>
+
+        public static void Enqueue<T>(this IList<T> list, T value)
+        {
+            list.Push(value);
+        }
+
+        /// <summary>
+        /// Treats list like a queue, removing and returning the
+        /// first value.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if list is empty.
+        /// </exception>
+
+        public static T Dequeue<T>(this IList<T> list)
+        {
+            return list.Shift();
+        }
+
+        /// <summary>
+        /// Treats list like a queue, removing and returning the
+        /// first value or the default value for <typeparamref name="T"/>
+        /// if the list is empty.
+        /// </summary>
+
+        public static T TryDequeue<T>(this IList<T> list)
+        {
+            return list.TryShift();
+        }
+
+        /// <summary>
+        /// Treats list like a queue, removing and returning the
+        /// first value or <paramref name="emptyValue"/> if the 
+        /// list is empty.
+        /// </summary>
+        
+        public static T TryDequeue<T>(this IList<T> list, T emptyValue)
+        {
+            return list.TryShift(emptyValue);
+        }
     }
 }
