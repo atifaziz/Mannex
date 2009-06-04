@@ -38,6 +38,7 @@ namespace Mannex
     namespace IO
     {
         public static partial class StreamExtensions { }
+        public static partial class StringExtensions { }
     }
 
     namespace Reflection
