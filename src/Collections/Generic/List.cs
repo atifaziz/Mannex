@@ -242,5 +242,74 @@ namespace Mannex.Collections.Generic
         {
             return list.TryShift(emptyValue);
         }
+
+        //
+        // Slicing and dicing
+        //
+
+        /// <summary>
+        /// Returns elements from the list, starting at the index
+        /// specified by <paramref name="start"/> index.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// If <paramref name="start"/> is negative, it is treated as 
+        /// <see cref="List{T}.Count"/> + <paramref name="start"/>.</para>
+        /// <para>
+        /// This method uses defered semantics.</para>
+        /// </remarks>
+
+        public static IEnumerable<T> Slice<T>(this IList<T> list, int start)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            return list.Slice(start, list.Count);
+        }
+
+        /// <summary>
+        /// Returns elements from the specified portion of the list, 
+        /// identified by <paramref name="start"/> index and 
+        /// <paramref name="end"/> (exclusive) index.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This method copies up to, but not including, the element indicated by 
+        /// <paramref name="end"/>. If <paramref name="start"/> is negative, it 
+        /// is treated as <see cref="List{T}.Count"/> + <paramref name="start"/>.
+        /// If <paramref name="end"/> is negative, it is treated as 
+        /// <see cref="List{T}.Count"/> + <paramref name="end"/>. 
+        /// If <paramref name="end"/> occurs before <paramref name="start"/>, no 
+        /// elements returned.</para>
+        /// <para>
+        /// This method uses defered semantics.</para>
+        /// </remarks>
+
+        public static IEnumerable<T> Slice<T>(this IList<T> list, int start, int end /* exclusive */)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            return SliceImpl(list, start, end);
+        }
+
+        private static IEnumerable<T> SliceImpl<T>(IList<T> list, int start, int end)
+        {
+            //
+            // This method copies up to, but not including, the element 
+            // indicated by end. If start is negative, it is 
+            // treated as length + start where length is the count of items
+            // in the list. If end is negative, it is treated as 
+            // length + end where length is the count of items in the list. 
+            // If end is omitted, extraction continues to the end of 
+            // the list. If end occurs before start, no elements are 
+            // copied to the new list.
+            //
+
+            for (var i = list.ClipIndex(start); i < list.ClipIndex(end); i++)
+                yield return list[i];
+        }
+
+        private static int ClipIndex<T>(this ICollection<T> collection, int index)
+        {
+            Debug.Assert(collection != null);
+            return Math.Min(collection.Count, index < 0 ? Math.Max(0, collection.Count + index) : index);
+        }
     }
 }

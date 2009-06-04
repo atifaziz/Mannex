@@ -27,6 +27,7 @@ namespace Mannex.Tests.Collections.Generic
 
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Mannex.Collections.Generic;
     using Xunit;
 
@@ -275,6 +276,49 @@ namespace Mannex.Tests.Collections.Generic
         public void TryDequeueReturnsAndRemovesFirstValue()
         {
             TryShiftReturnsAndRemovesFirstValue();
+        }
+
+        [Fact]
+        public void SliceFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.Slice<object>(null, 0));
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.Slice<object>(null, 0, 0));
+        }
+
+        [Fact]
+        public void SliceReturnsIdentifiedPortion()
+        {
+            var nums = new[] { 12, 34, 56, 78 };
+            Assert.Equal(nums, nums.Slice(0).ToArray());
+            Assert.Equal(nums, nums.Slice(0, 4).ToArray());
+            Assert.Equal(new[] { 12, 34, 56 }, nums.Slice(0, 3).ToArray());
+            Assert.Equal(new[] { 34, 56 }, nums.Slice(1, 3).ToArray());
+        }
+
+        [Fact]
+        public void SliceClipsEnd()
+        {
+            var nums = new[] { 12, 34, 56, 78 };
+            Assert.Equal(nums, nums.Slice(0, 10).ToArray());
+        }
+
+        [Fact]
+        public void SliceReturnsEmptySequenceWhenEndOccursBeforeStart()
+        {
+            var nums = new[] { 12, 34, 56, 78 };
+            Assert.Empty(nums.Slice(10).ToArray());
+            Assert.Empty(nums.Slice(3, 1).ToArray());
+            Assert.Empty(nums.Slice(1, -10).ToArray());
+        }
+
+        [Fact]
+        public void SliceReturnsPortionIdentifiedByOffsets()
+        {
+            var nums = new[] { 12, 34, 56, 78 };
+            Assert.Equal(new[] { 78 }, nums.Slice(-1).ToArray());
+            Assert.Equal(new[] { 56, 78 }, nums.Slice(-2).ToArray());
+            Assert.Equal(new[] { 34, 56, 78 }, nums.Slice(-3).ToArray());
+            Assert.Equal(new[] { 34, 56 }, nums.Slice(-3, -1).ToArray());
         }
     }
 }
