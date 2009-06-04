@@ -174,5 +174,90 @@ namespace Mannex
                  ? sb.Append(str, start, str.Length - start).Append(quote).ToString() 
                  : str.Wrap(quote, quote);
         }
+
+        /// <summary>
+        /// Format string using <paramref name="args"/> as sources for
+        /// replacements and a function, <paramref name="binder"/>, that
+        /// determines how to bind and resolve replacement tokens.
+        /// </summary>
+        /// <remarks>
+        /// This method implements most of what is described in
+        /// <a href="http://www.python.org/dev/peps/pep-3101/">PEP 3101 (Advanced String Formatting)</a> 
+        /// from Python.
+        /// </remarks>
+
+        public static string FormatWith(this string format, 
+            Func<string, object[], IFormatProvider, string> binder, params object[] args)
+        {
+            return format.FormatWith(null, binder, args);
+        }
+
+        /// <summary>
+        /// Format string using <paramref name="args"/> as sources for
+        /// replacements and a function, <paramref name="binder"/>, that
+        /// determines how to bind and resolve replacement tokens. In 
+        /// addition, <paramref name="provider"/> is used for cultural
+        /// formatting.
+        /// </summary>
+        /// <remarks>
+        /// This method implements most of what is described in
+        /// <a href="http://www.python.org/dev/peps/pep-3101/">PEP 3101 (Advanced String Formatting)</a> 
+        /// from Python.
+        /// </remarks>
+
+        public static string FormatWith(this string format,
+            IFormatProvider provider, Func<string, object[], IFormatProvider, string> binder, params object[] args)
+        {
+            if (format == null) throw new ArgumentNullException("format");
+            if (binder == null) throw new ArgumentNullException("binder");
+
+            Debug.Assert(binder != null);
+
+            var result = new StringBuilder(format.Length * 2);
+            var token = new StringBuilder();
+
+            var e = format.GetEnumerator();
+            while (e.MoveNext())
+            {
+                var ch = e.Current;
+                if (ch == '{')
+                {
+                    while (true)
+                    {
+                        if (!e.MoveNext())
+                            throw new FormatException();
+
+                        ch = e.Current;
+                        if (ch == '}')
+                        {
+                            if (token.Length == 0)
+                                throw new FormatException();
+
+                            result.Append(binder(token.ToString(), args, provider));
+                            token.Length = 0;
+                            break;
+                        }
+                        if (ch == '{')
+                        {
+                            result.Append(ch);
+                            break;
+                        }
+                        token.Append(ch);
+                    }
+                }
+                else if (ch == '}')
+                {
+                    if (!e.MoveNext() || e.Current != '}')
+                        throw new FormatException();
+                    result.Append('}');
+                }
+                else
+                {
+                    result.Append(ch);
+                }
+            }
+
+            return result.ToString();
+        }
     }
 }
