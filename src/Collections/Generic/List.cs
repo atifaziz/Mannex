@@ -105,5 +105,42 @@ namespace Mannex.Collections.Generic
             if (list == null) throw new ArgumentNullException("list");
             return list.Count > 0 ? list.Pop() : emptyValue;
         }
+
+        /// <summary>
+        /// Treats list like a stack, peeking and return the first
+        /// value on the list.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if list is empty.
+        /// </exception>
+
+        public static T Peek<T>(this IList<T> list)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            return list.First();
+        }
+
+        /// <summary>
+        /// Treats list like a stack, peeking and return the first
+        /// value on the list. If the list is empty, then
+        /// the default value for <typeparamref name="T"/> is returned.
+        /// </summary>
+
+        public static T TryPeek<T>(this IList<T> list)
+        {
+            return list.TryPeek(default(T));
+        }
+
+        /// <summary>
+        /// Treats list like a stack, peeking and return the first
+        /// value on the list. If the list is empty, then
+        /// <paramref name="emptyValue"/> is returned instead.
+        /// </summary>
+
+        public static T TryPeek<T>(this IList<T> list, T emptyValue)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            return list.Count > 0 ? list.Peek() : emptyValue;
+        }
     }
 }

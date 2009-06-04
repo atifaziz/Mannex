@@ -121,5 +121,43 @@ namespace Mannex.Tests.Collections.Generic
             Assert.Equal(12, list.TryPop());
             Assert.Equal(0, list.Count);
         }
+
+        [Fact]
+        public void PeekFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.Peek<object>(null));
+        }
+
+        [Fact]
+        public void PeekFailsWithEmptyList()
+        {
+            Assert.Throws<InvalidOperationException>(() => new List<object>().Peek());
+        }
+
+        [Fact]
+        public void PeekReturnsFirstValue()
+        {
+            Assert.Equal(12, new[] { 12, 34, 56 }.Peek());
+        }
+
+        [Fact]
+        public void TryPeekFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.TryPeek<object>(null));
+        }
+
+        [Fact]
+        public void TryPeekReturnsDefaultForEmptyList()
+        {
+            var list = new int?[0];
+            Assert.Null(list.TryPeek());
+            Assert.Equal(-1, list.TryPeek(-1));
+        }
+
+        [Fact]
+        public void TryPeekReturnsFirstValue()
+        {
+            Assert.Equal(12, new[] { 12, 34, 56 }.TryPeek());
+        }
     }
 }
