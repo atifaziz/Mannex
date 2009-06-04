@@ -76,7 +76,6 @@
     <Compile Include="Web\Script\Serialization\Object.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Web\Script\Serialization\String.cs" />
     <Compile Include="Web\UI\DataBindingExtensions.cs" />
     <Compile Include="Web\StringHtmlExtensions.cs" />
     <Compile Include="Web\UI\ControlExtensions.cs" />
