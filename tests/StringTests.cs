@@ -109,5 +109,29 @@ namespace Mannex.Tests
             Assert.Equal("foo-", "foo".Wrap(null, "-"));
             Assert.Equal("foo", "foo".Wrap(null, null));
         }
+
+        [Fact]
+        public void QuoteFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => StringExtensions.Quote(null, string.Empty, string.Empty));
+        }
+
+        [Fact]
+        public void QuoteQuotes()
+        {
+            Assert.Equal("'foo'", "foo".Quote("'", null));
+        }
+
+        [Fact]
+        public void QuoteEscapesEmbeddedQuotes()
+        {
+            Assert.Equal(@"'foo \'bar\' baz'", "foo 'bar' baz".Quote("'", @"\'"));
+        }
+
+        [Fact]
+        public void QuoteRemovesQuotesWithNullEscape()
+        {
+            Assert.Equal(@"'foo bar baz'", "foo 'bar' baz".Quote("'", null));
+        }
     }
 }
