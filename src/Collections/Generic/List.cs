@@ -28,6 +28,7 @@ namespace Mannex.Collections.Generic
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
 
     #endregion
 
@@ -62,6 +63,20 @@ namespace Mannex.Collections.Generic
         {
             if (list == null) throw new ArgumentNullException("list");
             list.Add(value);
+        }
+
+        /// <summary>
+        /// Treats list like a stack, popping (removing and returning)
+        /// the last value on the list.
+        /// </summary>
+
+        public static T Pop<T>(this IList<T> list)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+
+            var value = list.Last();
+            list.RemoveAt(list.LastIndex());
+            return value;
         }
     }
 }

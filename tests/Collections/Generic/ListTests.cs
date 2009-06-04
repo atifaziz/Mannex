@@ -69,5 +69,30 @@ namespace Mannex.Tests.Collections.Generic
             list.Push(34);
             Assert.Equal(34, list[1]);
         }
+
+        [Fact]
+        public void PopFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.Pop<object>(null));
+        }
+
+        [Fact]
+        public void PopFailsWithEmptyList()
+        {
+            Assert.Throws<InvalidOperationException>(() => new List<object>().Pop());
+        }
+
+        [Fact]
+        public void PopReturnsAndRemovesLastValue()
+        {
+            var list = new List<int>(new[]{ 12, 34, 56 });
+            Assert.Equal(3, list.Count);
+            Assert.Equal(56, list.Pop());
+            Assert.Equal(2, list.Count);
+            Assert.Equal(34, list.Pop());
+            Assert.Equal(1, list.Count);
+            Assert.Equal(12, list.Pop());
+            Assert.Equal(0, list.Count);
+        }
     }
 }
