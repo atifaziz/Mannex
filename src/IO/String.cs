@@ -66,6 +66,11 @@ namespace Mannex.IO
         /// by replacing all invalid characters, those returned by
         /// <see cref="Path.GetInvalidFileNameChars"/>, with an underscore.
         /// </summary>
+        /// <remarks>
+        /// This method is not guaranteed to replace the complete set of 
+        /// characters that are invalid in file and directory names.
+        /// The full set of invalid characters can vary by file system.
+        /// </remarks>
 
         public static string ToFileNameSafe(this string str)
         {
@@ -79,10 +84,16 @@ namespace Mannex.IO
         /// <paramref name="replacement"/>.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// The <paramref name="replacement"/> string itself cannot 
         /// carry any invalid file name characters. If 
         /// <paramref name="replacement"/> is <c>null</c> or empty
-        /// then it assumes the value of an underscore.
+        /// then it assumes the value of an underscore.</para>
+        /// <para>
+        /// This method is not guaranteed to replace the complete set of 
+        /// characters that are invalid in file and directory names.
+        /// The full set of invalid characters can vary by file system.
+        /// </para>
         /// </remarks>
 
         public static string ToFileNameSafe(this string str, string replacement)
@@ -97,6 +108,11 @@ namespace Mannex.IO
         /// by replacing all invalid characters, those returned by
         /// <see cref="Path.GetInvalidPathChars"/>, with an underscore.
         /// </summary>
+        /// <remarks>
+        /// This method is not guaranteed to replace the complete set of 
+        /// characters that are invalid in file and directory names.
+        /// The full set of invalid characters can vary by file system.
+        /// </remarks>
 
         public static string ToPathNameSafe(this string str)
         {
@@ -114,6 +130,11 @@ namespace Mannex.IO
         /// carry any invalid file name characters. If 
         /// <paramref name="replacement"/> is <c>null</c> or empty
         /// then it assumes the value of an underscore.
+        /// <para>
+        /// This method is not guaranteed to replace the complete set of 
+        /// characters that are invalid in file and directory names.
+        /// The full set of invalid characters can vary by file system.
+        /// </para>
         /// </remarks>
 
         public static string ToPathNameSafe(this string str, string replacement)
