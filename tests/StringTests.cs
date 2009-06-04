@@ -89,5 +89,25 @@ namespace Mannex.Tests
         {
             Assert.Equal("hello world!", "world".Embed("hello {0}!"));
         }
+
+        [Fact]
+        public void WrapFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => StringExtensions.Wrap(null, string.Empty, string.Empty));
+        }
+
+        [Fact]
+        public void WrapWraps()
+        {
+            Assert.Equal("(foo)", "foo".Wrap("(", ")"));
+        }
+
+        [Fact]
+        public void WrapIgnoresNullComponent()
+        {
+            Assert.Equal("-foo", "foo".Wrap("-", null));
+            Assert.Equal("foo-", "foo".Wrap(null, "-"));
+            Assert.Equal("foo", "foo".Wrap(null, null));
+        }
     }
 }

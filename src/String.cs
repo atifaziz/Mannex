@@ -138,7 +138,6 @@ namespace Mannex
             return string.Format(target, str);
         }
 
-        /*
         /// <summary>
         /// Wraps string between two other string where the first
         /// indicates the left side and the second indicates the
@@ -149,6 +148,6 @@ namespace Mannex
         {
             if (str == null) throw new ArgumentNullException("str");
             return lhs + str + rhs;
-        }*/
+        }
     }
 }
