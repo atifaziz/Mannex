@@ -32,17 +32,29 @@ namespace Mannex.Json
 
     #endregion
 
+    /// <summary>
+    /// Extension methods for <see cref="NameValueCollection"/>.
+    /// </summary>
+
     static partial class NameValueCollectionExtensions
     {
-        public static void WriteJsonStringTo(this NameValueCollection collection, TextWriter writer)
-        {
-            if (writer == null) throw new ArgumentNullException("writer");
-            WriteJsonStringToImpl(collection, writer);
-        }
+        /// <summary>
+        /// Formats collection as JSON text.
+        /// </summary>
 
         public static string ToJsonString(this NameValueCollection collection)
         {
             return WriteJsonStringToImpl(collection, new StringWriter()).ToString();
+        }
+
+        /// <summary>
+        /// Formats collection as JSON text, sending output to <paramref name="writer"/>.
+        /// </summary>
+
+        public static void WriteJsonStringTo(this NameValueCollection collection, TextWriter writer)
+        {
+            if (writer == null) throw new ArgumentNullException("writer");
+            WriteJsonStringToImpl(collection, writer);
         }
 
         private static TextWriter WriteJsonStringToImpl(NameValueCollection collection, TextWriter writer)
