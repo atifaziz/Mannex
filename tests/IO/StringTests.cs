@@ -137,5 +137,20 @@ namespace Mannex.Tests.IO
             var chars = Path.GetInvalidPathChars();
             Assert.Equal(new string('_', chars.Length), new string(chars).ToPathNameSafe());
         }
+
+        [Fact]
+        public void ReadWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Read(null));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void ReadReturnsReaderReturingContent()
+        {
+            var reader = "foobar".Read();
+            Assert.NotNull(reader.ReadToEnd());
+            Assert.Equal("foobar", reader.ReadToEnd());
+        }
     }
 }
