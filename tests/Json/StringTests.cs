@@ -21,14 +21,13 @@
 //
 #endregion
 
-namespace Mannex.Tests.Web.Script.Serialization
+namespace Mannex.Tests.Json
 {
     #region Improts
 
-    using System;
-    using Mannex.Web.Script.Serialization;
+    using Mannex.Json;
     using Xunit;
-    using StringExtensions = Mannex.Web.Script.Serialization.StringExtensions;
+    using StringExtensions = Mannex.Json.StringExtensions;
 
     #endregion
 
@@ -37,27 +36,19 @@ namespace Mannex.Tests.Web.Script.Serialization
         [Fact]
         public void ToJsonStringWithNullThisReturnJsonNull()
         {
-            Assert.Equal("null", StringExtensions.ToJsonString(null, '"'));
+            Assert.Equal("null", StringExtensions.ToJsonString(null));
         }
 
         [Fact]
         public void ToJsonStringFormatsJsonString()
         {
-            Assert.Equal("\"foo bar\"", "foo bar".ToJsonString('"'));
-            Assert.Equal("'foo bar'", "foo bar".ToJsonString('\''));
+            Assert.Equal("\"foo bar\"", "foo bar".ToJsonString());
         }
 
         [Fact]
         public void ToJsonStringEscapes()
         {
-            Assert.Equal("\"\\\"foo bar\\\"\"", "\"foo bar\"".ToJsonString('"'));
-            Assert.Equal("'\\\"foo bar\\\"'", "\"foo bar\"".ToJsonString('\''));            
-        }
-
-        [Fact]
-        public void ToJsonStringThrowsWhenQuoteIsNonQuote()
-        {
-            Assert.Throws<ArgumentException>(() => "foo".ToJsonString('?'));
+            Assert.Equal("\"\\\"foo bar\\\"\"", "\"foo bar\"".ToJsonString());
         }
     }
 }

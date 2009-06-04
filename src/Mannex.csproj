@@ -62,6 +62,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IO\TextReader.cs" />
+    <Compile Include="Json\String.cs" />
     <Compile Include="Net\Mime\ContentType.cs" />
     <Compile Include="Reflection\AssemblyExtensions.cs" />
     <Compile Include="Reflection\ICustomAttributeProviderExtensions.cs" />

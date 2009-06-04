@@ -40,6 +40,7 @@
     <Compile Include="BooleanTests.cs" />
     <Compile Include="IO\TextReaderTests.cs" />
     <Compile Include="IO\StringTests.cs" />
+    <Compile Include="Json\StringTests.cs" />
     <Compile Include="Reflection\ICustomAttributeProviderTests.cs" />
     <Compile Include="StringTests.cs" />
     <Compile Include="EventHandlerTests.cs" />
@@ -47,7 +48,6 @@
     <Compile Include="Int32Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\Script\Serialization\ObjectTests.cs" />
-    <Compile Include="Web\Script\Serialization\StringTests.cs" />
     <Compile Include="Web\UI\DataBindingTests.cs" />
     <Compile Include="Web\StringHtmlTests.cs" />
   </ItemGroup>
