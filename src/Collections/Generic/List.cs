@@ -211,7 +211,7 @@ namespace Mannex.Collections.Generic
         //
 
         /// <summary>
-        /// Treats list like a queue, appending <see cref="value"/>.
+        /// Treats list like a queue, appending <paramref name="value"/>.
         /// </summary>
 
         [DebuggerStepThrough]
