@@ -35,6 +35,11 @@ namespace Mannex
         public static partial class ListExtensions { }
     }
 
+    namespace IO
+    {
+        public static partial class StreamExtensions { }
+    }
+
     namespace Reflection
     {
         public static partial class ICustomAttributeProviderExtensions { }
