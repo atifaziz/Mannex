@@ -71,5 +71,23 @@ namespace Mannex.Tests
             Assert.Equal("brown", str.Slice(-9, -4));
             Assert.Equal(string.Empty, str.Slice(1, 0));
         }
+
+        [Fact]
+        public void EmbedFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => StringExtensions.Embed(null, string.Empty));
+        }
+
+        [Fact]
+        public void EmbedFailsWithNullTarget()
+        {
+            Assert.Throws<ArgumentNullException>(() => "foo".Embed(null));
+        }
+
+        [Fact]
+        public void EmbedFormatsThisIntoTaget()
+        {
+            Assert.Equal("hello world!", "world".Embed("hello {0}!"));
+        }
     }
 }

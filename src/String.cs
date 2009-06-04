@@ -125,5 +125,30 @@ namespace Mannex
             return sliceLength > 0 ?
                 str.Substring(start, sliceLength) : string.Empty;
         }
+        
+        /// <summary>
+        /// Embeds string into <paramref name="target"/>, using {0} 
+        /// within <paramref name="target"/> as the point of embedding.
+        /// </summary>
+
+        public static string Embed(this string str, string target)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            if (target == null) throw new ArgumentNullException("target");
+            return string.Format(target, str);
+        }
+
+        /*
+        /// <summary>
+        /// Wraps string between two other string where the first
+        /// indicates the left side and the second indicates the
+        /// right side.
+        /// </summary>
+
+        public static string Wrap(this string str, string lhs, string rhs)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            return lhs + str + rhs;
+        }*/
     }
 }
