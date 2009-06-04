@@ -27,6 +27,7 @@ namespace Mannex
 
     using System;
     using System.Diagnostics;
+    using System.Text;
 
     #endregion
 
@@ -148,6 +149,30 @@ namespace Mannex
         {
             if (str == null) throw new ArgumentNullException("str");
             return lhs + str + rhs;
+        }
+
+        /// <summary>
+        /// Enquotes string with <paramref name="quote"/>, escaping occurences
+        /// of <paramref name="quote"/> itself with <paramref name="escape"/>.
+        /// </summary>
+
+        public static string Quote(this string str, string quote, string escape)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            StringBuilder sb = null;
+            var start = 0;
+            int index;
+            while ((index = str.IndexOf(quote, start)) >= 0)
+            {
+                if (sb == null)
+                    sb = new StringBuilder(str.Length + 10).Append(quote);
+                sb.Append(str, start, index - start);
+                sb.Append(escape);
+                start = index + quote.Length;
+            }
+            return sb != null 
+                 ? sb.Append(str, start, str.Length - start).Append(quote).ToString() 
+                 : str.Wrap(quote, quote);
         }
     }
 }
