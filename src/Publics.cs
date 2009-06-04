@@ -32,6 +32,7 @@ namespace Mannex
     namespace Collections.Generic
     {
         public static partial class DictionaryExtensions { }
+        public static partial class ListExtensions { }
     }
 
     namespace Reflection
