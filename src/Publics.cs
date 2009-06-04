@@ -38,6 +38,7 @@ namespace Mannex
 
     namespace Json
     {
+        public static partial class NameValueCollectionExtensions { }
         public static partial class StringExtensions { }
     }
 
