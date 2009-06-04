@@ -31,6 +31,10 @@ namespace Mannex.IO
 
     #endregion
 
+    /// <summary>
+    /// Extension methods for <see cref="Stream"/>.
+    /// </summary>
+
     static partial class StreamExtensions
     {
         /// <summary>
