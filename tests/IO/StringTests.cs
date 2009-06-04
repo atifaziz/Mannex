@@ -149,7 +149,7 @@ namespace Mannex.Tests.IO
         public void ReadReturnsReaderReturingContent()
         {
             var reader = "foobar".Read();
-            Assert.NotNull(reader.ReadToEnd());
+            Assert.NotNull(reader);
             Assert.Equal("foobar", reader.ReadToEnd());
         }
     }
