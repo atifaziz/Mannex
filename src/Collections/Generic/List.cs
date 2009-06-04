@@ -47,5 +47,21 @@ namespace Mannex.Collections.Generic
             if (list == null) throw new ArgumentNullException("list");
             return list.Count - 1;
         }
+
+        //
+        // Stack semantics
+        //
+
+        /// <summary>
+        /// Treats list like a stack, pushing <paramref name="value"/>
+        /// on to the list; in other words adding it to the end of 
+        /// the list.
+        /// </summary>
+
+        public static void Push<T>(this IList<T> list, T value)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            list.Add(value);
+        }
     }
 }
