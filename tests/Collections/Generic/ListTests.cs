@@ -53,5 +53,21 @@ namespace Mannex.Tests.Collections.Generic
         {
             Assert.Equal(-1, new object[0].LastIndex());
         }
+
+        [Fact]
+        public void PushFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.Push(null, new object()));
+        }
+
+        [Fact]
+        public void PushAddsToThenEnd()
+        {
+            var list = new List<int>();
+            list.Push(12);
+            Assert.Equal(12, list[0]);
+            list.Push(34);
+            Assert.Equal(34, list[1]);
+        }
     }
 }
