@@ -36,6 +36,12 @@ namespace Mannex
         public static partial class ListExtensions { }
     }
 
+    namespace ComponentModel
+    {
+        public static partial class INotifyPropertyChangedExtensions { }
+    }
+
+
     namespace Json
     {
         public static partial class NameValueCollectionExtensions { }
