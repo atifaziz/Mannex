@@ -39,6 +39,11 @@ namespace Mannex
     namespace ComponentModel
     {
         public static partial class INotifyPropertyChangedExtensions { }
+
+        namespace Design
+        {
+            public static partial class IServiceContainerExtensions { }
+        }
     }
 
 
