@@ -80,14 +80,6 @@ namespace Mannex
         public static partial class HtmlStringExtensions { }
         public static partial class UriExtensions { }
 
-        namespace Script
-        {
-            namespace Serialization
-            {
-                public static partial class StringExtensions { }
-            }
-        }
-
         namespace UI
         {
             public static partial class ControlExtensions { }
