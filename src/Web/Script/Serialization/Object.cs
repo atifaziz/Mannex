@@ -36,7 +36,7 @@ namespace Mannex.Web.Script.Serialization
     /// Extension methods for <see cref="object"/>.
     /// </summary>
 
-    public static class ObjectExtensions
+    static partial class ObjectExtensions
     {
         #pragma warning disable 618
 
