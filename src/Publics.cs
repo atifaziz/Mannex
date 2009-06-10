@@ -34,6 +34,7 @@ namespace Mannex
     {
         public static partial class DictionaryExtensions { }
         public static partial class ListExtensions { }
+        public static partial class StringExtensions { }
     }
 
     namespace ComponentModel
