@@ -107,7 +107,7 @@ namespace Mannex.Web.UI
 
         public static string FormatWith(this string format, params object[] args)
         {
-            return format.FormatWith(null, null, args);
+            return format.FormatWith(null, args);
         }
 
         /// <summary>
