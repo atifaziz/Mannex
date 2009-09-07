@@ -37,8 +37,8 @@ using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
 [assembly: AssemblyCopyright("Copyright (c) 2009, Atif Aziz. All rights reserved.")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("1.0.11511.0")]
-[assembly: AssemblyFileVersion("1.0.11511.2237")]
+[assembly: AssemblyVersion("1.0.11607.0")]
+[assembly: AssemblyFileVersion("1.0.11607.2225")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("DEBUG")]
