@@ -34,7 +34,7 @@ namespace Mannex.IO
     /// Extension methods for <see cref="ArraySegment{T}"/>.
     /// </summary>
 
-    public static class ArraySegmentExtensions
+    static partial class ArraySegmentExtensions
     {
         /// <summary>
         /// Creates a read-only stream on top of the supplied buffer.
