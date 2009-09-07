@@ -79,6 +79,7 @@ namespace Mannex
     namespace Web
     {
         public static partial class HtmlStringExtensions { }
+        public static partial class NameValueCollectionExtensions { }
         public static partial class UriExtensions { }
 
         namespace Script
