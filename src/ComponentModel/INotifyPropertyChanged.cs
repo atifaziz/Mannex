@@ -37,7 +37,7 @@ namespace Mannex.ComponentModel
     /// Extension methods for <see cref="INotifyPropertyChanged"/>.
     /// </summary>
 
-    public static partial class INotifyPropertyChangedExtensions
+    static partial class INotifyPropertyChangedExtensions
     {
 #if !NO_LINQ_EXPRESSIONS
 

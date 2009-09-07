@@ -65,6 +65,7 @@ namespace Mannex
     namespace IO
     {
         public static partial class ArrayExtensions { }
+        public static partial class ArraySegmentExtensions { }
         public static partial class StreamExtensions { }
         public static partial class StringExtensions { }
         public static partial class TextReaderExtensions { }
