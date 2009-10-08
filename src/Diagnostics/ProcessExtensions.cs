@@ -28,6 +28,7 @@ namespace Mannex.Diagnostics
     using System;
     using System.ComponentModel;
     using System.Diagnostics;
+    using Threading;
 
     #endregion
 
@@ -67,6 +68,18 @@ namespace Mannex.Diagnostics
                 // - associated process is a Win16 executable.
                 return e;
             }
+        }
+
+        /// <summary>
+        /// Instructs the <see cref="Process"/> component to wait the specified 
+        /// amount of time for the associated process to exit. If the specified
+        /// time-out period is <c>null</c> then the wait is indefinite.
+        /// </summary>
+
+        public static bool WaitForExit(this Process process, TimeSpan? timeout)
+        {
+            if (process == null) throw new ArgumentNullException("process");
+            return process.WaitForExit(timeout.ToTimeout());
         }
     }
 }
