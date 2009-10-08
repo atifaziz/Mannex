@@ -78,6 +78,7 @@
     <Compile Include="Predicate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publics.cs" />
+    <Compile Include="Threading\TimeSpanExtensions.cs" />
     <Compile Include="Web\NameValueCollectionExtensions.cs" />
     <Compile Include="Web\Uri.cs" />
     <Compile Include="Web\Script\Serialization\Object.cs">

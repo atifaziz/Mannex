@@ -77,6 +77,11 @@ namespace Mannex
         public static partial class ICustomAttributeProviderExtensions { }
     }
 
+    namespace Threading
+    {
+        public static partial class TimeSpanExtensions { }
+    }
+
     namespace Web
     {
         public static partial class HtmlStringExtensions { }
