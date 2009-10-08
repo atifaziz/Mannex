@@ -28,6 +28,8 @@ namespace Mannex.Diagnostics
     using System;
     using System.ComponentModel;
     using System.Diagnostics;
+    using System.IO;
+    using System.Threading;
     using Threading;
 
     #endregion
@@ -80,6 +82,95 @@ namespace Mannex.Diagnostics
         {
             if (process == null) throw new ArgumentNullException("process");
             return process.WaitForExit(timeout.ToTimeout());
+        }
+
+        /// <summary>
+        /// Begins asynchronous read operations on the re-directed <see cref="Process.StandardOutput"/> 
+        /// and <see cref="Process.StandardError"/> of the application. 
+        /// Each line on the standard output is written to a <see cref="TextWriter"/>.
+        /// </summary>
+        /// <returns>
+        /// Returns an action that can be used to wait on outputs to drain.
+        /// </returns>
+
+        public static Action<TimeSpan?> BeginReadLine(this Process process, TextWriter output)
+        {
+            return BeginReadLine(process, output, null);
+        }
+
+        /// <summary>
+        /// Begins asynchronous read operations on the re-directed <see cref="Process.StandardOutput"/> 
+        /// and <see cref="Process.StandardError"/> of the application.
+        /// Each line on either is written to a respective <see cref="TextWriter"/>.
+        /// </summary>
+        /// <returns>
+        /// Returns an action that can be used to wait on outputs to drain.
+        /// </returns>
+
+        public static Action<TimeSpan?> BeginReadLine(this Process process, TextWriter output, TextWriter error)
+        {
+            if (process == null) throw new ArgumentNullException("process");
+
+            return BeginReadLineImpl(process,
+                (output ?? TextWriter.Null).WriteLine,
+                (error ?? TextWriter.Null).WriteLine);
+        }
+
+        /// <summary>
+        /// Begins asynchronous read operations on the re-directed <see cref="Process.StandardOutput"/> 
+        /// and <see cref="Process.StandardError"/> of the application. Each line on the standard output
+        /// is sent to a callback.
+        /// </summary>
+        /// <returns>
+        /// Returns an action that can be used to wait on outputs to drain.
+        /// </returns>
+        
+        public static Action<TimeSpan?> BeginReadLine(this Process process, Action<string> output)
+        {
+            return BeginReadLine(process, output, null);
+        }
+
+        /// <summary>
+        /// Begins asynchronous read operations on the re-directed <see cref="Process.StandardOutput"/> 
+        /// and <see cref="Process.StandardError"/> of the application. Each line on either is
+        /// sent to a respective callback.
+        /// </summary>
+        /// <returns>
+        /// Returns an action that can be used to wait on outputs to drain.
+        /// </returns>
+        
+        public static Action<TimeSpan?> BeginReadLine(this Process process, Action<string> output, Action<string> error)
+        {
+            if (process == null) throw new ArgumentNullException("process");
+
+            return BeginReadLineImpl(process,
+                output ?? (TextWriter.Null.WriteLine),
+                error ?? (TextWriter.Null.WriteLine));
+        }
+
+        private static Action<TimeSpan?> BeginReadLineImpl(Process process, Action<string> output, Action<string> error)
+        {
+            var outeof = new ManualResetEvent(false);
+            process.OutputDataReceived += OnDataReceived(output, () => outeof.Set());
+            process.BeginOutputReadLine();
+
+            var erreof = new ManualResetEvent(false);
+            process.ErrorDataReceived += OnDataReceived(error, () => erreof.Set());
+            process.BeginErrorReadLine();
+
+            return timeout => WaitHandle.WaitAll(new[] { outeof, erreof }, timeout.ToTimeout());
+        }
+
+        private static DataReceivedEventHandler OnDataReceived(
+            Action<string> line, Action eof)
+        {
+            return (sender, e) =>
+            {
+                if (e.Data != null)
+                    line(e.Data);
+                else
+                    eof();
+            };
         }
     }
 }
