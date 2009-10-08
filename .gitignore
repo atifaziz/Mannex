@@ -7,3 +7,4 @@ bin/**
 obj/**
 _ReSharper.*
 *.orig
+dist/**
