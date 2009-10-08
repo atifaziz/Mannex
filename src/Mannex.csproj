@@ -58,6 +58,7 @@
     <Compile Include="ComponentModel\Design\IServiceContainer.cs" />
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
     <Compile Include="DateTime.cs" />
+    <Compile Include="Diagnostics\ProcessExtensions.cs" />
     <Compile Include="IO\Array.cs" />
     <Compile Include="IO\ArraySegment.cs" />
     <Compile Include="IO\Stream.cs" />

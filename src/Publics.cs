@@ -47,6 +47,10 @@ namespace Mannex
         }
     }
 
+    namespace Diagnostics
+    {
+        public static partial class ProcessExtensions { }
+    }
 
     namespace Json
     {
