@@ -38,6 +38,7 @@
     <Compile Include="Collections\Generic\ListTests.cs" />
     <Compile Include="Collections\Generic\DictionaryTests.cs" />
     <Compile Include="BooleanTests.cs" />
+    <Compile Include="ArrayTests.cs" />
     <Compile Include="IO\TextReaderTests.cs" />
     <Compile Include="IO\StringTests.cs" />
     <Compile Include="Json\StringTests.cs" />
