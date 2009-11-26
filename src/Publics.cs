@@ -48,6 +48,11 @@ namespace Mannex
         }
     }
 
+    namespace Data
+    {
+        public static partial class IDataReaderExtensions { }
+    }
+
     namespace Diagnostics
     {
         public static partial class ProcessExtensions { }
