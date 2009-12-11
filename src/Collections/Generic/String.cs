@@ -83,9 +83,9 @@ namespace Mannex.Collections.Generic
 
             return new KeyValuePair<string, string>(
                 /* key   */ index < 0 ? str : str.Substring(0, index),
-                            /* value */ index < 0 || index + 1 >= str.Length
-                                            ? string.Empty
-                                            : str.Substring(index + count));
+                /* value */ index < 0 || index + 1 >= str.Length
+                ? string.Empty
+                : str.Substring(index + count));
         }
 
         /// <summary>
