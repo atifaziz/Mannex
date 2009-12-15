@@ -55,7 +55,6 @@
     <Compile Include="Boolean.cs" />
     <Compile Include="Collections\Generic\List.cs" />
     <Compile Include="Collections\Generic\Dictionary.cs" />
-    <Compile Include="Collections\Generic\String.cs" />
     <Compile Include="ComponentModel\Design\IServiceContainer.cs" />
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
     <Compile Include="Data\IDataReaderExtensions.cs" />
