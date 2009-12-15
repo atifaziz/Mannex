@@ -133,5 +133,85 @@ namespace Mannex.Tests
         {
             Assert.Equal(@"'foo bar baz'", "foo 'bar' baz".Quote("'", null));
         }
+
+        [Fact] 
+        public void SplitFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Split(null, ',', (a, b) => a + b));
+            Assert.Equal("str", e.ParamName);
+            e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Split(null, ',', (a, b, c) => a + b + c));
+            Assert.Equal("str", e.ParamName);
+            e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Split(null, ',', (a, b, c, d) => a + b + c + d));
+            Assert.Equal("str", e.ParamName);
+            
+            var separators = new char[0];
+            e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Split(null, separators, (a, b) => a + b));
+            Assert.Equal("str", e.ParamName);
+            e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Split(null, separators, (a, b, c) => a + b + c));
+            Assert.Equal("str", e.ParamName);
+            e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Split(null, separators, (a, b, c, d) => a + b + c + d));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void SplitFailsWithNullResultFunc()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => string.Empty.Split(',', (Func<string, string, string>) null));
+            Assert.Equal("resultFunc", e.ParamName);
+            e = Assert.Throws<ArgumentNullException>(() => string.Empty.Split(',', (Func<string, string, string, string>)null));
+            Assert.Equal("resultFunc", e.ParamName);
+            e = Assert.Throws<ArgumentNullException>(() => string.Empty.Split(',', (Func<string, string, string, string, string>)null));
+            Assert.Equal("resultFunc", e.ParamName);
+
+            var separators = new char[0];
+            e = Assert.Throws<ArgumentNullException>(() => string.Empty.Split(separators, (Func<string, string, string>)null));
+            Assert.Equal("resultFunc", e.ParamName);
+            e = Assert.Throws<ArgumentNullException>(() => string.Empty.Split(separators, (Func<string, string, string, string>)null));
+            Assert.Equal("resultFunc", e.ParamName);
+            e = Assert.Throws<ArgumentNullException>(() => string.Empty.Split(separators, (Func<string, string, string, string, string>)null));
+            Assert.Equal("resultFunc", e.ParamName);
+        }
+
+        [Fact]
+        public void SplitTwoUsingSingleSeparator()
+        {
+            Assert.Equal(new[] { "one", "two,three,four,five" }, 
+                "one,two,three,four,five".Split(',', (a, b) => new[] { a, b }));
+        }
+
+        [Fact]
+        public void SplitThreeUsingSingleSeparator()
+        {
+            Assert.Equal(new[] { "one", "two", "three,four,five" }, 
+                "one,two,three,four,five".Split(',', (a, b, c) => new[] { a, b, c }));
+        }
+
+        [Fact]
+        public void SplitFourUsingSingleSeparator()
+        {
+            Assert.Equal(new[] { "one", "two", "three", "four,five" }, 
+                "one,two,three,four,five".Split(',', (a, b, c, d) => new[] { a, b, c, d }));
+        }
+
+        [Fact]
+        public void SplitTwoUsingMultipleSeparators()
+        {
+            Assert.Equal(new[] { "one", "two;three|four,five" }, 
+                "one,two;three|four,five".Split(new[] { ',', ';' }, (a, b) => new[] { a, b }));
+        }
+
+        [Fact]
+        public void SplitThreeUsingMultipleSeparators()
+        {
+            Assert.Equal(new[] { "one", "two", "three|four,five" }, 
+                "one,two;three|four,five".Split(new[] { ',', ';' }, (a, b, c) => new[] { a, b, c }));
+        }
+
+        [Fact]
+        public void SplitFourUsingMultipleSeparators()
+        {
+            Assert.Equal(new[] { "one", "two", "three|four", "five" }, 
+                "one,two;three|four,five".Split(new[] { ',', ';' }, (a, b, c, d) => new[] { a, b, c, d }));
+        }
     }
 }
