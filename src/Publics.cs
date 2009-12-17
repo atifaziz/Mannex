@@ -86,6 +86,11 @@ namespace Mannex
         public static partial class ICustomAttributeProviderExtensions { }
     }
 
+    namespace Text.RegularExpressions
+    {
+        public static partial class StringExtensions { }
+    }
+
     namespace Threading
     {
         public static partial class TimeSpanExtensions { }
