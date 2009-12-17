@@ -49,6 +49,7 @@
     <Compile Include="PredicateTests.cs" />
     <Compile Include="Int32Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Text\RegularExpressions\StringTests.cs" />
     <Compile Include="Threading\TimeSpanTests.cs" />
     <Compile Include="Web\NameValueCollectionTests.cs" />
     <Compile Include="Web\Script\Serialization\ObjectTests.cs" />
