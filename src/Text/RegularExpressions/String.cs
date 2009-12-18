@@ -38,10 +38,21 @@ namespace Mannex.Text.RegularExpressions
 
     static partial class StringExtensions
     {
+        /// <summary>
+        /// Indicates whether the string contains a match for the regular 
+        /// expression pattern specified as an argument.
+        /// </summary>
+
         public static bool IsMatch(this string str, string pattern)
         {
             return IsMatch(str, pattern, RegexOptions.None);
         }
+
+        /// <summary>
+        /// Indicates whether the string contains a match for the regular 
+        /// expression pattern specified as an argument  along with 
+        /// matching options.
+        /// </summary>
 
         public static bool IsMatch(this string str, string pattern, RegexOptions options)
         {
