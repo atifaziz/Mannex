@@ -57,6 +57,7 @@
     <Compile Include="Collections\Generic\Dictionary.cs" />
     <Compile Include="ComponentModel\Design\IServiceContainer.cs" />
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
+    <Compile Include="Collections\Generic\IComparer.cs" />
     <Compile Include="Data\IDataReaderExtensions.cs" />
     <Compile Include="DateTime.cs" />
     <Compile Include="Diagnostics\ProcessExtensions.cs" />
