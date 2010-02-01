@@ -53,7 +53,7 @@ namespace Mannex.Net
             if (headers == null)
                 throw new InvalidOperationException("Response headers not available.");
 
-            var header = headers[HttpResponseHeader.ContentType];
+            var header = headers["Content-Type"];
             
             return !string.IsNullOrEmpty(header) 
                  ? new ContentType(header) 
@@ -91,8 +91,8 @@ namespace Mannex.Net
             var contentType = client.GetResponseContentType();
 
             var encoding = contentType == null || string.IsNullOrEmpty(contentType.CharSet)
-                               ? client.Encoding 
-                               : Encoding.GetEncoding(contentType.CharSet);
+                         ? client.Encoding 
+                         : Encoding.GetEncoding(contentType.CharSet);
 
             return encoding.GetString(data);
         }
