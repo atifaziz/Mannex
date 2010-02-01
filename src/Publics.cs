@@ -66,6 +66,8 @@ namespace Mannex
 
     namespace Net
     {
+        public static partial class WebClientExtensions { }
+
         namespace Mime
         {
             public static partial class ContentTypeExtensions { }

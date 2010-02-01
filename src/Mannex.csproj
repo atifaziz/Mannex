@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="Json\String.cs" />
     <Compile Include="Net\Mime\ContentType.cs" />
+    <Compile Include="Net\WebClient.cs" />
     <Compile Include="Reflection\AssemblyExtensions.cs" />
     <Compile Include="Reflection\ICustomAttributeProviderExtensions.cs" />
     <Compile Include="String.cs" />
