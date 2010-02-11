@@ -59,6 +59,11 @@ namespace Mannex
         public static partial class ProcessExtensions { }
     }
 
+    namespace Globalization
+    {
+        public static partial class CalendarExtensions { }
+    }
+
     namespace Json
     {
         public static partial class NameValueCollectionExtensions { }
