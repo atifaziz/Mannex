@@ -21,30 +21,30 @@
 //
 #endregion
 
-#region Imports
+namespace Mannex.Globalization
+{
+    #region Imports
 
-using System.Reflection;
+    using System;
+    using System.Globalization;
 
-using CLSCompliantAttribute = System.CLSCompliantAttribute;
-using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
+    #endregion
 
-#endregion
+    /// <summary>
+    /// Extension methods for <see cref="DateTimeFormatInfo"/>.
+    /// </summary>
 
-[assembly: AssemblyTitle("Mannex")]
-[assembly: AssemblyDescription("Extension methods for .NET")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mannex")]
-[assembly: AssemblyCopyright("Copyright (c) 2009-10, Atif Aziz. All rights reserved.")]
-[assembly: AssemblyCulture("")]
-
-[assembly: AssemblyVersion("1.0.12026.0")]
-[assembly: AssemblyFileVersion("1.0.12111.1745")]
-
-#if DEBUG
-[assembly: AssemblyConfiguration("DEBUG")]
-#else
-[assembly: AssemblyConfiguration("RELEASE")]
-#endif
-
-[assembly: CLSCompliant(true)] 
-[assembly: ComVisible(false)]
+    static partial class DateTimeFormatInfoExtensions
+    {
+        /// <summary>
+        /// Calculates the first date that occurs in a calendar
+        /// week given the year.
+        /// </summary>
+        
+        public static DateTime FirstDateOfWeek(this DateTimeFormatInfo info, int year, int weekOfYear)
+        {
+            if (info == null) throw new ArgumentNullException("info");
+            return info.Calendar.FirstDateOfWeek(year, weekOfYear, info.CalendarWeekRule, info.FirstDayOfWeek);
+        }
+    }
+}

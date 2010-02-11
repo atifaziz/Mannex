@@ -62,6 +62,7 @@ namespace Mannex
     namespace Globalization
     {
         public static partial class CalendarExtensions { }
+        public static partial class DateTimeFormatInfoExtensions { }
     }
 
     namespace Json
