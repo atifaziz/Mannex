@@ -96,6 +96,11 @@ namespace Mannex
         public static partial class ICustomAttributeProviderExtensions { }
     }
 
+    namespace Security.Cryptography
+    {
+        public static partial class ArrayExtensions { }
+    }
+
     namespace Text.RegularExpressions
     {
         public static partial class StringExtensions { }
