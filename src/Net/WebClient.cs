@@ -68,7 +68,8 @@ namespace Mannex.Net
 
         public static string DownloadStringUsingResponseEncoding(this WebClient client, string address)
         {
-            return DownloadStringUsingResponseEncodingImpl(client, () => client.DownloadData(address));
+            if (client == null) throw new ArgumentNullException("client");
+            return DownloadStringUsingResponseEncodingImpl(client, client.DownloadData(address));
         }
 
         /// <summary>
@@ -79,15 +80,15 @@ namespace Mannex.Net
 
         public static string DownloadStringUsingResponseEncoding(this WebClient client, Uri address)
         {
-            return DownloadStringUsingResponseEncodingImpl(client, () => client.DownloadData(address));
+            if (client == null) throw new ArgumentNullException("client");
+            return DownloadStringUsingResponseEncodingImpl(client, client.DownloadData(address));
         }
 
-        private static string DownloadStringUsingResponseEncodingImpl(WebClient client, Func<byte[]> downloader)
+        private static string DownloadStringUsingResponseEncodingImpl(WebClient client, byte[] data)
         {
-            if (client == null) throw new ArgumentNullException("client");
-            Debug.Assert(downloader != null);
+            Debug.Assert(client != null);
+            Debug.Assert(data != null);
 
-            var data = downloader();
             var contentType = client.GetResponseContentType();
 
             var encoding = contentType == null || string.IsNullOrEmpty(contentType.CharSet)
