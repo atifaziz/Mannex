@@ -26,8 +26,10 @@ namespace Mannex
     #region Imports
 
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Text;
+    using IO;
 
     #endregion
 
@@ -365,6 +367,27 @@ namespace Mannex
                   : str.Substring(index + count);
             
             return resultFunc(a, b);
+        }
+
+        /// <summary>
+        /// Splits string into lines where a line is terminated 
+        /// by CR and LF, or just CR or just LF.
+        /// </summary>
+        /// <remarks>
+        /// This method uses deferred exection.
+        /// </remarks>
+
+        public static IEnumerable<string> SplitIntoLines(this string str)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            return SplitIntoLinesImpl(str);
+        }
+ 
+        private static IEnumerable<string> SplitIntoLinesImpl(string str)
+        {
+            using (var reader = str.Read())
+            foreach (var line in reader.ReadLines())
+                yield return line;
         }
     }
 }
