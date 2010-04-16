@@ -213,5 +213,25 @@ namespace Mannex.Tests
             Assert.Equal(new[] { "one", "two", "three|four", "five" }, 
                 "one,two;three|four,five".Split(new[] { ',', ';' }, (a, b, c, d) => new[] { a, b, c, d }));
         }
+ 
+        [Fact]
+        public void SplitIntoLinesFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => StringExtensions.SplitIntoLines(null));
+        }
+
+        [Fact]
+        public void SplitIntoLines()
+        {
+            using (var e = "line 1\rline 2\nline 3\r\nline 4".SplitIntoLines().GetEnumerator())
+            {
+                Assert.NotNull(e);
+                Assert.True(e.MoveNext()); Assert.Equal("line 1", e.Current);
+                Assert.True(e.MoveNext()); Assert.Equal("line 2", e.Current);
+                Assert.True(e.MoveNext()); Assert.Equal("line 3", e.Current);
+                Assert.True(e.MoveNext()); Assert.Equal("line 4", e.Current);
+                Assert.False(e.MoveNext());
+            }
+        }
     }
 }
