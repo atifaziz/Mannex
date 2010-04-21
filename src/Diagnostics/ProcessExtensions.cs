@@ -93,7 +93,7 @@ namespace Mannex.Diagnostics
         /// Returns an action that can be used to wait on outputs to drain.
         /// </returns>
 
-        public static Action<TimeSpan?> BeginReadLine(this Process process, TextWriter output)
+        public static Func<TimeSpan?, bool> BeginReadLine(this Process process, TextWriter output)
         {
             return BeginReadLine(process, output, null);
         }
@@ -107,7 +107,7 @@ namespace Mannex.Diagnostics
         /// Returns an action that can be used to wait on outputs to drain.
         /// </returns>
 
-        public static Action<TimeSpan?> BeginReadLine(this Process process, TextWriter output, TextWriter error)
+        public static Func<TimeSpan?, bool> BeginReadLine(this Process process, TextWriter output, TextWriter error)
         {
             if (process == null) throw new ArgumentNullException("process");
 
@@ -125,7 +125,7 @@ namespace Mannex.Diagnostics
         /// Returns an action that can be used to wait on outputs to drain.
         /// </returns>
         
-        public static Action<TimeSpan?> BeginReadLine(this Process process, Action<string> output)
+        public static Func<TimeSpan?, bool> BeginReadLine(this Process process, Action<string> output)
         {
             return BeginReadLine(process, output, null);
         }
@@ -139,7 +139,7 @@ namespace Mannex.Diagnostics
         /// Returns an action that can be used to wait on outputs to drain.
         /// </returns>
         
-        public static Action<TimeSpan?> BeginReadLine(this Process process, Action<string> output, Action<string> error)
+        public static Func<TimeSpan?, bool> BeginReadLine(this Process process, Action<string> output, Action<string> error)
         {
             if (process == null) throw new ArgumentNullException("process");
 
@@ -148,7 +148,7 @@ namespace Mannex.Diagnostics
                 error ?? (TextWriter.Null.WriteLine));
         }
 
-        private static Action<TimeSpan?> BeginReadLineImpl(Process process, Action<string> output, Action<string> error)
+        private static Func<TimeSpan?, bool> BeginReadLineImpl(Process process, Action<string> output, Action<string> error)
         {
             var outeof = new ManualResetEvent(false);
             process.OutputDataReceived += OnDataReceived(output, () => outeof.Set());
