@@ -30,6 +30,7 @@ namespace Mannex
     public static partial class Int32Extensions { }
     public static partial class PredicateExtensions { }
     public static partial class StringExtensions { }
+    public static partial class TypeExtensions { }
     public static partial class UriExtensions { }
 
     namespace Collections.Generic
