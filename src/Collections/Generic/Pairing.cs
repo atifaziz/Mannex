@@ -21,30 +21,24 @@
 //
 #endregion
 
-#region Imports
+namespace Mannex.Collections.Generic
+{
+    using System.Collections.Generic;
 
-using System.Reflection;
+    /// <summary>
+    /// Extension methods for pairing keys and values as 
+    /// <see cref="KeyValuePair{TKey,TValue}"/>.
+    /// </summary>
 
-using CLSCompliantAttribute = System.CLSCompliantAttribute;
-using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
+    static partial class PairingExtensions
+    {
+        /// <summary>
+        /// Pairs a value with a key.
+        /// </summary>
 
-#endregion
-
-[assembly: AssemblyTitle("Mannex")]
-[assembly: AssemblyDescription("Extension methods for .NET")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mannex")]
-[assembly: AssemblyCopyright("Copyright (c) 2009-10, Atif Aziz. All rights reserved.")]
-[assembly: AssemblyCulture("")]
-
-[assembly: AssemblyVersion("1.1.12713.0")]
-[assembly: AssemblyFileVersion("1.1.12713.1219")]
-
-#if DEBUG
-[assembly: AssemblyConfiguration("DEBUG")]
-#else
-[assembly: AssemblyConfiguration("RELEASE")]
-#endif
-
-[assembly: CLSCompliant(true)] 
-[assembly: ComVisible(false)]
+        public static KeyValuePair<TKey, TValue> AsKeyTo<TKey, TValue>(this TKey key, TValue value)
+        {
+            return new KeyValuePair<TKey, TValue>(key, value);
+        }
+    }
+}

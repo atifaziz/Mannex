@@ -35,6 +35,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Generic\PairingTests.cs" />
     <Compile Include="Collections\Generic\IComparerTests.cs" />
     <Compile Include="TypeTests.cs" />
     <Compile Include="UriTests.cs" />
