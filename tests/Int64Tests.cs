@@ -34,6 +34,12 @@ namespace Mannex.Tests
     public class Int64Tests
     {
         [Fact]
+        public void ToInvariantString()
+        {
+            Assert.Equal("1234", 1234L.ToInvariantString());
+        }
+
+        [Fact]
         public void DivRemFailsWithNullCallback()
         {
             Assert.Throws<ArgumentNullException>(() =>

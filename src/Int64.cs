@@ -38,6 +38,17 @@ namespace Mannex
     static partial class Int64Extensions
     {
         /// <summary>
+        /// Converts <see cref="int"/> to its string representation in the
+        /// invariant culture.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static string ToInvariantString(this long value)
+        {
+            return value.ToString(CultureInfo.InvariantCulture);
+        }
+        
+        /// <summary>
         /// Calculates the quotient and remainder from dividing two numbers 
         /// and returns a user-defined result.
         /// </summary>
