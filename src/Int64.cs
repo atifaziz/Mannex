@@ -33,29 +33,18 @@ namespace Mannex
     #endregion
 
     /// <summary>
-    /// Extension methods for <see cref="int"/>.
+    /// Extension methods for <see cref="long"/>.
     /// </summary>
 
-    static partial class Int32Extensions
+    static partial class Int64Extensions
     {
-        /// <summary>
-        /// Converts <see cref="int"/> to its string representation in the
-        /// invariant culture.
-        /// </summary>
-
-        [DebuggerStepThrough]
-        public static string ToInvariantString(this int value)
-        {
-            return value.ToString(CultureInfo.InvariantCulture);
-        }
-
         /// <summary>
         /// Calculates the quotient and remainder from dividing two numbers 
         /// and returns a user-defined result.
         /// </summary>
 
         [DebuggerStepThrough]
-        public static T DivRem<T>(this int dividend, int divisor, Func<int, int, T> resultFunc)
+        public static T DivRem<T>(this long dividend, long divisor, Func<long, long, T> resultFunc)
         {
             if (resultFunc == null) throw new ArgumentNullException("resultFunc");
             var quotient = dividend / divisor;

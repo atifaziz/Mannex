@@ -31,32 +31,26 @@ namespace Mannex.Tests
 
     #endregion
 
-    public class Int32Tests
+    public class Int64Tests
     {
-        [Fact]
-        public void ToInvariantString()
-        {
-            Assert.Equal("1234", 1234.ToInvariantString());
-        }
-
         [Fact]
         public void DivRemFailsWithNullCallback()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                10.DivRem(6, (Func<int, int, object>) null));
+                10L.DivRem(6L, (Func<long, long, object>) null));
         }
 
         [Fact]
         public void DivRem()
         {
-            Assert.Equal(new[] { 1, 4 }, 10.DivRem(6, (q, r) => new[] { q, r }));
+            Assert.Equal(new[] { 1L, 4L }, 10L.DivRem(6L, (q, r) => new[] { q, r }));
         }
 
         [Fact]
         public void DivRemFailsWithZeroDivisor()
         {
             Assert.Throws<DivideByZeroException>(() =>
-               10.DivRem<object>(0, delegate { throw new NotImplementedException(); }));
+               10L.DivRem<object>(0L, delegate { throw new NotImplementedException(); }));
         }
     }
 }

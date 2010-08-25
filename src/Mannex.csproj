@@ -59,6 +59,7 @@
     <Compile Include="ComponentModel\Design\IServiceContainer.cs" />
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
     <Compile Include="Collections\Generic\IComparer.cs" />
+    <Compile Include="Int64.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Globalization\Calendar.cs" />
     <Compile Include="Globalization\DateTimeFormatInfo.cs" />
