@@ -23,40 +23,33 @@
 
 using System;
 
-namespace Mannex.Tests
+namespace Mannex
 {
-    #region Improts
+    #region Imports
 
-    using Xunit;
+    using System.Diagnostics;
+    using System.Globalization;
 
     #endregion
 
-    public class Int32Tests
+    /// <summary>
+    /// Extension methods for <see cref="long"/>.
+    /// </summary>
+
+    static partial class Int64Extensions
     {
-        [Fact]
-        public void ToInvariantString()
-        {
-            Assert.Equal("1234", 1234.ToInvariantString());
-        }
+        /// <summary>
+        /// Calculates the quotient and remainder from dividing two numbers 
+        /// and returns a user-defined result.
+        /// </summary>
 
-        [Fact]
-        public void DivRemFailsWithNullCallback()
+        [DebuggerStepThrough]
+        public static T DivRem<T>(this long dividend, long divisor, Func<long, long, T> resultFunc)
         {
-            Assert.Throws<ArgumentNullException>(() =>
-                10.DivRem(6, (Func<int, int, object>) null));
-        }
-
-        [Fact]
-        public void DivRem()
-        {
-            Assert.Equal(new[] { 1, 4 }, 10.DivRem(6, (q, r) => new[] { q, r }));
-        }
-
-        [Fact]
-        public void DivRemFailsWithZeroDivisor()
-        {
-            Assert.Throws<DivideByZeroException>(() =>
-               10.DivRem<object>(0, delegate { throw new NotImplementedException(); }));
+            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            var quotient = dividend / divisor;
+            var remainder = dividend % divisor;
+            return resultFunc(quotient, remainder);
         }
     }
 }

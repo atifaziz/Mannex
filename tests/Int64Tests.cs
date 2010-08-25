@@ -21,30 +21,36 @@
 //
 #endregion
 
-#region Imports
+using System;
 
-using System.Reflection;
+namespace Mannex.Tests
+{
+    #region Improts
 
-using CLSCompliantAttribute = System.CLSCompliantAttribute;
-using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
+    using Xunit;
 
-#endregion
+    #endregion
 
-[assembly: AssemblyTitle("Mannex")]
-[assembly: AssemblyDescription("Extension methods for .NET")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mannex")]
-[assembly: AssemblyCopyright("Copyright (c) 2009-10, Atif Aziz. All rights reserved.")]
-[assembly: AssemblyCulture("")]
+    public class Int64Tests
+    {
+        [Fact]
+        public void DivRemFailsWithNullCallback()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                10L.DivRem(6L, (Func<long, long, object>) null));
+        }
 
-[assembly: AssemblyVersion("1.1.12725.0")]
-[assembly: AssemblyFileVersion("1.1.12725.0051")]
+        [Fact]
+        public void DivRem()
+        {
+            Assert.Equal(new[] { 1L, 4L }, 10L.DivRem(6L, (q, r) => new[] { q, r }));
+        }
 
-#if DEBUG
-[assembly: AssemblyConfiguration("DEBUG")]
-#else
-[assembly: AssemblyConfiguration("RELEASE")]
-#endif
-
-[assembly: CLSCompliant(true)] 
-[assembly: ComVisible(false)]
+        [Fact]
+        public void DivRemFailsWithZeroDivisor()
+        {
+            Assert.Throws<DivideByZeroException>(() =>
+               10L.DivRem<object>(0L, delegate { throw new NotImplementedException(); }));
+        }
+    }
+}

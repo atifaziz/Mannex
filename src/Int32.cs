@@ -21,6 +21,8 @@
 //
 #endregion
 
+using System;
+
 namespace Mannex
 {
     #region Imports
@@ -45,6 +47,20 @@ namespace Mannex
         public static string ToInvariantString(this int value)
         {
             return value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// Calculates the quotient and remainder from dividing two numbers 
+        /// and returns a user-defined result.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static T DivRem<T>(this int dividend, int divisor, Func<int, int, T> resultFunc)
+        {
+            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            var quotient = dividend / divisor;
+            var remainder = dividend % divisor;
+            return resultFunc(quotient, remainder);
         }
     }
 }
