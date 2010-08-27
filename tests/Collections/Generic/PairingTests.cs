@@ -21,30 +21,24 @@
 //
 #endregion
 
-#region Imports
+namespace Mannex.Tests.Collections.Generic
+{
+    #region Improts
 
-using System.Reflection;
+    using System.Collections.Generic;
+    using Mannex.Collections.Generic;
+    using Xunit;
 
-using CLSCompliantAttribute = System.CLSCompliantAttribute;
-using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
+    #endregion
 
-#endregion
-
-[assembly: AssemblyTitle("Mannex")]
-[assembly: AssemblyDescription("Extension methods for .NET")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mannex")]
-[assembly: AssemblyCopyright("Copyright (c) 2009-10, Atif Aziz. All rights reserved.")]
-[assembly: AssemblyCulture("")]
-
-[assembly: AssemblyVersion("1.1.12713.0")]
-[assembly: AssemblyFileVersion("1.1.12713.1219")]
-
-#if DEBUG
-[assembly: AssemblyConfiguration("DEBUG")]
-#else
-[assembly: AssemblyConfiguration("RELEASE")]
-#endif
-
-[assembly: CLSCompliant(true)] 
-[assembly: ComVisible(false)]
+    public class PairingTests
+    {
+        [Fact]
+        public void PairKeyValue()
+        {
+            var pair = 10.AsKeyTo("ten");
+            Assert.Equal(10, pair.Key);
+            Assert.Equal("ten", pair.Value);
+        }
+    }
+}
