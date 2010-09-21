@@ -87,6 +87,13 @@ namespace Mannex.Tests.Text.RegularExpressions
         }
 
         [Fact]
+        public void MatchFailsWithNullSelector()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => string.Empty.Match<object>(".", null));
+            Assert.Equal("selector", e.ParamName);
+        }
+
+        [Fact]
         public void MatchReturnsMatchingTextWhenPatternFound()
         {
             var match = "(123,456)".Match(@"[0-9]+");
@@ -122,6 +129,13 @@ namespace Mannex.Tests.Text.RegularExpressions
         {
             var e = Assert.Throws<ArgumentNullException>(() => string.Empty.Matches(null));
             Assert.Equal("pattern", e.ParamName);
+        }
+
+        [Fact]
+        public void MatchesFailsWithNullSelector()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => string.Empty.Matches<object>(".", null));
+            Assert.Equal("selector", e.ParamName);
         }
 
         [Fact]
