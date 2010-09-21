@@ -107,6 +107,7 @@ namespace Mannex
 
     namespace Text.RegularExpressions
     {
+        public static partial class MatchExtensions { }
         public static partial class StringExtensions { }
     }
 

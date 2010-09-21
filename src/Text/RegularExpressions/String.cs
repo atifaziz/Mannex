@@ -45,7 +45,7 @@ namespace Mannex.Text.RegularExpressions
 
         public static bool IsMatch(this string str, string pattern)
         {
-            return IsMatch(str, pattern, RegexOptions.None);
+            return str.IsMatch(pattern, RegexOptions.None);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Mannex.Text.RegularExpressions
 
         public static Match Match(this string str, string pattern)
         {
-            return Match(str, pattern, RegexOptions.None);
+            return str.Match(pattern, RegexOptions.None);
         }
 
         /// <summary>
@@ -78,9 +78,30 @@ namespace Mannex.Text.RegularExpressions
 
         public static Match Match(this string str, string pattern, RegexOptions options)
         {
+            return str.Match(pattern, options, m => m);
+        }
+
+        /// <summary>
+        /// Searches string for an occurrence of the regular expression 
+        /// specified as an argument along with matching options.
+        /// </summary>
+
+        public static T Match<T>(this string str, string pattern, Func<Match, T> selector)
+        {
+            return str.Match(pattern, RegexOptions.None, selector);
+        }
+
+        /// <summary>
+        /// Searches string for an occurrence of the regular expression 
+        /// specified as an argument along with matching options.
+        /// </summary>
+
+        public static T Match<T>(this string str, string pattern, RegexOptions options, Func<Match, T> selector)
+        {
             if (str == null) throw new ArgumentNullException("str");
             if (pattern == null) throw new ArgumentNullException("pattern");
-            return Regex.Match(str, pattern, options);
+            if (selector == null) throw new ArgumentNullException("selector");
+            return selector(Regex.Match(str, pattern, options));
         }
 
         /// <summary>
@@ -93,7 +114,7 @@ namespace Mannex.Text.RegularExpressions
 
         public static IEnumerable<Match> Matches(this string str, string pattern)
         {
-            return Matches(str, pattern, RegexOptions.None);
+            return str.Matches(pattern, RegexOptions.None);
         }
 
         /// <summary>
@@ -107,17 +128,46 @@ namespace Mannex.Text.RegularExpressions
 
         public static IEnumerable<Match> Matches(this string str, string pattern, RegexOptions options)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (pattern == null) throw new ArgumentNullException("pattern");
-            return MatchesImpl(str, pattern, options);
+            return str.Matches(pattern, options, m => m);
         }
 
-        private static IEnumerable<Match> MatchesImpl(string str, string pattern, RegexOptions options)
+        /// <summary>
+        /// Searches the specified input string for all occurrences of the 
+        /// regular expression specified as an argument along with matching
+        /// options.
+        /// </summary>
+        /// <remarks>
+        /// This method uses deferred execution semantics.
+        /// </remarks>
+
+        public static IEnumerable<T> Matches<T>(this string str, string pattern, Func<Match, T> selector)
+        {
+            return str.Matches(pattern, RegexOptions.None, selector);
+        }
+
+        /// <summary>
+        /// Searches the specified input string for all occurrences of the 
+        /// regular expression specified as an argument along with matching
+        /// options.
+        /// </summary>
+        /// <remarks>
+        /// This method uses deferred execution semantics.
+        /// </remarks>
+
+        public static IEnumerable<T> Matches<T>(this string str, string pattern, RegexOptions options, Func<Match, T> selector)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            if (pattern == null) throw new ArgumentNullException("pattern");
+            if (selector == null) throw new ArgumentNullException("selector");
+            return MatchesImpl(str, pattern, options, selector);
+        }
+
+        private static IEnumerable<T> MatchesImpl<T>(string str, string pattern, RegexOptions options, Func<Match, T> selector)
         {
             var match = str.Match(pattern, options);
             while (match.Success)
             {
-                yield return match;
+                yield return selector(match);
                 match = match.NextMatch();
             }
         }
