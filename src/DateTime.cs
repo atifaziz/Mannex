@@ -84,7 +84,7 @@ namespace Mannex
 
         public static DateTime TrimToDay(this DateTime time)
         {
-            return new DateTime(time.Year, time.Month, time.Day);
+            return time.Date;
         }
 
         /// <summary>
