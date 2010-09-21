@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mannex", "src\Mannex.csproj", "{F577B73C-2D61-4D06-A641-7610D173C1E0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mannex.Tests", "tests\Mannex.Tests.csproj", "{3729AB0B-288A-4752-9807-3C6997B51502}"
