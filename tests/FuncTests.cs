@@ -37,13 +37,14 @@ namespace Mannex.Tests
         {
             var e = Assert.Throws<ArgumentNullException>(() => 
                         FuncExtensions.ToConverter<object, object>(null));
-            Assert.Equal("", e.ParamName);
+            Assert.Equal("converter", e.ParamName);
         }
 
         [Fact]
         public void ToConverter()
         {
-            var converter = new Func<string, int>(int.Parse).ToConverter();
+            Func<string, int> parse = int.Parse;
+            var converter = parse.ToConverter();
             Assert.NotNull(converter);
             Assert.Equal(42, converter("42"));
         }
@@ -53,16 +54,17 @@ namespace Mannex.Tests
         {
             var e = Assert.Throws<ArgumentNullException>(() =>
                         FuncExtensions.ToPredicate<object>(null));
-            Assert.Equal("", e.ParamName);
+            Assert.Equal("predicate", e.ParamName);
         }
 
         [Fact]
         public void ToPredicate()
         {
-            var predicate = ((Func<Type, bool>) (t => t.IsClass)).ToPredicate();
+            Func<Type, bool> isClass = t => t.IsClass;
+            var predicate = isClass.ToPredicate();
             Assert.NotNull(predicate);
             Assert.Equal(true, predicate(typeof(object)));
-            Assert.Equal(true, predicate(typeof(int)));
+            Assert.Equal(false, predicate(typeof(int)));
         }
     }
 }
