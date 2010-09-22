@@ -29,6 +29,7 @@ namespace Mannex
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Text;
+    using System.Text.RegularExpressions;
     using IO;
 
     #endregion
@@ -388,6 +389,18 @@ namespace Mannex
             using (var reader = str.Read())
             foreach (var line in reader.ReadLines())
                 yield return line;
+        }
+
+        /// <summary>
+        /// Collapses all sequences of white space (as deifned by Unicode 
+        /// and identified by <see cref="char.IsWhiteSpace(char)"/>) to a 
+        /// single space and trims all leading and trailing white space.
+        /// </summary>
+
+        public static string NormalizeWhiteSpace(this string str)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            return Regex.Replace(str, @"\s+", " ").Trim();
         }
     }
 }

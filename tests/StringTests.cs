@@ -233,5 +233,19 @@ namespace Mannex.Tests
                 Assert.False(e.MoveNext());
             }
         }
+    
+        [Fact]
+        public void NormalizeWhiteSpaceFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => 
+                        StringExtensions.NormalizeWhiteSpace(null));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void NormalizeWhiteSpace()
+        {
+            Assert.Equal("foo bar", " \t foo \r\n bar \t ".NormalizeWhiteSpace());
+        }
     }
 }
