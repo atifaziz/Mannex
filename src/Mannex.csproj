@@ -82,6 +82,7 @@
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
     <Compile Include="Collections\Generic\IComparer.cs" />
     <Compile Include="Exception.cs" />
+    <Compile Include="Func.cs" />
     <Compile Include="Int64.cs" />
     <Compile Include="Text\RegularExpressions\Match.cs" />
     <Compile Include="TypeExtensions.cs" />
