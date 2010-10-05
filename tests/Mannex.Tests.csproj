@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Collections\Generic\PairingTests.cs" />
     <Compile Include="Collections\Generic\IComparerTests.cs" />
+    <Compile Include="ExceptionTests.cs" />
     <Compile Include="Int64Tests.cs" />
     <Compile Include="Text\RegularExpressions\MatchTests.cs" />
     <Compile Include="TypeTests.cs" />
