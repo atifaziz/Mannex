@@ -29,6 +29,7 @@
 namespace Mannex
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>
     /// Extension methods for <see cref="Func{T}"/> and family.
@@ -78,6 +79,7 @@ namespace Mannex
         /// <see cref="Func{<#= join0(",")(i.Args.Select(tf)) #>,TResult}"/>.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static Func<<#= ots #>, TResult> Apply<<#= ts #>, TResult>(
             this Func<<#= ts #>, TResult> func,
             <#= bound #>)
