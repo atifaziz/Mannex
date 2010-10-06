@@ -24,6 +24,7 @@
 namespace Mannex
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>
     /// Extension methods for <see cref="Func{T}"/> and family.
@@ -38,6 +39,7 @@ namespace Mannex
         /// <see cref="Func{T1,T2,TResult}"/>.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static Func<T2, TResult> Apply<T1, T2, TResult>(
             this Func<T1, T2, TResult> func,
             T1 arg1)
@@ -51,6 +53,7 @@ namespace Mannex
         /// <see cref="Func{T1,T2,T3,TResult}"/>.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static Func<T2, T3, TResult> Apply<T1, T2, T3, TResult>(
             this Func<T1, T2, T3, TResult> func,
             T1 arg1)
@@ -64,6 +67,7 @@ namespace Mannex
         /// <see cref="Func{T1,T2,T3,TResult}"/>.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static Func<T3, TResult> Apply<T1, T2, T3, TResult>(
             this Func<T1, T2, T3, TResult> func,
             T1 arg1, T2 arg2)
@@ -77,6 +81,7 @@ namespace Mannex
         /// <see cref="Func{T1,T2,T3,T4,TResult}"/>.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static Func<T2, T3, T4, TResult> Apply<T1, T2, T3, T4, TResult>(
             this Func<T1, T2, T3, T4, TResult> func,
             T1 arg1)
@@ -90,6 +95,7 @@ namespace Mannex
         /// <see cref="Func{T1,T2,T3,T4,TResult}"/>.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static Func<T3, T4, TResult> Apply<T1, T2, T3, T4, TResult>(
             this Func<T1, T2, T3, T4, TResult> func,
             T1 arg1, T2 arg2)
@@ -103,6 +109,7 @@ namespace Mannex
         /// <see cref="Func{T1,T2,T3,T4,TResult}"/>.
         /// </summary>
 
+        [DebuggerStepThrough]
         public static Func<T4, TResult> Apply<T1, T2, T3, T4, TResult>(
             this Func<T1, T2, T3, T4, TResult> func,
             T1 arg1, T2 arg2, T3 arg3)
