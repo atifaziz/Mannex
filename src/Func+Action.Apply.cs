@@ -26,16 +26,16 @@ namespace Mannex
     using System;
     using System.Diagnostics;
 
+    // ReSharper disable RedundantLambdaSignatureParentheses
+
     /// <summary>
     /// Extension methods for <see cref="Func{T}"/> and family.
     /// </summary>
 
     static partial class FuncExtensions
     {
-        // ReSharper disable RedundantLambdaSignatureParentheses
-    
         /// <summary>
-        /// Partially applies the first argument of
+        /// Partially applies the first 7 arguments of
         /// <see cref="Func{T1,T2,TResult}"/>.
         /// </summary>
 
@@ -49,7 +49,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first argument of
+        /// Partially applies the first 7 arguments of
         /// <see cref="Func{T1,T2,T3,TResult}"/>.
         /// </summary>
 
@@ -63,7 +63,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first 2 arguments of
+        /// Partially applies the first 16 arguments of
         /// <see cref="Func{T1,T2,T3,TResult}"/>.
         /// </summary>
 
@@ -77,7 +77,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first argument of
+        /// Partially applies the first 7 arguments of
         /// <see cref="Func{T1,T2,T3,T4,TResult}"/>.
         /// </summary>
 
@@ -91,7 +91,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first 2 arguments of
+        /// Partially applies the first 16 arguments of
         /// <see cref="Func{T1,T2,T3,T4,TResult}"/>.
         /// </summary>
 
@@ -105,7 +105,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first 3 arguments of
+        /// Partially applies the first 25 arguments of
         /// <see cref="Func{T1,T2,T3,T4,TResult}"/>.
         /// </summary>
 
@@ -116,6 +116,97 @@ namespace Mannex
         {
             if (func == null) throw new ArgumentNullException("func");
             return (arg4) => func(arg1, arg2, arg3, arg4);
+        }
+    }
+
+    /// <summary>
+    /// Extension methods for <see cref="Action{T}"/> and family.
+    /// </summary>
+
+    static partial class ActionExtensions
+    {
+        /// <summary>
+        /// Partially applies the first 7 arguments of
+        /// <see cref="Action{T1,T2}"/>.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static Action<T2> Apply<T1, T2>(
+            this Action<T1, T2> action,
+            T1 arg1)
+        {
+            if (action == null) throw new ArgumentNullException("action");
+            return (arg2) => action(arg1, arg2);
+        }
+
+        /// <summary>
+        /// Partially applies the first 7 arguments of
+        /// <see cref="Action{T1,T2,T3}"/>.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static Action<T2, T3> Apply<T1, T2, T3>(
+            this Action<T1, T2, T3> action,
+            T1 arg1)
+        {
+            if (action == null) throw new ArgumentNullException("action");
+            return (arg2, arg3) => action(arg1, arg2, arg3);
+        }
+
+        /// <summary>
+        /// Partially applies the first 16 arguments of
+        /// <see cref="Action{T1,T2,T3}"/>.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static Action<T3> Apply<T1, T2, T3>(
+            this Action<T1, T2, T3> action,
+            T1 arg1, T2 arg2)
+        {
+            if (action == null) throw new ArgumentNullException("action");
+            return (arg3) => action(arg1, arg2, arg3);
+        }
+
+        /// <summary>
+        /// Partially applies the first 7 arguments of
+        /// <see cref="Action{T1,T2,T3,T4}"/>.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static Action<T2, T3, T4> Apply<T1, T2, T3, T4>(
+            this Action<T1, T2, T3, T4> action,
+            T1 arg1)
+        {
+            if (action == null) throw new ArgumentNullException("action");
+            return (arg2, arg3, arg4) => action(arg1, arg2, arg3, arg4);
+        }
+
+        /// <summary>
+        /// Partially applies the first 16 arguments of
+        /// <see cref="Action{T1,T2,T3,T4}"/>.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static Action<T3, T4> Apply<T1, T2, T3, T4>(
+            this Action<T1, T2, T3, T4> action,
+            T1 arg1, T2 arg2)
+        {
+            if (action == null) throw new ArgumentNullException("action");
+            return (arg3, arg4) => action(arg1, arg2, arg3, arg4);
+        }
+
+        /// <summary>
+        /// Partially applies the first 25 arguments of
+        /// <see cref="Action{T1,T2,T3,T4}"/>.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static Action<T4> Apply<T1, T2, T3, T4>(
+            this Action<T1, T2, T3, T4> action,
+            T1 arg1, T2 arg2, T3 arg3)
+        {
+            if (action == null) throw new ArgumentNullException("action");
+            return (arg4) => action(arg1, arg2, arg3, arg4);
         }
     }
 }
