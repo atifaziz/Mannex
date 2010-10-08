@@ -82,10 +82,10 @@
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
     <Compile Include="Collections\Generic\IComparer.cs" />
     <Compile Include="Exception.cs" />
-    <Compile Include="Func.Apply.cs">
+    <Compile Include="Func+Action.Apply.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Func.Apply.tt</DependentUpon>
+      <DependentUpon>Func+Action.Apply.tt</DependentUpon>
     </Compile>
     <Compile Include="Func.cs" />
     <Compile Include="Int64.cs" />
@@ -149,13 +149,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Func.Apply.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Func.Apply.cs</LastGenOutput>
-    </None>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <None Include="Func+Action.Apply.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Func+Action.Apply.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -23,6 +23,7 @@
 
 namespace Mannex
 {
+    public static partial class ActionExtensions { }
     public static partial class ArrayExtensions { }
     public static partial class BooleanExtensions { }
     public static partial class DateTimeExtensions { }
