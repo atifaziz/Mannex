@@ -26,6 +26,7 @@ namespace Mannex
     #region Imports
 
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Reflection;
 
@@ -78,6 +79,19 @@ namespace Mannex
         {
             if (e == null) throw new ArgumentNullException("e");
             throw e.PrepareForRethrow();
+        }
+
+        [DebuggerStepThrough]
+        public static IEnumerable<Exception> InnerExceptions(this Exception e)
+        {
+            if (e == null) throw new ArgumentNullException("e");
+            return YieldInnerExceptions(e);
+        }
+
+        private static IEnumerable<Exception> YieldInnerExceptions(Exception e)
+        {
+            for (; e != null; e = e.InnerException)
+                yield return e;
         }
     }
 }
