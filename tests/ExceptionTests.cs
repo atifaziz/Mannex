@@ -89,5 +89,32 @@ namespace Mannex.Tests
                 throw new Exception();
             }
         }
+
+        [Fact]
+        public void InnerExceptionsFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                 ExceptionExtensions.InnerExceptions(null));
+        }
+
+        [Fact]
+        public void InnerExceptionsYieldsAll()
+        {
+            var eee = new FormatException();
+            var ee = new ApplicationException(null, eee);
+            var e = new Exception(null, ee);
+
+            using (var x = e.InnerExceptions().GetEnumerator())
+            {
+                Assert.NotNull(x);
+                Assert.True(x.MoveNext());
+                Assert.Equal(e, x.Current);
+                Assert.True(x.MoveNext());
+                Assert.Equal(ee, x.Current);
+                Assert.True(x.MoveNext());
+                Assert.Equal(eee, x.Current);
+                Assert.False(x.MoveNext());
+            }
+        }
     }
 }
