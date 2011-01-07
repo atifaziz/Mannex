@@ -81,6 +81,15 @@ namespace Mannex
             throw e.PrepareForRethrow();
         }
 
+        /// <summary>
+        /// Gets a sequence containing the <see cref="Exception"/> object
+        /// and its complete chain of nested exceptions via 
+        /// <see cref="Exception.InnerException"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method uses deferred and streaming execution semantics.
+        /// </remarks>
+
         [DebuggerStepThrough]
         public static IEnumerable<Exception> InnerExceptions(this Exception e)
         {
