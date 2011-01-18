@@ -34,11 +34,11 @@ using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
 [assembly: AssemblyDescription("Extension methods for .NET")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Mannex")]
-[assembly: AssemblyCopyright("Copyright (c) 2009-10, Atif Aziz. All rights reserved.")]
+[assembly: AssemblyCopyright("Copyright (c) 2009-11, Atif Aziz. All rights reserved.")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("1.1.13207.0")]
-[assembly: AssemblyFileVersion("1.1.13207.2230")]
+[assembly: AssemblyVersion("1.1.13218.0")]
+[assembly: AssemblyFileVersion("1.1.13218.0")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("DEBUG")]
