@@ -328,5 +328,67 @@ namespace Mannex.Collections.Generic
             Debug.Assert(collection != null);
             return Math.Min(collection.Count, index < 0 ? Math.Max(0, collection.Count + index) : index);
         }
+
+        /// <summary>
+        /// Searches the entire sorted list for a specific element, using 
+        /// the <see cref="IComparable{T}"/> implemented by each element 
+        /// of the list and by the specified object. 
+        /// </summary>
+
+        public static int BinarySearch<T>(this IList<T> list, T value)
+        {
+            return list.BinarySearch(value, null);
+        }
+
+        /// <summary>
+        /// Searches the entire sorted list for a value using the specified 
+        /// <see cref="IComparer{T}"/> implementation. 
+        /// </summary>
+
+        public static int BinarySearch<T>(this IList<T> list, T value, IComparer<T> comparer)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            return list.BinarySearch(0, list.Count, value, comparer);
+        }
+
+        /// <summary>
+        /// Searches a range of elements the sorted list for a value, using 
+        /// the <see cref="IComparable{T}"/> implemented by each element of 
+        /// the list and by the specified value. 
+        /// </summary>
+
+        public static int BinarySearch<T>(this IList<T> list, int index, int length, T value)
+        {
+            return list.BinarySearch(index, length, value, null);
+        }
+
+        /// <summary>
+        /// Searches a range of elements in the sorted list for a value, 
+        /// using the specified <see cref="IComparer{T}"/> implementation. 
+        /// </summary>
+
+        public static int BinarySearch<T>(this IList<T> list, int index, int length, T value, IComparer<T> comparer)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            
+            comparer = comparer ?? Comparer<T>.Default;
+
+            var first = index; 
+            var last = (index + length) - 1; 
+            
+            while (first <= last)
+            {
+                var middle = first + ((last - first) / 2); 
+                var comparison = comparer.Compare(list[middle], value);
+                if (comparison == 0)
+                    return middle; 
+                if (comparison < 0)
+                    first = middle + 1;
+                else             
+                    last = middle - 1; 
+            } 
+            
+            return ~first;
+        }
     }
 }

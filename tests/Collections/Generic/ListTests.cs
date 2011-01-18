@@ -320,5 +320,52 @@ namespace Mannex.Tests.Collections.Generic
             Assert.Equal(new[] { 34, 56, 78 }, nums.Slice(-3).ToArray());
             Assert.Equal(new[] { 34, 56 }, nums.Slice(-3, -1).ToArray());
         }
+
+        [Fact]
+        public void BinarySearchFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.BinarySearch(null, "foo"));
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.BinarySearch(null, 0, 10, "foo"));
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.BinarySearch(null, "foo", null));
+            Assert.Throws<ArgumentNullException>(() => ListExtensions.BinarySearch(null, 0, 10, "foo", null));
+        }
+ 
+        [Fact]
+        public void BinarySearchReturnsIndexBitwiseComplementFirstElementThatIsLargerThanValueWhenValueNotFound()
+        {
+            IList<string> items = new[] { "bravo", "delta" };
+            Assert.Equal(-1, items.BinarySearch("alpha"));
+            Assert.Equal(-2, items.BinarySearch("charlie"));
+            Assert.Equal(-3, items.BinarySearch("echo"));
+        }
+
+        [Fact]
+        public void BinarySearchReturnsIndexWhenValueFound()
+        {
+            IList<string> items = new[] { "alpha", "bravo", "charlie" };
+            Assert.Equal(0, items.BinarySearch("alpha"));
+            Assert.Equal(1, items.BinarySearch("bravo"));
+            Assert.Equal(2, items.BinarySearch("charlie"));
+       }
+ 
+        [Fact]
+        public void BinarySearchWithComparerReturnsIndexBitwiseComplementFirstElementThatIsLargerThanValueWhenValueNotFound()
+        {
+            IList<string> items = new[] { "BRAVO", "DELTA" };
+            var comparer = StringComparer.InvariantCultureIgnoreCase;
+            Assert.Equal(-1, items.BinarySearch("alpha", comparer));
+            Assert.Equal(-2, items.BinarySearch("charlie", comparer));
+            Assert.Equal(-3, items.BinarySearch("echo", comparer));
+        }
+
+        [Fact]
+        public void BinarySearchWithComparerReturnsIndexWhenValueFound()
+        {
+            IList<string> items = new[] { "ALPHA", "BRAVO", "CHARLIE" };
+            var comparer = StringComparer.InvariantCultureIgnoreCase;
+            Assert.Equal(0, items.BinarySearch("alpha", comparer));
+            Assert.Equal(1, items.BinarySearch("bravo", comparer));
+            Assert.Equal(2, items.BinarySearch("charlie", comparer));
+        }
     }
 }
