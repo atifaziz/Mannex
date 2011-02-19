@@ -21,11 +21,11 @@ REM limitations under the License.
 
 setlocal
 pushd "%~dp0"
-set MSBUILD35EXE=%SystemRoot%\Microsoft.NET\Framework\v3.5\MSBuild.exe
-if not exist "%MSBUILD35EXE%" (
-    echo The .NET Framework 3.5 does not appear to be installed on this 
+set MSBUILD=%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe
+if not exist "%MSBUILD%" (
+    echo The .NET Framework 4.0 does not appear to be installed on this 
     echo machine, which is required to build the solution.
     exit /b 1
 )
-for %%i in (debug release) do if exist "%MSBUILD35EXE%" "%MSBUILD35EXE%" Mannex.sln /p:Configuration=%%i
+for %%i in (debug release) do "%MSBUILD%" Mannex.sln /p:Configuration=%%i
 popd
