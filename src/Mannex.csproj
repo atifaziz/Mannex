@@ -81,6 +81,8 @@
     <Compile Include="ComponentModel\Design\IServiceContainer.cs" />
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
     <Compile Include="Collections\Generic\IComparer.cs" />
+    <Compile Include="Data\IDataReader.cs" />
+    <Compile Include="Diagnostics\Process.cs" />
     <Compile Include="Exception.cs" />
     <Compile Include="Func+Action.Apply.cs">
       <AutoGen>True</AutoGen>
@@ -89,16 +91,17 @@
     </Compile>
     <Compile Include="Func.cs" />
     <Compile Include="Int64.cs" />
+    <Compile Include="Reflection\Assembly.cs" />
+    <Compile Include="Reflection\ICustomAttributeProvider.cs" />
     <Compile Include="Text\RegularExpressions\Match.cs" />
-    <Compile Include="TypeExtensions.cs" />
+    <Compile Include="Threading\TimeSpan.cs" />
+    <Compile Include="Type.cs" />
     <Compile Include="Globalization\Calendar.cs" />
     <Compile Include="Globalization\DateTimeFormatInfo.cs" />
     <Compile Include="IO\FileInfo.cs" />
     <Compile Include="Security\Cryptography\Array.cs" />
     <Compile Include="Uri.cs" />
-    <Compile Include="Data\IDataReaderExtensions.cs" />
     <Compile Include="DateTime.cs" />
-    <Compile Include="Diagnostics\ProcessExtensions.cs" />
     <Compile Include="IO\Array.cs" />
     <Compile Include="IO\ArraySegment.cs" />
     <Compile Include="IO\Stream.cs" />
@@ -112,8 +115,6 @@
     <Compile Include="Json\String.cs" />
     <Compile Include="Net\Mime\ContentType.cs" />
     <Compile Include="Net\WebClient.cs" />
-    <Compile Include="Reflection\AssemblyExtensions.cs" />
-    <Compile Include="Reflection\ICustomAttributeProviderExtensions.cs" />
     <Compile Include="String.cs" />
     <Compile Include="EventHandler.cs" />
     <Compile Include="Int32.cs" />
@@ -121,15 +122,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publics.cs" />
     <Compile Include="Text\RegularExpressions\String.cs" />
-    <Compile Include="Threading\TimeSpanExtensions.cs" />
-    <Compile Include="Web\NameValueCollectionExtensions.cs" />
+    <Compile Include="Web\NameValueCollection.cs" />
+    <Compile Include="Web\StringHtml.cs" />
+    <Compile Include="Web\UI\Control.cs" />
     <Compile Include="Web\Uri.cs" />
     <Compile Include="Web\Script\Serialization\Object.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Web\UI\DataBindingExtensions.cs" />
-    <Compile Include="Web\StringHtmlExtensions.cs" />
-    <Compile Include="Web\UI\ControlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
