@@ -36,6 +36,7 @@ namespace Mannex
     public static partial class StringExtensions { }
     public static partial class TypeExtensions { }
     public static partial class UriExtensions { }
+    public static partial class IServiceProviderExtensions { }
 
     namespace Collections.Generic
     {
