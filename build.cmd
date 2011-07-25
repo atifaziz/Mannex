@@ -27,5 +27,5 @@ if not exist "%MSBUILD%" (
     echo machine, which is required to build the solution.
     exit /b 1
 )
-for %%i in (debug release) do "%MSBUILD%" Mannex.sln /p:Configuration=%%i
+for %%f in (3.5 4.0) do for %%q in (Debug Release) do "%MSBUILD%" Mannex.sln /p:Configuration="NETFX %%f %%q"
 popd
