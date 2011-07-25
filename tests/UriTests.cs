@@ -90,7 +90,7 @@ namespace Mannex.Tests
 
             TryGetUserNamePassword(
                 "http://johndoe@www.example.com/", 
-                new NetworkCredential("johndoe", null));
+                new NetworkCredential("johndoe", (string) null));
 
             TryGetUserNamePassword(
                 "http://:secret@www.example.com/", 
@@ -129,8 +129,8 @@ namespace Mannex.Tests
             GetUserNamePassword("http://john%3adoe:sec%3aret@www.example.com/", 
                 new NetworkCredential("john:doe", "sec:ret"));
 
-            GetUserNamePassword("http://johndoe@www.example.com/", 
-                new NetworkCredential("johndoe", null));
+            GetUserNamePassword("http://johndoe@www.example.com/",
+                new NetworkCredential("johndoe", (string) null));
         }
  
         [Fact]
@@ -198,8 +198,8 @@ namespace Mannex.Tests
 
             TrySplitUserNamePassword(
                 "http://johndoe@www.example.com/", 
-                "http://www.example.com/", 
-                new NetworkCredential("johndoe", null));
+                "http://www.example.com/",
+                new NetworkCredential("johndoe", (string) null));
 
             TrySplitUserNamePassword(
                 "http://:secret@www.example.com/", 
@@ -247,7 +247,7 @@ namespace Mannex.Tests
 
             SplitUserNamePassword("http://johndoe@www.example.com/", 
                 "http://www.example.com/",
-                new NetworkCredential("johndoe", null));
+                new NetworkCredential("johndoe", (string) null));
         }
  
         [Fact]
