@@ -54,7 +54,7 @@ namespace Mannex
 
         public static DateTime TrimToSecond(this DateTime time)
         {
-            return new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
+            return new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second, time.Kind);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Mannex
 
         public static DateTime TrimToMinute(this DateTime time)
         {
-            return new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minute, 0);
+            return new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minute, 0, time.Kind);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Mannex
 
         public static DateTime TrimToHour(this DateTime time)
         {
-            return new DateTime(time.Year, time.Month, time.Day, time.Hour, 0, 0);
+            return new DateTime(time.Year, time.Month, time.Day, time.Hour, 0, 0, time.Kind);
         }
 
         /// <summary>
