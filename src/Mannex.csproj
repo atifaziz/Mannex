@@ -121,6 +121,7 @@
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
     <Compile Include="Collections\Generic\IComparer.cs" />
     <Compile Include="Data\IDataRecord.cs" />
+    <Compile Include="Enum.cs" />
     <Compile Include="IServiceProvider.cs" />
     <Compile Include="Data\IDataReader.cs" />
     <Compile Include="Diagnostics\Process.cs" />
