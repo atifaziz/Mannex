@@ -120,5 +120,27 @@ namespace Mannex.Collections.Specialized
                  ? new NameValueCollection(collection.Count) 
                  : new NameValueCollection();
         }
+
+        public static NameValueCollection Filter(this NameValueCollection collection, Func<string, bool> predicate)
+        {
+            if (collection == null) throw new ArgumentNullException("collection");
+            if (predicate == null) throw new ArgumentNullException("predicate");
+            return collection.Filter(key => predicate(key) ? key : null);
+        }
+
+        public static NameValueCollection Filter(this NameValueCollection collection, Func<string, string> keySelector)
+        {
+            if (collection == null) throw new ArgumentNullException("collection");
+            if (keySelector == null) throw new ArgumentNullException("keySelector");
+
+            var selection =
+                from i in Enumerable.Range(0, collection.Count)
+                let key = keySelector(collection.GetKey(i))
+                where key != null
+                from value in collection.GetValues(i)
+                select key.AsKeyTo(value);
+
+            return selection.ToNameValueCollection();
+        }
     }
 }
