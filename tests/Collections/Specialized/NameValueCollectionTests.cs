@@ -26,9 +26,7 @@ namespace Mannex.Tests.Collections.Specialized
     #region Improts
 
     using System;
-    using System.Collections.Generic;
     using System.Collections.Specialized;
-    using Mannex.Collections.Generic;
     using Mannex.Collections.Specialized;
     using Xunit;
 
@@ -94,12 +92,64 @@ namespace Mannex.Tests.Collections.Specialized
                 { "baz", "BAZ2" },
             };
 
-            var result = collection.Filter(k => k.StartsWith("b", StringComparison.Ordinal));
+            var result = collection.Filter(k => k.StartsWith("b", StringComparison.Ordinal) ? k.ToUpperInvariant() : null);
+            Assert.Equal(2, result.Count);
+            Assert.Equal("BAR", result.GetKey(0));
+            Assert.Equal("BAR", result[0]);
+            Assert.Equal("BAZ", result.GetKey(1));
+            Assert.Equal(new[] { "BAZ1", "BAZ2" }, result.GetValues(1));
+        }
+
+        [Fact]
+        public void FilterByPrefixFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                NameValueCollectionExtensions.FilterByPrefix(null, "prefix"));
+        }
+
+        [Fact]
+        public void FilterByPrefixReturnsItemsWithKeysMatchingPrefix()
+        {
+            var collection = new NameValueCollection
+            {
+                { "a:foo", "FOO" },
+                { "b:",    "B" },
+                { "b:bar", "BAR" },
+                { "b:baz", "BAZ1" },
+                { "b:baz", "BAZ2" },
+            };
+
+            var result = collection.FilterByPrefix("b:");
             Assert.Equal(2, result.Count);
             Assert.Equal("bar", result.GetKey(0));
             Assert.Equal("BAR", result[0]);
             Assert.Equal("baz", result.GetKey(1));
             Assert.Equal(new[] { "BAZ1", "BAZ2" }, result.GetValues(1));
+        }
+
+        [Fact]
+        public void FilterByPrefixReturnsExactCopyWithNullOrEmptyPrefix()
+        {
+            var collection = new NameValueCollection
+            {
+                { "a:foo", "FOO" },
+                { "b:bar", "BAR" },
+                { "b:baz", "BAZ1" },
+                { "b:baz", "BAZ2" },
+            };
+
+            foreach (var prefix in new[] { null, string.Empty })
+            {
+                var result = collection.FilterByPrefix(prefix);
+                Assert.NotSame(collection, result);
+                Assert.Equal(3, result.Count);
+                Assert.Equal("a:foo", result.GetKey(0));
+                Assert.Equal("FOO", result[0]);
+                Assert.Equal("b:bar", result.GetKey(1));
+                Assert.Equal("BAR", result[1]);
+                Assert.Equal("b:baz", result.GetKey(2));
+                Assert.Equal(new[] { "BAZ1", "BAZ2" }, result.GetValues(2));
+            }
         }
     }
 }

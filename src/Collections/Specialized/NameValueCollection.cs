@@ -142,5 +142,13 @@ namespace Mannex.Collections.Specialized
 
             return selection.ToNameValueCollection();
         }
+
+        public static NameValueCollection FilterByPrefix(this NameValueCollection collection, string prefix)
+        {
+            if (collection == null) throw new ArgumentNullException("collection");
+            return string.IsNullOrEmpty(prefix) 
+                 ? new NameValueCollection(collection) 
+                 : collection.Filter(key => key.Length > prefix.Length && key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) ? key.Substring(prefix.Length) : null);
+        }
     }
 }
