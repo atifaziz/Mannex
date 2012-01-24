@@ -121,14 +121,16 @@ namespace Mannex.Collections.Specialized
                  : new NameValueCollection();
         }
 
-        public static NameValueCollection Filter(this NameValueCollection collection, Func<string, bool> predicate)
+        public static T Filter<T>(this T collection, Func<string, bool> predicate)
+            where T : NameValueCollection, new()
         {
             if (collection == null) throw new ArgumentNullException("collection");
             if (predicate == null) throw new ArgumentNullException("predicate");
             return collection.Filter(key => predicate(key) ? key : null);
         }
 
-        public static NameValueCollection Filter(this NameValueCollection collection, Func<string, string> keySelector)
+        public static T Filter<T>(this T collection, Func<string, string> keySelector)
+            where T : NameValueCollection, new()
         {
             if (collection == null) throw new ArgumentNullException("collection");
             if (keySelector == null) throw new ArgumentNullException("keySelector");
@@ -140,14 +142,17 @@ namespace Mannex.Collections.Specialized
                 from value in collection.GetValues(i)
                 select key.AsKeyTo(value);
 
-            return selection.ToNameValueCollection();
+            var result = new T();
+            result.Add(selection);
+            return result;
         }
 
-        public static NameValueCollection FilterByPrefix(this NameValueCollection collection, string prefix)
+        public static T FilterByPrefix<T>(this T collection, string prefix)
+            where T : NameValueCollection, new()
         {
             if (collection == null) throw new ArgumentNullException("collection");
-            return string.IsNullOrEmpty(prefix) 
-                 ? new NameValueCollection(collection) 
+            return string.IsNullOrEmpty(prefix)
+                 ? new T { collection }
                  : collection.Filter(key => key.Length > prefix.Length && key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) ? key.Substring(prefix.Length) : null);
         }
     }
