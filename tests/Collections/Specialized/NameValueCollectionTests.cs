@@ -38,7 +38,7 @@ namespace Mannex.Tests.Collections.Specialized
         public void FilterFailsWithNullThisAndPredicate()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                NameValueCollectionExtensions.Filter(null, delegate { return false; }));
+                NameValueCollectionExtensions.Filter<NameValueCollection>(null, delegate { return false; }));
         }
 
         [Fact]
@@ -71,7 +71,7 @@ namespace Mannex.Tests.Collections.Specialized
         public void FilterFailsWithNullThisAndKeySelector()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                NameValueCollectionExtensions.Filter(null, delegate { return null; }));
+                NameValueCollectionExtensions.Filter<NameValueCollection>(null, delegate { return null; }));
         }
 
         [Fact]
@@ -104,7 +104,7 @@ namespace Mannex.Tests.Collections.Specialized
         public void FilterByPrefixFailsWithNullThis()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                NameValueCollectionExtensions.FilterByPrefix(null, "prefix"));
+                NameValueCollectionExtensions.FilterByPrefix<NameValueCollection>(null, "prefix"));
         }
 
         [Fact]
