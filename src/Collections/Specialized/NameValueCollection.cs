@@ -121,6 +121,11 @@ namespace Mannex.Collections.Specialized
                  : new NameValueCollection();
         }
 
+        /// <summary>
+        /// Returns a new collection with only those entries where keys
+        /// match a given predicate.
+        /// </summary>
+
         public static T Filter<T>(this T collection, Func<string, bool> predicate)
             where T : NameValueCollection, new()
         {
@@ -128,6 +133,12 @@ namespace Mannex.Collections.Specialized
             if (predicate == null) throw new ArgumentNullException("predicate");
             return collection.Filter(predicate, key => key);
         }
+
+        /// <summary>
+        /// Returns a new collection with only those entries where keys
+        /// match a given predicate. An additional function provides 
+        /// the keys projected in the new collection.
+        /// </summary>
 
         public static T Filter<T>(this T collection, Func<string, bool> predicate, Func<string, string> keySelector)
             where T : NameValueCollection, new()
@@ -146,6 +157,11 @@ namespace Mannex.Collections.Specialized
             result.Add(selection);
             return result;
         }
+
+        /// <summary>
+        /// Returns a new collection where the keys are prefixed by a given
+        /// string. The keys in new collection are without the prefix.
+        /// </summary>
 
         public static T FilterByPrefix<T>(this T collection, string prefix)
             where T : NameValueCollection, new()
