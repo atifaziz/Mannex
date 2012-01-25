@@ -53,8 +53,8 @@ namespace Mannex.Tests.Collections.Specialized
         {
             var collection = new NameValueCollection
             {
-                { "foo", "FOO" },
-                { "bar", "BAR" },
+                { "foo", "FOO"  },
+                { "bar", "BAR"  },
                 { "baz", "BAZ1" },
                 { "baz", "BAZ2" },
             };
@@ -93,8 +93,8 @@ namespace Mannex.Tests.Collections.Specialized
         {
             var collection = new NameValueCollection
             {
-                { "foo", "FOO" },
-                { "bar", "BAR" },
+                { "foo", "FOO"  },
+                { "bar", "BAR"  },
                 { "baz", "BAZ1" },
                 { "baz", "BAZ2" },
             };
@@ -119,9 +119,9 @@ namespace Mannex.Tests.Collections.Specialized
         {
             var collection = new NameValueCollection
             {
-                { "a:foo", "FOO" },
-                { "b:",    "B" },
-                { "b:bar", "BAR" },
+                { "a:foo", "FOO"  },
+                { "b:",    "B"    },
+                { "b:bar", "BAR"  },
                 { "b:baz", "BAZ1" },
                 { "b:baz", "BAZ2" },
             };
@@ -141,8 +141,8 @@ namespace Mannex.Tests.Collections.Specialized
         {
             var collection = new NameValueCollection
             {
-                { "a:foo", "FOO" },
-                { "b:bar", "BAR" },
+                { "a:foo", "FOO"  },
+                { "b:bar", "BAR"  },
                 { "b:baz", "BAZ1" },
                 { "b:baz", "BAZ2" },
             };
