@@ -127,10 +127,12 @@ namespace Mannex.Tests.Collections.Specialized
             };
 
             var result = collection.FilterByPrefix("b:");
-            Assert.Equal(2, result.Count);
-            Assert.Equal("bar", result.GetKey(0));
-            Assert.Equal("BAR", result[0]);
-            Assert.Equal("baz", result.GetKey(1));
+            Assert.Equal(3, result.Count);
+            Assert.Equal(null, result.GetKey(0));
+            Assert.Equal("B", result[0]);
+            Assert.Equal("bar", result.GetKey(1));
+            Assert.Equal("BAR", result[1]);
+            Assert.Equal("baz", result.GetKey(2));
             Assert.Equal(new[] { "BAZ1", "BAZ2" }, result.GetValues(1));
         }
 
