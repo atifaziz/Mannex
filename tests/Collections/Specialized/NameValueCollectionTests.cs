@@ -27,6 +27,7 @@ namespace Mannex.Tests.Collections.Specialized
 
     using System;
     using System.Collections.Specialized;
+    using System.Globalization;
     using Mannex.Collections.Specialized;
     using Xunit;
 
@@ -53,13 +54,14 @@ namespace Mannex.Tests.Collections.Specialized
         {
             var collection = new NameValueCollection
             {
+                { null,  "NULL" },
                 { "foo", "FOO"  },
                 { "bar", "BAR"  },
                 { "baz", "BAZ1" },
                 { "baz", "BAZ2" },
             };
 
-            var result = collection.Filter(k => k.StartsWith("b", StringComparison.Ordinal));
+            var result = collection.Filter(k => k != null && k.StartsWith("b", StringComparison.Ordinal));
             Assert.Equal(2, result.Count);
             Assert.Equal("bar", result.GetKey(0));
             Assert.Equal("BAR", result[0]);
@@ -93,13 +95,14 @@ namespace Mannex.Tests.Collections.Specialized
         {
             var collection = new NameValueCollection
             {
+                { null,    "NULL" },
                 { "foo", "FOO"  },
                 { "bar", "BAR"  },
                 { "baz", "BAZ1" },
                 { "baz", "BAZ2" },
             };
 
-            var result = collection.Filter(k => k.StartsWith("b", StringComparison.Ordinal), k => k.ToUpperInvariant());
+            var result = collection.Filter(k => k != null && k.StartsWith("b", StringComparison.Ordinal), k => k.ToUpperInvariant());
             Assert.Equal(2, result.Count);
             Assert.Equal("BAR", result.GetKey(0));
             Assert.Equal("BAR", result[0]);
@@ -119,6 +122,7 @@ namespace Mannex.Tests.Collections.Specialized
         {
             var collection = new NameValueCollection
             {
+                { null,    "NULL" },
                 { "a:foo", "FOO"  },
                 { "b:",    "B"    },
                 { "b:bar", "BAR"  },
@@ -128,12 +132,12 @@ namespace Mannex.Tests.Collections.Specialized
 
             var result = collection.FilterByPrefix("b:");
             Assert.Equal(3, result.Count);
-            Assert.Equal(null, result.GetKey(0));
+            Assert.Null (result.GetKey(0));
             Assert.Equal("B", result[0]);
             Assert.Equal("bar", result.GetKey(1));
             Assert.Equal("BAR", result[1]);
             Assert.Equal("baz", result.GetKey(2));
-            Assert.Equal(new[] { "BAZ1", "BAZ2" }, result.GetValues(1));
+            Assert.Equal(new[] { "BAZ1", "BAZ2" }, result.GetValues(2));
         }
 
         [Fact]
@@ -141,6 +145,7 @@ namespace Mannex.Tests.Collections.Specialized
         {
             var collection = new NameValueCollection
             {
+                { null,    "NULL" },
                 { "a:foo", "FOO"  },
                 { "b:bar", "BAR"  },
                 { "b:baz", "BAZ1" },
@@ -151,13 +156,15 @@ namespace Mannex.Tests.Collections.Specialized
             {
                 var result = collection.FilterByPrefix(prefix);
                 Assert.NotSame(collection, result);
-                Assert.Equal(3, result.Count);
-                Assert.Equal("a:foo", result.GetKey(0));
-                Assert.Equal("FOO", result[0]);
-                Assert.Equal("b:bar", result.GetKey(1));
-                Assert.Equal("BAR", result[1]);
-                Assert.Equal("b:baz", result.GetKey(2));
-                Assert.Equal(new[] { "BAZ1", "BAZ2" }, result.GetValues(2));
+                Assert.Equal(4, result.Count);
+                Assert.Null (result.GetKey(0));
+                Assert.Equal("NULL", result[0]);
+                Assert.Equal("a:foo", result.GetKey(1));
+                Assert.Equal("FOO", result[1]);
+                Assert.Equal("b:bar", result.GetKey(2));
+                Assert.Equal("BAR", result[2]);
+                Assert.Equal("b:baz", result.GetKey(3));
+                Assert.Equal(new[] { "BAZ1", "BAZ2" }, result.GetValues(3));
             }
         }
     }
