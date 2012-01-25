@@ -45,7 +45,7 @@ namespace Mannex.Tests.Collections.Specialized
         public void FilterFailsWithNullPredicate()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                new NameValueCollection().Filter((Func<string, bool>) null));
+                new NameValueCollection().Filter(null));
         }
 
         [Fact]
@@ -68,17 +68,24 @@ namespace Mannex.Tests.Collections.Specialized
         }
 
         [Fact]
-        public void FilterFailsWithNullThisAndKeySelector()
+        public void FilterFailsWithNullThis()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                NameValueCollectionExtensions.Filter<NameValueCollection>(null, delegate { return null; }));
+                NameValueCollectionExtensions.Filter<NameValueCollection>(null, delegate { return false; }, k => k));
+        }
+
+        [Fact]
+        public void FilterFailsWithNullPredicateAndSomeKeySelector()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                new NameValueCollection().Filter(null, k => k));
         }
 
         [Fact]
         public void FilterFailsWithNullKeySelector()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                new NameValueCollection().Filter((Func<string, string>) null));
+                new NameValueCollection().Filter(delegate { return false; }, null));
         }
 
         [Fact]
@@ -92,7 +99,7 @@ namespace Mannex.Tests.Collections.Specialized
                 { "baz", "BAZ2" },
             };
 
-            var result = collection.Filter(k => k.StartsWith("b", StringComparison.Ordinal) ? k.ToUpperInvariant() : null);
+            var result = collection.Filter(k => k.StartsWith("b", StringComparison.Ordinal), k => k.ToUpperInvariant());
             Assert.Equal(2, result.Count);
             Assert.Equal("BAR", result.GetKey(0));
             Assert.Equal("BAR", result[0]);

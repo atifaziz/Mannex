@@ -126,21 +126,21 @@ namespace Mannex.Collections.Specialized
         {
             if (collection == null) throw new ArgumentNullException("collection");
             if (predicate == null) throw new ArgumentNullException("predicate");
-            return collection.Filter(key => predicate(key) ? key : null);
+            return collection.Filter(predicate, key => key);
         }
 
-        public static T Filter<T>(this T collection, Func<string, string> keySelector)
+        public static T Filter<T>(this T collection, Func<string, bool> predicate, Func<string, string> keySelector)
             where T : NameValueCollection, new()
         {
             if (collection == null) throw new ArgumentNullException("collection");
+            if (predicate == null) throw new ArgumentNullException("predicate");
             if (keySelector == null) throw new ArgumentNullException("keySelector");
 
             var selection =
                 from i in Enumerable.Range(0, collection.Count)
-                let key = keySelector(collection.GetKey(i))
-                where key != null
+                where predicate(collection.GetKey(i))
                 from value in collection.GetValues(i)
-                select key.AsKeyTo(value);
+                select keySelector(collection.GetKey(i)).AsKeyTo(value);
 
             var result = new T();
             result.Add(selection);
@@ -153,7 +153,8 @@ namespace Mannex.Collections.Specialized
             if (collection == null) throw new ArgumentNullException("collection");
             return string.IsNullOrEmpty(prefix)
                  ? new T { collection }
-                 : collection.Filter(key => key.Length > prefix.Length && key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) ? key.Substring(prefix.Length) : null);
+                 : collection.Filter(key => key.Length > prefix.Length && key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase), 
+                                     key => key.Substring(prefix.Length));
         }
     }
 }
