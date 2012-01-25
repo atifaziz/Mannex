@@ -169,8 +169,8 @@ namespace Mannex.Collections.Specialized
             if (collection == null) throw new ArgumentNullException("collection");
             return string.IsNullOrEmpty(prefix)
                  ? new T { collection }
-                 : collection.Filter(key => key.Length > prefix.Length && key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase), 
-                                     key => key.Substring(prefix.Length));
+                 : collection.Filter(key => key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase), 
+                                     key => key.Length == prefix.Length ? null : key.Substring(prefix.Length));
         }
     }
 }
