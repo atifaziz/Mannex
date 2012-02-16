@@ -95,7 +95,7 @@ namespace Mannex.Tests.Collections.Specialized
         {
             var collection = new NameValueCollection
             {
-                { null,    "NULL" },
+                { null,  "NULL" },
                 { "foo", "FOO"  },
                 { "bar", "BAR"  },
                 { "baz", "BAZ1" },
