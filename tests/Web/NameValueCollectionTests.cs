@@ -108,7 +108,7 @@ namespace Mannex.Tests.Web
                 { null, string.Empty },
                 { null, string.Empty },
             };
-            Assert.Equal("?&&", collection.ToQueryString());
+            Assert.Equal(string.Empty, collection.ToQueryString());
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace Mannex.Tests.Web
                 { string.Empty, string.Empty },
                 { string.Empty, string.Empty },
             };
-            Assert.Equal("?&&", collection.ToQueryString());
+            Assert.Equal(string.Empty, collection.ToQueryString());
         }
 
         [Fact]
@@ -143,6 +143,117 @@ namespace Mannex.Tests.Web
                 { "msg", "hello world" },
             };
             Assert.Equal("?msg=hello%20world", collection.ToQueryString());
+        }
+
+        [Fact]
+        public void ToW3FormEncodedFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => NameValueCollectionExtensions.ToW3FormEncoded(null));
+            Assert.Equal("collection", e.ParamName);
+        }
+
+        [Fact]
+        public void ToW3FormEncodedOnEmptyCollectionReturnsEmptyString()
+        {
+            Assert.Equal(string.Empty, new NameValueCollection().ToW3FormEncoded());
+        }
+
+        [Fact]
+        public void ToW3FormEncodedOnCollectionWithOnePair()
+        {
+            var collection = new NameValueCollection
+            {
+                { "key", "value" },
+            };
+            Assert.Equal("key=value", collection.ToW3FormEncoded());
+        }
+
+        [Fact]
+        public void ToW3FormEncodedOnCollectionWithManyPairs()
+        {
+            var collection = new NameValueCollection
+            {
+                { "ka", "v1" },
+                { "kb", "v2" },
+                { "kc", "v3" },
+            };
+            Assert.Equal("ka=v1&kb=v2&kc=v3", collection.ToW3FormEncoded());
+        }
+
+        [Fact]
+        public void ToW3FormEncodedOnCollectionWithUnsortedMultiValueKeys()
+        {
+            var collection = new NameValueCollection
+            {
+                { "a", "a1" },
+                { "c", "c1" },
+                { "b", "b1" },
+                { "a", "a2" },
+                { "c", "c2" },
+                { "b", "b2" },
+                { "a", "a3" },
+                { "c", "c3" },
+                { "b", "b3" },
+            };
+            Assert.Equal("a=a1&a=a2&a=a3&c=c1&c=c2&c=c3&b=b1&b=b2&b=b3", collection.ToW3FormEncoded());
+        }
+
+        [Fact]
+        public void ToW3FormEncodedOnCollectionWithMultiValueNullKey()
+        {
+            var collection = new NameValueCollection
+            {
+                { null, "v1" },
+                { null, "v2" },
+                { null, "v3" },
+            };
+            Assert.Equal("v1&v2&v3", collection.ToW3FormEncoded());
+        }
+
+        [Fact]
+        public void ToW3FormEncodedOnCollectionWithNullKeyAndHavingEmptyValues()
+        {
+            var collection = new NameValueCollection
+            {
+                { null, string.Empty },
+                { null, string.Empty },
+                { null, string.Empty },
+            };
+            Assert.Equal(string.Empty, collection.ToW3FormEncoded());
+        }
+
+        [Fact]
+        public void ToW3FormEncodedOnCollectionWithKeyHavingEmptyValues()
+        {
+            var collection = new NameValueCollection
+            {
+                { "key", string.Empty },
+                { "key", string.Empty },
+                { "key", string.Empty },
+            };
+            Assert.Equal("key=&key=&key=", collection.ToW3FormEncoded());
+        }
+
+        [Fact]
+        public void ToW3FormEncodedOnCollectionWithEmptyKeyHavingEmptyValues()
+        {
+            var collection = new NameValueCollection
+            {
+                { string.Empty, string.Empty },
+                { string.Empty, string.Empty },
+                { string.Empty, string.Empty },
+            };
+            Assert.Equal(string.Empty, collection.ToW3FormEncoded());
+        }
+
+        [Fact]
+        public void ToW3FormEncodedEncodesValues()
+        {
+            var collection = new NameValueCollection
+            {
+                { "msg", "hello world" },
+            };
+            Assert.Equal("msg=hello%20world", collection.ToW3FormEncoded());
         }
     }
 }
