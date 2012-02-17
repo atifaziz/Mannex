@@ -28,7 +28,6 @@ namespace Mannex.Web
     using System;
     using System.Collections.Specialized;
     using System.Text;
-    using System.Web;
 
     #endregion
 
@@ -49,7 +48,26 @@ namespace Mannex.Web
 
         public static string ToQueryString(this NameValueCollection collection)
         {
+            return W3FormEncode(collection, "?");
+        }
+
+        /// <summary>
+        /// Encodes the content of the collection to a string
+        /// suitably formatted per the <c>application/x-www-form-urlencoded</c>
+        /// MIME media type.
+        /// </summary>
+
+        public static string ToW3FormEncoded(this NameValueCollection collection)
+        {
+            return W3FormEncode(collection, null);
+        }
+
+        static string W3FormEncode(NameValueCollection collection, string prefix)
+        {
             if (collection == null) throw new ArgumentNullException("collection");
+
+            if (collection.Count == 0)
+                return string.Empty;
 
             var sb = new StringBuilder();
 
@@ -64,21 +82,21 @@ namespace Mannex.Web
                 
                 foreach (var value in values)
                 {
-                    sb.Append('&');
+                    if (sb.Length > 0)
+                        sb.Append('&');
 
                     if (!string.IsNullOrEmpty(name))
                         sb.Append(name).Append('=');
 
                     sb.Append(string.IsNullOrEmpty(value) 
                               ? string.Empty 
-                              : HttpUtility.UrlPathEncode(value));
+                              : Uri.EscapeDataString(value));
                 }
             }
 
-            if (sb.Length == 0)
-                return string.Empty;
-            
-            sb[0] = '?';
+            if (sb.Length > 0 && !string.IsNullOrEmpty(prefix))
+                sb.Insert(0, prefix);
+
             return sb.ToString();
         }
     }
