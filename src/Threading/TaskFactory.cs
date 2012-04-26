@@ -170,9 +170,9 @@ namespace Mannex.Threading
                         done = !task.MoveNext();
                     }
                     catch (Exception e)
-                    {                                       // ReSharper disable EmptyGeneralCatchClause
-                        try { task.Dispose(); }
-                        catch { }   // ReSharper restore EmptyGeneralCatchClause
+                    {
+                        try { task.Dispose(); } // ReSharper disable EmptyGeneralCatchClause                        
+                        catch { }               // ReSharper restore EmptyGeneralCatchClause
                         tcs.SetException(e);
                         return;
                     }
