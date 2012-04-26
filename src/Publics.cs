@@ -125,6 +125,10 @@ namespace Mannex
     namespace Threading
     {
         public static partial class TimeSpanExtensions { }
+        
+        #if NET4
+        public static partial class TaskFactoryExtensions { }
+        #endif
     }
 
     namespace Web
