@@ -121,6 +121,7 @@
     <Compile Include="ComponentModel\Design\IServiceContainer.cs" />
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
     <Compile Include="Collections\Generic\IComparer.cs" />
+    <Compile Include="Tuple.cs" />
     <Compile Include="Data\IDataRecord.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="IServiceProvider.cs" />
@@ -139,6 +140,11 @@
     <Compile Include="Text\RegularExpressions\Match.cs" />
     <Compile Include="Threading\TaskFactory.cs" />
     <Compile Include="Threading\TimeSpan.cs" />
+    <Compile Include="Tuple.g.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tuple.g.tt</DependentUpon>
+    </Compile>
     <Compile Include="Type.cs" />
     <Compile Include="Globalization\Calendar.cs" />
     <Compile Include="Globalization\DateTimeFormatInfo.cs" />
@@ -199,6 +205,10 @@
     <None Include="Func+Action.Apply.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Func+Action.Apply.cs</LastGenOutput>
+    </None>
+    <None Include="Tuple.g.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Tuple.g.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

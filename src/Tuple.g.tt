@@ -1,0 +1,101 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" #>
+<#@ import namespace="System.Globalization" #>
+<#@ import namespace="System.Linq" #>
+#region License, Terms and Author(s)
+//
+// Mannex - Extension methods for .NET
+// Copyright (c) 2009 Atif Aziz. All rights reserved.
+//
+//  Author(s):
+//
+//      Atif Aziz, http://www.raboof.com
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+#endregion
+
+namespace Mannex
+{
+    using System;
+    using System.Collections.Generic;
+
+    #if NET4
+
+    partial class TupleExtensions
+    {
+<#      
+        var nths = new[] { "first", "second", "third", "fourth", 
+                           "fifth", "sixth", "seventh", "eight", };
+
+        foreach (var i in Enumerable.Range(2, 6)) 
+        { 
+            var items = 
+                from item in Enumerable.Range(1, i)
+                                    .Zip(nths, (n, nth) => new { N = n, Nth = nth })
+                let nstr = item.N.ToString(CultureInfo.InvariantCulture)
+                select new
+                {
+                   Type     = "T" + nstr,
+                   Property = "Item" + nstr,
+                   Nth      = item.Nth,
+                };
+            items = items.ToArray();
+            var ts = new
+            {
+                Def = string.Join(", ", from item in items select item.Type),
+                Doc = string.Join(",",  from item in items select item.Type),
+            }; #>
+        /// <summary>
+        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/> 
+        /// whose elements are the items of a given 
+        /// <see cref="Tuple{<#= ts.Doc #>}" />.
+        /// </summary>
+<#      foreach (var item in items) { #>
+        /// <typeparam name="<#= item.Type #>">The type of the tuple's <#= item.Nth #> component.</typeparam>
+<#      } #>
+
+        public static IEnumerable<object> AsEnumerable<<#= ts.Def #>>(this Tuple<<#= ts.Def #>> tuple)
+        {
+            if (tuple == null) throw new ArgumentNullException("tuple");
+            return AsEnumerableImpl(tuple);
+        }
+        
+        static IEnumerable<object> AsEnumerableImpl<<#= ts.Def #>>(Tuple<<#= ts.Def #>> tuple)
+        {
+<#      foreach (var item in items) { #>
+            yield return tuple.<#= item.Property #>;
+<#      } #>
+        }
+
+        /// <summary>
+        /// Folds items of a <see cref="Tuple{<#= ts.Doc #>}" /> 
+        /// into a single element of <typeparamref name="TResult"/>.
+        /// </summary>
+<#      foreach (var item in items) { #>
+        /// <typeparam name="<#= item.Type #>">The type of the tuple's <#= item.Nth #> component.</typeparam>
+<#      } #>
+        /// <typeparam name="TResult">The type of the result.</typeparam>
+
+        public static TResult Fold<<#= ts.Def #>, TResult>(this Tuple<<#= ts.Def #>> tuple, Func<<#= ts.Def #>, TResult> selector)
+        {
+            if (tuple == null) throw new ArgumentNullException("tuple");
+            if (selector == null) throw new ArgumentNullException("selector");
+            return selector(<#= string.Join(", ", from item in items select "tuple." + item.Property) #>);
+        }
+
+<#      } #>
+    }
+
+    #endif // NET4
+}
