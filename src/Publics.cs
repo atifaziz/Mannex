@@ -35,6 +35,9 @@ namespace Mannex
     public static partial class Int64Extensions { }
     public static partial class PredicateExtensions { }
     public static partial class StringExtensions { }
+    #if NET4
+    public static partial class TupleExtensions { }
+    #endif
     public static partial class TypeExtensions { }
     public static partial class UriExtensions { }
     public static partial class IServiceProviderExtensions { }
