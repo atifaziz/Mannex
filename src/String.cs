@@ -402,5 +402,47 @@ namespace Mannex
             if (str == null) throw new ArgumentNullException("str");
             return Regex.Replace(str, @"\s+", " ").Trim();
         }
+
+        /// <summary>
+        /// Retrieves left, middle and right substrings from this instance
+        /// given the character position and length of the middle substring.
+        /// </summary>
+        /// <returns>
+        /// Returns a zero-base, single-dimension, array of three elements 
+        /// containing the left, middle and right substrings, respectively.
+        /// </returns>
+        /// <remarks>
+        /// This function never returns <c>null</c> for any of the 
+        /// substrings. For example, even when <paramref name="index"/> is
+        /// zero, the first substring will be an empty string, but not null.
+        /// </remarks>
+
+        public static string[] Substrings(this string str, int index, int length)
+        {
+            return Substrings(str, index, length, (left, mid, right) => new[] { left, mid, right });
+        }
+
+        /// <summary>
+        /// Retrieves left, middle and right substrings from this instance
+        /// given the character position and length of the middle substring.
+        /// An additional parameter specifies a function that is used to
+        /// project the final result.
+        /// </summary>
+        /// <remarks>
+        /// This function never supplies <c>null</c> for any of the 
+        /// substrings. For example, even when <paramref name="index"/> is
+        /// zero, the first substring will be an empty string, but not 
+        /// <c>null</c>.
+        /// </remarks>
+
+        public static T Substrings<T>(this string str, int index, int length, Func<string, string, string, T> resultor)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            if (resultor == null) throw new ArgumentNullException("resultor");
+
+            return resultor(str.Substring(0, index),
+                            str.Substring(index, length),
+                            str.Substring(index + length));
+        }
     }
 }
