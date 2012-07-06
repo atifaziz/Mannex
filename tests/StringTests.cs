@@ -247,5 +247,36 @@ namespace Mannex.Tests
         {
             Assert.Equal("foo bar", " \t foo \r\n bar \t ".NormalizeWhiteSpace());
         }
+
+        [Fact]
+        public void SubstringsFailsWithNullThis()
+        {
+            var e1 = Assert.Throws<ArgumentNullException>(() => StringExtensions.Substrings(null, 0, 0));
+            Assert.Equal("str", e1.ParamName);
+            var e2 = Assert.Throws<ArgumentNullException>(() => StringExtensions.Substrings<object>(null, 0, 0, delegate { return null; }));
+            Assert.Equal("str", e2.ParamName);
+        }
+
+        [Fact]
+        public void SubstringsFailsWithNullFunction()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => string.Empty.Substrings<object>(0, 0, null));
+            Assert.Equal("resultor", e.ParamName);
+        }
+
+        [Fact]
+        public void Substrings()
+        {
+            Assert.Equal(new[] { "left", "mid", "right" }, "leftmidright".Substrings(4, 3));
+            const string foo = "foo";
+            const string bar = "bar";
+            const string foobar = foo + bar;
+            const string _ = "";
+            Assert.Equal(new[] { _, foo, bar }, foobar.Substrings(0, foo.Length));
+            Assert.Equal(new[] { foo, bar, _ }, foobar.Substrings(foo.Length, bar.Length));
+            Assert.Equal(new[] { _, _, foobar }, foobar.Substrings(0, 0));
+            Assert.Equal(new[] { foobar, _, _ }, foobar.Substrings(foobar.Length, 0));
+            Assert.Equal(new[] { _, _, _ }, _.Substrings(0, 0));
+        }
     }
 }
