@@ -26,6 +26,7 @@ namespace Mannex.Tests.IO
     #region Improts
 
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using Mannex.IO;
@@ -48,6 +49,60 @@ namespace Mannex.Tests.IO
         {
             Assert.Equal(new[] { "line1", "line2", "line3" }, 
                 new StringReader("line1\nline2\nline3").ReadLines().ToArray());
+        }
+
+        [Fact]
+        public void ConcatFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => TextReaderExtensions.Concat(null));
+            Assert.Equal("first", e.ParamName);
+        }
+
+        [Fact]
+        public void ConcatSequenceOverloadFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => TextReaderExtensions.Concat(null, (IEnumerable<TextReader>)null));
+            Assert.Equal("first", e.ParamName);
+        }
+
+        [Fact]
+        public void ConcatFailsWithNullOthers()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => TextReader.Null.Concat((TextReader[]) null));
+            Assert.Equal("others", e.ParamName);
+        }
+
+        [Fact]
+        public void ConcatSequenceOverloadFailsWithNullOthers()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => TextReader.Null.Concat((IEnumerable<TextReader>) null));
+            Assert.Equal("others", e.ParamName);
+        }
+
+        [Fact]
+        public void ConcatNone()
+        {
+            Assert.Equal(-1, TextReader.Null.Concat().Read());
+        }
+
+        [Fact]
+        public void Concat()
+        {
+            var readers = 
+                from s in new[] { "foo,", "bar,", "baz" } 
+                select new StringReader(s);
+            var result = TextReader.Null.Concat(readers).ReadToEnd();
+            Assert.Equal("foo,bar,baz", result);
+        }
+
+        [Fact]
+        public void ConcatWithNullReader()
+        {
+            var readers =
+                from s in new[] { "foo", null, "bar" }
+                select s != null ? new StringReader(s) : null;
+            var result = TextReader.Null.Concat(readers).ReadToEnd();
+            Assert.Equal("foobar", result);
         }
     }
 }

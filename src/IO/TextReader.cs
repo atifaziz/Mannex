@@ -28,6 +28,7 @@ namespace Mannex.IO
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
 
     #endregion
 
@@ -51,6 +52,119 @@ namespace Mannex.IO
         {
             for (var line = reader.ReadLine(); line != null; line = reader.ReadLine())
                 yield return line;
+        }
+
+        // Concat derived from StackOverflow answer[1] by Rex Morgan[2].
+        //
+        // [1] http://stackoverflow.com/a/2925722/6682
+        // [2] http://www.rexmorgan.net/
+
+        /// <summary>
+        /// Return a new <see cref="TextReader"/> that represents the
+        /// concatenated content of one or more supplied 
+        /// <see cref="TextReader"/> objects.
+        /// </summary>
+        /// <remarks>
+        /// If any of the <see cref="TextReader"/> objects is <c>null</c>
+        /// then it is treated as being empty; no exception is thrown.
+        /// </remarks>
+
+        public static TextReader Concat(this TextReader first, IEnumerable<TextReader> others)
+        {
+            if (first == null) throw new ArgumentNullException("first");
+            if (others == null) throw new ArgumentNullException("others");
+            return Concat(first, others.ToArray());
+        }
+
+        /// <summary>
+        /// Return a new <see cref="TextReader"/> that represents the
+        /// concatenated content of one or more supplied 
+        /// <see cref="TextReader"/> objects.
+        /// </summary>
+        /// <remarks>
+        /// If any of the <see cref="TextReader"/> objects is <c>null</c>
+        /// then it is treated as being empty; no exception is thrown.
+        /// </remarks>
+
+        public static TextReader Concat(this TextReader first, params TextReader[] others)
+        {
+            if (first == null) throw new ArgumentNullException("first");
+            if (others == null) throw new ArgumentNullException("others");
+            return new ChainedTextReader(new[] { first }.Concat(others));
+        }
+
+        sealed class ChainedTextReader : TextReader
+        {
+            private TextReader[] _readers;
+
+            public ChainedTextReader(IEnumerable<TextReader> readers)
+            {
+                if (readers == null) throw new ArgumentNullException("readers");
+
+                _readers = readers.Select(r => r ?? Null)
+                    /*sentinel */ .Concat(new TextReader[] { null })
+                                  .ToArray();
+            }
+
+            private TextReader GetReader()
+            {
+                if (_readers == null) throw new ObjectDisposedException(null);
+                return _readers[0];
+            }
+
+            public override int Peek()
+            {
+                var reader = GetReader();
+                return reader == null ? -1 : reader.Peek();
+            }
+
+            public override int Read()
+            {
+                while (true)
+                {
+                    var reader = GetReader();
+                    if (reader == null)
+                        return -1;
+                    var ch = reader.Read();
+                    if (ch >= 0)
+                        return ch;
+                    _readers.Rotate();
+                }
+            }
+
+            public override int Read(char[] buffer, int index, int count)
+            {
+                while (true)
+                {
+                    var reader = GetReader();
+                    if (reader == null)
+                        return 0;
+                    var read = reader.Read(buffer, index, count);
+                    if (read > 0)
+                        return read;
+                    _readers.Rotate();
+                }
+            }
+
+            public override void Close()
+            {
+                OnDisposeOrClose(r => r.Close());
+            } 
+        
+            protected override void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+                OnDisposeOrClose(r => r.Dispose());
+            }
+
+            void OnDisposeOrClose(Action<TextReader> action)
+            {
+                if (_readers == null)
+                    return;
+                foreach (var reader in _readers.Where(reader => reader != null))
+                    action(reader);
+                _readers = null;
+            }
         }
     }
 }
