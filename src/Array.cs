@@ -80,5 +80,20 @@ namespace Mannex
 
             return sb;
         }
+
+        /// <summary>
+        /// Rotates the elements of the array (in-place) such that all 
+        /// elements are shifted left by one position, with the exception of 
+        /// the first element which assumes the last position in the array.
+        /// </summary>
+        
+        public static void Rotate<T>(this T[] array)
+        {
+            if (array == null) throw new ArgumentNullException("array");
+            if (array.Length == 0) return;
+            var first = array[0];
+            Array.Copy(array, 1, array, 0, array.Length - 1);
+            array[array.Length - 1] = first;
+        }
     }
 }

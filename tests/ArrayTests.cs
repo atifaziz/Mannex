@@ -95,5 +95,29 @@ namespace Mannex.Tests
 
             Assert.Equal("a0a1a2a3a4a5a6a7a8a9aaabacadaeaf", result);
         }
+
+        [Fact]
+        public void RotateFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                        ArrayExtensions.Rotate<object>(null));
+            Assert.Equal("array", e.ParamName);
+        }
+
+        [Fact]
+        public void RotateEmptyArray()
+        {
+            var array = new object[0];
+            array.Rotate();
+            // no assertions; point is to test it does not fail
+        }
+
+        [Fact]
+        public void Rotate()
+        {
+            var array = new [] { 1, 2, 3 };
+            array.Rotate();
+            Assert.Equal(new[] { 2, 3, 1 }, array);
+        }
     }
 }
