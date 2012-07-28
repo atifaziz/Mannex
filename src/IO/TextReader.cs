@@ -60,7 +60,7 @@ namespace Mannex.IO
         // [2] http://www.rexmorgan.net/
 
         /// <summary>
-        /// Return a new <see cref="TextReader"/> that represents the
+        /// Returns a new <see cref="TextReader"/> that represents the
         /// concatenated content of one or more supplied 
         /// <see cref="TextReader"/> objects.
         /// </summary>
@@ -77,7 +77,7 @@ namespace Mannex.IO
         }
 
         /// <summary>
-        /// Return a new <see cref="TextReader"/> that represents the
+        /// Returns a new <see cref="TextReader"/> that represents the
         /// concatenated content of one or more supplied 
         /// <see cref="TextReader"/> objects.
         /// </summary>
