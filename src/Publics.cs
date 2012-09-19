@@ -40,6 +40,7 @@ namespace Mannex
     #endif
     public static partial class TypeExtensions { }
     public static partial class UriExtensions { }
+    public static partial class ICloneableExtensions { }
     public static partial class IServiceProviderExtensions { }
     
     namespace Collections.Specialized
