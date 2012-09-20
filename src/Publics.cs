@@ -134,6 +134,8 @@ namespace Mannex
         namespace Tasks
         {
             public static partial class TaskFactoryExtensions { }
+            public static partial class TaskExtensions { }
+            public static partial class TaskCompletionSourceExtensions { }
         }
         #endif
     }
