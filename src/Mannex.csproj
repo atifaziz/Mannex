@@ -139,7 +139,7 @@
     <Compile Include="Reflection\Assembly.cs" />
     <Compile Include="Reflection\ICustomAttributeProvider.cs" />
     <Compile Include="Text\RegularExpressions\Match.cs" />
-    <Compile Include="Threading\TaskFactory.cs" />
+    <Compile Include="Threading\Tasks\TaskFactory.cs" />
     <Compile Include="Threading\TimeSpan.cs" />
     <Compile Include="Tuple.g.cs">
       <AutoGen>True</AutoGen>
