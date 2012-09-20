@@ -21,7 +21,7 @@
 //
 #endregion
 
-namespace Mannex.Threading
+namespace Mannex.Threading.Tasks
 {
     #if NET4
 
