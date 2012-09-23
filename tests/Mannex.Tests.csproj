@@ -60,6 +60,7 @@
     <Compile Include="Collections\Generic\IComparerTests.cs" />
     <Compile Include="Collections\Specialized\NameValueCollectionTests.cs" />
     <Compile Include="ICloneableTests.cs" />
+    <Compile Include="Threading\Tasks\ImmediateTaskScheduler.cs" />
     <Compile Include="Threading\Tasks\TaskCompletionSourceTests.cs" />
     <Compile Include="Threading\Tasks\TaskTests.cs" />
     <Compile Include="TupleTests.cs" />

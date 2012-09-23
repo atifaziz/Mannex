@@ -34,6 +34,13 @@ namespace Mannex.Tests.Threading.Tasks
 
     public class TaskTests
     {
+        private ImmediateTaskScheduler _immediateTaskScheduler;
+
+        ImmediateTaskScheduler TaskScheduler
+        {
+            get { return _immediateTaskScheduler ?? (_immediateTaskScheduler = new ImmediateTaskScheduler()); }
+        }
+
         [Fact]
         public void ApmizeNop()
         {
@@ -48,7 +55,7 @@ namespace Mannex.Tests.Threading.Tasks
             var tcs = new TaskCompletionSource<object>();
             var task = tcs.Task;
             IAsyncResult actualResult = null;
-            var result = task.Apmize(ar => actualResult = ar, null);
+            var result = task.Apmize(ar => actualResult = ar, null, TaskScheduler);
             tcs.SetResult(null);
             Assert.Same(task, result);
             Assert.NotNull(actualResult);
@@ -78,7 +85,7 @@ namespace Mannex.Tests.Threading.Tasks
             {
                 actualResult = ar;
                 isCompletedDuringCallback = resultCell[0].IsCompleted;
-            }, state);
+            }, state, TaskScheduler);
             tcs.SetResult(null);
             Assert.NotSame(task, result);
             Assert.Same(state, result.AsyncState);
