@@ -34,7 +34,7 @@ using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
 [assembly: AssemblyDescription("Extension methods for .NET")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Mannex")]
-[assembly: AssemblyCopyright("Copyright (c) 2009-11, Atif Aziz. All rights reserved.")]
+[assembly: AssemblyCopyright("Copyright (c) 2009, Atif Aziz. All rights reserved.")]
 [assembly: AssemblyCulture("")]
 
 [assembly: AssemblyVersion("1.2.14015.0")]
