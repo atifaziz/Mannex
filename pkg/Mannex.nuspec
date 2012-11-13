@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Mannex</id>
-        <version>1.3.0</version>
+        <version>1.3.1</version>
         <title>Mannex</title>
         <authors>Atif Aziz</authors>
         <owners>Atif Aziz</owners>
@@ -12,12 +12,13 @@
         <description>Extension methods for .NET.</description>
         <copyright>Copyright (c) 2009, Atif Aziz. All rights reserved.</copyright>
         <tags>extension methods</tags>
+        <releaseNotes>Fixes XML documentation file references</releaseNotes>
     </metadata>
     <files>
         <file src="..\bin\net-3.5\Release\Mannex.dll" target="lib\net35\Mannex.dll" />
-        <file src="..\bin\net-3.5\Release\Mannex.dll" target="lib\net35\Mannex.xml" />
+        <file src="..\bin\net-3.5\Release\Mannex.xml" target="lib\net35\Mannex.xml" />
         <file src="..\bin\net-4.0\Release\Mannex.dll" target="lib\net40\Mannex.dll" />
-        <file src="..\bin\net-4.0\Release\Mannex.dll" target="lib\net40\Mannex.xml" />
+        <file src="..\bin\net-4.0\Release\Mannex.xml" target="lib\net40\Mannex.xml" />
         <file src="..\COPYING.txt" target="COPYING.txt" />
     </files>
 </package>
