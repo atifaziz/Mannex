@@ -15,7 +15,9 @@
     </metadata>
     <files>
         <file src="..\bin\net-3.5\Release\Mannex.dll" target="lib\net35\Mannex.dll" />
+        <file src="..\bin\net-3.5\Release\Mannex.dll" target="lib\net35\Mannex.xml" />
         <file src="..\bin\net-4.0\Release\Mannex.dll" target="lib\net40\Mannex.dll" />
+        <file src="..\bin\net-4.0\Release\Mannex.dll" target="lib\net40\Mannex.xml" />
         <file src="..\COPYING.txt" target="COPYING.txt" />
     </files>
 </package>
