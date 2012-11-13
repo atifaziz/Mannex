@@ -167,5 +167,44 @@ namespace Mannex.Tests.Collections.Specialized
                 Assert.Equal(new[] { "BAZ1", "BAZ2" }, result.GetValues(3));
             }
         }
+
+        [Fact]
+        public void UpdateFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                        NameValueCollectionExtensions.Update(null, new NameValueCollection()));
+            Assert.Equal("collection", e.ParamName);
+        }
+
+        [Fact]
+        public void UpdateFailsWithNullThat()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                        new NameValueCollection().Update(null));
+            Assert.Equal("source", e.ParamName);
+        }
+
+        [Fact]
+        public void Update()
+        {
+            var a = new NameValueCollection
+            {
+                { "ka", "a" },
+                { "kb", "a" },
+                { "kb", "b" },
+            };
+            a.Update(new NameValueCollection
+            {
+                { "ka", "b" },
+                { "kb", "a" },
+                { "kb", "c" },
+                { "kc", "a" },
+            });
+            Assert.Equal(3, a.Count);
+            Assert.Equal(new[] { "ka", "kb", "kc" }, a.AllKeys);
+            Assert.Equal(new[] { "b" }, a.GetValues("ka"));
+            Assert.Equal(new[] { "a", "c" }, a.GetValues("kb"));
+            Assert.Equal(new[] { "a" }, a.GetValues("kc"));
+        }
     }
 }

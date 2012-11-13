@@ -172,5 +172,33 @@ namespace Mannex.Collections.Specialized
                  : collection.Filter(key => key != null && key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase), 
                                      key => key.Length == prefix.Length ? null : key.Substring(prefix.Length));
         }
+
+        /// <summary>
+        /// Updates this collection with another where values of existing
+        /// keys are replaced but those of new ones added.
+        /// </summary>
+
+        public static void Update(this NameValueCollection collection, NameValueCollection source)
+        {
+            if (collection == null) throw new ArgumentNullException("collection");
+            if (source == null) throw new ArgumentNullException("source");
+
+            for (var i = 0; i < source.Count; i++)
+            {
+                var key = source.GetKey(i);
+                collection.Remove(key);
+
+                var values = source.GetValues(i);
+                if (values != null)
+                {
+                    foreach (var value in values)
+                        collection.Add(key, value);
+                }
+                else
+                {
+                    collection.Add(key, null);
+                }
+            }
+        }
     }
 }
