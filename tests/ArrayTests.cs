@@ -119,5 +119,74 @@ namespace Mannex.Tests
             array.Rotate();
             Assert.Equal(new[] { 2, 3, 1 }, array);
         }
+ 
+        [Fact]
+        public void UpdateFailsWithNullThis()
+        {
+            ArgumentNullException e1, e2;
+
+            e1 = Assert.Throws<ArgumentNullException>(() => 
+                     ArrayExtensions.Update<object, object>(null, new object[0], (t, s, i) => -1));
+            Assert.Equal("target", e1.ParamName);
+
+            e2 = Assert.Throws<ArgumentNullException>(() => 
+                     ArrayExtensions.Update<object, object>(null, new object[0], (t, s, i) => -1));
+            Assert.Equal("target", e2.ParamName);
+        }
+ 
+        [Fact]
+        public void UpdateFailsWithNullFunction()
+        {
+            ArgumentNullException e1, e2;
+
+            e1 = Assert.Throws<ArgumentNullException>(() => 
+                     new object[0].Update(new object[0], (Func<object, object, int, object>) null));
+            Assert.Equal("function", e1.ParamName);
+
+            e2 = Assert.Throws<ArgumentNullException>(() => 
+                     new object[0].Update(new object[0], (Func<object, object, object>) null));
+            Assert.Equal("function", e2.ParamName);
+        }
+
+        [Fact]
+        public void UpdateFailsWithNullSource()
+        {
+            ArgumentNullException e1, e2;
+
+            e1 = Assert.Throws<ArgumentNullException>(() => 
+                     new object[0].Update((object[]) null, (t, s, i) => null));
+            Assert.Equal("source", e1.ParamName);
+
+            e2 = Assert.Throws<ArgumentNullException>(() => 
+                     new object[0].Update((object[]) null, (t, s) => null));
+            Assert.Equal("source", e2.ParamName);
+        }
+ 
+        [Fact]
+        public void Update()
+        {
+            var xs = new[] { 4, 5, 6 };
+            var ys = new[] { 7, 8, 9 };
+            xs.Update(ys, (x, y, i) => (i + 1) * 100 + x * 10 + y);
+            Assert.Equal(new[] { 147, 258, 369 }, xs);
+        }
+
+        [Fact]
+        public void UpdateShort()
+        {
+            var xs = new[] { 4, 5,   };
+            var ys = new[] { 7, 8, 9 };
+            xs.Update(ys, (x, y, i) => (i + 1) * 100 + x * 10 + y);
+            Assert.Equal(new[] { 147, 258 }, xs);
+        }
+
+        [Fact]
+        public void UpdateLong()
+        {
+            var xs = new[] { 4, 5, 6 };
+            var ys = new[] { 7, 8,   };
+            xs.Update(ys, (x, y, i) => (i + 1) * 100 + x * 10 + y);
+            Assert.Equal(new[] { 147, 258, 6 }, xs);
+        }
     }
 }
