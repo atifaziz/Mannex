@@ -444,5 +444,19 @@ namespace Mannex
                             str.Substring(index, length),
                             str.Substring(index + length));
         }
+
+        static readonly Regex TruthinessRegex = new Regex(@"\A\s*(?i:true|1|on|yes)\s*\z", 
+                                                    RegexOptions.CultureInvariant);
+
+        /// <summary>
+        /// Returns <c>true</c> if the string value reads (excluding leading
+        /// and trailing white space) either <c>"true"</c>, <c>"1"</c>, 
+        /// <c>"on"</c> or <c>"yes"</c>. Otherwise it returns <c>false</c>.
+        /// </summary>
+
+        public static bool IsTruthy(this string value)
+        {
+            return value != null && TruthinessRegex.IsMatch(value);
+        }
     }
 }
