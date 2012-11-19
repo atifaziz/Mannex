@@ -70,6 +70,11 @@ namespace Mannex
     {
         public static partial class IDataReaderExtensions { }
         public static partial class IDataRecordExtensions { }
+
+        namespace Common
+        {
+            public static partial class DbConnectionExtensions { }
+        }
     }
 
     namespace Diagnostics
