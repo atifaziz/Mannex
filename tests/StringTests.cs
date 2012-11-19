@@ -26,6 +26,7 @@ namespace Mannex.Tests
     #region Improts
 
     using System;
+    using System.Linq;
     using Xunit;
 
     #endregion
@@ -277,6 +278,44 @@ namespace Mannex.Tests
             Assert.Equal(new[] { _, _, foobar }, foobar.Substrings(0, 0));
             Assert.Equal(new[] { foobar, _, _ }, foobar.Substrings(foobar.Length, 0));
             Assert.Equal(new[] { _, _, _ }, _.Substrings(0, 0));
+        }
+
+        [Fact]
+        public void IsTruthyWithNullReturnsFalse()
+        {
+            Assert.False(StringExtensions.IsTruthy(null));
+        }
+
+        [Fact]
+        public void IsTruthyWithNull()
+        {
+            var tests =
+                from t in new[]
+                {
+                    new { Input = "true",   Expected = true  },
+                    new { Input = "yes",    Expected = true  },
+                    new { Input = "1",      Expected = true  },
+                    new { Input = "on",     Expected = true  },
+                    new { Input = "false",  Expected = false },
+                    new { Input = "foo",    Expected = false },
+                    new { Input = "bar",    Expected = false },
+                    new { Input = "-1",     Expected = false },
+                }
+                from ws in new[]
+                {
+                    new { Before = string.Empty, After = string.Empty },
+                    new { Before = "\r\n\t\x20", After = "\x20\t\r\n" },
+                    new { Before = string.Empty, After = "\x20\t\r\n" },
+                    new { Before = "\r\n\t\x20", After = string.Empty },
+                }
+                select new 
+                { 
+                    Input = ws.Before + t.Input + ws.After, 
+                    t.Expected 
+                };
+
+            foreach (var test in tests)
+                Assert.Equal(test.Expected, test.Input.IsTruthy());
         }
     }
 }
