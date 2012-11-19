@@ -26,6 +26,7 @@ namespace Mannex
     #region Imports
 
     using System;
+    using System.Collections.Generic;
     using System.Text;
 
     #endregion
@@ -94,6 +95,83 @@ namespace Mannex
             var first = array[0];
             Array.Copy(array, 1, array, 0, array.Length - 1);
             array[array.Length - 1] = first;
+        }
+
+        /// <summary>
+        /// Updates this array with results of applying a function to 
+        /// elements paired from this and the source array.
+        /// </summary>
+        /// <remarks>
+        /// The array is not updated if the application of the function
+        /// fails on any pair of elements. The operation is thus atomic.
+        /// </remarks>
+
+        public static void Update<TTarget, TSource>(this TTarget[] target, IEnumerable<TSource> source, Func<TTarget, TSource, TTarget> function)
+        {
+            if (function == null) throw new ArgumentNullException("function");
+            target.Update(source, (l, r, i) => function(l, r));
+        }
+
+        /// <summary>
+        /// Updates this array with results of applying a function to 
+        /// elements paired from this and the source array. An additional
+        /// parameter to supplied function provides the index of the 
+        /// elements.
+        /// </summary>
+        /// <remarks>
+        /// The array is not updated if the application of the function
+        /// fails on any pair of elements. The operation is thus atomic.
+        /// </remarks>
+
+        public static void Update<TTarget, TSource>(this TTarget[] target, IEnumerable<TSource> source, Func<TTarget, TSource, int, TTarget> function)
+        {
+            if (target == null) throw new ArgumentNullException("target");
+            if (function == null) throw new ArgumentNullException("function");
+            if (source == null) throw new ArgumentNullException("source");
+
+            var results = new TTarget[target.Length];
+
+            using (var e = source.GetEnumerator())
+            for (var i = 0; i < target.Length; i++)
+            {
+                results[i] = e.MoveNext()
+                           ? function(target[i], e.Current, i)
+                           : target[i];
+            }
+
+            Array.Copy(results, 0, target, 0, results.Length);
+        }
+    
+        /// <summary>
+        /// Updates this array with results of applying a function to 
+        /// elements paired from this and the source array.
+        /// </summary>
+        /// <remarks>
+        /// The array is not updated if the application of the function
+        /// fails on any pair of elements. The operation is thus atomic.
+        /// </remarks>
+
+        public static TTarget[] Updating<TTarget, TSource>(this TTarget[] target, IEnumerable<TSource> source, Func<TTarget, TSource, TTarget> function)
+        {
+            target.Update(source, function);
+            return target;
+        }
+
+        /// <summary>
+        /// Updates this array with results of applying a function to 
+        /// elements paired from this and the source array. An additional
+        /// parameter to supplied function provides the index of the 
+        /// elements.
+        /// </summary>
+        /// <remarks>
+        /// The array is not updated if the application of the function
+        /// fails on any pair of elements. The operation is thus atomic.
+        /// </remarks>
+
+        public static TTarget[] Updating<TTarget, TSource>(this TTarget[] target, Func<TTarget, TSource, int, TTarget> function, IEnumerable<TSource> source)
+        {
+            target.Update(source, function);
+            return target;
         }
     }
 }
