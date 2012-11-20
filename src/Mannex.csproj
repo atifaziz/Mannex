@@ -121,6 +121,7 @@
     <Compile Include="ComponentModel\Design\IServiceContainer.cs" />
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
     <Compile Include="Collections\Generic\IComparer.cs" />
+    <Compile Include="Globalization\NumberStyles.cs" />
     <Compile Include="Data\Common\DbConnection.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="Threading\Tasks\Task.cs">
