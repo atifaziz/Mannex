@@ -287,7 +287,7 @@ namespace Mannex.Tests
         }
 
         [Fact]
-        public void IsTruthyWithNull()
+        public void IsTruthy()
         {
             var tests =
                 from t in new[]
