@@ -58,6 +58,34 @@ namespace Mannex
         }
 
         /// <summary>
+        /// Determines if a string has another non-empty string as its 
+        /// prefix and longer by it by at least one character.
+        /// </summary>
+
+        public static bool HasPrefix(this string str, string prefix, StringComparison comparison)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+
+            return !string.IsNullOrEmpty(prefix)
+                && str.Length > prefix.Length
+                && str.StartsWith(prefix, comparison);
+        }
+
+        /// <summary>
+        /// Determines if a string has another non-empty string as its 
+        /// suffix and longer by it by at least one character.
+        /// </summary>
+
+        public static bool HasSuffix(this string str, string suffix, StringComparison comparison)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+
+            return !string.IsNullOrEmpty(suffix)
+                && str.Length > suffix.Length
+                && str.EndsWith(suffix, comparison);
+        }
+
+        /// <summary>
         /// Returns a section of a string from a give starting point on.
         /// </summary>
         /// <remarks>
