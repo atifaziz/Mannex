@@ -86,6 +86,7 @@ namespace Mannex
     {
         public static partial class CalendarExtensions { }
         public static partial class DateTimeFormatInfoExtensions { }
+        public static partial class NumberStylesExtensions { }
     }
 
     namespace Json
