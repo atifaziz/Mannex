@@ -317,5 +317,41 @@ namespace Mannex.Tests
             foreach (var test in tests)
                 Assert.Equal(test.Expected, test.Input.IsTruthy());
         }
+
+        [Fact]
+        public void HasPrefixFailsWithNullThis()
+        {
+             var e = Assert.Throws<ArgumentNullException>(() => 
+                        StringExtensions.HasPrefix(null, string.Empty, StringComparison.Ordinal));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void HasPrefix()
+        {
+            Assert.True("foobar".HasPrefix("foo", StringComparison.Ordinal));
+            Assert.True("foobar".HasPrefix("FOO", StringComparison.OrdinalIgnoreCase));
+            Assert.False("foobar".HasPrefix(null, StringComparison.Ordinal));
+            Assert.False("foobar".HasPrefix(string.Empty, StringComparison.Ordinal));
+            Assert.False("foo".HasPrefix("foo", StringComparison.Ordinal));
+        }
+
+        [Fact]
+        public void HasSuffixFailsWithNullThis()
+        {
+             var e = Assert.Throws<ArgumentNullException>(() => 
+                        StringExtensions.HasSuffix(null, string.Empty, StringComparison.Ordinal));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void HasSuffix()
+        {
+            Assert.True("foobar".HasSuffix("bar", StringComparison.Ordinal));
+            Assert.True("foobar".HasSuffix("BAR", StringComparison.OrdinalIgnoreCase));
+            Assert.False("foobar".HasSuffix(null, StringComparison.Ordinal));
+            Assert.False("foobar".HasSuffix(string.Empty, StringComparison.Ordinal));
+            Assert.False("bar".HasSuffix("bar", StringComparison.Ordinal));
+        }
     }
 }
