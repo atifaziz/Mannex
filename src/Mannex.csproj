@@ -179,6 +179,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publics.cs" />
     <Compile Include="Text\RegularExpressions\String.cs" />
+    <Compile Include="Web\HttpRequest.cs" />
     <Compile Include="Web\NameValueCollection.cs" />
     <Compile Include="Web\StringHtml.cs" />
     <Compile Include="Web\UI\Control.cs" />
