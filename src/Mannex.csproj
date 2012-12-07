@@ -110,6 +110,9 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Web.Abstractions" Condition="'$(Configuration)' == 'NETFX 3.5 Debug' Or '$(Configuration)' == 'NETFX 3.5 Release'">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Array.cs" />
