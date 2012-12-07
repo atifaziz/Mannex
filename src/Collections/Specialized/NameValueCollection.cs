@@ -28,6 +28,7 @@ namespace Mannex.Collections.Specialized
     using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
+    using System.Diagnostics;
     using System.Linq;
     using Generic;
 
@@ -199,6 +200,41 @@ namespace Mannex.Collections.Specialized
                     collection.Add(key, null);
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns an <see cref="IEnumerable{T}"/> object that enumerates
+        /// the entries of this collection as pairs of key-values.
+        /// </summary>
+        /// <remarks>
+        /// This method uses deferred execution.
+        /// </remarks>
+
+        public static IEnumerable<KeyValuePair<string, string[]>> AsEnumerable(this NameValueCollection collection)
+        {
+            if (collection == null) throw new ArgumentNullException("collection");
+            return collection.AsEnumerable((c, k, i) => k.AsKeyTo(c.GetValues(i)));
+        }
+
+        /// <summary>
+        /// Returns an <see cref="IEnumerable{T}"/> object that enumerates
+        /// the entries of this collection. An additional parameter
+        /// determines how to project each entry given its containing 
+        /// collection, key and index.
+        /// </summary>
+        /// <remarks>
+        /// This method uses deferred execution.
+        /// </remarks>
+
+        public static IEnumerable<TResult> AsEnumerable<T, TResult>(this T collection, Func<T, string, int, TResult> selector) 
+            where T : NameValueCollection
+        {
+            if (collection == null) throw new ArgumentNullException("collection");
+            if (selector == null) throw new ArgumentNullException("selector");
+            
+            return from i in Enumerable.Range(0, collection.Count)
+                   select collection.GetKey(i).AsKeyTo(i) into e
+                   select selector(collection, e.Key, e.Value);
         }
     }
 }
