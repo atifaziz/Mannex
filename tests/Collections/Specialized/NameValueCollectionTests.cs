@@ -206,5 +206,42 @@ namespace Mannex.Tests.Collections.Specialized
             Assert.Equal(new[] { "a", "c" }, a.GetValues("kb"));
             Assert.Equal(new[] { "a" }, a.GetValues("kc"));
         }
+ 
+        [Fact]
+        public void AsEnumerableFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                NameValueCollectionExtensions.AsEnumerable(null));
+            Assert.Equal("collection", e.ParamName);
+        }
+
+        [Fact]
+        public void AsEnumerableFailsWithNullSelector()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                new NameValueCollection().AsEnumerable<NameValueCollection, object>(null));
+            Assert.Equal("selector", e.ParamName);
+        }
+
+        [Fact]
+        public void AsEnumerable()
+        {
+            var collection = new NameValueCollection
+            {
+                { "goo", "car" },
+                { "foo", "bar" },
+                { "foo", "baz" },
+            };
+            using (var e = collection.AsEnumerable().GetEnumerator())
+            {
+                Assert.True(e.MoveNext());
+                Assert.Equal("goo", e.Current.Key);
+                Assert.Equal(new[] { "car" }, e.Current.Value);
+                Assert.True(e.MoveNext());
+                Assert.Equal("foo", e.Current.Key);
+                Assert.Equal(new[] { "bar", "baz" }, e.Current.Value);
+                Assert.False(e.MoveNext());
+            }
+        }
     }
 }
