@@ -57,7 +57,7 @@ namespace Mannex.Tests.Data
         [Fact]
         public void GetValueByIndexForReferences()
         {
-            var records = GetRecords(CreateTable<string>("foo", null)).ToArray();
+            var records = CreateTable<string>("foo", null).GetRecords().ToArray();
             Assert.Equal("foo", records[0].GetValue<string>(0));
             Assert.Null(records[1].GetValue<string>(0));
         }
@@ -65,32 +65,22 @@ namespace Mannex.Tests.Data
         [Fact]
         public void GetValueByIndexForStructs()
         {
-            var record = GetRecords(CreateTable<int>(42)).Single();
+            var record = CreateTable<int>(42).GetRecords().Single();
             Assert.Equal(42, record.GetValue<int>(0));
         }
         
         [Fact]
         public void GetValueByIndexForStructsFailsWithDBNull()
         {
-            var record = GetRecords(CreateTable<int>(0)).Single();
+            var record = CreateTable<int>(0).GetRecords().Single();
             Assert.Throws<InvalidCastException>(() => record.GetValue<int>(0));
         }
 
         [Fact]
         public void GetValueByIndexForNullableFailsWithDBNull()
         {
-            var record = GetRecords(CreateTable<int>(0)).Single();
+            var record = CreateTable<int>(0).GetRecords().Single();
             Assert.Null(record.GetValue<int?>(0));
-        }
-
-        static IEnumerable<IDataRecord> GetRecords(DataTable table)
-        {
-            using (var reader = new DataTableReader(table))
-            {
-                var e = new DbEnumerator(reader);
-                while (e.MoveNext())
-                    yield return (IDataRecord) e.Current;
-            }
         }
 
         static DataTable CreateTable<T>(params T[] values)

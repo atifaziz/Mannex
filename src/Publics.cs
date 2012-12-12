@@ -69,6 +69,7 @@ namespace Mannex
 
     namespace Data
     {
+        public static partial class DataTableExtensions { }
         public static partial class IDataReaderExtensions { }
         public static partial class IDataRecordExtensions { }
 
