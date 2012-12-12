@@ -28,10 +28,11 @@ namespace Mannex.Data
     using System;
     using System.Collections.Generic;
     using System.Data;
-#if NET4
     using System.Diagnostics;
+#if NET4
     using System.Dynamic;
 #endif
+    using System.Reflection;
 
     #endregion
 
@@ -41,6 +42,91 @@ namespace Mannex.Data
 
     static partial class IDataRecordExtensions
     {
+        /// <summary>
+        /// Provides strongly-typed access to the value of the field
+        /// identified by its name.
+        /// </summary>
+        /// <remarks>
+        /// If <typeparamref name="T"/> is a reference type and the field
+        /// value is <see cref="DBNull.Value"/> then the returned value is
+        /// a null reference. If <typeparamref name="T"/> is a value type 
+        /// and the field value is <see cref="DBNull.Value"/> then 
+        /// <see cref="InvalidCastException"/> is raised unless 
+        /// <typeparamref name="T"/> is nullable (<see cref="Nullable{T}"/>).
+        /// </remarks>
+
+        public static T GetValue<T>(this IDataRecord record, string name)
+        {
+            if (record == null) throw new ArgumentNullException("record");
+            return record.GetValue<T>(record.GetOrdinal(name));
+        }
+
+        /// <summary>
+        /// Provides strongly-typed access to the value of the field
+        /// identified by ordinal position.
+        /// </summary>
+        /// <remarks>
+        /// If <typeparamref name="T"/> is a reference type and the field
+        /// value is <see cref="DBNull.Value"/> then the returned value is
+        /// a null reference. If <typeparamref name="T"/> is a value type 
+        /// and the field value is <see cref="DBNull.Value"/> then 
+        /// <see cref="InvalidCastException"/> is raised unless 
+        /// <typeparamref name="T"/> is nullable (<see cref="Nullable{T}"/>).
+        /// </remarks>
+
+        public static T GetValue<T>(this IDataRecord record, int i)
+        {
+            if (record == null) throw new ArgumentNullException("record");
+            return GetValueImpl<T>.Impl(record[i]);
+        }
+
+        static class GetValueImpl<T>
+        {
+            public static readonly Func<object, T> Impl;
+
+            static GetValueImpl()
+            {
+                var type = typeof(T);
+                Impl = !type.IsValueType
+                     ? GetValueImpl<T>.ReferenceImpl
+                     : type.IsConstructionOfNullable()
+                     ? MakeNullableImpl()
+                     : GetValueImpl<T>.ValueImpl;
+            }
+
+            static T ReferenceImpl(object value)
+            {
+                return !Convert.IsDBNull(value) ? (T) value : default(T);
+            }
+
+            static T ValueImpl(object value)
+            {
+                if (Convert.IsDBNull(value))
+                { 
+                    throw new InvalidCastException(string.Format(
+                        @"Cannot cast DBNull to type '{0}'. Use '{1}' instead.", 
+                        typeof(T), typeof(Nullable<>).MakeGenericType(typeof(T))));
+                }
+                return (T) value;
+            }
+
+            static Func<object, T> MakeNullableImpl()
+            {
+                Debug.Assert(typeof(T).IsConstructionOfNullable());
+                var thisType = typeof(GetValueImpl<T>);
+                var md = thisType.GetMethod("NullableImpl", BindingFlags.Static | BindingFlags.NonPublic);
+                var method = md.MakeGenericMethod(typeof(T).GetGenericArguments()[0]);
+                return (Func<object, T>) Delegate.CreateDelegate(typeof(Func<object, T>), method);
+            }
+
+            static TValue? NullableImpl<TValue>(object value) where TValue : struct
+            {
+                return !Convert.IsDBNull(value) 
+                     ? new TValue?((TValue) value) 
+                     : new TValue?();
+            }
+        }
+
 #if NET4
         /// <summary>
         /// Converts the record into a dyamic object (specifically 
@@ -63,21 +149,21 @@ namespace Mannex.Data
         /// </summary>
 
         public static ExpandoObject ToDynamicObject(
-            this IDataRecord record, 
-            Func<string, string> nameMapper, 
+            this IDataRecord record,
+            Func<string, string> nameMapper,
             Func<string, object, object> valueMapper)
         {
             if (record == null) throw new ArgumentNullException("record");
             if (nameMapper == null) throw new ArgumentNullException("nameMapper");
             if (valueMapper == null) throw new ArgumentNullException("valueMapper");
-            
+
             return Map(record, new ExpandoObject(), nameMapper, valueMapper);
         }
 
         private static T Map<T>(
-            this IDataRecord record, 
-            T target, 
-            Func<string, string> nameMapper, 
+            this IDataRecord record,
+            T target,
+            Func<string, string> nameMapper,
             Func<string, object, object> valueMapper)
             where T : IDictionary<string, object>
         {
