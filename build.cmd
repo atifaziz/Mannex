@@ -19,12 +19,18 @@ REM WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 REM See the License for the specific language governing permissions and
 REM limitations under the License.
 
+@echo off
 setlocal
 pushd "%~dp0"
+call :main %*
+popd
+goto :EOF
+
+:main
 set MSBUILD=%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe
 if not exist "%MSBUILD%" (
     echo The .NET Framework 4.0 does not appear to be installed on this 
     echo machine, which is required to build the solution.
     exit /b 1
 )
-for %%f in (3.5 4.0) do for %%q in (Debug Release) do "%MSBUILD%" Mannex.sln /p:Configuration="NETFX %%f %%q" %*
+for %%f in (3.5 4.0) do for %%q in (Debug Release) do "%MSBUILD%" Mannex.sln /p:Configuration="NETFX %%f %%q" /v:m %*
