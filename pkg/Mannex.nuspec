@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Mannex</id>
-        <version>1.6.0</version>
+        <version>1.7.0</version>
         <title>Mannex</title>
         <authors>Atif Aziz</authors>
         <owners>Atif Aziz</owners>
@@ -12,7 +12,7 @@
         <description>Extension methods for .NET.</description>
         <copyright>Copyright (c) 2009, Atif Aziz. All rights reserved.</copyright>
         <tags>extension methods</tags>
-        <releaseNotes>New extension methods</releaseNotes>
+        <releaseNotes>New extension methods for IDataRecord</releaseNotes>
     </metadata>
     <files>
         <file src="..\bin\net-3.5\Release\Mannex.dll" target="lib\net35\Mannex.dll" />
