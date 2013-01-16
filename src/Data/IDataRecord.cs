@@ -45,14 +45,22 @@ namespace Mannex.Data
     static partial class IDataRecordExtensions
     {
         /// <summary>
+        /// Gets an ordered sequence of field ordinals of this record.
+        /// </summary>
+
+        public static IEnumerable<int> GetOrdinals(this IDataRecord record)
+        {
+            return Enumerable.Range(0, record.FieldCount);
+        }
+
+        /// <summary>
         /// Gets an ordered sequence of field names of this record.
         /// </summary>
 
         public static IEnumerable<string> GetNames(this IDataRecord record)
         {
             if (record == null) throw new ArgumentNullException("record");
-            return from i in Enumerable.Range(0, record.FieldCount) 
-                   select record.GetName(i);
+            return from i in record.GetOrdinals() select record.GetName(i);
         }
 
         /// <summary>
@@ -62,7 +70,7 @@ namespace Mannex.Data
         public static IEnumerable<object> GetValues(this IDataRecord record)
         {
             if (record == null) throw new ArgumentNullException("record");
-            return from i in Enumerable.Range(0, record.FieldCount) 
+            return from i in record.GetOrdinals()
                    select record.GetValue(i);
         }
 
