@@ -32,6 +32,7 @@ namespace Mannex.Data
 #if NET4
     using System.Dynamic;
 #endif
+    using System.Linq;
     using System.Reflection;
 
     #endregion
@@ -42,6 +43,17 @@ namespace Mannex.Data
 
     static partial class IDataRecordExtensions
     {
+        /// <summary>
+        /// Gets an ordered sequence of field names of this record.
+        /// </summary>
+
+        public static IEnumerable<string> GetNames(this IDataRecord record)
+        {
+            if (record == null) throw new ArgumentNullException("record");
+            return from i in Enumerable.Range(0, record.FieldCount) 
+                   select record.GetName(i);
+        }
+
         /// <summary>
         /// Provides strongly-typed access to the value of the field
         /// identified by its name.
