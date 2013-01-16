@@ -34,6 +34,7 @@ namespace Mannex.Data
 #endif
     using System.Linq;
     using System.Reflection;
+    using Collections.Generic;
 
     #endregion
 
@@ -52,6 +53,17 @@ namespace Mannex.Data
             if (record == null) throw new ArgumentNullException("record");
             return from i in Enumerable.Range(0, record.FieldCount) 
                    select record.GetName(i);
+        }
+
+        /// <summary>
+        /// Gets an ordered sequence of field value of this record.
+        /// </summary>
+
+        public static IEnumerable<object> GetValues(this IDataRecord record)
+        {
+            if (record == null) throw new ArgumentNullException("record");
+            return from i in Enumerable.Range(0, record.FieldCount) 
+                   select record.GetValue(i);
         }
 
         /// <summary>
