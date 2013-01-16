@@ -75,6 +75,18 @@ namespace Mannex.Data
         }
 
         /// <summary>
+        /// Gets an ordered sequence of fields of this record as 
+        /// key-value pairs.
+        /// </summary>
+
+        public static IEnumerable<KeyValuePair<string, object>> GetFields(this IDataRecord record)
+        {
+            if (record == null) throw new ArgumentNullException("record");
+            return from i in record.GetOrdinals()
+                   select record.GetName(i).AsKeyTo(record.GetValue(i));
+        }
+
+        /// <summary>
         /// Provides strongly-typed access to the value of the field
         /// identified by its name.
         /// </summary>
@@ -203,10 +215,10 @@ namespace Mannex.Data
             Debug.Assert(nameMapper != null);
             Debug.Assert(valueMapper != null);
 
-            for (var i = 0; i < record.FieldCount; i++)
+            foreach (var field in record.GetFields())
             {
-                var key = nameMapper(record.GetName(i));
-                target.Add(key, valueMapper(key, record.GetValue(i)));
+                var key = nameMapper(field.Key);
+                target.Add(key, valueMapper(key, field.Value));
             }
 
             return target;
