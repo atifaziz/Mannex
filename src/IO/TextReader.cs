@@ -27,8 +27,12 @@ namespace Mannex.IO
 
     using System;
     using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using Collections.Generic;
+    using Microsoft.VisualBasic.FileIO;
 
     #endregion
 
@@ -166,5 +170,213 @@ namespace Mannex.IO
                 _readers = null;
             }
         }
+
+        /// <summary>
+        /// Parses delimited text like CSV (command-separated values) and 
+        /// returns each row of data as a sequence of items.
+        /// </summary>
+
+        public static IEnumerator<TResult> ParseXsv<TResult>(
+            this TextReader reader, string delimiter, bool quoted,
+            Func<string[], string[], TResult> resultSelector)
+        {
+            return reader.ParseXsv(delimiter, quoted, hs => hs, resultSelector);
+        }
+
+        /// <summary>
+        /// Parses delimited text like CSV (command-separated values) and 
+        /// returns each row of data as a sequence of items.
+        /// </summary>
+
+        public static IEnumerator<TResult> ParseXsv<TResult>(
+            this TextReader reader, string delimiter, bool quoted,
+            Func<long, string[], string[], TResult> resultSelector)
+        {
+            return reader.ParseXsv(delimiter, quoted, (_, hs) => hs, resultSelector);
+        }
+
+        /// <summary>
+        /// Parses delimited text like CSV (command-separated values) and 
+        /// returns each row of data as a sequence of items.
+        /// </summary>
+
+        public static IEnumerator<TResult> ParseXsv<THeader, TResult>(
+            this TextReader reader, string delimiter, bool quoted,
+            Func<string[], THeader> headerSelector,
+            Func<THeader, string[], TResult> resultSelector)
+        {
+            if (headerSelector == null) throw new ArgumentNullException("headerSelector");
+            if (resultSelector == null) throw new ArgumentNullException("resultSelector");
+
+            return reader.ParseXsv(delimiter, quoted, 
+                                   (_, hs) => headerSelector(hs), 
+                                   (_, hs, fs) => resultSelector(hs, fs));
+        }
+
+        /// <summary>
+        /// Parses delimited text like CSV (command-separated values) and 
+        /// returns each row of data as a sequence of items.
+        /// </summary>
+
+        public static IEnumerator<TResult> ParseXsv<THeader, TResult>(
+            this TextReader reader, string delimiter, bool quoted,
+            Func<long, string[], THeader> headerSelector,
+            Func<long, THeader, string[], TResult> resultSelector)
+        {
+            if (reader == null) throw new ArgumentNullException("reader");
+            if (headerSelector == null) throw new ArgumentNullException("headerSelector");
+            if (resultSelector == null) throw new ArgumentNullException("resultSelector");
+
+            return ParseXsv(() => new TextFieldParser(reader)
+            {
+                TextFieldType  = FieldType.Delimited,
+                Delimiters = new[] { delimiter }, 
+                HasFieldsEnclosedInQuotes = quoted,
+                TrimWhiteSpace = false,
+            }, headerSelector, resultSelector).GetEnumerator();
+        }
+
+        static IEnumerable<TResult> ParseXsv<THeader, TResult>(
+            Func<TextFieldParser> opener, 
+            Func<long, string[], THeader> headerSelector,
+            Func<long, THeader, string[], TResult> resultSelector)
+        {
+            Debug.Assert(opener != null);
+            Debug.Assert(headerSelector != null);
+            Debug.Assert(resultSelector != null);
+
+            using (var parser = opener())
+            {
+                if (parser == null)
+                    throw new NullReferenceException("Unexpected null reference where an instance of TextFieldParser was expected.");
+                var headerInitialzed = false;
+                var header = default(THeader);
+                while (!parser.EndOfData)
+                {
+                    if (!headerInitialzed)
+                    {
+                        header = headerSelector(parser.LineNumber, parser.ReadFields());
+                        headerInitialzed = true;
+                    }
+                    else
+                    {
+                        yield return resultSelector(parser.LineNumber, header, parser.ReadFields());
+                    }
+                }
+            }
+        }
+
+        /*
+         * TODO InvalidOperationException "Invalid attempt to read when no data is present"
+
+        sealed class TextDataReader : IDataReader
+        {
+            string[] _headers;
+            IEnumerator<string[]> _cursor;
+
+            bool IsDisposed() { return _cursor == null; }
+
+            void UndisposedGuard()
+            {
+                if (IsDisposed()) 
+                    throw new ObjectDisposedException(GetType().FullName);
+            }
+
+            IEnumerator<string[]> Cursor { get { UndisposedGuard(); return _cursor; } }
+            string[] Headers { get { UndisposedGuard(); return _headers; } }
+
+            public void Dispose()
+            {
+                if (_cursor == null) return;
+                _cursor.Dispose();
+                _cursor = null;
+                _headers = null; // not needed but good for GC
+            }
+
+            public void Close() { Dispose(); }
+
+            int ValidatingIndex(int i) { return ValidatingIndex(i, i); }
+
+            // ReSharper disable UnusedParameter.Local
+            T ValidatingIndex<T>(int i, T result) // ReSharper restore UnusedParameter.Local
+            {
+                if (i < 0 || i >= FieldCount) throw new IndexOutOfRangeException();
+                return result;
+            }
+
+            public string GetName(int i) { return Headers[ValidatingIndex(i)]; }
+            public string GetDataTypeName(int i) { return GetFieldType(i).Name; }
+            public Type GetFieldType(int i) { return ValidatingIndex(i, typeof(string)); }
+            public object GetValue(int i) { return GetString(i); }
+
+            public int GetValues(object[] values)
+            {
+                if (values == null) throw new ArgumentNullException("values");
+                var length = Math.Min(values.Length, FieldCount);
+                for (var i = 0; i < length; i++)
+                    values[i] = this[i];
+                return length;
+            }
+
+            public int GetOrdinal(string name)
+            {
+                var ordinal = Array.FindIndex(Headers, h => h.Equals(name, StringComparison.Ordinal));
+                if (ordinal < 0)
+                {
+                    ordinal = Array.FindIndex(Headers, h => h.Equals(name, StringComparison.OrdinalIgnoreCase));
+                    if (ordinal < 0)
+                        throw new IndexOutOfRangeException();
+                }
+                return ordinal;
+            }
+
+            #region Unsupported GetXXX methods
+
+            InvalidCastException BadTypeRequestImpl(int i) { return ValidatingIndex(i, new InvalidCastException()); }
+
+            public bool        GetBoolean(int i)  { throw BadTypeRequestImpl(i); }
+            public byte        GetByte(int i)     { throw BadTypeRequestImpl(i); }
+            public char        GetChar(int i)     { throw BadTypeRequestImpl(i); }
+            public Guid        GetGuid(int i)     { throw BadTypeRequestImpl(i); }
+            public short       GetInt16(int i)    { throw BadTypeRequestImpl(i); }
+            public int         GetInt32(int i)    { throw BadTypeRequestImpl(i); }
+            public long        GetInt64(int i)    { throw BadTypeRequestImpl(i); }
+            public float       GetFloat(int i)    { throw BadTypeRequestImpl(i); }
+            public double      GetDouble(int i)   { throw BadTypeRequestImpl(i); }
+            public string      GetString(int i)   { throw BadTypeRequestImpl(i); }
+            public decimal     GetDecimal(int i)  { throw BadTypeRequestImpl(i); }
+            public DateTime    GetDateTime(int i) { throw BadTypeRequestImpl(i); }
+            public IDataReader GetData(int i)     { throw BadTypeRequestImpl(i); }
+            public long        GetBytes(int i, long fieldOffset, byte[] buffer, int bufferoffset, int length) { throw BadTypeRequestImpl(i); }
+            public long        GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length) { throw BadTypeRequestImpl(i); }
+
+            public bool IsDBNull(int i) { return ValidatingIndex(i, false); }
+            public int FieldCount { get { return Headers.Length; } }
+            public object this[int i] { get { return GetValue(i); } }
+            public object this[string name] { get { return this[GetOrdinal(name)]; } }
+
+            #endregion
+
+            public DataTable GetSchemaTable()
+            {
+                var table = new DataTable();
+            }
+
+            public bool NextResult()
+            {
+                // TODO close enumerator
+                return false;
+            }
+
+            public bool Read()
+            {
+                return Cursor.MoveNext();
+            }
+
+            public int Depth { get; private set; }
+            public bool IsClosed { get; private set; }
+            public int RecordsAffected { get; private set; }
+        }
+        */
     }
 }
