@@ -27,7 +27,6 @@ namespace Mannex.IO
 
     using System;
     using System.Collections.Generic;
-    using System.Data;
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
@@ -176,6 +175,17 @@ namespace Mannex.IO
         /// returns each row of data as a sequence of items.
         /// </summary>
 
+        public static IEnumerator<KeyValuePair<string, string>[]> ParseXsv(
+            this TextReader reader, string delimiter, bool quoted)
+        {
+            return reader.ParseXsv(delimiter, quoted, hs => hs, (hs, vs) => Enumerable.Range(0, hs.Length).Select(i => hs[i].AsKeyTo(vs[i])).ToArray());
+        }
+
+        /// <summary>
+        /// Parses delimited text like CSV (command-separated values) and 
+        /// returns each row of data as a sequence of items.
+        /// </summary>
+
         public static IEnumerator<TResult> ParseXsv<TResult>(
             this TextReader reader, string delimiter, bool quoted,
             Func<string[], string[], TResult> resultSelector)
@@ -210,7 +220,7 @@ namespace Mannex.IO
 
             return reader.ParseXsv(delimiter, quoted, 
                                    (_, hs) => headerSelector(hs), 
-                                   (_, hs, fs) => resultSelector(hs, fs));
+                                   (_, hs, vs) => resultSelector(hs, vs));
         }
 
         /// <summary>
@@ -265,14 +275,92 @@ namespace Mannex.IO
                 }
             }
         }
-
+        
         /*
-         * TODO InvalidOperationException "Invalid attempt to read when no data is present"
+        abstract class DataReader : DbDataReader
+        {
+            public override int Depth { get { return 0; } }
+            public override int RecordsAffected { get { return -1; } }
 
-        sealed class TextDataReader : IDataReader
+            public override object this[string name] { get { return GetValue(GetOrdinal(name)); } }
+            public override object this[int i] { get { return GetValue(i); } }
+
+            public override string GetDataTypeName(int i) { return GetFieldType(i).Name; }
+            public override bool IsDBNull(int i) { return Convert.IsDBNull(GetValue(i)); }
+            public override bool GetBoolean(int i) { return (bool) GetValue(i); }
+            public override byte GetByte(int i) { return (byte) GetValue(i); }
+            public override char GetChar(int i) { return (char) GetValue(i); }
+            public override DateTime GetDateTime(int i) { return (DateTime) GetValue(i); }
+            public override decimal GetDecimal(int i) { return (decimal) GetValue(i); }
+            public override double GetDouble(int i) { return (double) GetValue(i); }
+            public override float GetFloat(int i) { return (float) GetValue(i); }
+            public override Guid GetGuid(int i) { return (Guid) GetValue(i); }
+            public override short GetInt16(int i) { return (short) GetValue(i); }
+            public override int GetInt32(int i) { return (int) GetValue(i); }
+            public override long GetInt64(int i) { return (long) GetValue(i); }
+            public override string GetString(int i) { return (string) GetValue(i); }
+
+            public override long GetBytes(int i, long dataIndex, byte[] buffer, int bufferIndex, int length)
+            {
+                return GetBuffer(i, dataIndex, buffer, bufferIndex, length);
+            }
+
+            public override long GetChars(int i, long dataIndex, char[] buffer, int bufferIndex, int length)
+            {
+                return GetBuffer(i, dataIndex, buffer, bufferIndex, length);
+            }
+
+            long GetBuffer<T>(int i, long dataIndex, T[] buffer, int bufferIndex, int length)
+            {
+                var array = (T[]) GetValue(i);
+                var copyLength = Math.Min(array.LongLength - dataIndex, length);
+                Array.Copy(array, dataIndex, buffer, bufferIndex, copyLength);
+                return copyLength;
+            }
+
+            public override int GetValues(object[] values)
+            {
+                if (values == null) throw new ArgumentNullException("values");
+                var length = Math.Min(values.Length, FieldCount);
+                for (var i = 0; i < length; i++)
+                    values[i] = this[i];
+                return length;
+            }
+
+            public override IEnumerator GetEnumerator()
+            {
+                return new DbEnumerator(this, true);
+            }
+
+            public override int GetOrdinal(string name)
+            {
+                var names = Enumerable.Range(0, FieldCount)
+                                      .Select(ord => (ord + 1).AsKeyTo(GetName(ord)));
+
+                // ReSharper disable PossibleMultipleEnumeration
+                var ordinal = names.FirstOrDefault(e => e.Value.Equals(name, StringComparison.Ordinal)).Key - 1; // ReSharper restore PossibleMultipleEnumeration
+                if (ordinal < 0)
+                {
+                    // ReSharper disable PossibleMultipleEnumeration
+                    ordinal = names.FirstOrDefault(e => e.Value.Equals(name, StringComparison.OrdinalIgnoreCase)).Key - 1; // ReSharper restore PossibleMultipleEnumeration
+                    if (ordinal < 0)
+                        throw new IndexOutOfRangeException();
+                }
+
+                return ordinal;
+            }
+        }
+
+        sealed class TextDataReader : DataReader
         {
             string[] _headers;
             IEnumerator<string[]> _cursor;
+
+            public TextDataReader(string[] headers, IEnumerator<string[]> cursor)
+            {
+                _headers = headers;
+                _cursor = new Enumerator<string[]>(cursor);
+            }
 
             bool IsDisposed() { return _cursor == null; }
 
@@ -285,15 +373,14 @@ namespace Mannex.IO
             IEnumerator<string[]> Cursor { get { UndisposedGuard(); return _cursor; } }
             string[] Headers { get { UndisposedGuard(); return _headers; } }
 
-            public void Dispose()
+            public override void Close()
             {
-                if (_cursor == null) return;
+                if (_cursor == null) 
+                    return;
                 _cursor.Dispose();
                 _cursor = null;
                 _headers = null; // not needed but good for GC
             }
-
-            public void Close() { Dispose(); }
 
             int ValidatingIndex(int i) { return ValidatingIndex(i, i); }
 
@@ -304,78 +391,71 @@ namespace Mannex.IO
                 return result;
             }
 
-            public string GetName(int i) { return Headers[ValidatingIndex(i)]; }
-            public string GetDataTypeName(int i) { return GetFieldType(i).Name; }
-            public Type GetFieldType(int i) { return ValidatingIndex(i, typeof(string)); }
-            public object GetValue(int i) { return GetString(i); }
+            public override string GetName(int i) { return Headers[ValidatingIndex(i)]; }
+            public override Type GetFieldType(int i) { return ValidatingIndex(i, typeof(string)); }
+            public override object GetValue(int i) { return GetString(i); }
+            public override string GetString(int i) { return _cursor.Current[ValidatingIndex(i)]; }
+            public override bool IsDBNull(int i) { return ValidatingIndex(i, false); }
+            public override int FieldCount { get { return Headers.Length; } }
 
-            public int GetValues(object[] values)
+            public override bool HasRows
             {
-                if (values == null) throw new ArgumentNullException("values");
-                var length = Math.Min(values.Length, FieldCount);
-                for (var i = 0; i < length; i++)
-                    values[i] = this[i];
-                return length;
+                get { throw new NotSupportedException(); }
             }
 
-            public int GetOrdinal(string name)
-            {
-                var ordinal = Array.FindIndex(Headers, h => h.Equals(name, StringComparison.Ordinal));
-                if (ordinal < 0)
-                {
-                    ordinal = Array.FindIndex(Headers, h => h.Equals(name, StringComparison.OrdinalIgnoreCase));
-                    if (ordinal < 0)
-                        throw new IndexOutOfRangeException();
-                }
-                return ordinal;
-            }
+            public override object this[int i] { get { return GetValue(i); } }
+            public override object this[string name] { get { return this[GetOrdinal(name)]; } }
 
-            #region Unsupported GetXXX methods
-
-            InvalidCastException BadTypeRequestImpl(int i) { return ValidatingIndex(i, new InvalidCastException()); }
-
-            public bool        GetBoolean(int i)  { throw BadTypeRequestImpl(i); }
-            public byte        GetByte(int i)     { throw BadTypeRequestImpl(i); }
-            public char        GetChar(int i)     { throw BadTypeRequestImpl(i); }
-            public Guid        GetGuid(int i)     { throw BadTypeRequestImpl(i); }
-            public short       GetInt16(int i)    { throw BadTypeRequestImpl(i); }
-            public int         GetInt32(int i)    { throw BadTypeRequestImpl(i); }
-            public long        GetInt64(int i)    { throw BadTypeRequestImpl(i); }
-            public float       GetFloat(int i)    { throw BadTypeRequestImpl(i); }
-            public double      GetDouble(int i)   { throw BadTypeRequestImpl(i); }
-            public string      GetString(int i)   { throw BadTypeRequestImpl(i); }
-            public decimal     GetDecimal(int i)  { throw BadTypeRequestImpl(i); }
-            public DateTime    GetDateTime(int i) { throw BadTypeRequestImpl(i); }
-            public IDataReader GetData(int i)     { throw BadTypeRequestImpl(i); }
-            public long        GetBytes(int i, long fieldOffset, byte[] buffer, int bufferoffset, int length) { throw BadTypeRequestImpl(i); }
-            public long        GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length) { throw BadTypeRequestImpl(i); }
-
-            public bool IsDBNull(int i) { return ValidatingIndex(i, false); }
-            public int FieldCount { get { return Headers.Length; } }
-            public object this[int i] { get { return GetValue(i); } }
-            public object this[string name] { get { return this[GetOrdinal(name)]; } }
-
-            #endregion
-
-            public DataTable GetSchemaTable()
+            public override DataTable GetSchemaTable()
             {
                 var table = new DataTable();
+                return table;
             }
-
-            public bool NextResult()
+            
+            public override bool NextResult()
             {
                 // TODO close enumerator
                 return false;
             }
 
-            public bool Read()
+            public override bool Read()
             {
                 return Cursor.MoveNext();
             }
 
-            public int Depth { get; private set; }
-            public bool IsClosed { get; private set; }
-            public int RecordsAffected { get; private set; }
+            public override bool IsClosed { get { throw new NotImplementedException(); } }
+
+            sealed class Enumerator<T> : IEnumerator<T>
+            {
+                bool _started;
+                readonly IEnumerator<T> _inner;
+
+                public Enumerator(IEnumerator<T> inner) { _inner = inner; }
+                public void Dispose() { _inner.Dispose(); }
+            
+                public bool MoveNext()
+                {
+                    _started = true;
+                    return _inner.MoveNext();
+                }
+
+                public void Reset()
+                {
+                    _inner.Reset();
+                    _started = false;
+                }
+
+                object IEnumerator.Current { get { return Current; } }
+
+                public T Current
+                {
+                    get 
+                    { 
+                        if (!_started) throw new InvalidOperationException(@"Invalid attempt to read when no data is present."); 
+                        return _inner.Current; 
+                    }
+                }
+            }
         }
         */
     }
