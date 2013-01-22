@@ -126,6 +126,7 @@
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
     <Compile Include="Collections\Generic\IComparer.cs" />
     <Compile Include="Data\DataTable.cs" />
+    <Compile Include="Data\TextReader.cs" />
     <Compile Include="IFormattable.cs" />
     <Compile Include="Globalization\NumberStyles.cs" />
     <Compile Include="Data\Common\DbConnection.cs" />
