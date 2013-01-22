@@ -72,6 +72,7 @@ namespace Mannex
         public static partial class DataTableExtensions { }
         public static partial class IDataReaderExtensions { }
         public static partial class IDataRecordExtensions { }
+        public static partial class TextReaderExtensions { }
 
         namespace Common
         {
