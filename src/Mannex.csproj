@@ -118,9 +118,12 @@
   <ItemGroup>
     <Compile Include="Array.cs" />
     <Compile Include="Boolean.cs" />
+    <Compile Include="Collections\ArrayList.cs" />
+    <Compile Include="Collections\Generic\IEnumerator.cs" />
     <Compile Include="Collections\Generic\Pairing.cs" />
     <Compile Include="Collections\Generic\List.cs" />
     <Compile Include="Collections\Generic\Dictionary.cs" />
+    <Compile Include="Collections\IEnumerator.cs" />
     <Compile Include="Collections\Specialized\NameValueCollection.cs" />
     <Compile Include="ComponentModel\Design\IServiceContainer.cs" />
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
