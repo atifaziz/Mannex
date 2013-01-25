@@ -43,7 +43,13 @@ namespace Mannex
     public static partial class ICloneableExtensions { }
     public static partial class IFormattableExtensions { }
     public static partial class IServiceProviderExtensions { }
-    
+
+    namespace Collections
+    {
+        public static partial class ArrayListExtensions { }
+        public static partial class IEnumeratorExtensions { }
+    }
+
     namespace Collections.Specialized
     {
         public static partial class NameValueCollectionExtensions { }
@@ -53,6 +59,7 @@ namespace Mannex
     {
         public static partial class DictionaryExtensions { }
         public static partial class IComparerExtensions { }
+        public static partial class IEnumeratorExtensions { }
         public static partial class ListExtensions { }
         public static partial class PairingExtensions { }
     }

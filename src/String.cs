@@ -28,6 +28,7 @@ namespace Mannex
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
     using IO;
@@ -396,6 +397,23 @@ namespace Mannex
                   : str.Substring(index + count);
             
             return resultFunc(a, b);
+        }
+
+        /// <summary>
+        /// Splits string into lines where a line is terminated 
+        /// by CR and LF, or just CR or just LF. White space is trimmed off
+        /// each line and any resulting blank lines are skipped.
+        /// </summary>
+        /// <remarks>
+        /// This method uses deferred exection.
+        /// </remarks>
+
+        public static IEnumerable<string> SplitIntoNonBlankLines(this string str)
+        {
+            return from line in str.SplitIntoLines()
+                   select line.Trim() into line
+                   where line.Length > 0
+                   select line;
         }
 
         /// <summary>

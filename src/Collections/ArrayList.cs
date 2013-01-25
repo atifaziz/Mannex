@@ -21,30 +21,29 @@
 //
 #endregion
 
-#region Imports
+namespace Mannex.Collections
+{
+    #region Imports
 
-using System.Reflection;
+    using System;
+    using System.Collections;
 
-using CLSCompliantAttribute = System.CLSCompliantAttribute;
-using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
+    #endregion
 
-#endregion
+    /// <summary>
+    /// Extension methods for <see cref="ArrayList"/>.
+    /// </summary>
 
-[assembly: AssemblyTitle("Mannex")]
-[assembly: AssemblyDescription("Extension methods for .NET")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mannex")]
-[assembly: AssemblyCopyright("Copyright (c) 2009, Atif Aziz. All rights reserved.")]
-[assembly: AssemblyCulture("")]
+    static partial class ArrayListExtensions
+    {
+        /// <summary>
+        /// Strong-typed version of <see cref="ArrayList.ToArray()"/>.
+        /// </summary>
 
-[assembly: AssemblyVersion("1.8.15625.810")]
-[assembly: AssemblyFileVersion("1.8.15625.810")]
-
-#if DEBUG
-[assembly: AssemblyConfiguration("DEBUG")]
-#else
-[assembly: AssemblyConfiguration("RELEASE")]
-#endif
-
-[assembly: CLSCompliant(true)] 
-[assembly: ComVisible(false)]
+        public static T[] ToArray<T>(this ArrayList list)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            return (T[]) list.ToArray(typeof(T));
+        }
+    }
+}
