@@ -65,9 +65,10 @@ namespace Mannex.IO
                        : new StreamReader(path, encoding);
 
             using (reader)
+            using (var line = reader.ReadLines())
             {
-                foreach (var line in reader.ReadLines())
-                    yield return line;
+                while (line.MoveNext())
+                    yield return line.Current;
             }
         }
     }

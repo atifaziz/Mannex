@@ -46,13 +46,13 @@ namespace Mannex.IO
         /// Reads all lines from reader using deferred semantics.
         /// </summary>
 
-        public static IEnumerable<string> ReadLines(this TextReader reader)
+        public static IEnumerator<string> ReadLines(this TextReader reader)
         {
             if (reader == null) throw new ArgumentNullException("reader");
             return ReadLinesImpl(reader);
         }
 
-        private static IEnumerable<string> ReadLinesImpl(this TextReader reader)
+        static IEnumerator<string> ReadLinesImpl(this TextReader reader)
         {
             for (var line = reader.ReadLine(); line != null; line = reader.ReadLine())
                 yield return line;

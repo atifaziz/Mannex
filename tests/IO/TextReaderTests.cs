@@ -29,9 +29,9 @@ namespace Mannex.Tests.IO
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using Mannex.Collections.Generic;
     using Mannex.IO;
     using Xunit;
-    using StringExtensions = Mannex.IO.StringExtensions;
 
     #endregion
 

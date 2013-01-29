@@ -42,7 +42,7 @@ namespace Mannex.Data
         /// Projects each record of the reader into a new form.
         /// </summary>
 
-        public static IEnumerable<T> Select<T>(this IDataReader reader, Func<IDataRecord, T> selector)
+        public static IEnumerator<T> Select<T>(this IDataReader reader, Func<IDataRecord, T> selector)
         {
             if (reader == null) throw new ArgumentNullException("reader");
             if (selector == null) throw new ArgumentNullException("selector");
@@ -50,7 +50,7 @@ namespace Mannex.Data
             return SelectImpl(reader, selector);
         }
         
-        private static IEnumerable<T> SelectImpl<T>(IDataReader reader, Func<IDataRecord, T> selector)
+        static IEnumerator<T> SelectImpl<T>(IDataReader reader, Func<IDataRecord, T> selector)
         {
             using (reader)
             {
