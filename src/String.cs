@@ -433,8 +433,9 @@ namespace Mannex
         private static IEnumerable<string> SplitIntoLinesImpl(string str)
         {
             using (var reader = str.Read())
-            foreach (var line in reader.ReadLines())
-                yield return line;
+            using (var line = reader.ReadLines())
+                while (line.MoveNext())
+                    yield return line.Current;
         }
 
         /// <summary>

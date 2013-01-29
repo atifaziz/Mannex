@@ -28,6 +28,7 @@ namespace Mannex.Tests.Data
     using System;
     using System.Data;
     using System.Linq;
+    using Mannex.Collections.Generic;
     using Mannex.Data;
     using Xunit;
 
@@ -59,20 +60,21 @@ namespace Mannex.Tests.Data
             var disposed = false;
             reader.Disposed += delegate { disposed = true; };
 
-            var result = reader.Select(r => (int)r[0]);
-            Assert.NotNull(result);
-            var e = result.GetEnumerator();
-            Assert.NotNull(e);
-            Assert.True(e.MoveNext());
-            Assert.Equal(12, e.Current);
-            Assert.True(e.MoveNext());
-            Assert.Equal(34, e.Current);
-            Assert.True(e.MoveNext());
-            Assert.Equal(56, e.Current);
-            Assert.True(e.MoveNext());
-            Assert.Equal(78, e.Current);
-            Assert.False(e.MoveNext());
-            Assert.True(disposed);
+            using (var e = reader.Select(r => (int)r[0]))
+            {
+                Assert.NotNull(e);
+                Assert.NotNull(e);
+                Assert.True(e.MoveNext());
+                Assert.Equal(12, e.Current);
+                Assert.True(e.MoveNext());
+                Assert.Equal(34, e.Current);
+                Assert.True(e.MoveNext());
+                Assert.Equal(56, e.Current);
+                Assert.True(e.MoveNext());
+                Assert.Equal(78, e.Current);
+                Assert.False(e.MoveNext());
+                Assert.True(disposed);                
+            }
         }
 
         [Fact]
