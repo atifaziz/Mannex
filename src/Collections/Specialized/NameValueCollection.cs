@@ -28,7 +28,6 @@ namespace Mannex.Collections.Specialized
     using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
-    using System.Diagnostics;
     using System.Linq;
     using Generic;
 
@@ -263,6 +262,31 @@ namespace Mannex.Collections.Specialized
             return from i in Enumerable.Range(0, collection.Count)
                    select collection.GetKey(i).AsKeyTo(i) into e
                    select selector(collection, e.Key, e.Value);
+        }
+
+        /// <summary>
+        /// Determines whether a key exists in the <see cref="NameObjectCollectionBase.Keys"/>
+        /// or not. The check is made without regard to case of the key.
+        /// </summary>
+    
+        public static bool ContainsKey(this NameValueCollection collection, string name)
+        {
+            if (collection == null) throw new ArgumentNullException("collection");
+            return collection.ContainsKey(name, null);
+        }
+
+        /// <summary>
+        /// Determines whether a key exists in the <see cref="NameObjectCollectionBase.Keys"/>
+        /// or not. An additional parameter sepcifies a <see cref="StringComparer"/>
+        /// to use to compare keys (where <c>null</c> is allowed and defaults 
+        /// to same as <see cref="StringComparer.OrdinalIgnoreCase"/>).
+        /// </summary>
+
+        public static bool ContainsKey(this NameValueCollection collection, string name, StringComparer comparer)
+        {
+            if (collection == null) throw new ArgumentNullException("collection");
+            var keys = from string key in collection.Keys select key;
+            return keys.Contains(name, comparer ?? StringComparer.OrdinalIgnoreCase);
         }
     }
 }
