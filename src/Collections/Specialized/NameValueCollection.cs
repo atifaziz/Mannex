@@ -28,7 +28,6 @@ namespace Mannex.Collections.Specialized
     using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
-    using System.Diagnostics;
     using System.Linq;
     using Generic;
 
@@ -40,6 +39,34 @@ namespace Mannex.Collections.Specialized
 
     static partial class NameValueCollectionExtensions
     {
+        /// <summary>
+        /// Gets the values associated with the specified key from the 
+        /// <see cref="NameValueCollection"/> combined into one 
+        /// comma-separated list and then applies a function to convert it
+        /// into a value of the return type. If the key is not found then
+        /// the result is the default value of the return type.
+        /// </summary>
+
+        public static T TryGetValue<T>(this NameValueCollection collection, string key, Func<string, T> selector)
+        {
+            return collection.TryGetValue(key, default(T), selector);
+        }
+
+        /// <summary>
+        /// Gets the values associated with the specified key from the 
+        /// <see cref="NameValueCollection"/> combined into one 
+        /// comma-separated list and then applies a function to convert it
+        /// into a value of the return type. An additional parameter 
+        /// specifies the default value to return instead.
+        /// </summary>
+
+        public static T TryGetValue<T>(this NameValueCollection collection, string key, T defaultValue, Func<string, T> selector)
+        {
+            if (selector == null) throw new ArgumentNullException("selector");
+            var value = collection[key];
+            return value == null ? defaultValue : selector(value);
+        }
+
         /// <summary>
         /// Create a <see cref="NameValueCollection"/> from a sequence of
         /// <see cref="KeyValuePair{String,String}"/>.
@@ -235,6 +262,31 @@ namespace Mannex.Collections.Specialized
             return from i in Enumerable.Range(0, collection.Count)
                    select collection.GetKey(i).AsKeyTo(i) into e
                    select selector(collection, e.Key, e.Value);
+        }
+
+        /// <summary>
+        /// Determines whether a key exists in the <see cref="NameObjectCollectionBase.Keys"/>
+        /// or not. The check is made without regard to case of the key.
+        /// </summary>
+    
+        public static bool ContainsKey(this NameValueCollection collection, string name)
+        {
+            if (collection == null) throw new ArgumentNullException("collection");
+            return collection.ContainsKey(name, null);
+        }
+
+        /// <summary>
+        /// Determines whether a key exists in the <see cref="NameObjectCollectionBase.Keys"/>
+        /// or not. An additional parameter sepcifies a <see cref="StringComparer"/>
+        /// to use to compare keys (where <c>null</c> is allowed and defaults 
+        /// to same as <see cref="StringComparer.OrdinalIgnoreCase"/>).
+        /// </summary>
+
+        public static bool ContainsKey(this NameValueCollection collection, string name, StringComparer comparer)
+        {
+            if (collection == null) throw new ArgumentNullException("collection");
+            var keys = from string key in collection.Keys select key;
+            return keys.Contains(name, comparer ?? StringComparer.OrdinalIgnoreCase);
         }
     }
 }
