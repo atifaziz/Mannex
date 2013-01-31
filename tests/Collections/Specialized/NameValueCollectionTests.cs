@@ -243,5 +243,26 @@ namespace Mannex.Tests.Collections.Specialized
                 Assert.False(e.MoveNext());
             }
         }
+
+        [Fact]
+        public void TryGetValueWhenKeyIsPresent()
+        {
+            var collection = new NameValueCollection { { "foo", "42" } };
+            Assert.Equal(42, collection.TryGetValue("foo", v => int.Parse(v, CultureInfo.InvariantCulture)));
+        }
+
+        [Fact]
+        public void TryGetValueWhenKeyIsAbsent()
+        {
+            var collection = new NameValueCollection();
+            Assert.Equal(0, collection.TryGetValue("foo", v => int.Parse(v, CultureInfo.InvariantCulture)));
+        }
+
+        [Fact]
+        public void TryGetValueWhenKeyIsAbsentAndDefaultGiven()
+        {
+            var collection = new NameValueCollection();
+            Assert.Equal(-1, collection.TryGetValue("foo", -1, v => int.Parse(v, CultureInfo.InvariantCulture)));
+        }
     }
 }

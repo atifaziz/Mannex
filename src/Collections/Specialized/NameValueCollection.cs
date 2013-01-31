@@ -41,6 +41,34 @@ namespace Mannex.Collections.Specialized
     static partial class NameValueCollectionExtensions
     {
         /// <summary>
+        /// Gets the values associated with the specified key from the 
+        /// <see cref="NameValueCollection"/> combined into one 
+        /// comma-separated list and then applies a function to convert it
+        /// into a value of the return type. If the key is not found then
+        /// the result is the default value of the return type.
+        /// </summary>
+
+        public static T TryGetValue<T>(this NameValueCollection collection, string key, Func<string, T> selector)
+        {
+            return collection.TryGetValue(key, default(T), selector);
+        }
+
+        /// <summary>
+        /// Gets the values associated with the specified key from the 
+        /// <see cref="NameValueCollection"/> combined into one 
+        /// comma-separated list and then applies a function to convert it
+        /// into a value of the return type. An additional parameter 
+        /// specifies the default value to return instead.
+        /// </summary>
+
+        public static T TryGetValue<T>(this NameValueCollection collection, string key, T defaultValue, Func<string, T> selector)
+        {
+            if (selector == null) throw new ArgumentNullException("selector");
+            var value = collection[key];
+            return value == null ? defaultValue : selector(value);
+        }
+
+        /// <summary>
         /// Create a <see cref="NameValueCollection"/> from a sequence of
         /// <see cref="KeyValuePair{String,String}"/>.
         /// </summary>
