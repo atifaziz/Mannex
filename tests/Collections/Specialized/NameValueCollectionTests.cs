@@ -264,5 +264,41 @@ namespace Mannex.Tests.Collections.Specialized
             var collection = new NameValueCollection();
             Assert.Equal(-1, collection.TryGetValue("foo", -1, v => int.Parse(v, CultureInfo.InvariantCulture)));
         }
+ 
+        [Fact]
+        public void ContainsKeyFailsWithNullCollection()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => 
+                        NameValueCollectionExtensions.ContainsKey(null, null));
+            Assert.Equal("collection", e.ParamName);
+        }
+
+        [Fact]
+        public void ContainsKeyWhenKeyIsPresent()
+        {
+            var collection = new NameValueCollection { { "foo", "bar" } };
+            Assert.True(collection.ContainsKey("foo"), "Same case");
+            Assert.True(collection.ContainsKey("FOO"), "Different case");
+        }
+
+        [Fact]
+        public void ContainsKeyWhenIsAbsent()
+        {
+            Assert.False(new NameValueCollection().ContainsKey("foo"));
+        }
+ 
+        [Fact]
+        public void ContainsKeyWhenKeyIsDifferentCaseAndComparerIsCaseSensitive()
+        {
+            var collection = new NameValueCollection { { "foo", "bar" } };
+            Assert.False(collection.ContainsKey("FOO", StringComparer.Ordinal));
+        }
+
+        [Fact]
+        public void ContainsKeyWithNullStringComparer()
+        {
+            var collection = new NameValueCollection { { "foo", "bar" } };
+            Assert.True(collection.ContainsKey("FOO", null));
+        }
     }
 }
