@@ -26,7 +26,6 @@ namespace Mannex.Tests
     #region Improts
 
     using System;
-    using System.ComponentModel.Design;
     using Xunit;
 
     #endregion

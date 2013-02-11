@@ -25,7 +25,6 @@ namespace Mannex.Tests.Collections.Generic
 {
     #region Improts
 
-    using System.Collections.Generic;
     using Mannex.Collections.Generic;
     using Xunit;
 
