@@ -23,7 +23,7 @@
 
 namespace Mannex.Tests.IO
 {
-    #region Improts
+    #region Imports
 
     using System;
     using System.IO;

@@ -23,7 +23,7 @@
 
 namespace Mannex.Tests.Json
 {
-    #region Improts
+    #region Imports
 
     using Mannex.Json;
     using Xunit;

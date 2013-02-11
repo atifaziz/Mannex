@@ -23,7 +23,7 @@
 
 namespace Mannex.Tests.Threading
 {
-    #region Improts
+    #region Imports
 
     using System;
     using System.Threading;

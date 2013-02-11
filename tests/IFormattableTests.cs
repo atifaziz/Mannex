@@ -25,7 +25,7 @@ using System;
 
 namespace Mannex.Tests
 {
-    #region Improts
+    #region Imports
 
     using System.Globalization;
     using System.Threading;

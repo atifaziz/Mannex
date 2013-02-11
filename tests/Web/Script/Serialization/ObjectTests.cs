@@ -23,7 +23,7 @@
 
 namespace Mannex.Tests.Web.Script.Serialization
 {
-    #region Improts
+    #region Imports
 
     using System;
     using Mannex.Web.Script.Serialization;
