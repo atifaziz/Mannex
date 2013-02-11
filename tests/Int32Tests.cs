@@ -25,7 +25,7 @@ using System;
 
 namespace Mannex.Tests
 {
-    #region Improts
+    #region Imports
 
     using Xunit;
 

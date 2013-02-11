@@ -23,7 +23,7 @@
 
 namespace Mannex.Tests.Data
 {
-    #region Improts
+    #region Imports
 
     using System;
     using System.Data;

@@ -23,7 +23,7 @@
 
 namespace Mannex.Tests.Collections.Generic
 {
-    #region Improts
+    #region Imports
 
     using Mannex.Collections.Generic;
     using Xunit;

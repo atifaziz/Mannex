@@ -23,7 +23,7 @@
 
 namespace Mannex.Tests.Collections.Specialized
 {
-    #region Improts
+    #region Imports
 
     using System;
     using System.Collections.Specialized;

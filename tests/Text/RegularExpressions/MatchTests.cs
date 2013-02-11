@@ -23,7 +23,7 @@
 
 namespace Mannex.Tests.Text.RegularExpressions
 {
-    #region Improts
+    #region Imports
 
     using Xunit;
     using Mannex.Text.RegularExpressions;

@@ -23,7 +23,7 @@
 
 namespace Mannex.Tests.Web.UI
 {
-    #region Improts
+    #region Imports
 
     using System;
     using Mannex.Web.UI;

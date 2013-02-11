@@ -23,7 +23,7 @@
 
 namespace Mannex.Tests.Web
 {
-    #region Improts
+    #region Imports
 
     using System;
     using System.Collections.Specialized;
