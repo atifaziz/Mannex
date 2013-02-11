@@ -41,6 +41,7 @@ namespace Mannex
     public static partial class TypeExtensions { }
     public static partial class UriExtensions { }
     public static partial class ICloneableExtensions { }
+    public static partial class IComparableExtensions { }
     public static partial class IFormattableExtensions { }
     public static partial class IServiceProviderExtensions { }
 

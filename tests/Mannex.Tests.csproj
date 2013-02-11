@@ -59,6 +59,7 @@
     <Compile Include="Collections\Generic\PairingTests.cs" />
     <Compile Include="Collections\Generic\IComparerTests.cs" />
     <Compile Include="Collections\Specialized\NameValueCollectionTests.cs" />
+    <Compile Include="IComparableTests.cs" />
     <Compile Include="Data\IDataRecordTests.cs" />
     <Compile Include="IFormattableTests.cs" />
     <Compile Include="ICloneableTests.cs" />

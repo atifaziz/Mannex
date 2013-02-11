@@ -128,6 +128,7 @@
     <Compile Include="ComponentModel\Design\IServiceContainer.cs" />
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
     <Compile Include="Collections\Generic\IComparer.cs" />
+    <Compile Include="IComparable.cs" />
     <Compile Include="Data\DataTable.cs" />
     <Compile Include="Data\TextReader.cs" />
     <Compile Include="IFormattable.cs" />
