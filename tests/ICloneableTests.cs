@@ -33,7 +33,7 @@ namespace Mannex.Tests
     public class ICloneableTests
     {
         [Fact]
-        public void GetServiceFailsWithNullThis()
+        public void CloneObjectFailsWithNullThis()
         {
             var e = Assert.Throws<ArgumentNullException>(() => ICloneableExtensions.CloneObject<Array>(null));
             Assert.Equal("source", e.ParamName);
