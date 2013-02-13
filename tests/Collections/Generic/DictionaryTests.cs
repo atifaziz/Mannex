@@ -59,5 +59,41 @@ namespace Mannex.Tests.Collections.Generic
             var dict = new Dictionary<int, string> { { 42, "fourty two" } };
             Assert.Equal("fourty two", dict.Find(42));
         }
+
+        [Fact]
+        public void GetFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => DictionaryExtensions.GetValue<object, object>(null, "foo", delegate { return null; }));
+            Assert.Equal(e.ParamName, "dictionary");
+        }
+
+        [Fact]
+        public void GetWithNullErrorSelector()
+        {
+            var dict = new Dictionary<string, object>();
+            Assert.Throws<KeyNotFoundException>(() => dict.GetValue("foo", null));
+        }
+
+        [Fact]
+        public void GetWithErrorSelectorReturningNullException()
+        {
+            var dict = new Dictionary<string, object>();
+            Assert.Throws<KeyNotFoundException>(() => dict.GetValue("foo", _ => null));
+        }
+
+        [Fact]
+        public void GetWithErrorSelectorReturningApplicationException()
+        {
+            var dict = new Dictionary<string, object>();
+            var e = Assert.Throws<ApplicationException>(() => dict.GetValue("foo", key => new ApplicationException("`" + key + "` not found.")));
+            Assert.Equal("`foo` not found.", e.Message);
+        }
+
+        [Fact]
+        public void GetWithExistingKeyAndErrorSelector()
+        {
+            var dict = new Dictionary<string, int> { { "foo", 42 } };
+            Assert.Equal(42, dict.GetValue("foo", null));
+        }
     }
 }

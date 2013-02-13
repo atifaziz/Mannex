@@ -60,5 +60,55 @@ namespace Mannex.Collections.Generic
             TValue value;
             return dict.TryGetValue(key, out value) ? value : @default;
         }
+
+        /// <summary>
+        /// Gets the value associated with the specified key. If the key is 
+        /// not present then a function is called back with the key to 
+        /// determine the exception to be thrown.
+        /// </summary>
+        /// <remarks>
+        /// If the function called when the key is not found returns a null 
+        /// reference then a <see cref="KeyNotFoundException"/> is thrown.
+        /// The same happens if a null reference is supplied for the 
+        /// function.
+        /// </remarks>
+
+        [DebuggerStepThrough]
+        public static TValue GetValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TKey, Exception> errorSelector)
+        {
+            if (dictionary == null) throw new ArgumentNullException("dictionary");
+
+            TValue value;
+            if (!dictionary.TryGetValue(key, out value))
+            {
+                throw (errorSelector != null ? errorSelector(key) : null) 
+                   ?? new ArgumentException(KeyNotFoundSystemErrorMessage);
+            }
+
+            return value;
+        }
+
+        static string _frameworkKeyNotFoundErrorMessage;
+
+        static string KeyNotFoundSystemErrorMessage
+        {
+            get { return _frameworkKeyNotFoundErrorMessage ?? (_frameworkKeyNotFoundErrorMessage = GetFrameworkKeyNotFoundErrorMessage().ToString()); }
+        }
+
+        static string GetFrameworkKeyNotFoundErrorMessage()
+        {
+            try
+            {
+                var result = new Dictionary<object, string>()[new object()];
+                Debug.Fail("A bad assumption has been made. Code should have never reached here!");
+                // ReSharper disable HeuristicUnreachableCode
+                return result;
+                // ReSharper restore HeuristicUnreachableCode
+            }
+            catch (ArgumentException e)
+            {
+                return e.Message;
+            }
+        } 
     }
 }
