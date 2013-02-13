@@ -80,35 +80,9 @@ namespace Mannex.Collections.Generic
 
             TValue value;
             if (!dictionary.TryGetValue(key, out value))
-            {
-                throw (errorSelector != null ? errorSelector(key) : null) 
-                   ?? new ArgumentException(KeyNotFoundSystemErrorMessage);
-            }
+                throw (errorSelector != null ? errorSelector(key) : null) ?? new KeyNotFoundException();
 
             return value;
         }
-
-        static string _frameworkKeyNotFoundErrorMessage;
-
-        static string KeyNotFoundSystemErrorMessage
-        {
-            get { return _frameworkKeyNotFoundErrorMessage ?? (_frameworkKeyNotFoundErrorMessage = GetFrameworkKeyNotFoundErrorMessage()); }
-        }
-
-        static string GetFrameworkKeyNotFoundErrorMessage()
-        {
-            try
-            {
-                var result = new Dictionary<object, string>()[new object()];
-                Debug.Fail("A bad assumption has been made. Code should have never reached here!");
-                // ReSharper disable HeuristicUnreachableCode
-                return result;
-                // ReSharper restore HeuristicUnreachableCode
-            }
-            catch (ArgumentException e)
-            {
-                return e.Message;
-            }
-        } 
     }
 }
