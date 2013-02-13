@@ -92,7 +92,7 @@ namespace Mannex.Collections.Generic
 
         static string KeyNotFoundSystemErrorMessage
         {
-            get { return _frameworkKeyNotFoundErrorMessage ?? (_frameworkKeyNotFoundErrorMessage = GetFrameworkKeyNotFoundErrorMessage().ToString()); }
+            get { return _frameworkKeyNotFoundErrorMessage ?? (_frameworkKeyNotFoundErrorMessage = GetFrameworkKeyNotFoundErrorMessage()); }
         }
 
         static string GetFrameworkKeyNotFoundErrorMessage()
