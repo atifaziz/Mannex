@@ -353,5 +353,31 @@ namespace Mannex.Tests
             Assert.False("foobar".HasSuffix(string.Empty, StringComparison.Ordinal));
             Assert.False("bar".HasSuffix("bar", StringComparison.Ordinal));
         }
+ 
+        [Fact]
+        public void CharAtFailsWithNullThis()
+        {
+             var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.TryCharAt(null, 0));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void CharAt()
+        {
+            const string word = "word";
+            Assert.Equal('w', word.TryCharAt(0));
+            Assert.Equal('o', word.TryCharAt(1));
+            Assert.Equal('r', word.TryCharAt(2));
+            Assert.Equal('d', word.TryCharAt(3));
+            Assert.Equal('d', word.TryCharAt(-1));
+            Assert.Equal('r', word.TryCharAt(-2));
+            Assert.Equal('o', word.TryCharAt(-3));
+            Assert.Equal('w', word.TryCharAt(-4));
+            Assert.Equal(null, word.TryCharAt(-(word.Length + 10)));
+            Assert.Equal(null, word.TryCharAt(word.Length + 10));
+            Assert.Equal(null, string.Empty.TryCharAt(0));
+            Assert.Equal(null, string.Empty.TryCharAt(1));
+            Assert.Equal(null, string.Empty.TryCharAt(-1));
+        }
     }
 }
