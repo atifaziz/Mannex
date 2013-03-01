@@ -505,5 +505,26 @@ namespace Mannex
         {
             return value != null && TruthinessRegex.IsMatch(value);
         }
+
+        /// <summary>
+        /// Gets the character at the given index in the string otherwise 
+        /// <c>null</c> if the index falls beyond last character of the 
+        /// string. If the index is negative it is used to look up
+        /// the character from the end of the string where -1 yields that
+        /// last character. Again, <c>null</c> is returned if the negative
+        /// index goes beyond the first character of the string.
+        /// </summary>
+        
+        public static char? TryCharAt(this string str, int index)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            return index < str.Length 
+                 ? index < 0 
+                 ? str.Length + index < 0 
+                 ? (char?) null
+                 : str[str.Length + index] 
+                 : str[index]
+                 : null;
+        }
     }
 }
