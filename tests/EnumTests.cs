@@ -63,5 +63,32 @@ namespace Mannex.Tests
             Assert.Contains(FileAttributes.System, flags);
             Assert.Contains(FileAttributes.Hidden, flags);
         }
+
+        [Fact]
+        public void HasEitherFlag()
+        {
+            const FileAttributes shd 
+                = FileAttributes.System 
+                | FileAttributes.Hidden
+                | FileAttributes.Directory;
+
+            // Invoked with 6 arguments to force the most general overload
+            // and which internally invokes the others and provides 
+            // sufficient coverage.
+
+            Assert.True(shd.HasEitherFlag(FileAttributes.Hidden, 
+                                          FileAttributes.ReadOnly, 
+                                          FileAttributes.System, 
+                                          FileAttributes.Encrypted, 
+                                          FileAttributes.Directory,
+                                          FileAttributes.Compressed));
+
+            Assert.False(shd.HasEitherFlag(FileAttributes.Archive, 
+                                          FileAttributes.ReadOnly, 
+                                          FileAttributes.Offline, 
+                                          FileAttributes.Encrypted, 
+                                          FileAttributes.ReparsePoint,
+                                          FileAttributes.Compressed));
+        }
     }
 }

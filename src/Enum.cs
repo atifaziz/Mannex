@@ -36,6 +36,48 @@ namespace Mannex
         #if NET4
 
         /// <summary>
+        /// Determines whether any of the given bit fields are set in the 
+        /// current instance.
+        /// </summary>
+
+        public static bool HasEitherFlag(this Enum value, Enum flag1, Enum flag2)
+        {
+            return value.HasFlag(flag1) || value.HasFlag(flag2);
+        }
+
+        /// <summary>
+        /// Determines whether any of the given bit fields are set in the 
+        /// current instance.
+        /// </summary>
+
+        public static bool HasEitherFlag(this Enum value, Enum flag1, Enum flag2, Enum flag3)
+        {
+            return value.HasEitherFlag(flag1, flag2) || value.HasFlag(flag3);
+        }
+
+        /// <summary>
+        /// Determines whether any of the given bit fields are set in the 
+        /// current instance.
+        /// </summary>
+
+        public static bool HasEitherFlag(this Enum value, Enum flag1, Enum flag2, Enum flag3, Enum flag4)
+        {
+            return value.HasEitherFlag(flag1, flag2, flag3) || value.HasFlag(flag4);
+        }
+
+        /// <summary>
+        /// Determines whether any of the given bit fields are set in the 
+        /// current instance.
+        /// </summary>
+
+        public static bool HasEitherFlag(this Enum value, Enum flag1, Enum flag2, Enum flag3, Enum flag4, Enum flag5, params Enum[] others)
+        {
+            return value.HasEitherFlag(flag1, flag2, flag3, flag4) 
+                || value.HasFlag(flag5) 
+                || others.Any(value.HasFlag);
+        }
+
+        /// <summary>
         /// Returns a sequence of the enumeration members that are flagged
         /// in the given enumeration value.
         /// </summary>
