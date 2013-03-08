@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Mannex</id>
-        <version>2.4.0</version>
+        <version>2.5.0-beta1</version>
         <title>Mannex</title>
         <authors>Atif Aziz</authors>
         <owners>Atif Aziz</owners>
@@ -17,6 +17,7 @@
     <files>
         <file src="..\bin\net-3.5\Release\*" target="lib\net35" />
         <file src="..\bin\net-4.0\Release\*" target="lib\net40" />
+        <file src="..\bin\net-4.5\Release\*" target="lib\net45" />
         <file src="..\src\**.cs" target="src" />
         <file src="..\COPYING.txt" target="COPYING.txt" />
     </files>

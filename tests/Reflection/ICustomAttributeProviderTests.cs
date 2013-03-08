@@ -71,7 +71,8 @@ namespace Mannex.Tests.Reflection
         [Fact]
         public void GetCustomAttributesReturnsRequestedAttributeWhenAttributesApplied()
         {
-            var attributes = typeof(Test).GetCustomAttributes<TestAttribute>(true);
+            ICustomAttributeProvider cap = typeof(Test);
+            var attributes = cap.GetCustomAttributes<TestAttribute>(true);
             Assert.NotNull(attributes);
             Assert.Equal(new[] { 12, 34 }, attributes.Select(a => a.Value).OrderBy(x => x).ToArray());
         }
@@ -79,7 +80,8 @@ namespace Mannex.Tests.Reflection
         [Fact]
         public void GetCustomAttributesReturnsEmptyWhenAttributesAbsent()
         {
-            var attributes = typeof(Test).GetCustomAttributes<CategoryAttribute>(true);
+            ICustomAttributeProvider cap = typeof(Test);
+            var attributes = cap.GetCustomAttributes<CategoryAttribute>(true);
             Assert.NotNull(attributes);
             Assert.Equal(0, attributes.Length);
         }
@@ -87,7 +89,8 @@ namespace Mannex.Tests.Reflection
         [Fact]
         public void GetCustomAttributesReturnsEmptyForSubclassWhenAttributeInheritanceIsNotRequested()
         {
-            var attributes = typeof(Subtest).GetCustomAttributes<TestAttribute>(false);
+            ICustomAttributeProvider cap = typeof(Subtest);
+            var attributes = cap.GetCustomAttributes<TestAttribute>(false);
             Assert.NotNull(attributes);
             Assert.Equal(0, attributes.Length);
         }
@@ -102,14 +105,16 @@ namespace Mannex.Tests.Reflection
         [Fact]
         public void GetCustomAttributeFailsForDuplicateAttribtueApplication()
         {
+            ICustomAttributeProvider cap = typeof(Test);
             Assert.Throws<AmbiguousMatchException>(() =>
-                typeof(Test).GetCustomAttribute<TestAttribute>(true));
+                cap.GetCustomAttribute<TestAttribute>(true));
         }
 
         [Fact]
         public void GetCustomAttributeReturnsRequestedAttributeWhenAttributesApplied()
         {
-            var attribute = typeof(Test).GetCustomAttribute<DescriptionAttribute>(true);
+            ICustomAttributeProvider cap = typeof(Test);
+            var attribute = cap.GetCustomAttribute<DescriptionAttribute>(true);
             Assert.NotNull(attribute);
             Assert.Equal("foo", attribute.Description);
         }
@@ -117,13 +122,15 @@ namespace Mannex.Tests.Reflection
         [Fact]
         public void GetCustomAttributeReturnsEmptyWhenAttributesAbsent()
         {
-            Assert.Null(typeof(Test).GetCustomAttribute<CategoryAttribute>(true));
+            ICustomAttributeProvider cap = typeof(Test);
+            Assert.Null(cap.GetCustomAttribute<CategoryAttribute>(true));
         }
 
         [Fact]
         public void GetCustomAttributeReturnsEmptyForSubclassWhenAttributeInheritanceIsNotRequested()
         {
-            Assert.Null(typeof(Subtest).GetCustomAttribute<DescriptionAttribute>(true));
+            ICustomAttributeProvider cap = typeof(Subtest);
+            Assert.Null(cap.GetCustomAttribute<DescriptionAttribute>(true));
         }
 
         [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
