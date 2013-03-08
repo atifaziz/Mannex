@@ -164,6 +164,11 @@ namespace Mannex
         public static partial class NameValueCollectionExtensions { }
         public static partial class UriExtensions { }
 
+        namespace Hosting
+        {
+            public static partial class VirtualFileExtensions { }
+        }
+
         namespace Script
         {
             namespace Serialization
