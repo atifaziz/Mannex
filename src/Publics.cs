@@ -183,4 +183,9 @@ namespace Mannex
             public static partial class DataBindingExtensions { }
         }
     }
+
+    namespace Xml.Linq
+    {
+        public static partial class XElementExtensions { }
+    }
 }
