@@ -202,6 +202,31 @@ namespace Mannex.Collections.Specialized
         }
 
         /// <summary>
+        /// Returns entires of the collection where the values are non-blank. 
+        /// If all the values under a key are blank, then the entry is 
+        /// entirely omitted.
+        /// </summary>
+
+        public static IEnumerable<KeyValuePair<string, string[]>> NonBlanks(this NameValueCollection collection)
+        {
+            if (collection == null) throw new ArgumentNullException("collection");
+
+            return from e in collection.AsEnumerable()
+                   let vs = e.Value.Length > 1
+#if NET40 || NET45
+                          ? e.Value.Where(v => !string.IsNullOrWhiteSpace(v)).ToArray()
+                          : string.IsNullOrWhiteSpace(e.Value[0])
+#else
+                          ? e.Value.Where(v => !string.IsNullOrEmpty(v) && v.Trim().Length > 0).ToArray()
+                          : string.IsNullOrEmpty(e.Value[0]) || e.Value[0].Trim().Length == 0
+#endif
+                          ? null
+                          : e.Value
+                   where vs != null && vs.Length > 0
+                   select e.Key.AsKeyTo(vs);
+        }
+
+        /// <summary>
         /// Updates this collection with another where values of existing
         /// keys are replaced but those of new ones added.
         /// </summary>
