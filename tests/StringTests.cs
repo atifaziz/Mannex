@@ -379,5 +379,34 @@ namespace Mannex.Tests
             Assert.Equal(null, string.Empty.TryCharAt(1));
             Assert.Equal(null, string.Empty.TryCharAt(-1));
         }
+    
+        [Fact]
+        public void TrimCommonLeadingSpaceFailsWithNullThis()
+        {
+             var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.TrimCommonLeadingSpace(null));
+            Assert.Equal("str", e.ParamName);
+        }
+ 
+        [Fact]
+        public void TrimCommonLeadingSpace()
+        {
+            Assert.Equal(
+                string.Join(Environment.NewLine, new[] {
+                    string.Empty,
+                    "SELECT",
+                    "    *",
+                    "FROM",
+                    "    foo",
+                    "WHERE bar IS NOT NULL",
+                    "ORDER BY id",
+                    string.Empty }), @"  
+                    SELECT
+                        *
+                    FROM
+                        foo
+                    WHERE bar IS NOT NULL
+                    ORDER BY id
+                    ".TrimCommonLeadingSpace());
+        }
     }
 }

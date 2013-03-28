@@ -43,7 +43,7 @@ namespace Mannex
     {
         /// <summary>
         /// Masks an empty string with a given mask such that the result
-        /// is never an empty string. If the input string is null or
+        /// is never an empty string. If the str string is null or
         /// empty then it is masked, otherwise the original is returned.
         /// </summary>
         /// <remarks>
@@ -525,6 +525,43 @@ namespace Mannex
                  : str[str.Length + index] 
                  : str[index]
                  : null;
+        }
+
+        /// <summary>
+        /// Splits the string into lines and then removes all leading spaces
+        /// that are common in all lines and returns those lines back as a 
+        /// single string.
+        /// </summary>
+        /// <remarks>
+        /// Empty lines are not removed in the returned string.
+        /// </remarks>
+
+        public static string TrimCommonLeadingSpace(this string str)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+
+            var output =
+                from lines in new[] { str.SplitIntoLines() }
+                let indents = 
+                    from line in lines
+#if NET40 || NET45
+                    where !string.IsNullOrWhiteSpace(line)
+#else
+                    where !string.IsNullOrEmpty(line) && line.Trim().Length > 0
+#endif
+                    select line.TakeWhile(ch => ch == ' ').Count() into indent
+                    select (int?) indent
+                let indent = indents.Min() ?? 0
+                from line in lines
+                select line.Slice(indent);
+            
+            return string.Join(Environment.NewLine, 
+#if NET40 || NET45
+                       output.ToArray()
+#else
+                       output.ToArray()
+#endif
+                );
         }
     }
 }
