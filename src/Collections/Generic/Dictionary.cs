@@ -27,6 +27,7 @@ namespace Mannex.Collections.Generic
 
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Diagnostics;
 
     #endregion
@@ -84,5 +85,21 @@ namespace Mannex.Collections.Generic
 
             return value;
         }
+
+        #if NET45
+
+        /// <summary>
+        /// Returns a <see cref="ReadOnlyDictionary{TKey,TValue}"/> that 
+        /// wraps this dictionary, rendering it effectively read-only.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static ReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue>  dictionary)
+        {
+            if (dictionary == null) throw new ArgumentNullException("dictionary");
+            return new ReadOnlyDictionary<TKey, TValue>(dictionary);
+        }
+
+        #endif
     }
 }
