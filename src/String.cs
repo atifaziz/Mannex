@@ -194,7 +194,7 @@ namespace Mannex
             StringBuilder sb = null;
             var start = 0;
             int index;
-            while ((index = str.IndexOf(quote, start)) >= 0)
+            while ((index = str.IndexOf(quote, start, StringComparison.Ordinal)) >= 0)
             {
                 if (sb == null)
                     sb = new StringBuilder(str.Length + 10).Append(quote);
