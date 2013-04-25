@@ -60,6 +60,7 @@ namespace Mannex
     {
         public static partial class DictionaryExtensions { }
         public static partial class IComparerExtensions { }
+        public static partial class IEqualityComparerExtensions { }
         public static partial class IEnumeratorExtensions { }
         public static partial class ListExtensions { }
         public static partial class PairingExtensions { }
