@@ -26,6 +26,7 @@ namespace Mannex.Tests
     #region Imports
 
     using System;
+    using System.IO;
     using Xunit;
 
     #endregion
@@ -115,6 +116,20 @@ namespace Mannex.Tests
                 Assert.Equal(eee, x.Current);
                 Assert.False(x.MoveNext());
             }
+        }
+
+        [Fact]
+        public void IsSharingViolationFailsWithNullThis()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                 ExceptionExtensions.IsSharingViolation(null));
+        }
+
+        [Fact]
+        public void IsSharingViolation()
+        {
+            var e = new IOException(null, unchecked((int) 0x80070020));
+            Assert.True(e.IsSharingViolation());
         }
     }
 }

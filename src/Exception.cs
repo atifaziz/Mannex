@@ -29,6 +29,7 @@ namespace Mannex
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Reflection;
+    using System.Runtime.InteropServices;
 
     #endregion
 
@@ -101,6 +102,19 @@ namespace Mannex
         {
             for (; e != null; e = e.InnerException)
                 yield return e;
+        }
+
+        /// <summary>
+        /// Determines whether the <c>HRESULT</c> for the 
+        /// <see cref="Exception"/> represents a file or device sharing 
+        /// violation error.
+        /// </summary>
+
+        public static bool IsSharingViolation(this Exception exception)
+        {
+            if (exception == null) throw new ArgumentNullException("exception");
+            // http://support.microsoft.com/kb/316609
+            return /* ERROR_SHARING_VIOLATION */ 0x80070020 == (uint) Marshal.GetHRForException(exception);
         }
     }
 }
