@@ -144,6 +144,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action.Return.g.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Action.Return.g.tt</DependentUpon>
+    </Compile>
     <Compile Include="Array.cs" />
     <Compile Include="Boolean.cs" />
     <Compile Include="Collections\ArrayList.cs" />
@@ -157,6 +162,11 @@
     <Compile Include="ComponentModel\Design\IServiceContainer.cs" />
     <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
     <Compile Include="Collections\Generic\IComparer.cs" />
+    <Compile Include="Action.cs" />
+    <None Include="Action.Return.g.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Action.Return.g.cs</LastGenOutput>
+    </None>
     <Compile Include="Data\IDbCommand.cs" />
     <Compile Include="IComparable.cs" />
     <Compile Include="Data\DataTable.cs" />

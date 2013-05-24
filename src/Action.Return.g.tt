@@ -1,0 +1,85 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" #>
+<#@ import namespace="System.Globalization" #>
+<#@ import namespace="System.Linq" #>
+#region License, Terms and Author(s)
+//
+// Mannex - Extension methods for .NET
+// Copyright (c) 2009 Atif Aziz. All rights reserved.
+//
+//  Author(s):
+//
+//      Atif Aziz, http://www.raboof.com
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+#endregion
+
+namespace Mannex
+{
+    using System;
+    using System.Diagnostics;
+
+    partial class ActionExtensions
+    {
+<#      
+        var nths = new[] { "first",      "second",     "third",     "fourth", 
+                           "fifth",      "sixth",      "seventh",   "eight", 
+                           "nineth",     "tenth",      "eleventh",  "twelfth",
+                           "thirteenth", "fourteenth", "fifteenth", "sixteenth", };
+
+        foreach (var i in Enumerable.Range(2, nths.Length - 1)) 
+        { 
+            var items = 
+                from item in Enumerable.Range(1, i)
+                                       .Zip(nths, (n, nth) => new { N = n, Nth = nth })
+                let nstr = item.N.ToString(CultureInfo.InvariantCulture)
+                select new
+                {
+                   Type     = "T" + nstr,
+                   Property = "Item" + nstr,
+                   Arg      = "arg" + nstr,
+                   Nth      = item.Nth,
+                };
+            items = items.ToArray();
+            var ts = new
+            {
+                Def  = string.Join(", ", from item in items select item.Type),
+                Doc  = string.Join(",",  from item in items select item.Type),
+                Args = string.Join(", ", from item in items select item.Arg ),
+            };
+            if (i == 5) { #>        
+        #if NET4
+<#          } #>        
+        /// <summary>
+        /// Creates a <see cref="Func{<#= ts.Doc #>,TResult}"/> from the 
+        /// <see cref="Action{<#= ts.Doc #>}"/> which when invoked will 
+        /// call the <see cref="Action{<#= ts.Doc #>}"/> and then return 
+        /// the given result of type <typeparamref name="TResult"/>.
+        /// </summary>
+<#      foreach (var item in items) { #>
+        /// <typeparam name="<#= item.Type #>">The type of the <#= item.Nth #> argument.</typeparam>
+<#      } #>
+        /// <typeparam name="TResult">The type of the result.</typeparam>
+
+        [DebuggerStepThrough]
+        public static Func<<#= ts.Def #>, TResult> Return<<#= ts.Def #>, TResult>(this Action<<#= ts.Def #>> action, TResult result)
+        {
+            if (action == null) throw new ArgumentNullException("action");
+            return (<#= ts.Args #>) => { action(<#= ts.Args #>); return result; };
+        }
+<#      } #>
+        
+        #endif
+    }
+}
