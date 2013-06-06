@@ -26,8 +26,11 @@ namespace Mannex
     #region Imports
 
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
+    using System.Linq;
+    using System.Text;
 
     #endregion
 
@@ -60,6 +63,52 @@ namespace Mannex
             var quotient = dividend / divisor;
             var remainder = dividend % divisor;
             return resultFunc(quotient, remainder);
+        }
+
+        // ReSharper disable LoopCanBeConvertedToQuery
+        
+        public static IEnumerable<T> LsDigits<T>(this int number, IList<T> digits)
+        {
+            foreach (var d in number.LsDigits(digits.Count))
+                yield return digits[d];
+        }
+
+        // ReSharper restore LoopCanBeConvertedToQuery
+
+        public static IEnumerable<int> LsDigits(this int number)
+        {
+            return LsDigits(number, 10);
+        }
+
+        public static IEnumerable<int> LsDigits(this int number, int radix)
+        {
+            do
+            {
+                yield return number % radix;
+                number = number / radix;
+            }
+            while (number > 0);
+        }
+
+        /// <summary>
+        /// Gets the digit at a specific position of the number (assuming 
+        /// base 10) with the first position being zero.
+        /// </summary>
+
+        public static int GetDigit(this int number, int position)
+        {
+            return GetDigit(number, position, 10);
+        }
+
+        /// <summary>
+        /// Gets the digit at a specific position of the number with
+        /// the first position being zero. An additional parameter specifies 
+        /// the radix to assume.
+        /// </summary>
+
+        public static int GetDigit(this int number, int position, int radix)
+        {
+            return (number / checked((int) Math.Pow(radix, position))) % radix;
         }
     }
 }
