@@ -27,6 +27,7 @@ namespace Mannex.Tests.Web
 
     using System;
     using System.Collections.Specialized;
+    using System.Web;
     using Mannex.Web;
     using Xunit;
 
@@ -254,6 +255,41 @@ namespace Mannex.Tests.Web
                 { "msg", "hello world" },
             };
             Assert.Equal("msg=hello%20world", collection.ToW3FormEncoded());
+        }
+
+        static readonly string VeryLargeValue = new string('z', 64 * 1024);
+
+        [Fact]
+        public void ToW3FormEncodedFailsForLargeValues()
+        {
+            var collection = new NameValueCollection
+            {
+                { "foo", VeryLargeValue },
+            };
+            Assert.Throws<UriFormatException>(() => collection.ToW3FormEncoded());
+        }
+
+        [Fact]
+        public void ToW3FormEncodedWithNullEncoderDefaultsToUriEscapeDataStringAndSoFailsForLargeValues()
+        {
+            var collection = new NameValueCollection
+            {
+                { "foo", VeryLargeValue },
+            };
+            Assert.Throws<UriFormatException>(() => collection.ToW3FormEncoded(null));
+        }
+
+        [Fact]
+        public void ToW3FormEncodedWithCustomEncoder()
+        {
+            var collection = new NameValueCollection
+            {
+                { "msg", "hello world" },
+            };
+            string arg = null;
+            Func<string, string> encoder = s => { arg = s; return Uri.EscapeDataString(s); };
+            Assert.Equal("msg=hello%20world", collection.ToW3FormEncoded(encoder));
+            Assert.Equal("hello world", arg);
         }
     }
 }

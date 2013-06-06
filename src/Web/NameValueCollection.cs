@@ -48,7 +48,7 @@ namespace Mannex.Web
 
         public static string ToQueryString(this NameValueCollection collection)
         {
-            return W3FormEncode(collection, "?");
+            return W3FormEncode(collection, "?", null);
         }
 
         /// <summary>
@@ -56,13 +56,38 @@ namespace Mannex.Web
         /// suitably formatted per the <c>application/x-www-form-urlencoded</c>
         /// MIME media type.
         /// </summary>
+        /// <remarks>
+        /// Each value is escaped using <see cref="Uri.EscapeDataString"/> 
+        /// but which can throw <see cref="UriFormatException"/> for very 
+        /// large values.
+        /// </remarks>
 
         public static string ToW3FormEncoded(this NameValueCollection collection)
         {
-            return W3FormEncode(collection, null);
+            return collection.ToW3FormEncoded(null);
         }
 
-        static string W3FormEncode(NameValueCollection collection, string prefix)
+        /// <summary>
+        /// Encodes the content of the collection to a string
+        /// suitably formatted per the <c>application/x-www-form-urlencoded</c>
+        /// MIME media type. An additional parameter specifies a function 
+        /// used to encode the value into the URI.
+        /// </summary>
+        /// <remarks>
+        /// A null reference is permitted for <paramref name="encoder"/> and 
+        /// in which case <see cref="Uri.EscapeDataString"/> is used by 
+        /// default. However, <see cref="Uri.EscapeDataString"/> may throw 
+        /// <see cref="UriFormatException"/> for very large values.
+        /// </remarks>
+
+        public static string ToW3FormEncoded(this NameValueCollection collection, Func<string, string> encoder)
+        {
+            return W3FormEncode(collection, null, encoder);
+        }
+
+        static readonly Func<string, string> UriEscapeDataString = Uri.EscapeDataString;
+
+        static string W3FormEncode(NameValueCollection collection, string prefix, Func<string, string> encoder)
         {
             if (collection == null) throw new ArgumentNullException("collection");
 
@@ -89,8 +114,8 @@ namespace Mannex.Web
                         sb.Append(name).Append('=');
 
                     sb.Append(string.IsNullOrEmpty(value) 
-                              ? string.Empty 
-                              : Uri.EscapeDataString(value));
+                              ? string.Empty
+                              : (encoder ?? UriEscapeDataString)(value));
                 }
             }
 
