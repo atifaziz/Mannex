@@ -563,5 +563,17 @@ namespace Mannex
 #endif
                 );
         }
+
+        public static IEnumerable<string> Partition(this string str, int size)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            return PartitionImpl(str, size);
+        }
+
+        static IEnumerable<string> PartitionImpl(string str, int size)
+        {
+            for (var i = 0; i < str.Length; i += size)
+                yield return str.Slice(i, i + size);
+        }
     }
 }

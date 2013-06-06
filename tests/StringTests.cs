@@ -408,5 +408,41 @@ namespace Mannex.Tests
                     ORDER BY id
                     ".TrimCommonLeadingSpace());
         }
+
+        [Fact]
+        public void PartitionFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Partition(null, 42));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void PartitionOnEmptyStringYieldsEmptySequence()
+        {
+            using (var e = string.Empty.Partition(42).GetEnumerator())
+                Assert.False(e.MoveNext());
+        }
+
+        [Fact]
+        public void PartitionEvenly()
+        {
+            const string foo = "foo";
+            const string bar = "bar";
+            const string baz = "baz";
+            Assert.Equal(new[] { foo, bar, baz }, string.Concat(foo, bar, baz).Partition(3).ToArray());
+        }
+
+        [Fact]
+        public void PartitionIrregularTail()
+        {
+            Assert.Equal(new[] { "hello ", "there ", "foobar", "!" }, "hello there foobar!".Partition(6).ToArray());
+        }
+
+        [Fact]
+        public void PartitionIrregularSingleton()
+        {
+            const string foobar = "foobar";
+            Assert.Equal(new[] { foobar }, foobar.Partition(foobar.Length * 2).ToArray());
+        }
     }
 }
