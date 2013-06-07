@@ -63,21 +63,33 @@ namespace Mannex
             return resultFunc(quotient, remainder);
         }
 
-        // ReSharper disable LoopCanBeConvertedToQuery
+        /// <summary>
+        /// Returns the digits of the integer encoded in another digital 
+        /// system given as a list of ordered digits. The number of digits 
+        /// in the list also determines the radix.
+        /// </summary>
         
         public static IEnumerable<T> LsDigits<T>(this int number, IList<T> digits)
-        {
-            foreach (var d in number.LsDigits(digits.Count))
+        {                                                    // ReSharper disable LoopCanBeConvertedToQuery
+            foreach (var d in number.LsDigits(digits.Count)) // ReSharper restore LoopCanBeConvertedToQuery
                 yield return digits[d];
         }
 
-        // ReSharper restore LoopCanBeConvertedToQuery
+        /// <summary>
+        /// Returns a sequence of the least significant base 10 digits in 
+        /// the integer.
+        /// </summary>
 
         public static IEnumerable<int> LsDigits(this int number)
         {
             return LsDigits(number, 10);
         }
 
+        /// <summary>
+        /// Returns a sequence of the least significant digits in the 
+        /// integer in a given radix.
+        /// </summary>
+        
         public static IEnumerable<int> LsDigits(this int number, int radix)
         {
             do

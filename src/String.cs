@@ -564,6 +564,15 @@ namespace Mannex
                 );
         }
 
+        /// <summary>
+        /// Partitions a string into equally sized parts (except possibly 
+        /// the last one) and returns a sequence containing each partition.
+        /// than the given size.
+        /// </summary>
+        /// <remarks>
+        /// This method uses deferred execution semantics.
+        /// </remarks>
+
         public static IEnumerable<string> Partition(this string str, int size)
         {
             if (str == null) throw new ArgumentNullException("str");
