@@ -572,8 +572,9 @@ namespace Mannex
 
         static IEnumerable<string> PartitionImpl(string str, int size)
         {
-            for (var i = 0; i < str.Length; i += size)
-                yield return str.Slice(i, i + size);
+            var length = str.Length;
+            for (var i = 0; i < length; i += size)
+                yield return str.Substring(i, Math.Min(size, length - i));
         }
     }
 }
