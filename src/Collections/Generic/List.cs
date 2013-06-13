@@ -27,6 +27,7 @@ namespace Mannex.Collections.Generic
 
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Diagnostics;
     using System.Linq;
 
@@ -389,6 +390,19 @@ namespace Mannex.Collections.Generic
             } 
             
             return ~first;
+        }
+
+        /// <summary>
+        /// Returns a read-only wrapper for the list otherwise returns the 
+        /// list itself if its <see cref="ICollection{T}.IsReadOnly"/> is 
+        /// <c>true</c>.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static IList<T> AsReadOnly<T>(this IList<T> list)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            return list.IsReadOnly ? list : new ReadOnlyCollection<T>(list);
         }
     }
 }
