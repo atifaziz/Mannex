@@ -367,5 +367,31 @@ namespace Mannex.Tests.Collections.Generic
             Assert.Equal(1, items.BinarySearch("bravo", comparer));
             Assert.Equal(2, items.BinarySearch("charlie", comparer));
         }
+
+        [Fact]
+        public void AsReadOnlyWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => ListExtensions.AsReadOnly<object>(null));
+            Assert.Equal("list", e.ParamName);
+        }
+
+        [Fact]
+        public void AsReadOnly()
+        {
+            var list = (IList<int>) new [] { 1, 2, 3 }.ToList();
+            Assert.False(list.IsReadOnly);
+            var roList = list.AsReadOnly();
+            Assert.True(roList.IsReadOnly);
+        }
+ 
+        [Fact]
+        public void AsReadOnlyOnReadOnlyListReturnsSameListReference()
+        {
+            var list = (IList<int>) new [] { 1, 2, 3 }.ToList();
+            Assert.False(list.IsReadOnly);
+            var roList = list.AsReadOnly();
+            Assert.True(roList.IsReadOnly);
+            Assert.Same(roList, roList.AsReadOnly());
+        }
     }
 }
