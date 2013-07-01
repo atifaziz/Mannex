@@ -48,6 +48,7 @@ namespace Mannex
     namespace Collections
     {
         public static partial class ArrayListExtensions { }
+        public static partial class BitArrayExtensions { }
         public static partial class IEnumeratorExtensions { }
     }
 
