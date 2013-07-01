@@ -21,30 +21,32 @@
 //
 #endregion
 
-#region Imports
+namespace Mannex.Tests.Collections
+{
+    #region Imports
 
-using System.Reflection;
+    using System;
+    using System.Collections;
+    using System.Linq;
+    using Mannex.Collections;
+    using Xunit;
 
-using CLSCompliantAttribute = System.CLSCompliantAttribute;
-using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
+    #endregion
 
-#endregion
+    public class BitArrayTests
+    {
+        [Fact]
+        public void AsEnumerableFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => BitArrayExtensions.AsEnumerable(null));
+            Assert.Equal("array", e.ParamName);
+        }
 
-[assembly: AssemblyTitle("Mannex")]
-[assembly: AssemblyDescription("Extension methods for .NET")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mannex")]
-[assembly: AssemblyCopyright("Copyright (c) 2009, Atif Aziz. All rights reserved.")]
-[assembly: AssemblyCulture("")]
-
-[assembly: AssemblyVersion("2.7.16201.0")]
-[assembly: AssemblyFileVersion("2.7.16201.1413")]
-
-#if DEBUG
-[assembly: AssemblyConfiguration("DEBUG")]
-#else
-[assembly: AssemblyConfiguration("RELEASE")]
-#endif
-
-[assembly: CLSCompliant(true)] 
-[assembly: ComVisible(false)]
+        [Fact]
+        public void AsEnumerable()
+        {
+            var bools = new[] { true, false, true };
+            Assert.True(bools.SequenceEqual(new BitArray(bools).AsEnumerable()));
+        }
+    }
+}
