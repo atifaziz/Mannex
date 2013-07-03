@@ -119,5 +119,84 @@ namespace Mannex.Data
 
             return table;
         }
+
+        /// <summary>
+        /// Parses text with fixed width fields into a <see cref="DataTable"/> 
+        /// object given a set of columns to bind to the source.
+        /// </summary>
+
+        public static DataTable ParseFixedWidthTextFieldRecordsAsDataTable(
+            this TextReader reader, params DataColumn[] columns)
+        {
+            var schema = columns.Select(c => c.AsKeyTo(new Func<string, object>(s => s)));
+            return reader.ParseFixedWidthTextFieldRecordsAsDataTable(schema.ToArray());
+        }
+
+        /// <summary>
+        /// Parses text with fixed width fields into a <see cref="DataTable"/> 
+        /// object given a set of columns to bind to the source and 
+        /// functions to convert source text values to required column types.
+        /// </summary>
+
+        public static DataTable ParseFixedWidthTextFieldRecordsAsDataTable(
+            this TextReader reader, 
+            params KeyValuePair<DataColumn, Func<string, object>>[] columns)
+        {
+            if (columns == null) throw new ArgumentNullException("columns");
+            if (columns.Any(e => e.Key.Table != null || e.Value == null))
+                throw new ArgumentException(null, "columns");
+
+            var table = new DataTable();
+            var dataColumns = table.Columns;
+            dataColumns.AddRange(columns.Select(e => e.Key).ToArray());
+
+            using (var e = reader.ReadLines())
+            {
+                if (!e.MoveNext())
+                    throw new Exception("Missing headers on first line.");
+
+                var headerLine = e.Current;
+
+                var headers =           // ReSharper disable ImplicitlyCapturedClosure
+                    from hs in new[] 
+                    { 
+                        from h in headerLine.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                        select headerLine.IndexOf(h, StringComparison.OrdinalIgnoreCase).AsKeyTo(h) 
+                    }
+                    select hs.Concat(new[] { int.MaxValue.AsKeyTo(string.Empty) }).ToArray() into hs
+                    from h in Enumerable.Range(1, hs.Length - 1)
+                                        .Select(i => new { Start = hs[i - 1].Key, 
+                                                           Stop  = hs[i].Key, 
+                                                           Text  = hs[i - 1].Value })
+                    let hcol = dataColumns[h.Text]
+                    where columns.Length == 0 || hcol != null
+                    let col = hcol ?? new DataColumn(h.Text)
+                    orderby col.Ordinal
+                    select new
+                    {
+                        h.Start, h.Stop, Column = col,
+                        Converter = col != null && columns.Length > 0
+                                  ? columns[col.Ordinal].Value 
+                                  : (s => s),
+                    };
+
+                // ReSharper restore ImplicitlyCapturedClosure
+
+                headers = headers.ToArray();
+
+                if (columns.Length == 0)
+                    dataColumns.AddRange(headers.Select(h => h.Column).ToArray());
+
+                while (e.MoveNext())
+                {
+                    var dataLine = e.Current;
+                    var fields = from h in headers
+                                 select h.Converter(dataLine.Slice(h.Start, h.Stop).TrimEnd());
+                    table.Rows.Add(fields.ToArray());
+                }
+            }
+            
+            return table;
+        }
     }
 }
