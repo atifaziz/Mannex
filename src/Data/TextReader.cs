@@ -80,28 +80,28 @@ namespace Mannex.Data
                                    var bindings = 
                                        columns.Length == 0
                                        ? from i in Enumerable.Range(0, hs.Length)
-                                           select new
-                                           {
-                                               Index = i, 
-                                               Name = hs[i],
-                                               Converter = new Func<string, object>(s => s)
-                                           }
+                                         select new
+                                         {
+                                             Index     = i, 
+                                             Name      = hs[i],
+                                             Converter = new Func<string, object>(s => s)
+                                         }
                                        : from col in columns
-                                           select new
-                                           {
-                                               Index     = Array.FindIndex(hs, h => col.Key.ColumnName.Equals(h, StringComparison.Ordinal)),
-                                               Name      = col.Key.ColumnName,
-                                               Converter = col.Value,
-                                           } 
-                                           into col
-                                           select new
-                                           {
-                                               Index = col.Index >= 0 
-                                                   ? col.Index 
-                                                   : Array.FindIndex(hs, h => col.Name.Equals(h, StringComparison.OrdinalIgnoreCase)),
-                                               col.Name,
-                                               col.Converter,
-                                           };
+                                         select new
+                                         {
+                                             Index     = Array.FindIndex(hs, h => col.Key.ColumnName.Equals(h, StringComparison.Ordinal)),
+                                             Name      = col.Key.ColumnName,
+                                             Converter = col.Value,
+                                         } 
+                                         into col
+                                         select new
+                                         {
+                                             Index = col.Index >= 0 
+                                                 ? col.Index 
+                                                 : Array.FindIndex(hs, h => col.Name.Equals(h, StringComparison.OrdinalIgnoreCase)),
+                                             col.Name,
+                                             col.Converter,
+                                         };
                                
                                    bindings = bindings.ToArray();
                                    if (columns.Length == 0 && bindings.Any())
