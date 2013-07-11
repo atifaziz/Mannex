@@ -68,7 +68,6 @@
     <Compile Include="Data\IDataRecordTests.cs" />
     <Compile Include="IFormattableTests.cs" />
     <Compile Include="ICloneableTests.cs" />
-    <Compile Include="Net\WebExceptionTests.cs" />
     <Compile Include="Threading\Tasks\ImmediateTaskScheduler.cs" />
     <Compile Include="Threading\Tasks\TaskCompletionSourceTests.cs" />
     <Compile Include="Threading\Tasks\TaskTests.cs" />
@@ -127,7 +126,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

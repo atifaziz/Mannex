@@ -176,7 +176,6 @@
     <Compile Include="Globalization\NumberStyles.cs" />
     <Compile Include="Data\Common\DbConnection.cs" />
     <Compile Include="ICloneable.cs" />
-    <Compile Include="Net\WebException.cs" />
     <Compile Include="Reflection\MethodInfo.cs" />
     <Compile Include="Threading\Tasks\Task.cs">
       <SubType>Code</SubType>
