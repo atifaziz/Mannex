@@ -79,7 +79,9 @@ namespace Mannex.Reflection
         /// </summary>
         /// <remarks>
         /// Build targeting .NET Framework 3.5 does not support static 
-        /// methods with a return type of <see cref="System.Void"/>.
+        /// methods with a return type of <see cref="System.Void"/>. Use 
+        /// <see cref="Type.Missing"/> for an argument to the invoker to 
+        /// have the default value for an optional argument to be filled in.
         /// </remarks>
         
         public static Func<object[], object> CompileStaticInvoker(this MethodInfo method)
@@ -95,11 +97,16 @@ namespace Mannex.Reflection
             var argsParameter = Expression.Parameter(typeof(object[]), "args");
 
             var parameters = method.GetParameters();
-            var args = from p in parameters
-                       let arg = Expression.ArrayIndex(argsParameter, Expression.Constant(p.Position))
-                       select p.ParameterType == arg.Type
-                            ? (Expression) arg
-                            : Expression.Convert(arg, p.ParameterType);
+            
+            var args = 
+                from p in parameters
+                let arg = Expression.ArrayIndex(argsParameter, Expression.Constant(p.Position))
+                let carg = p.ParameterType == arg.Type
+                         ? (Expression) arg
+                         : Expression.Convert(arg, p.ParameterType)
+                select p.HasDefaultValue
+                     ? Expression.Condition(Expression.Equal(arg, Expression.Constant(Type.Missing)), Expression.Constant(p.DefaultValue), carg)
+                     : carg;
             
             var e = (Expression) Expression.Call(method, args.ToArray());
             if (!returnsVoid) 
