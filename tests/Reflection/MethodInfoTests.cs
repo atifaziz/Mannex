@@ -95,5 +95,14 @@ namespace Mannex.Tests.Reflection
         }
 
         static int FortyTwoFactor(int x = 1) { return 42 * x; }
+        
+        [Fact]
+        public void CompileStaticInvokerOnMethodWithNullForValueTypeParameter()
+        {
+            var d = (Func<int, int>) Echo;
+            Assert.Equal(0, d.Method.CompileStaticInvoker()(new object[1]));
+        }
+
+        static int Echo(int x) { return x; }
     }
 }
