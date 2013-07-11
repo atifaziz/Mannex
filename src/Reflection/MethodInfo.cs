@@ -97,17 +97,13 @@ namespace Mannex.Reflection
             var argsParameter = Expression.Parameter(typeof(object[]), "args");
 
             var parameters = method.GetParameters();
-            
             var args = 
                 from p in parameters
                 let arg = Expression.ArrayIndex(argsParameter, Expression.Constant(p.Position))
-                let carg = p.ParameterType == arg.Type
-                         ? (Expression) arg
-                         : Expression.Convert(arg, p.ParameterType)
                 select p.HasDefaultValue
-                     ? Expression.Condition(Expression.Equal(arg, Expression.Constant(Type.Missing)), Expression.Constant(p.DefaultValue), carg)
-                     : carg;
-            
+                     ? Expression.Call(OptArgInfo(p.ParameterType), arg, Expression.Constant(p.DefaultValue))
+                     : (Expression) Expression.Call(ReqArgInfo(p.ParameterType), arg);
+
             var e = (Expression) Expression.Call(method, args.ToArray());
             if (!returnsVoid) 
                 e = Expression.Convert(e, typeof(object));
@@ -124,5 +120,12 @@ namespace Mannex.Reflection
             
             return Expression.Lambda<Func<object[], object>>(e, argsParameter).Compile();
         }
+
+        static MethodInfo _reqArg;
+        static MethodInfo _optArg;
+        static MethodInfo ReqArgInfo(Type type) { return (_reqArg ?? (_reqArg = ((Func<object, object>) ReqArg<object>).Method.GetGenericMethodDefinition())).MakeGenericMethod(type); }
+        static MethodInfo OptArgInfo(Type type) { return (_optArg ?? (_optArg = ((Func<object, object, object>) OptArg).Method.GetGenericMethodDefinition())).MakeGenericMethod(type); }
+        static T ReqArg<T>(object arg) { return (T) (arg ?? default(T)); }
+        static T OptArg<T>(object arg, T defaultValue) { return (T) (arg == Type.Missing ? defaultValue : arg ?? default(T)); }
     }
 }
