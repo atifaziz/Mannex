@@ -100,7 +100,7 @@ namespace Mannex.Reflection
             var args = 
                 from p in parameters
                 let arg = Expression.ArrayIndex(argsParameter, Expression.Constant(p.Position))
-                select p.HasDefaultValue
+                select ParameterAttributes.HasDefault == (p.Attributes & ParameterAttributes.HasDefault)
                      ? Expression.Call(OptArgInfo(p.ParameterType), arg, Expression.Constant(p.DefaultValue))
                      : (Expression) Expression.Call(ReqArgInfo(p.ParameterType), arg);
 
