@@ -29,6 +29,7 @@ namespace Mannex.Reflection
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Reflection;
     using Collections.Generic;
 
@@ -70,6 +71,51 @@ namespace Mannex.Reflection
                                         : param.IsOptional && (ParameterAttributes.HasDefault == (param.Attributes & ParameterAttributes.HasDefault))
                                         ? param.DefaultValue
                                         : Missing.Value);
+        }
+
+        /// <summary>
+        /// Compiles a function that can be used to call a static method 
+        /// without the performance penalties of late-binding and invocation.
+        /// </summary>
+        /// <remarks>
+        /// Build targeting .NET Framework 3.5 does not support static 
+        /// methods with a return type of <see cref="System.Void"/>.
+        /// </remarks>
+        
+        public static Func<object[], object> CompileStaticInvoker(this MethodInfo method)
+        {
+            if (method == null) throw new ArgumentNullException("method");
+            if (!method.IsStatic) throw new ArgumentException(null, "method");
+            
+            var returnsVoid = method.ReturnType == typeof(void);
+        #if !NET4
+            if (returnsVoid) throw new ArgumentException(null, "method");
+        #endif
+
+            var argsParameter = Expression.Parameter(typeof(object[]), "args");
+
+            var parameters = method.GetParameters();
+            var args = from p in parameters
+                       let arg = Expression.ArrayIndex(argsParameter, Expression.Constant(p.Position))
+                       select p.ParameterType == arg.Type
+                            ? (Expression) arg
+                            : Expression.Convert(arg, p.ParameterType);
+            
+            var e = (Expression) Expression.Call(method, args.ToArray());
+            if (!returnsVoid) 
+                e = Expression.Convert(e, typeof(object));
+        #if NET4
+            var statements = new List<Expression>
+            {
+                Expression.IfThen(Expression.MakeBinary(ExpressionType.NotEqual, Expression.ArrayLength(argsParameter), Expression.Constant(parameters.Length)), Expression.Throw(Expression.Constant(new ArgumentException(null, argsParameter.Name)))),
+                e,
+            };
+            if (returnsVoid) 
+                statements.Add(Expression.Constant(null));
+            e = Expression.Block(statements);
+        #endif
+            
+            return Expression.Lambda<Func<object[], object>>(e, argsParameter).Compile();
         }
     }
 }

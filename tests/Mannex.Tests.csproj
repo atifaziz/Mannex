@@ -68,6 +68,7 @@
     <Compile Include="Data\IDataRecordTests.cs" />
     <Compile Include="IFormattableTests.cs" />
     <Compile Include="ICloneableTests.cs" />
+    <Compile Include="Reflection\MethodInfoTests.cs" />
     <Compile Include="Threading\Tasks\ImmediateTaskScheduler.cs" />
     <Compile Include="Threading\Tasks\TaskCompletionSourceTests.cs" />
     <Compile Include="Threading\Tasks\TaskTests.cs" />
