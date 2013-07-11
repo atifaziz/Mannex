@@ -86,5 +86,14 @@ namespace Mannex.Tests.Reflection
             var index = findIndex(new object[] { new[] { 1, 2, 3 }, new Predicate<int>(x => x % 2 == 0) });
             Assert.Equal(1, index);
         }
+
+        [Fact]
+        public void CompileStaticInvokerOnMethodWithOptionalParameters()
+        {
+            var d = (Func<int, int>) FortyTwoFactor;
+            Assert.Equal(42, d.Method.CompileStaticInvoker()(new[] { Type.Missing }));
+        }
+
+        static int FortyTwoFactor(int x = 1) { return 42 * x; }
     }
 }
