@@ -101,8 +101,8 @@ namespace Mannex.Reflection
                 from p in parameters
                 let arg = Expression.ArrayIndex(argsParameter, Expression.Constant(p.Position))
                 select ParameterAttributes.HasDefault == (p.Attributes & ParameterAttributes.HasDefault)
-                     ? Expression.Call(OptArgInfo(p.ParameterType), arg, Expression.Constant(p.DefaultValue))
-                     : (Expression) Expression.Call(ReqArgInfo(p.ParameterType), arg);
+                     ? Expression.Call(MakeOptArgMethod(p.ParameterType), arg, Expression.Constant(p.DefaultValue))
+                     : (Expression) Expression.Call(MakeReqArgMethod(p.ParameterType), arg);
 
             var e = (Expression) Expression.Call(method, args.ToArray());
             if (!returnsVoid) 
@@ -110,7 +110,7 @@ namespace Mannex.Reflection
         #if NET4
             var statements = new List<Expression>
             {
-                Expression.Call(((Action<object[], int>) ValidateArgCount).Method, argsParameter, Expression.Constant(parameters.Length)),
+                Expression.Call(ValidateArgCountMethod, argsParameter, Expression.Constant(parameters.Length)),
                 e,
             };
             if (returnsVoid) 
@@ -121,12 +121,15 @@ namespace Mannex.Reflection
             return Expression.Lambda<Func<object[], object>>(e, argsParameter).Compile();
         }
 
-        static MethodInfo _reqArg;
-        static MethodInfo _optArg;
-        static MethodInfo ReqArgInfo(Type type) { return (_reqArg ?? (_reqArg = ((Func<object, object>) ReqArg<object>).Method.GetGenericMethodDefinition())).MakeGenericMethod(type); }
-        static MethodInfo OptArgInfo(Type type) { return (_optArg ?? (_optArg = ((Func<object, object, object>) OptArg).Method.GetGenericMethodDefinition())).MakeGenericMethod(type); }
+        static RuntimeMethodHandle _genericReqArgHandle;
+        static RuntimeMethodHandle _genericOptArgHandle;
+        static MethodInfo MakeReqArgMethod(Type type) { return (_genericReqArgHandle.Value != IntPtr.Zero ? _genericReqArgHandle : (_genericReqArgHandle = ((Func<object, object>) ReqArg<object>).Method.GetGenericMethodDefinition().MethodHandle)).GetMethodInfo().MakeGenericMethod(type); }
+        static MethodInfo MakeOptArgMethod(Type type) { return (_genericOptArgHandle.Value != IntPtr.Zero ? _genericOptArgHandle : (_genericOptArgHandle = ((Func<object, object, object>) OptArg).Method.GetGenericMethodDefinition().MethodHandle)).GetMethodInfo().MakeGenericMethod(type); }
         static T ReqArg<T>(object arg) { return (T) (arg ?? default(T)); }
         static T OptArg<T>(object arg, T defaultValue) { return (T) (arg == Type.Missing ? defaultValue : arg ?? default(T)); }
+        
+        static RuntimeMethodHandle _validateArgCountHandle;
+        static MethodInfo ValidateArgCountMethod { get { return (_validateArgCountHandle.Value != IntPtr.Zero ? _validateArgCountHandle : (_validateArgCountHandle = ((Action<object[], int>) ValidateArgCount).Method.MethodHandle)).GetMethodInfo(); } }
         static void ValidateArgCount(object[] args, int count) { if (args.Length != count) throw new ArgumentException(null, "args"); }
     }
 }
