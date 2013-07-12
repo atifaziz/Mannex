@@ -21,30 +21,29 @@
 //
 #endregion
 
-#region Imports
+namespace Mannex
+{
+    #region Imports
 
-using System.Reflection;
+    using System;
+    using System.Reflection;
 
-using CLSCompliantAttribute = System.CLSCompliantAttribute;
-using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
+    #endregion
 
-#endregion
+    /// <summary>
+    /// Extension methods for <see cref="RuntimeMethodHandle"/>.
+    /// </summary>
 
-[assembly: AssemblyTitle("Mannex")]
-[assembly: AssemblyDescription("Extension methods for .NET")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mannex")]
-[assembly: AssemblyCopyright("Copyright (c) 2009, Atif Aziz. All rights reserved.")]
-[assembly: AssemblyCulture("")]
+    static partial class RuntimeMethodHandleExtensions
+    {
+        /// <summary>
+        /// Gets method information by using the method's internal metadata 
+        /// representation (handle).
+        /// </summary>
 
-[assembly: AssemblyVersion("2.7.16212.0")]
-[assembly: AssemblyFileVersion("2.7.16212.756")]
-
-#if DEBUG
-[assembly: AssemblyConfiguration("DEBUG")]
-#else
-[assembly: AssemblyConfiguration("RELEASE")]
-#endif
-
-[assembly: CLSCompliant(true)] 
-[assembly: ComVisible(false)]
+        public static MethodInfo GetMethodInfo(this RuntimeMethodHandle handle)
+        {
+            return (MethodInfo) MethodBase.GetMethodFromHandle(handle);
+        }
+    }
+}
