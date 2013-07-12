@@ -110,7 +110,7 @@ namespace Mannex.Reflection
         #if NET4
             var statements = new List<Expression>
             {
-                Expression.IfThen(Expression.MakeBinary(ExpressionType.NotEqual, Expression.ArrayLength(argsParameter), Expression.Constant(parameters.Length)), Expression.Throw(Expression.Constant(new ArgumentException(null, argsParameter.Name)))),
+                Expression.Call(((Action<object[], int>) ValidateArgCount).Method, argsParameter, Expression.Constant(parameters.Length)),
                 e,
             };
             if (returnsVoid) 
@@ -127,5 +127,6 @@ namespace Mannex.Reflection
         static MethodInfo OptArgInfo(Type type) { return (_optArg ?? (_optArg = ((Func<object, object, object>) OptArg).Method.GetGenericMethodDefinition())).MakeGenericMethod(type); }
         static T ReqArg<T>(object arg) { return (T) (arg ?? default(T)); }
         static T OptArg<T>(object arg, T defaultValue) { return (T) (arg == Type.Missing ? defaultValue : arg ?? default(T)); }
+        static void ValidateArgCount(object[] args, int count) { if (args.Length != count) throw new ArgumentException(null, "args"); }
     }
 }
