@@ -26,7 +26,9 @@ namespace Mannex.Net.Mime
     #region Imports
 
     using System;
+    using System.Net;
     using System.Net.Mime;
+    using System.Text;
 
     #endregion
 
@@ -101,6 +103,61 @@ namespace Mannex.Net.Mime
         private static bool EqualsOrdinalIgnoreCase(string left, string right)
         {
             return left.Equals(right, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Gets an <see cref="Encoding"/> object based on the character set 
+        /// specified in the content-type header in the given headers 
+        /// collection and <c>null</c> otherwise.
+        /// </summary>
+
+        public static Encoding EncodingFromCharSet(this ContentType contentType)
+        {
+            return contentType.EncodingFromCharSet((Encoding) null);
+        }
+
+        /// <summary>
+        /// Gets an <see cref="Encoding"/> object based on the character set 
+        /// specified in the content-type header in the given headers 
+        /// collection and a default encoding otherwise (that may be 
+        /// <c>null</c>).
+        /// </summary>
+
+        public static Encoding EncodingFromCharSet(this ContentType contentType, Encoding defaultEncoding)
+        {
+            return EncodingFromCharSet(contentType, defaultEncoding, null);
+        }
+
+        /// <summary>
+        /// Gets an <see cref="Encoding"/> object based on the character set 
+        /// specified in the content-type header in the given headers 
+        /// collection and <c>null</c> otherwise. An additional parameter 
+        /// specifies how to map the character set specification into an 
+        /// <see cref="Encoding"/> object and uses 
+        /// <see cref="Encoding.GetEncoding(string)"/> if <c>null</c>. 
+        /// </summary>
+
+        public static Encoding EncodingFromCharSet(this ContentType contentType, Func<string, Encoding> encodingSelector)
+        {
+            return EncodingFromCharSet(contentType, null, encodingSelector);
+        }
+
+        /// <summary>
+        /// Gets an <see cref="Encoding"/> object based on the character set 
+        /// specified in the content-type header in the given headers 
+        /// collection and a default encoding otherwise (that may be 
+        /// <c>null</c>). An additional parameter specifies how to map the 
+        /// character set specification into an <see cref="Encoding"/> 
+        /// object and uses <see cref="Encoding.GetEncoding(string)"/> if 
+        /// <c>null</c>. 
+        /// </summary>
+
+        public static Encoding EncodingFromCharSet(this ContentType contentType, Encoding defaultEncoding, Func<string, Encoding> encodingSelector)
+        {
+            if (contentType == null) throw new ArgumentNullException("contentType");
+            return string.IsNullOrEmpty(contentType.CharSet)
+                 ? defaultEncoding
+                 : (encodingSelector ?? Encoding.GetEncoding)(contentType.CharSet);
         }
     }
 }
