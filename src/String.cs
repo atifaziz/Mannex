@@ -376,6 +376,54 @@ namespace Mannex
         }
 
         /// <summary>
+        /// Splits a string into a pair using a specified string to 
+        /// separate the two. An aditional parameter specifies comparison 
+        /// rules used to find the separator string.
+        /// </summary>
+        /// <remarks>
+        /// Neither half in the resulting pair is ever <c>null</c>.
+        /// </remarks>
+
+        public static T Split<T>(this string str, string separator, StringComparison comparison, Func<string, string, T> resultFunc)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            return SplitRemoving(str, str.IndexOf(separator, comparison), separator.Length, resultFunc);
+        }
+
+        /// <summary>
+        /// Splits a string into three parts using a specified string to 
+        /// separate the three.  An aditional parameter specifies comparison 
+        /// rules used to find the separator string.
+        /// </summary>
+        /// <remarks>
+        /// None of the resulting parts is ever <c>null</c>.
+        /// </remarks>
+        
+        public static T Split<T>(this string str, string separator, StringComparison comparison, Func<string, string, string, T> resultFunc)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            return str.Split(separator, comparison, (a, rest) => rest.Split(separator, comparison, (b, c) => resultFunc(a, b, c)));
+        }
+
+        /// <summary>
+        /// Splits a string into four parts using a specified string to 
+        /// separate the four. An aditional parameter specifies comparison 
+        /// rules used to find the separator string.
+        /// </summary>
+        /// <remarks>
+        /// None of the resulting parts is ever <c>null</c>.
+        /// </remarks>
+
+        public static T Split<T>(this string str, string separator, StringComparison comparison, Func<string, string, string, string, T> resultFunc)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            return str.Split(separator, comparison, (a, b, rest) => rest.Split(separator, comparison, (c, d) => resultFunc(a, b, c, d)));
+        }
+
+        /// <summary>
         /// Splits a string into a pair by removing a portion of the string.
         /// </summary>
         /// <remarks>
