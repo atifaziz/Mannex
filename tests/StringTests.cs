@@ -444,5 +444,33 @@ namespace Mannex.Tests
             const string foobar = "foobar";
             Assert.Equal(new[] { foobar }, foobar.Partition(foobar.Length * 2).ToArray());
         }
+    
+
+        [Fact]
+        public void SplitTwoUsingStringSeparator()
+        {
+            const string str = "one|sep|two|sep|three|sep|four|sep|five";
+            Assert.Equal(new[] { "one", "two|sep|three|sep|four|sep|five" }, 
+                str.Split("|SEP|", StringComparison.OrdinalIgnoreCase,  
+                          (a, b) => new[] { a, b }));
+        }
+
+        [Fact]
+        public void SplitThreeUsingStringSeparator()
+        {
+            const string str = "one|sep|two|sep|three|sep|four|sep|five";
+            Assert.Equal(new[] { "one", "two", "three|sep|four|sep|five" }, 
+                str.Split("|SEP|", StringComparison.OrdinalIgnoreCase, 
+                          (a, b, c) => new[] { a, b, c }));
+        }
+
+        [Fact]
+        public void SplitFourUsingStringSeparator()
+        {
+            const string str = "one|sep|two|sep|three|sep|four|sep|five";
+            Assert.Equal(new[] { "one", "two", "three", "four|sep|five" }, 
+                str.Split("|SEP|", StringComparison.OrdinalIgnoreCase, 
+                          (a, b, c, d) => new[] { a, b, c, d }));
+        }
     }
 }
