@@ -30,6 +30,7 @@ namespace Mannex.Net
     using System.Net;
     using System.Net.Mime;
     using System.Text;
+    using Mime;
 
     #endregion
 
@@ -53,11 +54,7 @@ namespace Mannex.Net
             if (headers == null)
                 throw new InvalidOperationException("Response headers not available.");
 
-            var header = headers["Content-Type"];
-            
-            return !string.IsNullOrEmpty(header) 
-                 ? new ContentType(header) 
-                 : null;
+            return headers.Map(HttpResponseHeader.ContentType, h => new ContentType(h));
         }
 
         /// <summary>
@@ -90,12 +87,11 @@ namespace Mannex.Net
             Debug.Assert(data != null);
 
             var contentType = client.GetResponseContentType();
+            var encoding = contentType != null
+                         ? contentType.EncodingFromCharSet(client.Encoding)
+                         : null;
 
-            var encoding = contentType == null || string.IsNullOrEmpty(contentType.CharSet)
-                         ? client.Encoding 
-                         : Encoding.GetEncoding(contentType.CharSet);
-
-            return encoding.GetString(data);
+            return (encoding ?? client.Encoding).GetString(data);
         }
     }
 }

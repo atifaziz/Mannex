@@ -112,6 +112,7 @@ namespace Mannex
 
     namespace Net
     {
+        public static partial class WebHeaderCollectionExtensions { }
         public static partial class WebClientExtensions { }
 
         namespace Mime
