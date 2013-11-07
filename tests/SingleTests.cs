@@ -21,30 +21,26 @@
 //
 #endregion
 
-#region Imports
+namespace Mannex.Tests
+{
+    #region Imports
 
-using System.Reflection;
+    using Xunit;
 
-using CLSCompliantAttribute = System.CLSCompliantAttribute;
-using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
+    #endregion
 
-#endregion
+    public class SingleTests
+    {
+        [Fact]
+        public void NullNaNReturnsOriginalWhenNonNaN()
+        {
+            Assert.Equal(1.23f, 1.23f.NullNaN());
+        }
 
-[assembly: AssemblyTitle("Mannex")]
-[assembly: AssemblyDescription("Extension methods for .NET")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mannex")]
-[assembly: AssemblyCopyright("Copyright (c) 2009, Atif Aziz. All rights reserved.")]
-[assembly: AssemblyCulture("")]
-
-[assembly: AssemblyVersion("2.7.16607.0")]
-[assembly: AssemblyFileVersion("2.7.16607.1042")]
-
-#if DEBUG
-[assembly: AssemblyConfiguration("DEBUG")]
-#else
-[assembly: AssemblyConfiguration("RELEASE")]
-#endif
-
-[assembly: CLSCompliant(true)] 
-[assembly: ComVisible(false)]
+        [Fact]
+        public void NullNaNReturnsNullWhenNaN()
+        {
+            Assert.Equal(null, float.NaN.NullNaN());
+        }
+    }
+}

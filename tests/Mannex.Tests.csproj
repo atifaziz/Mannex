@@ -64,6 +64,8 @@
     <Compile Include="Collections\Generic\IComparerTests.cs" />
     <Compile Include="Collections\Specialized\NameValueCollectionTests.cs" />
     <Compile Include="ActionTests.cs" />
+    <Compile Include="SingleTests.cs" />
+    <Compile Include="DoubleTests.cs" />
     <Compile Include="Net\WebHeaderCollectionTests.cs" />
     <Compile Include="Net\Mime\ContentTypeTests.cs" />
     <Compile Include="IComparableTests.cs" />

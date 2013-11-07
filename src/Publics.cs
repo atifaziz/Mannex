@@ -27,6 +27,7 @@ namespace Mannex
     public static partial class ArrayExtensions { }
     public static partial class BooleanExtensions { }
     public static partial class DateTimeExtensions { }
+    public static partial class DoubleExtensions { }
     public static partial class EnumExtensions { }
     public static partial class EventHandlerExtensions { }
     public static partial class ExceptionExtensions { }
@@ -35,6 +36,7 @@ namespace Mannex
     public static partial class Int64Extensions { }
     public static partial class PredicateExtensions { }
     public static partial class RuntimeMethodHandleExtensions { }
+    public static partial class SingleExtensions { }
     public static partial class StringExtensions { }
     #if NET4
     public static partial class TupleExtensions { }
