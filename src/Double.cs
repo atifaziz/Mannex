@@ -21,30 +21,32 @@
 //
 #endregion
 
-#region Imports
+namespace Mannex
+{
+    #region Imports
 
-using System.Reflection;
+    using System;
+    using System.Diagnostics;
 
-using CLSCompliantAttribute = System.CLSCompliantAttribute;
-using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
+    #endregion
 
-#endregion
+    /// <summary>
+    /// Extension methods for <see cref="double"/>.
+    /// </summary>
 
-[assembly: AssemblyTitle("Mannex")]
-[assembly: AssemblyDescription("Extension methods for .NET")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mannex")]
-[assembly: AssemblyCopyright("Copyright (c) 2009, Atif Aziz. All rights reserved.")]
-[assembly: AssemblyCulture("")]
+    static partial class DoubleExtensions
+    {
+        /// <summary>
+        /// Converts <see cref="double.NaN"/> value to a 
+        /// <see cref="Nullable{T}"/> of <see cref="double"/> initialized to 
+        /// the null state. Otherwise the <see cref="Nullable{T}"/> of 
+        /// <see cref="double"/> retured holds the original input value.
+        /// </summary>
 
-[assembly: AssemblyVersion("2.7.16607.0")]
-[assembly: AssemblyFileVersion("2.7.16607.1042")]
-
-#if DEBUG
-[assembly: AssemblyConfiguration("DEBUG")]
-#else
-[assembly: AssemblyConfiguration("RELEASE")]
-#endif
-
-[assembly: CLSCompliant(true)] 
-[assembly: ComVisible(false)]
+        [DebuggerStepThrough]
+        public static double? NullNaN(this double value)
+        {
+            return double.IsNaN(value) ? (double?) null : value;
+        }
+    }
+}
