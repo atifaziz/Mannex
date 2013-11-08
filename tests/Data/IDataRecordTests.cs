@@ -26,10 +26,8 @@ namespace Mannex.Tests.Data
     #region Imports
 
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using System.Data.Common;
     using System.Linq;
     using Mannex.Data;
     using Xunit;
@@ -57,7 +55,7 @@ namespace Mannex.Tests.Data
         [Fact]
         public void GetValueByIndexForReferences()
         {
-            var records = CreateTable<string>("foo", null).GetRecords().ToArray();
+            var records = CreateTable("foo", null).GetRecords().ToArray();
             Assert.Equal("foo", records[0].GetValue<string>(0));
             Assert.Null(records[1].GetValue<string>(0));
         }
@@ -65,21 +63,21 @@ namespace Mannex.Tests.Data
         [Fact]
         public void GetValueByIndexForStructs()
         {
-            var record = CreateTable<int>(42).GetRecords().Single();
+            var record = CreateTable(42).GetRecords().Single();
             Assert.Equal(42, record.GetValue<int>(0));
         }
         
         [Fact]
         public void GetValueByIndexForStructsFailsWithDBNull()
         {
-            var record = CreateTable<int>(0).GetRecords().Single();
+            var record = CreateTable(0).GetRecords().Single();
             Assert.Throws<InvalidCastException>(() => record.GetValue<int>(0));
         }
 
         [Fact]
         public void GetValueByIndexForNullableFailsWithDBNull()
         {
-            var record = CreateTable<int>(0).GetRecords().Single();
+            var record = CreateTable(0).GetRecords().Single();
             Assert.Null(record.GetValue<int?>(0));
         }
 
@@ -91,7 +89,6 @@ namespace Mannex.Tests.Data
 
         static DataTable CreateTable<T>(Predicate<T> nullPredicate, params T[] values)
         {
-            var comparer = EqualityComparer<T>.Default;
             var table = new DataTable();
             table.Columns.Add("Value", typeof(T));
             
