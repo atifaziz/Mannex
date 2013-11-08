@@ -132,10 +132,10 @@ namespace Mannex.Data
             {
                 var type = typeof(T);
                 Impl = !type.IsValueType
-                     ? GetValueImpl<T>.ReferenceImpl
+                     ? ReferenceImpl
                      : type.IsConstructionOfNullable()
                      ? MakeNullableImpl()
-                     : GetValueImpl<T>.ValueImpl;
+                     : ValueImpl;
             }
 
             static T ReferenceImpl(object value)
