@@ -53,37 +53,61 @@ namespace Mannex.Data
             return Enumerable.Range(0, record.FieldCount);
         }
 
+        static IEnumerable<TResult> Ordinally<TRecord, TResult>(TRecord record, Func<TRecord, IEnumerable<int>, IEnumerable<TResult>> selector) 
+            where TRecord : IDataRecord
+        {
+            // ReSharper disable once CompareNonConstrainedGenericWithNull
+            if (record == null) throw new ArgumentNullException("record");
+            if (selector == null) throw new ArgumentNullException("selector");
+            var result = selector(record, record.GetOrdinals());
+            return record is IDataReader ? result.ToArray() : result;
+        }
+
         /// <summary>
         /// Gets an ordered sequence of field names of this record.
         /// </summary>
+        /// <remarks>
+        /// This method uses immediate execution semantics if the 
+        /// <see cref="IDataRecord"/> is an <see cref="IDataReader"/> and 
+        /// deferred in all other cases.
+        /// </remarks>
 
         public static IEnumerable<string> GetNames(this IDataRecord record)
         {
             if (record == null) throw new ArgumentNullException("record");
-            return from i in record.GetOrdinals() select record.GetName(i);
+            return Ordinally(record, (r, ords) => ords.Select(r.GetName));
         }
 
         /// <summary>
         /// Gets an ordered sequence of field value of this record.
         /// </summary>
+        /// <remarks>
+        /// This method uses immediate execution semantics if the 
+        /// <see cref="IDataRecord"/> is an <see cref="IDataReader"/> and 
+        /// deferred in all other cases.
+        /// </remarks>
 
         public static IEnumerable<object> GetValues(this IDataRecord record)
         {
             if (record == null) throw new ArgumentNullException("record");
-            return from i in record.GetOrdinals()
-                   select record.GetValue(i);
+            return Ordinally(record, (r, ords) => ords.Select(r.GetValue));
         }
 
         /// <summary>
         /// Gets an ordered sequence of fields of this record as 
         /// key-value pairs.
         /// </summary>
+        /// <remarks>
+        /// This method uses immediate execution semantics if the 
+        /// <see cref="IDataRecord"/> is an <see cref="IDataReader"/> and 
+        /// deferred in all other cases.
+        /// </remarks>
 
         public static IEnumerable<KeyValuePair<string, object>> GetFields(this IDataRecord record)
         {
             if (record == null) throw new ArgumentNullException("record");
-            return from i in record.GetOrdinals()
-                   select record.GetName(i).AsKeyTo(record.GetValue(i));
+            return Ordinally(record, (r, ords) => from i in ords 
+                                                  select r.GetName(i).AsKeyTo(r.GetValue(i)));
         }
 
         /// <summary>

@@ -28,6 +28,7 @@ namespace Mannex.Tests.Data
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Data.Common;
     using System.Linq;
     using Mannex.Data;
     using Xunit;
@@ -101,6 +102,63 @@ namespace Mannex.Tests.Data
             }
             
             return table;
+        }
+
+        [Fact]
+        public void GetNamesExecutesImmediatelyWithReader()
+        {
+            ImmediateExecutionSemanticsWithReader(false, r => r.GetNames());
+        }
+
+        [Fact]
+        public void GetNamesExecutesLaterWithRecord()
+        {
+            DeferredExecutionSemanticsWithRecord(r => r.GetNames());
+        }
+
+        [Fact]
+        public void GetFieldsExecutesImmediatelyWithReader()
+        {
+            ImmediateExecutionSemanticsWithReader(true, r => r.GetFields());
+        }
+
+        [Fact]
+        public void GetFieldsExecutesLaterWithRecord()
+        {
+            DeferredExecutionSemanticsWithRecord(r => r.GetFields());
+        }
+
+        [Fact]
+        public void GetValuesExecutesImmediatelyWithReader()
+        {
+            ImmediateExecutionSemanticsWithReader(true, r => r.GetValues());
+        }
+
+        [Fact]
+        public void GetValuesExecutesLaterWithRecord()
+        {
+            DeferredExecutionSemanticsWithRecord(r => r.GetValues());
+        }
+
+        static void ImmediateExecutionSemanticsWithReader<T>(bool read, Func<IDataRecord, IEnumerable<T>> f)
+        {
+            var table = CreateTable(1, 2, 3);
+            using (var reader = table.CreateDataReader())
+            { 
+                if (read) Assert.True(reader.Read());
+                Assert.True(f(reader) is T[]);
+            }
+        }
+
+        static void DeferredExecutionSemanticsWithRecord<T>(Func<IDataRecord, IEnumerable<T>> f)
+        {
+            var table = CreateTable(1, 2, 3);
+            using (var reader = table.CreateDataReader())
+            using (var e = reader.Select(r => r))
+            {
+                Assert.True(e.MoveNext());
+                Assert.False(f(e.Current) is T[]);
+            }
         }
 
         /*
