@@ -145,6 +145,11 @@ namespace Mannex
         public static partial class ArrayExtensions { }
     }
 
+    namespace Text
+    {
+        public static partial class StringBuilderExtensions { }
+    }
+    
     namespace Text.RegularExpressions
     {
         public static partial class MatchExtensions { }
