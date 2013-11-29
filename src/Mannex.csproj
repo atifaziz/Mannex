@@ -168,7 +168,6 @@
       <LastGenOutput>Action.Return.g.cs</LastGenOutput>
     </None>
     <Compile Include="Collections\BitArray.cs" />
-    <Compile Include="Reflection\Reflector.cs" />
     <Compile Include="Properties\AssemblyInfo.g.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
