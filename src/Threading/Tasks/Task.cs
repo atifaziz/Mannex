@@ -98,3 +98,26 @@ namespace Mannex.Threading.Tasks
 }
 
 #endif // NET4
+
+#if NET45
+
+namespace Mannex.Threading.Tasks
+{
+    using System.Runtime.CompilerServices;
+    using System.Threading.Tasks;
+
+    static partial class TaskExtensions
+    {
+        /// <summary>
+        /// Specifies whether an awaiter used to wait this 
+        /// <see cref="Task"/> continues on the captured context.
+        /// </summary>
+
+        public static ConfiguredTaskAwaitable<T> ContinueOnCapturedContext<T>(this Task<T> task, bool value)
+        {
+            return task.ConfigureAwait(value);
+        }
+    }
+}
+
+#endif // NET45
