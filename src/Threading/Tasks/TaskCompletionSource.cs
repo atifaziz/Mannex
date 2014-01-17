@@ -48,8 +48,22 @@ namespace Mannex.Threading.Tasks
 
         public static bool TryConcludeFrom<T>(this TaskCompletionSource<T> source, Task<T> task)
         {
+            return source.TryConcludeFrom(task, t => t.Result);
+        }
+
+        /// <summary>
+        /// Attempts to conclude <see cref="TaskCompletionSource{TResult}"/>
+        /// as being canceled, faulted or having completed successfully
+        /// based on the corresponding status of the given 
+        /// <see cref="Task{T}"/>.
+        /// </summary>
+
+        public static bool TryConcludeFrom<T, TTask>(this TaskCompletionSource<T> source, TTask task, Func<TTask, T> resultSelector)
+            where TTask : Task
+        {
             if (source == null) throw new ArgumentNullException("source");
             if (task == null) throw new ArgumentNullException("task");
+            if (resultSelector == null) throw new ArgumentNullException("resultSelector");
 
             if (task.IsCanceled)
             {
@@ -63,7 +77,7 @@ namespace Mannex.Threading.Tasks
             }
             else if (TaskStatus.RanToCompletion == task.Status)
             {
-                source.TrySetResult(task.Result);
+                source.TrySetResult(resultSelector(task));
             }
             else
             {
