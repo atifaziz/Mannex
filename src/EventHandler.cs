@@ -37,6 +37,49 @@ namespace Mannex
     static partial class EventHandlerExtensions
     {
         /// <summary>
+        /// Ensures that an <see cref="EventHandler{T}"/> will fire only 
+        /// once given a way to add and remove subscription from the event.
+        /// </summary>
+
+        public static void Once<T>(this EventHandler<T> handler,
+                                   Action<EventHandler<T>> addHandler,
+                                   Action<EventHandler<T>> removeHandler)
+            where T : EventArgs
+        {
+            if (handler == null) throw new ArgumentNullException("handler");
+            if (addHandler == null) throw new ArgumentNullException("addHandler");
+            if (removeHandler == null) throw new ArgumentNullException("removeHandler");
+
+            var proxy = new EventHandler<T>[1];
+            addHandler(proxy[0] = (sender, args) =>
+            {
+                removeHandler(proxy[0]);
+                handler(sender, args);
+            });
+        }
+
+        /// <summary>
+        /// Ensures that an <see cref="EventHandler"/> will fire only 
+        /// once given a way to add and remove subscription from the event.
+        /// </summary>
+
+        public static void Once(this EventHandler handler,
+                                Action<EventHandler> addHandler,
+                                Action<EventHandler> removeHandler)
+        {
+            if (handler == null) throw new ArgumentNullException("handler");
+            if (addHandler == null) throw new ArgumentNullException("addHandler");
+            if (removeHandler == null) throw new ArgumentNullException("removeHandler");
+
+            var proxy = new EventHandler[1];
+            addHandler(proxy[0] = (sender, args) =>
+            {
+                removeHandler(proxy[0]);
+                handler(sender, args);
+            });
+        }
+
+        /// <summary>
         /// Fires an event given its arguments.
         /// </summary>
         /// <returns>
@@ -47,6 +90,27 @@ namespace Mannex
 
         public static bool Fire<T>(this EventHandler<T> handler, object sender, T args) 
             where T : EventArgs
+        {
+            if (sender == null) throw new ArgumentNullException("sender");
+            if (args == null) throw new ArgumentNullException("args");
+
+            if (handler == null)
+                return false;
+
+            handler(sender, args);
+            return true;
+        }
+
+        /// <summary>
+        /// Fires an event given its arguments.
+        /// </summary>
+        /// <returns>
+        /// Boolean value indicating whether the event was fired or not. The
+        /// only event under which the event is not fired is there are no
+        /// handlers attached.
+        /// </returns>
+
+        public static bool Fire(this EventHandler handler, object sender, EventArgs args)
         {
             if (sender == null) throw new ArgumentNullException("sender");
             if (args == null) throw new ArgumentNullException("args");
