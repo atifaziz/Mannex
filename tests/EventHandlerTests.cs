@@ -32,20 +32,21 @@ namespace Mannex.Tests
 
     public class EventHandlerTests
     {
-        public event EventHandler<EventArgs> Event;
+        public event EventHandler<EventArgs> EventT;
+        public event EventHandler Event;
 
         [Fact]
         public void FireFailsWithNullSender()
         {
             Assert.Throws<ArgumentNullException>(() => 
-                Event.Fire(null, EventArgs.Empty));
+                EventT.Fire(null, EventArgs.Empty));
         }
 
         [Fact]
         public void FireFailsWithNullArgs()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                Event.Fire(new object(), null));
+                EventT.Fire(new object(), null));
         }
 
         [Fact]
@@ -53,20 +54,130 @@ namespace Mannex.Tests
         {
             var fired = false;
             var args = new EventArgs();
-            Event += ((sender, aargs) =>
+            EventT += ((sender, aargs) =>
             {
                 Assert.Same(this, sender);
                 Assert.Same(args, aargs);
                 fired = true;
             });
-            Assert.True(Event.Fire(this, args));
+            Assert.True(EventT.Fire(this, args));
             Assert.True(fired);
         }
 
         [Fact]
         public void FireReturnsFalseWhenNotFired()
         {
-            Assert.False(Event.Fire(this, EventArgs.Empty));
+            Assert.False(EventT.Fire(this, EventArgs.Empty));
+        }
+
+        [Fact]
+        public void OnceFailsWithNullHandler()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                EventHandlerExtensions.Once(null, delegate { }, delegate { }));
+            Assert.Equal("handler", e.ParamName);
+        }
+
+        [Fact]
+        public void OnceFailsWithNullAddHandler()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                new EventHandler(delegate { }).Once(null, delegate { }));
+            Assert.Equal("addHandler", e.ParamName);
+        }
+
+        [Fact]
+        public void OnceFailsWithNullRemoveHandler()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                new EventHandler(delegate { }).Once(delegate { }, null));
+            Assert.Equal("removeHandler", e.ParamName);
+        }
+
+        [Fact]
+        public void OnceTFailsWithNullHandler()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                EventHandlerExtensions.Once<EventArgs>(null, delegate { }, delegate { }));
+            Assert.Equal("handler", e.ParamName);
+        }
+
+        [Fact]
+        public void OnceTFailsWithNullAddHandler()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                new EventHandler<EventArgs>(delegate { }).Once(null, delegate { }));
+            Assert.Equal("addHandler", e.ParamName);
+        }
+
+        [Fact]
+        public void OnceTFailsWithNullRemoveHandler()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                new EventHandler<EventArgs>(delegate { }).Once(delegate { }, null));
+            Assert.Equal("removeHandler", e.ParamName);
+        }
+
+        [Fact]
+        public void OnceT()
+        {
+            var counter = 0;
+            EventHandler<EventArgs> handler = delegate { counter++; };
+            handler.Once(h => EventT += h, h => EventT -= h);
+            EventT.Fire(this, EventArgs.Empty);
+            Assert.Equal(1, counter);
+            EventT.Fire(this, EventArgs.Empty);
+            Assert.Equal(1, counter);
+        }
+
+        [Fact]
+        public void Once()
+        {
+            var counter = 0;
+            EventHandler handler = delegate { counter++; };
+            handler.Once(h => Event += h, h => Event -= h);
+            Event.Fire(this, EventArgs.Empty);
+            Assert.Equal(1, counter);
+            Event.Fire(this, EventArgs.Empty);
+            Assert.Equal(1, counter);
+        }
+
+        [Fact]
+        public void OnceWhenHandlerFails()
+        {
+            var counter = 0;
+            EventHandler handler = delegate
+            { 
+                if (++counter == 1) throw new ApplicationException();
+            };
+            handler.Once(h => Event += h, h => Event -= h);
+            try
+            {
+                Event.Fire(this, EventArgs.Empty);
+            }
+            catch (ApplicationException) { }
+            Assert.Equal(1, counter);
+            Event.Fire(this, EventArgs.Empty);
+            Assert.Equal(1, counter);
+        }
+
+        [Fact]
+        public void OnceTWhenHandlerFails()
+        {
+            var counter = 0;
+            EventHandler<EventArgs> handler = delegate
+            {
+                if (++counter == 1) throw new ApplicationException();
+            };
+            handler.Once(h => EventT += h, h => EventT -= h);
+            try
+            {
+                EventT.Fire(this, EventArgs.Empty);
+            }
+            catch (ApplicationException) { }
+            Assert.Equal(1, counter);
+            EventT.Fire(this, EventArgs.Empty);
+            Assert.Equal(1, counter);
         }
     }
 }
