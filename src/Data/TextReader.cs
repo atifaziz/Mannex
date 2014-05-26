@@ -51,6 +51,7 @@ namespace Mannex.Data
             this TextReader reader, string delimiter, bool quoted,
             params DataColumn[] columns)
         {
+            if (columns == null) throw new ArgumentNullException("columns");
             return reader.ParseXsvAsDataTable(delimiter, quoted, 
                        columns.Select(c => c.AsKeyTo(new Func<string, object>(s => s)))
                               .ToArray());
