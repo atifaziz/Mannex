@@ -28,4 +28,15 @@ if not exist "%MSBUILD%" (
     echo machine, which is required to build the solution.
     exit /b 1
 )
-for %%f in (3.5 4.0 4.5) do for %%q in (Debug Release) do "%MSBUILD%" Mannex.sln /p:Configuration="NETFX %%f %%q" /v:m %*
+call :build 3.5 Debug    && ^
+call :build 3.5 Release  && ^
+call :build 4.0 Debug    && ^
+call :build 4.0 Release  && ^
+call :build 4.5 Debug    && ^
+call :build 4.5 Release
+goto :EOF
+
+:build
+"%MSBUILD%" Mannex.sln /p:Configuration="NETFX %1 %2" /v:m %3 %4 %5 %6 %7 %8 %9
+exit /b %errorlevel%
+
