@@ -26,7 +26,9 @@ namespace Mannex
     #region Imports
 
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
 
     #endregion
 
@@ -47,6 +49,27 @@ namespace Mannex
         public static float? NullNaN(this float value)
         {
             return float.IsNaN(value) ? (float?) null : value;
+        }
+
+        /// <summary>
+        /// Generates a sequence of given count of values between two values  
+        /// (inclusive).
+        /// </summary>
+        /// <remarks>This method uses deferred semantics.</remarks>
+
+        public static IEnumerable<float> To(this float first, float last, int count)
+        {
+            if (count < 0) throw new ArgumentOutOfRangeException("count", count, null);
+            return count > 0 ? ToImpl(first, last, count) : Enumerable.Empty<float>();
+        }
+
+        static IEnumerable<float> ToImpl(float first, float last, int count)
+        {
+            var rate = (last - first) / (count - 1);
+            var sign = Math.Sign(rate);
+            for (var n = first; sign <= 0 ? n > last : n < last; n += rate)
+                yield return n;
+            yield return last;
         }
     }
 }

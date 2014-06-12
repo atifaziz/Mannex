@@ -25,6 +25,8 @@ namespace Mannex.Tests
 {
     #region Imports
 
+    using System;
+    using System.Linq;
     using Xunit;
 
     #endregion
@@ -41,6 +43,65 @@ namespace Mannex.Tests
         public void NullNaNReturnsNullWhenNaN()
         {
             Assert.Equal(null, double.NaN.NullNaN());
+        }
+
+        [Fact]
+        public void ToIncreasing()
+        {
+            var expectations = new[]
+            { 
+                -12.500, 
+                -09.778, 
+                -07.056, 
+                -04.333, 
+                -01.611, 
+                +01.111, 
+                +03.833, 
+                +06.556, 
+                +09.278, 
+                +12.000,
+            };
+
+            var ns = from n in (-12.5).To(12, 10)
+                     select Math.Round(n, 3);
+            Assert.Equal(expectations, ns.ToArray());
+        }
+
+        [Fact]
+        public void ToDecreasing()
+        {
+            var expectations = new[]
+            { 
+                +12.000,
+                +09.278,
+                +06.556,
+                +03.833,
+                +01.111,
+                -01.611, 
+                -04.333, 
+                -07.056, 
+                -09.778, 
+                -12.500,
+            };
+
+            var ns = from n in (12.0).To(-12.5, 10)
+                     select Math.Round(n, 3);
+            Assert.Equal(expectations, ns.ToArray());
+        }
+
+        [Fact]
+        public void ToFailsWithNegativeCount()
+        {
+            const int count = -1;
+            var e = Assert.Throws<ArgumentOutOfRangeException>(() => 0.0.To(1, count));
+            Assert.Equal("count", e.ParamName);
+            Assert.Equal(count, e.ActualValue);
+        }
+
+        [Fact]
+        public void ToWithZeroCountReturnsEmptySequence()
+        {
+            Assert.False(0.0.To(1, 0).GetEnumerator().MoveNext());
         }
     }
 }
