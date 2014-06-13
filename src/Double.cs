@@ -62,16 +62,16 @@ namespace Mannex
         public static IEnumerable<double> To(this double first, double last, int count)
         {
             if (count < 0) throw new ArgumentOutOfRangeException("count", count, null);
-            return count > 0 ? ToImpl(first, last, count) : Enumerable.Empty<double>();
+            if (count == 0)
+                return Enumerable.Empty<double>();
+            var rate = (last - first) / (count - 1);
+            return ToImpl(first, rate, count);
         }
 
-        static IEnumerable<double> ToImpl(double first, double last, int count)
+        static IEnumerable<double> ToImpl(double n, double rate, int count)
         {
-            var rate = (last - first) / (count - 1);
-            var sign = Math.Sign(rate);
-            for (var n = first; sign <= 0 ? n > last : n < last; n += rate)
+            for (var i = 0; i < count; n += rate, i++)
                 yield return n;
-            yield return last;
         }
     }
 }

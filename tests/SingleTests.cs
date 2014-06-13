@@ -68,6 +68,22 @@ namespace Mannex.Tests
         }
 
         [Fact]
+        public void ToEdgeCase()
+        {
+            var expectations = new[]
+            { 
+                1.000f, 
+                2.333f, 
+                3.667f, 
+                5.000f,
+            };
+
+            var ns = from n in 1f.To(5f, 4)
+                     select (float) Math.Round(n, 3);
+            Assert.Equal(expectations, ns.ToArray());
+        }
+
+        [Fact]
         public void ToDecreasing()
         {
             var expectations = new[]
