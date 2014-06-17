@@ -30,6 +30,7 @@ namespace Mannex.Data
     using System.Data;
     using System.Data.Common;
     using System.Linq;
+    using Collections.Generic;
 
     #endregion
 
@@ -59,6 +60,49 @@ namespace Mannex.Data
         {
             if (table == null) throw new ArgumentNullException("table");
             return from name in names select table.Columns[name];
+        }
+
+        /// <summary>
+        /// Moves the columns of the <see cref="DataTable"/> based on a
+        /// given order.
+        /// </summary>
+
+        public static void SetColumnsOrder(this DataTable table, IEnumerable<DataColumn> columns)
+        {
+            table.SetColumnsOrder(columns != null ? columns.ToArray() : null);
+        }
+
+        /// <summary>
+        /// Moves the columns of the <see cref="DataTable"/> based on a
+        /// given order.
+        /// </summary>
+
+        // Inspiration & credit: http://stackoverflow.com/a/3758041/6682
+
+        public static void SetColumnsOrder(this DataTable table, params DataColumn[] columns)
+        {
+            if (table == null) throw new ArgumentNullException("table");
+            
+            if (columns == null || columns.Length == 0)
+                return;
+            
+            foreach (var e in columns.Select((col, ord) => ord.AsKeyTo(col)))
+            {
+                var column = e.Value;
+                if (column == null)
+                {
+                    var message = string.Format(@"Column in position {0} not set to a {1} instance.", e.
+                                                Key, typeof(DataColumn).Name);
+                    throw new ArgumentException(message, "columns");
+                }
+                if (column.Table != table)
+                {
+                    var message = string.Format(@"Column '{0}' does not belong to the table.", 
+                                                column.ColumnName);
+                    throw new ArgumentException(message, "columns");
+                }
+                column.SetOrdinal(e.Key);
+            }
         }
 
         /// <summary>
