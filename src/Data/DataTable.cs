@@ -29,6 +29,7 @@ namespace Mannex.Data
     using System.Collections.Generic;
     using System.Data;
     using System.Data.Common;
+    using System.Linq;
 
     #endregion
 
@@ -38,6 +39,28 @@ namespace Mannex.Data
 
     static partial class DataTableExtensions
     {
+        /// <summary>
+        /// Finds columns of <see cref="DataTable"/> instance given their 
+        /// names. 
+        /// </summary>
+        /// <returns>
+        /// A sequence of <see cref="DataColumn"/> objects matching the 
+        /// supplied names and in the same order. If there is no column 
+        /// found for a given name, then its corresponding 
+        /// <see cref="DataColumn"/> reference in the sequence will be 
+        /// <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// This method uses deferred execution. The column names are 
+        /// sought without regard to case sensitivity.
+        /// </remarks>
+
+        public static IEnumerable<DataColumn> FindColumns(this DataTable table, params string[] names)
+        {
+            if (table == null) throw new ArgumentNullException("table");
+            return from name in names select table.Columns[name];
+        }
+
         /// <summary>
         /// Gets <see cref="IDataRecord"/> objects for each row of this table.
         /// </summary>
