@@ -26,8 +26,10 @@ namespace Mannex.Tests.Data
     #region Imports
 
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+    using System.Web.UI.WebControls;
     using Mannex.Data;
     using Xunit;
 
@@ -35,6 +37,18 @@ namespace Mannex.Tests.Data
 
     public class DataTableTests
     {
+        static DataTable CreateSampleDataTable()
+        {
+            var table = new DataTable();
+            table.Columns.AddRange(new[]
+            {
+                new DataColumn("Foo"),
+                new DataColumn("Bar"),
+                new DataColumn("Baz"),
+            });
+            return table;
+        }
+
         [Fact]
         public void FindColumnsWithNullThis()
         {
@@ -53,16 +67,58 @@ namespace Mannex.Tests.Data
         [Fact]
         public void FindColumnsWithNames()
         {
-            var table = new DataTable();
-            var cols = table.Columns;
-            cols.AddRange(new[]
-            {
-                new DataColumn("Foo"), 
-                new DataColumn("Bar"),
-                new DataColumn("Baz"), 
-            });
+            var table = CreateSampleDataTable();
             var found = table.FindColumns("Baz", "foo", "???", "BAR");
+            var cols = table.Columns;
             Assert.Equal(new[] { cols[2], cols[0], null, cols[1] }, found.ToArray());
+        }
+
+        [Fact]
+        public void SetColumnsOrderFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                        DataTableExtensions.SetColumnsOrder(null, new DataColumn[0]));
+            Assert.Equal("table", e.ParamName);
+        }
+
+        [Fact]
+        public void SetColumnsOrderWithNullArray()
+        {
+            CreateSampleDataTable().SetColumnsOrder((DataColumn[]) null);
+        }
+
+        [Fact]
+        public void SetColumnsOrderWithNullSequence()
+        {
+            CreateSampleDataTable().SetColumnsOrder((IEnumerable<DataColumn>)null);
+        }
+
+        [Fact]
+        public void SetColumnsOrder()
+        {
+            var table = CreateSampleDataTable();
+            var cols = table.Columns;
+            DataColumn foo = cols[0], bar = cols[1], baz = cols[2]; 
+            table.SetColumnsOrder(baz, bar);
+            Assert.Equal(new[] { baz, bar, foo }, table.Columns.Cast<DataColumn>().ToArray());
+        }
+
+        [Fact]
+        public void SetColumnsOrderFailsWithUnrelatedColumn()
+        {
+            var e = Assert.Throws<ArgumentException>(() =>
+                        CreateSampleDataTable().SetColumnsOrder(new DataColumn()));
+            Assert.Equal("columns", e.ParamName);
+        }
+
+        [Fact]
+        public void SetColumnsOrderFailsWithNullColumnElement()
+        {
+            var table = CreateSampleDataTable();
+            var cols = table.Columns;
+            var e = Assert.Throws<ArgumentException>(() =>
+                        table.SetColumnsOrder(cols[2], null, cols[0]));
+            Assert.Equal("columns", e.ParamName);
         }
     }
 }
