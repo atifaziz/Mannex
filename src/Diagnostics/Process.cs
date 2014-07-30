@@ -148,20 +148,22 @@ namespace Mannex.Diagnostics
                 error ?? (TextWriter.Null.WriteLine));
         }
 
-        private static Func<TimeSpan?, bool> BeginReadLineImpl(Process process, Action<string> output, Action<string> error)
+        static Func<TimeSpan?, bool> BeginReadLineImpl(Process process, Action<string> output, Action<string> error)
         {
-            var outeof = new ManualResetEvent(false);
-            process.OutputDataReceived += OnDataReceived(output, () => outeof.Set());
+            var done = new ManualResetEvent(false);
+            var pending = 2;
+            var onEof = new Action(() => { if (Interlocked.Decrement(ref pending) == 0) done.Set(); });
+
+            process.OutputDataReceived += OnDataReceived(output, onEof);
             process.BeginOutputReadLine();
 
-            var erreof = new ManualResetEvent(false);
-            process.ErrorDataReceived += OnDataReceived(error, () => erreof.Set());
+            process.ErrorDataReceived += OnDataReceived(error, onEof);
             process.BeginErrorReadLine();
 
-            return timeout => WaitHandle.WaitAll(new[] { outeof, erreof }, timeout.ToTimeout());
+            return timeout => done.WaitOne(timeout.ToTimeout());
         }
 
-        private static DataReceivedEventHandler OnDataReceived(
+        static DataReceivedEventHandler OnDataReceived(
             Action<string> line, Action eof)
         {
             return (sender, e) =>
