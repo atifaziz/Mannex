@@ -88,6 +88,15 @@ namespace Mannex
         }
 
         /// <summary>
+        /// Determines the quarter (from 1 to 4) to which the date belongs.
+        /// </summary>
+
+        public static int GetQuarter(this DateTime date)
+        {
+            return ((date.Month - 1) / 3) + 1;
+        }
+
+        /// <summary>
         /// Determines if the time component is midnight exactly.
         /// </summary>
 
