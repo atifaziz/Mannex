@@ -48,5 +48,26 @@ namespace Mannex.Tests
             Assert.Equal(4, new DateTime(2014, 11, 15).GetQuarter());
             Assert.Equal(4, new DateTime(2014, 12, 15).GetQuarter());
         }
+
+        [Fact]
+        public void FirstDayOfMonth()
+        {
+            var input = new DateTime(2014, 6, 15, 1, 2, 3, 4, DateTimeKind.Local);
+            Assert.Equal(new DateTime(2014, 6, 1, 1, 2, 3, 4, DateTimeKind.Local), input.FirstDayOfMonth());
+        }
+
+        [Fact]
+        public void FirstDayOfQuarter()
+        {
+            var input = new DateTime(2014, 6, 15, 1, 2, 3, 4, DateTimeKind.Local);
+            Assert.Equal(new DateTime(2014, 4, 1, 1, 2, 3, 4, DateTimeKind.Local), input.FirstDayOfQuarter());
+        }
+
+        [Fact]
+        public void FirstDayOfYear()
+        {
+            var input = new DateTime(2014, 6, 15, 1, 2, 3, 4, DateTimeKind.Local);
+            Assert.Equal(new DateTime(2014, 1, 1, 1, 2, 3, 4, DateTimeKind.Local), input.FirstDayOfYear());
+        }
     }
 }
