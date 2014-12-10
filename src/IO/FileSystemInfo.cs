@@ -23,12 +23,8 @@
 
 namespace Mannex.IO
 {
-    #region Imports
-
     using System;
     using System.IO;
-
-    #endregion
 
     /// <summary>
     /// Extension methods for <see cref="FileSystemInfo"/>.
@@ -51,7 +47,7 @@ namespace Mannex.IO
         {
             if (info == null) throw new ArgumentNullException("info");
             return 0 == (info.Attributes & (FileAttributes.Hidden | FileAttributes.System))
-                || (Environment.OSVersion.IsUnix() && info.Name.TryCharAt(0) == '.');
+                && (!Environment.OSVersion.IsUnix() || info.Name.TryCharAt(0) != '.');
         }
     }
 }
