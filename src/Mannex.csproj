@@ -170,6 +170,7 @@
     </None>
     <Compile Include="Collections\BitArray.cs" />
     <Compile Include="Data\DataRow.cs" />
+    <Compile Include="IO\FileSystemInfo.cs" />
     <Compile Include="IO\DirectoryInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.g.cs">
       <AutoGen>True</AutoGen>
