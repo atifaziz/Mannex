@@ -130,6 +130,7 @@ namespace Mannex
         public static partial class ArrayExtensions { }
         public static partial class ArraySegmentExtensions { }
         public static partial class FileInfoExtensions { }
+        public static partial class FileSystemInfoExtensions { }
         public static partial class DirectoryInfoExtensions { }
         public static partial class StreamExtensions { }
         public static partial class StringExtensions { }
