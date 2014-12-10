@@ -44,11 +44,20 @@ namespace Mannex.IO
         /// <see cref="FileAttributes.System"/> set) in a user interface
         /// based on its attributes.
         /// </summary>
+        /// <remarks>
+        /// On Unix systems, if <see cref="FileSystemInfo.Name"/> starts with
+        /// a period or dot (.) then it is considered user-invisible.
+        /// </remarks>
 
         public static bool IsUserVisible(this FileSystemInfo info)
         {
             if (info == null) throw new ArgumentNullException("info");
-            return 0 == (info.Attributes & (FileAttributes.Hidden | FileAttributes.System));
+            return 0 == (info.Attributes & (FileAttributes.Hidden | FileAttributes.System))
+                // Testing Path.DirectorySeparatorChar for a forward slash
+                // seems to be the most reliable method for assuming a *nix
+                // platform:
+                // http://mono.wikia.com/wiki/Detecting_the_execution_platform
+                || (Path.DirectorySeparatorChar == '/' && info.Name.TryCharAt(0) == '.');
         }
     }
 }
