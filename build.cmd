@@ -28,12 +28,12 @@ if not exist "%MSBUILD%" (
     echo machine, which is required to build the solution.
     exit /b 1
 )
-call :build 3.5 Debug    && ^
-call :build 3.5 Release  && ^
-call :build 4.0 Debug    && ^
-call :build 4.0 Release  && ^
-call :build 4.5 Debug    && ^
-call :build 4.5 Release
+call :build 3.5 Debug   %* && ^
+call :build 3.5 Release %* && ^
+call :build 4.0 Debug   %* && ^
+call :build 4.0 Release %* && ^
+call :build 4.5 Debug   %* && ^
+call :build 4.5 Release %*
 goto :EOF
 
 :build
