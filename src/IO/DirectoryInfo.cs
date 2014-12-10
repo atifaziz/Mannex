@@ -29,7 +29,6 @@ namespace Mannex.IO
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Text;
 
     #endregion
 
@@ -39,6 +38,8 @@ namespace Mannex.IO
 
     static partial class DirectoryInfoExtensions
     {
+        const string DefaultSearchPattern = "*";
+
         /// <summary>
         /// Returns all the parents of the directory.
         /// </summary>
@@ -71,5 +72,204 @@ namespace Mannex.IO
             for (; dir != null; dir = dir.Parent)
                 yield return dir;
         }
+
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.GetFiles()"/>
+        /// except filters hidden and system files.
+        /// </summary>
+
+        public static FileInfo[] GetVisibleFiles(this DirectoryInfo dir)
+        {
+            return GetVisibleFiles(dir, DefaultSearchPattern);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.GetFiles(String)"/>
+        /// except filters hidden and system files.
+        /// </summary>
+
+        public static FileInfo[] GetVisibleFiles(this DirectoryInfo dir, string searchPattern)
+        {
+            return GetVisibleFiles(dir, searchPattern, SearchOption.TopDirectoryOnly);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.GetFiles(String,SearchOption)"/>
+        /// except filters hidden and system files.
+        /// </summary>
+
+        public static FileInfo[] GetVisibleFiles(this DirectoryInfo dir, string searchPattern, SearchOption searchOption)
+        {
+            return dir.GetFiles(searchPattern, searchOption)
+                      .Where(e => e.IsUserVisible())
+                      .ToArray();
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.GetDirectories()"/>
+        /// except filters hidden and system files.
+        /// </summary>
+
+        public static DirectoryInfo[] GetVisibleDirectories(this DirectoryInfo dir)
+        {
+            return GetVisibleDirectories(dir, DefaultSearchPattern);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.GetDirectories(String)"/>
+        /// except filters hidden and system directories.
+        /// </summary>
+
+        public static DirectoryInfo[] GetVisibleDirectories(this DirectoryInfo dir, string searchPattern)
+        {
+            return GetVisibleDirectories(dir, searchPattern, SearchOption.TopDirectoryOnly);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.GetDirectories(String,SearchOption)"/>
+        /// except filters hidden and system directories.
+        /// </summary>
+
+        public static DirectoryInfo[] GetVisibleDirectories(this DirectoryInfo dir, string searchPattern, SearchOption searchOption)
+        {
+            return dir.GetDirectories(searchPattern, searchOption)
+                      .Where(e => e.IsUserVisible())
+                      .ToArray();
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.GetFileSystemInfos()"/>
+        /// except filters hidden and system entries.
+        /// </summary>
+
+        public static FileSystemInfo[] GetVisibleFileSystemInfo(this DirectoryInfo dir)
+        {
+            return GetVisibleFileSystemInfo(dir, DefaultSearchPattern);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.GetFileSystemInfos(String)"/>
+        /// except filters hidden and system entries.
+        /// </summary>
+
+        public static FileSystemInfo[] GetVisibleFileSystemInfo(this DirectoryInfo dir, string searchPattern)
+        {
+            return dir.GetFileSystemInfos(searchPattern)
+                      .Where(e => e.IsUserVisible())
+                      .ToArray();
+        }
+
+        #if NET4
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.GetFileSystemInfos(String,SearchOption)"/>
+        /// except filters hidden and system entries.
+        /// </summary>
+
+        public static FileSystemInfo[] GetVisibleFileSystemInfo(this DirectoryInfo dir, string searchPattern, SearchOption searchOption)
+        {
+            return dir.GetFileSystemInfos(searchPattern, searchOption)
+                      .Where(e => e.IsUserVisible())
+                      .ToArray();
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.EnumerateFiles()"/>
+        /// except filters hidden and system files.
+        /// </summary>
+
+        public static IEnumerable<FileInfo> EnumerateVisibleFiles(this DirectoryInfo dir)
+        {
+            return EnumerateVisibleFiles(dir, DefaultSearchPattern);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.EnumerateFiles(String)"/>
+        /// except filters hidden and system files.
+        /// </summary>
+
+        public static IEnumerable<FileInfo> EnumerateVisibleFiles(this DirectoryInfo dir, string searchPattern)
+        {
+            return EnumerateVisibleFiles(dir, searchPattern, SearchOption.TopDirectoryOnly);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.EnumerateFiles(String,SearchOption)"/>
+        /// except filters hidden and system files.
+        /// </summary>
+
+        public static IEnumerable<FileInfo> EnumerateVisibleFiles(this DirectoryInfo dir, string searchPattern, SearchOption searchOption)
+        {
+            return from e in dir.EnumerateFiles(searchPattern, searchOption)
+                   where e.IsUserVisible()
+                   select e;
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.EnumerateDirectories()"/>
+        /// except filters hidden and system directories.
+        /// </summary>
+
+        public static IEnumerable<DirectoryInfo> EnumerateVisibleDirectories(this DirectoryInfo dir)
+        {
+            return EnumerateVisibleDirectories(dir, DefaultSearchPattern);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.EnumerateDirectories(String)"/>
+        /// except filters hidden and system directories.
+        /// </summary>
+
+        public static IEnumerable<DirectoryInfo> EnumerateVisibleDirectories(this DirectoryInfo dir, string searchPattern)
+        {
+            return EnumerateVisibleDirectories(dir, searchPattern, SearchOption.TopDirectoryOnly);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.EnumerateDirectories(String,SearchOption)"/>
+        /// except filters hidden and system directories.
+        /// </summary>
+
+        public static IEnumerable<DirectoryInfo> EnumerateVisibleDirectories(this DirectoryInfo dir, string searchPattern, SearchOption searchOption)
+        {
+            return from e in dir.EnumerateDirectories(searchPattern, searchOption)
+                   where e.IsUserVisible()
+                   select e;
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.EnumerateFileSystemInfos()"/>
+        /// except filters hidden and system entries.
+        /// </summary>
+
+        public static IEnumerable<FileSystemInfo> EnumerateVisibleFileSystemInfo(this DirectoryInfo dir)
+        {
+            return EnumerateVisibleFileSystemInfo(dir, DefaultSearchPattern);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.EnumerateFileSystemInfos(String)"/>
+        /// except filters hidden and system entries.
+        /// </summary>
+
+        public static IEnumerable<FileSystemInfo> EnumerateVisibleFileSystemInfo(this DirectoryInfo dir, string searchPattern)
+        {
+            return EnumerateVisibleFileSystemInfo(dir, searchPattern, SearchOption.TopDirectoryOnly);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.EnumerateFileSystemInfos(String,SearchOption)"/>
+        /// except filters hidden and system entries.
+        /// </summary>
+
+        public static IEnumerable<FileSystemInfo> EnumerateVisibleFileSystemInfo(this DirectoryInfo dir, string searchPattern, SearchOption searchOption)
+        {
+            return from e in dir.EnumerateFileSystemInfos(searchPattern, searchOption)
+                   where e.IsUserVisible()
+                   select e;
+        }
+
+        #endif
     }
 }
