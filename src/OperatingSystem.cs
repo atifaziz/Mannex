@@ -21,37 +21,36 @@
 //
 #endregion
 
-namespace Mannex.IO
+namespace Mannex
 {
     #region Imports
 
     using System;
+    using System.Diagnostics;
     using System.IO;
 
     #endregion
 
     /// <summary>
-    /// Extension methods for <see cref="FileSystemInfo"/>.
+    /// Extension methods for <see cref="OperatingSystem"/>.
     /// </summary>
 
-    static partial class FileSystemInfoExtensions
+    static partial class OperatingSystemExtensions
     {
         /// <summary>
-        /// Determines if the file system entry should be generally hidden
-        /// (has <see cref="FileAttributes.Hidden"/> or
-        /// <see cref="FileAttributes.System"/> set) in a user interface
-        /// based on its attributes.
+        /// Determines whether the operating system is a Unix platform.
         /// </summary>
-        /// <remarks>
-        /// On Unix systems, if <see cref="FileSystemInfo.Name"/> starts with
-        /// a period or dot (.) then it is considered user-invisible.
-        /// </remarks>
 
-        public static bool IsUserVisible(this FileSystemInfo info)
+        [DebuggerStepThrough]
+        public static bool IsUnix(this OperatingSystem os)
         {
-            if (info == null) throw new ArgumentNullException("info");
-            return 0 == (info.Attributes & (FileAttributes.Hidden | FileAttributes.System))
-                || (Environment.OSVersion.IsUnix() && info.Name.TryCharAt(0) == '.');
+            if (os == null) throw new ArgumentNullException("os");
+            return os.Platform == PlatformID.Unix
+                // Testing Path.DirectorySeparatorChar for a forward slash
+                // seems to be the most reliable method for assuming a *nix
+                // platform:
+                // http://mono.wikia.com/wiki/Detecting_the_execution_platform
+                || Path.DirectorySeparatorChar == '/';
         }
     }
 }
