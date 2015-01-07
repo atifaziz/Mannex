@@ -79,9 +79,9 @@ namespace Mannex.Reflection
 
         /// <summary>
         /// Loads the specified manifest resource and returns it as a string, 
-        /// scoped by the namespace  of the specified type, from this assembly. 
-        /// A parameter specifies the text encoding to be decode the resource
-        /// bytes into text.
+        /// scoped by the namespace of the specified type, from this assembly. 
+        /// A parameter specifies the text encoding to be used to decode the 
+        /// resource bytes into text.
         /// </summary>
 
         public static string GetManifestResourceString(this Assembly assembly, Type type, string name, Encoding encoding)
