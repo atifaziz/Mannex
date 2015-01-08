@@ -650,7 +650,6 @@ namespace Mannex
             if (oldValue.Length == 0) throw new ArgumentException("String cannot be of zero length.", "oldValue");
 
             StringBuilder sb = null;
-
             var previousIndex = 0;
             int index;
             while ((index = str.IndexOf(oldValue, previousIndex, comparison)) >= 0)
@@ -663,6 +662,27 @@ namespace Mannex
             return sb != null
                  ? sb.Append(str.Substring(previousIndex)).ToString()
                  : str;
+        }
+
+        /// <summary>
+        /// Repeats the string <paramref name="count"/> number of times.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="count"/> is zero then then the result is
+        /// an empty string. If it is one then string is return verbatim.
+        /// </remarks>
+
+        public static string Repeat(this string str, int count)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            if (count < 0) throw new ArgumentOutOfRangeException("count", count, null);
+            if (count == 0 || str.Length == 0) return string.Empty;
+            if (count == 1) return str;
+            if (str.Length == 1) return new string(str[0], count);
+            var sb = new StringBuilder(str.Length * count);
+            for (var i = 0; i < count; i++)
+                sb.Append(str);
+            return sb.ToString();
         }
     }
 }

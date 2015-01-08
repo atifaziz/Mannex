@@ -511,5 +511,39 @@ namespace Mannex.Tests
             var input = string.Concat(Enumerable.Repeat("foo bar", 3));
             Assert.Same(input, input.Replace("-", string.Empty, StringComparison.Ordinal));
         }
+
+        [Fact]
+        public void RepeatFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Repeat(null, 0));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void RepeatFailsWithNegativeCount()
+        {
+            const int count = -1;
+            var e = Assert.Throws<ArgumentOutOfRangeException>(() => "foo".Repeat(count));
+            Assert.Equal("count", e.ParamName);
+            Assert.Equal(count, e.ActualValue);
+        }
+
+        [Fact]
+        public void RepeatZeroCountReturnsEmptyString()
+        {
+            Assert.Equal(0, "foo".Repeat(0).Length);
+        }
+
+        [Fact]
+        public void Repeat()
+        {
+            const string foo = "foo";
+            Assert.Equal(foo, foo.Repeat(1));
+            Assert.Equal(foo + foo, foo.Repeat(2));
+            Assert.Equal(foo + foo + foo, foo.Repeat(3));
+            Assert.Equal(foo + foo + foo + foo + foo + foo + foo + foo + foo + foo, 
+                         foo.Repeat(10));
+            Assert.Equal(new string('-', 42), "-".Repeat(42));
+        }
     }
 }
