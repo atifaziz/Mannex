@@ -633,5 +633,36 @@ namespace Mannex
             for (var i = 0; i < length; i += size)
                 yield return str.Substring(i, Math.Min(size, length - i));
         }
+
+        /// <summary>
+        /// A string that is equivalent to the current string except that all
+        /// instances of <paramref name="oldValue"/> are replaced with
+        /// <paramref name="newValue"/>. If <paramref name="oldValue"/> is
+        /// not found in the current instance, the method returns the current
+        /// instance unchanged. An additional parameter specifies the
+        /// comparison rule when looking for <paramref name="oldValue"/>.
+        /// </summary>
+
+        public static string Replace(this string str, string oldValue, string newValue, StringComparison comparison)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            if (oldValue == null) throw new ArgumentNullException("oldValue");
+            if (oldValue.Length == 0) throw new ArgumentException("String cannot be of zero length.", "oldValue");
+
+            StringBuilder sb = null;
+
+            var previousIndex = 0;
+            int index;
+            while ((index = str.IndexOf(oldValue, previousIndex, comparison)) >= 0)
+            {
+                (sb ?? (sb = new StringBuilder()))
+                    .Append(str.Substring(previousIndex, index - previousIndex))
+                    .Append(newValue);
+                previousIndex = index + oldValue.Length;
+            }
+            return sb != null
+                 ? sb.Append(str.Substring(previousIndex)).ToString()
+                 : str;
+        }
     }
 }

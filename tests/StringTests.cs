@@ -444,7 +444,6 @@ namespace Mannex.Tests
             const string foobar = "foobar";
             Assert.Equal(new[] { foobar }, foobar.Partition(foobar.Length * 2).ToArray());
         }
-    
 
         [Fact]
         public void SplitTwoUsingStringSeparator()
@@ -471,6 +470,46 @@ namespace Mannex.Tests
             Assert.Equal(new[] { "one", "two", "three", "four|sep|five" }, 
                 str.Split("|SEP|", StringComparison.OrdinalIgnoreCase, 
                           (a, b, c, d) => new[] { a, b, c, d }));
+        }
+
+        [Fact]
+        public void ReplaceFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Replace(null, "foo", "bar", StringComparison.Ordinal));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void ReplaceFailsWithNullOldValue()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => "foo".Replace(null, "bar", StringComparison.Ordinal));
+            Assert.Equal("oldValue", e.ParamName);
+        }
+
+        [Fact]
+        public void ReplaceFailsWithZeroLengthOldValue()
+        {
+            var e = Assert.Throws<ArgumentException>(() => "foo".Replace(string.Empty, "bar", StringComparison.Ordinal));
+            Assert.Equal("oldValue", e.ParamName);
+        }
+
+        [Fact]
+        public void Replace()
+        {
+            Assert.Equal("foo BAR foo BAR foo BAR foo", "foo bar foo bar foo bar foo".Replace("bar", "BAR", StringComparison.Ordinal));
+        }
+
+        [Fact]
+        public void ReplaceCaseInsensitive()
+        {
+            Assert.Equal("Foo * Foo * Foo * Foo", "Foo Bar Foo Bar Foo Bar Foo".Replace("bar", "*", StringComparison.OrdinalIgnoreCase));
+        }
+
+        [Fact]
+        public void ReplaceWithoutOldValueReturnsOriginal()
+        {
+            var input = string.Concat(Enumerable.Repeat("foo bar", 3));
+            Assert.Same(input, input.Replace("-", string.Empty, StringComparison.Ordinal));
         }
     }
 }
