@@ -676,13 +676,13 @@ namespace Mannex
         {
             if (str == null) throw new ArgumentNullException("str");
             if (count < 0) throw new ArgumentOutOfRangeException("count", count, null);
-            if (count == 0 || str.Length == 0) return string.Empty;
-            if (count == 1) return str;
-            if (str.Length == 1) return new string(str[0], count);
-            var sb = new StringBuilder(str.Length * count);
-            for (var i = 0; i < count; i++)
-                sb.Append(str);
-            return sb.ToString();
+            return count == 0 || str.Length == 0
+                 ? string.Empty
+                 : count == 1
+                 ? str
+                 : str.Length == 1
+                 ? new string(str[0], count)
+                 : new StringBuilder(str.Length * count).Insert(0, str, count).ToString();
         }
     }
 }
