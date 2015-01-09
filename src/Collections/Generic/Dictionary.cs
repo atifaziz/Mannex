@@ -26,7 +26,6 @@ namespace Mannex.Collections.Generic
     #region Imports
 
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
@@ -95,61 +94,10 @@ namespace Mannex.Collections.Generic
         /// </summary>
 
         [DebuggerStepThrough]
-        public static ReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
+        public static ReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue>  dictionary)
         {
             if (dictionary == null) throw new ArgumentNullException("dictionary");
             return new ReadOnlyDictionary<TKey, TValue>(dictionary);
-        }
-
-        #else
-
-        /// <summary>
-        /// Returns an <see cref="IDictionary{TKey,TValue}"/> that wraps this
-        /// dictionary and disallows any modifications.
-        /// </summary>
-
-        [DebuggerStepThrough]
-        public static IDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
-        {
-            if (dictionary == null) throw new ArgumentNullException("dictionary");
-            return new ReadOnlyDictionary<TKey, TValue>(dictionary);
-        }
-
-        // Adapted from http://stackoverflow.com/a/1269311/6682
-
-        [Serializable]
-        [DebuggerDisplayAttribute("Count = {Count}")]
-        partial class ReadOnlyDictionary<TKey, TValue> : IDictionary<TKey, TValue>
-        {
-            readonly IDictionary<TKey, TValue> _inner;
-
-            public ReadOnlyDictionary() : this(new Dictionary<TKey, TValue>()) {}
-            public ReadOnlyDictionary(IDictionary<TKey, TValue> inner) { _inner = inner; }
-
-            public int Count { get { return _inner.Count; } }
-            public bool IsReadOnly { get { return true; } }
-
-            public bool ContainsKey(TKey key) { return _inner.ContainsKey(key); }
-            public ICollection<TKey> Keys { get { return _inner.Keys; } }
-            public bool TryGetValue(TKey key, out TValue value) { return _inner.TryGetValue(key, out value); }
-            public ICollection<TValue> Values { get { return _inner.Values; } }
-            public TValue this[TKey key] { get { return _inner[key]; } }
-            TValue IDictionary<TKey, TValue>.this[TKey key] { get { return this[key]; }
-                                                              set { throw ReadOnlyException(); } }
-            public bool Contains(KeyValuePair<TKey, TValue> item) { return _inner.Contains(item); }
-            public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) { _inner.CopyTo(array, arrayIndex); }
-            public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() { return _inner.GetEnumerator(); }
-            IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
-
-            // Forbidden members...
-
-            void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item) { throw ReadOnlyException(); }
-            void ICollection<KeyValuePair<TKey, TValue>>.Clear() { throw ReadOnlyException(); }
-            bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item) { throw ReadOnlyException(); }
-            void IDictionary<TKey, TValue>.Add(TKey key, TValue value) { throw ReadOnlyException(); }
-            bool IDictionary<TKey, TValue>.Remove(TKey key) { throw ReadOnlyException(); }
-
-            static Exception ReadOnlyException() { return new NotSupportedException("Dictionary is read-only."); }
         }
 
         #endif
