@@ -49,5 +49,16 @@ namespace Mannex.IO
             return 0 == (info.Attributes & (FileAttributes.Hidden | FileAttributes.System))
                 && (!Environment.OSVersion.IsUnix() || info.Name.TryCharAt(0) != '.');
         }
+
+        /// <summary>
+        /// Determines if the file system entry has at least the the given
+        /// bits of <see cref="FileAttributes"/> set.
+        /// </summary>
+
+        public static bool HasAttributes(this FileSystemInfo info, FileAttributes attributes)
+        {
+            if (info == null) throw new ArgumentNullException("info");
+            return (info.Attributes & attributes) == attributes;
+        }
     }
 }
