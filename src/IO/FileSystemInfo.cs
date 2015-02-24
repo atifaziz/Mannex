@@ -79,5 +79,30 @@ namespace Mannex.IO
             var dir = info as DirectoryInfo;
             return dir != null ? dir.Parent : ((FileInfo) info).Directory;
         }
+
+        /// <summary>
+        /// Reconstructs <see cref="FileSystemInfo.FullName"/> of the file
+        /// system entry by walking the entry and all its parents
+        /// (except root) and getting the original name as stored in the
+        /// file system.
+        /// </summary>
+        /// <remarks>
+        /// This is useful with case-insensitive file systems like NTFS where
+        /// the user can specify the path to a file or directory in one case
+        /// when its stored in another. The root is not reconstructed so paths
+        /// using mapped local drive letters or UNC paths under Windows, for
+        /// example, are returned verbatim.
+        /// </remarks>
+
+        public static string ReconstructFullName(this FileSystemInfo info)
+        {
+            // Inspiration & credit:
+            // http://stackoverflow.com/a/326153/6682
+
+            var parent = GetParentDirectory(info);
+            return parent != null
+                 ? Path.Combine(parent.ReconstructFullName(), parent.GetFileSystemInfos(info.Name)[0].Name)
+                 : info.FullName;
+        }
     }
 }
