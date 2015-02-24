@@ -60,5 +60,24 @@ namespace Mannex.IO
             if (info == null) throw new ArgumentNullException("info");
             return (info.Attributes & attributes) == attributes;
         }
+
+        /// <summary>
+        /// Returns <see cref="DirectoryInfo.Parent"/> when the file system
+        /// entry represents a directory and <see cref="FileInfo.Directory"/>
+        /// otherwise.
+        /// </summary>
+        /// <remarks>
+        /// This method is useful for getting the parent of a
+        /// <see cref="FileSystemInfo"/> object irrespective of it being a
+        /// file (<see cref="FileInfo"/>) or directory
+        /// (<see cref="DirectoryInfo"/>).
+        /// </remarks>
+
+        public static DirectoryInfo GetParentDirectory(FileSystemInfo info)
+        {
+            if (info == null) throw new ArgumentNullException("info");
+            var dir = info as DirectoryInfo;
+            return dir != null ? dir.Parent : ((FileInfo) info).Directory;
+        }
     }
 }
