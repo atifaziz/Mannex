@@ -62,5 +62,40 @@ namespace Mannex.Collections.Generic
             }
             return list;
         }
+
+        /// <summary>
+        /// Reads the next value from the enumerator otherwise throws
+        /// <see cref="InvalidOperationException"/>.
+        /// </summary>
+
+        public static T Read<T>(this IEnumerator<T> enumerator)
+        {
+            if (enumerator == null) throw new ArgumentNullException("enumerator");
+            if (!enumerator.MoveNext()) throw new InvalidOperationException();
+            return enumerator.Current;
+        }
+
+        /// <summary>
+        /// Attempts to read the next value from the enumerator. If the
+        /// enumerator has no more values then returns the default value of
+        /// <typeparamref name="T"/> instead.
+        /// </summary>
+
+        public static T TryRead<T>(this IEnumerator<T> enumerator)
+        {
+            return TryRead(enumerator, default(T));
+        }
+
+        /// <summary>
+        /// Attempts to read the next value from the enumerator. If the
+        /// enumerator has no more values then returns a given sentinel value
+        /// instead.
+        /// </summary>
+
+        public static T TryRead<T>(this IEnumerator<T> enumerator, T sentinel)
+        {
+            if (enumerator == null) throw new ArgumentNullException("enumerator");
+            return enumerator.MoveNext() ? enumerator.Current : sentinel;
+        }
     }
 }
