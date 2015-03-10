@@ -134,5 +134,16 @@ namespace Mannex
         {
             return time.TrimToDay() == time;
         }
+
+        /// <summary>
+        /// Replaces time component with that of another
+        /// <see cref="DateTime"/>.
+        /// </summary>
+
+        public static DateTime WithTimeFrom(this DateTime date, DateTime time)
+        {
+            if (date.Kind != time.Kind) throw new ArgumentException(string.Format("Date ({0}) and time ({1}) kinds do not match.", date.Kind, time.Kind));
+            return new DateTime(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second, time.Millisecond);
+        }
     }
 }

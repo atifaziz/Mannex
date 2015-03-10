@@ -69,5 +69,25 @@ namespace Mannex.Tests
             var input = new DateTime(2014, 6, 15, 1, 2, 3, 4, DateTimeKind.Local);
             Assert.Equal(new DateTime(2014, 1, 1, 1, 2, 3, 4, DateTimeKind.Local), input.FirstDayOfYear());
         }
+
+        [Fact]
+        public void WithTimeFrom()
+        {
+            const int y = 2014;
+            const int mo = 6;
+            const int d = 15;
+            const int h = 12;
+            const int mi = 34;
+            const int s = 56;
+            const int ms = 789;
+            Assert.Equal(new DateTime(y, mo, d, h, mi, s, ms),
+                new DateTime(y, mo, d, 1, 2, 3, 456).WithTimeFrom(new DateTime(2013, 5, 14, h, mi, s, ms)));
+        }
+
+        [Fact]
+        public void WithTimeFromFailsWithMismatchingKind()
+        {
+            Assert.Throws<ArgumentException>(() => DateTime.Now.WithTimeFrom(DateTime.UtcNow));
+        }
     }
 }
