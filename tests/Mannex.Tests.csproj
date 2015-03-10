@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\BitArrayTests.cs" />
+    <Compile Include="Collections\Generic\IEnumeratorTests.cs" />
     <Compile Include="Collections\Generic\IEqualityComparerTests.cs" />
     <Compile Include="Collections\Generic\PairingTests.cs" />
     <Compile Include="Collections\Generic\IComparerTests.cs" />
