@@ -178,6 +178,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyInfo.g.tt</DependentUpon>
     </Compile>
+    <Compile Include="TimeZoneInfo.cs" />
     <Compile Include="Text\StringBuilder.cs" />
     <Compile Include="Single.cs" />
     <Compile Include="Double.cs" />

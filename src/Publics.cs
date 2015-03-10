@@ -39,6 +39,7 @@ namespace Mannex
     public static partial class RuntimeMethodHandleExtensions { }
     public static partial class SingleExtensions { }
     public static partial class StringExtensions { }
+    public static partial class TimeZoneInfoExtensions { }
     #if NET4
     public static partial class TupleExtensions { }
     #endif
