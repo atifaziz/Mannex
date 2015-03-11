@@ -15,3 +15,5 @@ While Mannex may grow in size as more and more extension methods are added, your
 In the near future, Mannex hopes to provide a sort-of bundling tool (help wanted) that will enable developers to pick and choose what they wish to use. Today, you will have to choose to include or exclude files manually. Meanwhile, you can also try to achieve a similar effect with [ILMerge](http://research.microsoft.com/en-us/people/mbarnett/ilmerge.aspx) and its `/internalize` switch.
 
 Mannex is also [available as a NuGet package](http://nuget.org/packages/Mannex/)!
+
+[![Build status](https://ci.appveyor.com/api/projects/status/w64gkmfok9fedtxg?svg=true)](https://ci.appveyor.com/project/raboof/mannex)
