@@ -150,6 +150,7 @@
       <DependentUpon>Action.Return.g.tt</DependentUpon>
     </Compile>
     <Compile Include="Array.cs" />
+    <Compile Include="Diagnostics\ProcessStartInfo.cs" />
     <Compile Include="OperatingSystem.cs" />
     <Compile Include="Boolean.cs" />
     <Compile Include="Collections\ArrayList.cs" />
