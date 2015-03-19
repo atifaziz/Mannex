@@ -101,6 +101,7 @@ namespace Mannex
     namespace Diagnostics
     {
         public static partial class ProcessExtensions { }
+        public static partial class ProcessStartInfoExtensions { }
     }
 
     namespace Globalization
