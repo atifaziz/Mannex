@@ -173,5 +173,43 @@ namespace Mannex
             target.Update(source, function);
             return target;
         }
+
+        /// <summary>
+        /// Removes an item from the array if it is found.
+        /// </summary>
+        /// <returns>
+        /// Returns a new array with the item removed. If the item does not
+        /// exist then the original array is returned.
+        /// </returns>
+
+        public static T[] Remove<T>(this T[] array, T item)
+        {
+            return Remove(array, item, null);
+        }
+
+        /// <summary>
+        /// Removes an item from the array if it is found. An additional
+        /// parameter specifies the comparer to use to identify the item to
+        /// remove.
+        /// </summary>
+        /// <returns>
+        /// Returns a new array with the item removed. If the item does not
+        /// exist then the original array is returned.
+        /// </returns>
+
+        public static T[] Remove<T>(this T[] array, T item, IEqualityComparer<T> comparer)
+        {
+            if (array == null) throw new ArgumentNullException("array");
+
+            var index = comparer == null
+                      ? Array.IndexOf(array, item)
+                      : Array.FindIndex(array, other => comparer.Equals(other, item));
+            if (index < 0)
+                return array;
+            var result = new T[array.Length - 1];
+            if (index > 0) Array.Copy(array, 0, result, 0, index);
+            Array.Copy(array, index + 1, result, index, array.Length - (index + 1));
+            return result;
+        }
     }
 }
