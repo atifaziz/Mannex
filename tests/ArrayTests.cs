@@ -188,5 +188,61 @@ namespace Mannex.Tests
             xs.Update(ys, (x, y, i) => (i + 1) * 100 + x * 10 + y);
             Assert.Equal(new[] { 147, 258, 6 }, xs);
         }
+
+        [Fact]
+        public void RemoveFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                ArrayExtensions.Remove(null, 0));
+            Assert.Equal("array", e.ParamName);
+        }
+
+        [Fact]
+        public void RemoveWhenNonExistingReturnsOriginal()
+        {
+            var ns = new[] { 1, 2, 3 };
+            Assert.True(ReferenceEquals(ns, ns.Remove(42)));
+        }
+
+        [Fact]
+        public void Remove()
+        {
+            var ns = new[] { 123, 456, 789 };
+            Assert.Equal(new[] { 456, 789 }, ns.Remove(123));
+            Assert.Equal(new[] { 123, 789 }, ns.Remove(456));
+            Assert.Equal(new[] { 123, 456 }, ns.Remove(789));
+        }
+
+        [Fact]
+        public void RemoveRemovesFirstOccurenceOnly()
+        {
+            var ns = new[] { 123, 456, 789,
+                             123, 456, 789 };
+            Assert.Equal(new[] { 123,      789,
+                                 123, 456, 789 }, ns.Remove(456));
+        }
+
+        [Fact]
+        public void RemoveUsingComparer()
+        {
+            const string foo = "foo";
+            const string bar = "bar";
+            const string baz = "baz";
+            var ns = new[] { foo, bar, baz };
+            var comparer = StringComparer.OrdinalIgnoreCase;
+            Assert.Equal(new[] { bar, baz }, ns.Remove("FoO", comparer));
+            Assert.Equal(new[] { foo, baz }, ns.Remove("bAr", comparer));
+            Assert.Equal(new[] { foo, bar }, ns.Remove("BAZ", comparer));
+        }
+
+        [Fact]
+        public void RemoveUsingComparerRemovesFirstOccurenceOnly()
+        {
+            var ns = new[] { "foo", "bar", "baz",
+                             "foo", "bar", "baz" };
+            var comparer = StringComparer.OrdinalIgnoreCase;
+            Assert.Equal(new[] { "foo",        "baz",
+                                 "foo", "bar", "baz" }, ns.Remove("BaR", comparer));
+        }
     }
 }
