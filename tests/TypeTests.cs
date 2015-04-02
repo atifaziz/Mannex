@@ -43,22 +43,21 @@ namespace Mannex.Tests
         [Fact]
         public void IsConstructionOfGenericTypeDefinitionWithNullGenericTypeDefinition()
         {
-            var e = Assert.Throws<ArgumentNullException>(() => TypeExtensions.IsConstructionOfGenericTypeDefinition(typeof(Nullable<int>), null));
+            var e = Assert.Throws<ArgumentNullException>(() => typeof(int?).IsConstructionOfGenericTypeDefinition(null));
             Assert.Equal("genericTypeDefinition", e.ParamName);
         }
 
         [Fact]
         public void IsConstructionOfGenericTypeDefinitionWithNonGenericTypeDefinition()
         {
-            var e = Assert.Throws<ArgumentException>(() => TypeExtensions.IsConstructionOfGenericTypeDefinition(typeof(Nullable<int>), typeof(int)));
+            var e = Assert.Throws<ArgumentException>(() => typeof(int?).IsConstructionOfGenericTypeDefinition(typeof(int)));
             Assert.Equal("genericTypeDefinition", e.ParamName);
         }
 
         [Fact]
         public void IsConstructionOfGenericTypeDefinitionReturnsTrueWhenTypeIsConstructionOfGenericTypeDefinition()
         {
-            Assert.True(typeof(Nullable<int>).IsConstructionOfGenericTypeDefinition(typeof(Nullable<>)));
-            
+            Assert.True(typeof(int?).IsConstructionOfGenericTypeDefinition(typeof(Nullable<>)));
         }
 
         [Fact]
@@ -76,8 +75,7 @@ namespace Mannex.Tests
         [Fact]
         public void IsConstructionOfNullableReturnsTrueWhenTypeIsNullable()
         {
-            Assert.True(typeof(Nullable<int>).IsConstructionOfNullable());
-            
+            Assert.True(typeof(int?).IsConstructionOfNullable());
         }
 
         [Fact]
