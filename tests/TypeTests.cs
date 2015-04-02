@@ -26,6 +26,8 @@ namespace Mannex.Tests
     #region Imports
 
     using System;
+    using System.Globalization;
+    using System.Linq.Expressions;
     using System.Net;
     using Xunit;
 
@@ -82,6 +84,45 @@ namespace Mannex.Tests
         public void IsConstructionOfNullableReturnsFalseWhenTypeIsNotNullable()
         {
             Assert.False(typeof(int).IsConstructionOfNullable());
+        }
+
+        [Fact]
+        public void FindParseMethodWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => TypeExtensions.FindParseMethod(null));
+            Assert.Equal("type", e.ParamName);
+        }
+
+        [Fact]
+        public void FindParseMethod()
+        {
+            Expression<Func<int>> e = () => int.Parse(null, null);
+            var mce = (MethodCallExpression) e.Body;
+            Assert.Equal(mce.Method, typeof(int).FindParseMethod());
+        }
+
+        [Fact]
+        public void FindParseMethodWithTypeHavingNoParseMethod()
+        {
+            Assert.Null(typeof(Unparseable).FindParseMethod());
+        }
+
+        class Unparseable
+        {   // ReSharper disable once UnusedMember.Local
+            // ReSharper disable UnusedParameter.Local
+            public static object Parse(string s, IFormatProvider fp) { return null; }
+            // ReSharper restore UnusedParameter.Local
+        }
+
+        [Fact]
+        public void GetParser()
+        {
+            var parser = typeof(DateTimeOffset).GetParser();
+            Assert.NotNull(parser);
+            var formatProvider = new CultureInfo("en-US");
+            const string input = "3/27/2015 12:34:56 AM +02:30";
+            var result = parser(input, formatProvider);
+            Assert.Equal(DateTimeOffset.Parse(input, formatProvider), result);
         }
     }
 }
