@@ -28,7 +28,6 @@ namespace Mannex.Tests
     using System;
     using System.Globalization;
     using System.Linq.Expressions;
-    using System.Net;
     using Xunit;
 
     #endregion
