@@ -38,20 +38,19 @@ namespace Mannex
     static partial class ArrayExtensions
     {
         /// <summary>
-        /// Formats bytes in hexadecimal format, appending to the 
-        /// supplied <see cref="StringBuilder"/>.
+        /// Formats bytes in hexadecimal format.
         /// </summary>
-        
+
         public static string ToHex(this byte[] buffer)
         {
             return ToHex(buffer, 0, buffer.Length);
         }
 
         /// <summary>
-        /// Formats bytes in hexadecimal format, appending to the 
-        /// supplied <see cref="StringBuilder"/>.
+        /// Formats bytes in hexadecimal format. Additional parameters
+        /// specify the segment of the array for format.
         /// </summary>
-        
+
         public static string ToHex(this byte[] buffer, int index, int count)
         {
             return ToHex(buffer, index, count, null).ToString();
@@ -61,13 +60,13 @@ namespace Mannex
         /// Formats bytes in hexadecimal format, appending to the 
         /// supplied <see cref="StringBuilder"/>.
         /// </summary>
-        
+
         public static StringBuilder ToHex(this byte[] buffer, int index, int count, StringBuilder sb)
         {
             if (buffer == null) throw new ArgumentNullException("buffer");
             if (index < 0 || index > buffer.Length) throw new ArgumentOutOfRangeException("index");
             if (index + count > buffer.Length) throw new ArgumentOutOfRangeException("count");
-            
+
             if (sb == null)
                 sb = new StringBuilder(count * 2);
 
