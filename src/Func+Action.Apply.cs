@@ -1,4 +1,4 @@
-#region License, Terms and Author(s)
+﻿#region License, Terms and Author(s)
 //
 // Mannex - Extension methods for .NET
 // Copyright (c) 2009 Atif Aziz. All rights reserved.
@@ -35,7 +35,7 @@ namespace Mannex
     static partial class FuncExtensions
     {
         /// <summary>
-        /// Partially applies the first 7 arguments of
+        /// Partially applies the first argument of
         /// <see cref="Func{T1,T2,TResult}"/>.
         /// </summary>
 
@@ -49,7 +49,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first 7 arguments of
+        /// Partially applies the first argument of
         /// <see cref="Func{T1,T2,T3,TResult}"/>.
         /// </summary>
 
@@ -63,7 +63,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first 16 arguments of
+        /// Partially applies the first 2 arguments of
         /// <see cref="Func{T1,T2,T3,TResult}"/>.
         /// </summary>
 
@@ -77,7 +77,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first 7 arguments of
+        /// Partially applies the first argument of
         /// <see cref="Func{T1,T2,T3,T4,TResult}"/>.
         /// </summary>
 
@@ -91,7 +91,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first 16 arguments of
+        /// Partially applies the first 2 arguments of
         /// <see cref="Func{T1,T2,T3,T4,TResult}"/>.
         /// </summary>
 
@@ -105,7 +105,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first 25 arguments of
+        /// Partially applies the first 3 arguments of
         /// <see cref="Func{T1,T2,T3,T4,TResult}"/>.
         /// </summary>
 
@@ -126,7 +126,7 @@ namespace Mannex
     static partial class ActionExtensions
     {
         /// <summary>
-        /// Partially applies the first 7 arguments of
+        /// Partially applies the first argument of
         /// <see cref="Action{T1,T2}"/>.
         /// </summary>
 
@@ -140,7 +140,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first 7 arguments of
+        /// Partially applies the first argument of
         /// <see cref="Action{T1,T2,T3}"/>.
         /// </summary>
 
@@ -154,7 +154,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first 16 arguments of
+        /// Partially applies the first 2 arguments of
         /// <see cref="Action{T1,T2,T3}"/>.
         /// </summary>
 
@@ -168,7 +168,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first 7 arguments of
+        /// Partially applies the first argument of
         /// <see cref="Action{T1,T2,T3,T4}"/>.
         /// </summary>
 
@@ -182,7 +182,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first 16 arguments of
+        /// Partially applies the first 2 arguments of
         /// <see cref="Action{T1,T2,T3,T4}"/>.
         /// </summary>
 
@@ -196,7 +196,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partially applies the first 25 arguments of
+        /// Partially applies the first 3 arguments of
         /// <see cref="Action{T1,T2,T3,T4}"/>.
         /// </summary>
 
