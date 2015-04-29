@@ -44,7 +44,7 @@ namespace Mannex.IO
         /// Returns all the parents of the directory.
         /// </summary>
         /// <remarks>
-        /// This method uses deferred execution. In addition, it does not 
+        /// This method uses deferred execution. In addition, it does not
         /// check for the existence of the directory or its parents.
         /// </remarks>
 
@@ -57,7 +57,7 @@ namespace Mannex.IO
         /// Returns the directory and all its parents.
         /// </summary>
         /// <remarks>
-        /// This method uses deferred execution. In addition, it does not 
+        /// This method uses deferred execution. In addition, it does not
         /// check for the existence of the directory or its parents.
         /// </remarks>
 
@@ -243,9 +243,10 @@ namespace Mannex.IO
         /// except filters hidden and system entries.
         /// </summary>
 
+        [Obsolete("Use EnumerateVisibleFileSystemInfos instead.")]
         public static IEnumerable<FileSystemInfo> EnumerateVisibleFileSystemInfo(this DirectoryInfo dir)
         {
-            return EnumerateVisibleFileSystemInfo(dir, DefaultSearchPattern);
+            return dir.EnumerateVisibleFileSystemInfos();
         }
 
         /// <summary>
@@ -253,9 +254,10 @@ namespace Mannex.IO
         /// except filters hidden and system entries.
         /// </summary>
 
+        [Obsolete("Use EnumerateVisibleFileSystemInfos instead.")]
         public static IEnumerable<FileSystemInfo> EnumerateVisibleFileSystemInfo(this DirectoryInfo dir, string searchPattern)
         {
-            return EnumerateVisibleFileSystemInfo(dir, searchPattern, SearchOption.TopDirectoryOnly);
+            return dir.EnumerateVisibleFileSystemInfos(searchPattern);
         }
 
         /// <summary>
@@ -263,7 +265,38 @@ namespace Mannex.IO
         /// except filters hidden and system entries.
         /// </summary>
 
+        [Obsolete("Use EnumerateVisibleFileSystemInfos instead.")]
         public static IEnumerable<FileSystemInfo> EnumerateVisibleFileSystemInfo(this DirectoryInfo dir, string searchPattern, SearchOption searchOption)
+        {
+            return dir.EnumerateFileSystemInfos(searchPattern, searchOption);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.EnumerateFileSystemInfos()"/>
+        /// except filters hidden and system entries.
+        /// </summary>
+
+        public static IEnumerable<FileSystemInfo> EnumerateVisibleFileSystemInfos(this DirectoryInfo dir)
+        {
+            return EnumerateVisibleFileSystemInfos(dir, DefaultSearchPattern);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.EnumerateFileSystemInfos(String)"/>
+        /// except filters hidden and system entries.
+        /// </summary>
+
+        public static IEnumerable<FileSystemInfo> EnumerateVisibleFileSystemInfos(this DirectoryInfo dir, string searchPattern)
+        {
+            return EnumerateVisibleFileSystemInfos(dir, searchPattern, SearchOption.TopDirectoryOnly);
+        }
+
+        /// <summary>
+        /// Same as <see cref="DirectoryInfo.EnumerateFileSystemInfos(String,SearchOption)"/>
+        /// except filters hidden and system entries.
+        /// </summary>
+
+        public static IEnumerable<FileSystemInfo> EnumerateVisibleFileSystemInfos(this DirectoryInfo dir, string searchPattern, SearchOption searchOption)
         {
             return from e in dir.EnumerateFileSystemInfos(searchPattern, searchOption)
                    where e.IsUserVisible()
