@@ -307,7 +307,7 @@ namespace Mannex.Collections.Generic
             return SliceImpl(list, start, end);
         }
 
-        private static IEnumerable<T> SliceImpl<T>(IList<T> list, int start, int end)
+        static IEnumerable<T> SliceImpl<T>(IList<T> list, int start, int end)
         {
             //
             // This method copies up to, but not including, the element 
@@ -324,7 +324,7 @@ namespace Mannex.Collections.Generic
                 yield return list[i];
         }
 
-        private static int ClipIndex<T>(this ICollection<T> collection, int index)
+        static int ClipIndex<T>(this ICollection<T> collection, int index)
         {
             Debug.Assert(collection != null);
             return Math.Min(collection.Count, index < 0 ? Math.Max(0, collection.Count + index) : index);

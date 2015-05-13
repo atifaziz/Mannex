@@ -142,7 +142,7 @@ namespace Mannex.Collections.Specialized
                 collection.Add(item.Key, item.Value);
         }
 
-        private static NameValueCollection CreateCollection<T>(ICollection<T> collection)
+        static NameValueCollection CreateCollection<T>(ICollection<T> collection)
         {
             return collection != null 
                  ? new NameValueCollection(collection.Count) 

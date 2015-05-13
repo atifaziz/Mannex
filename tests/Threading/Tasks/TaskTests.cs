@@ -34,7 +34,7 @@ namespace Mannex.Tests.Threading.Tasks
 
     public class TaskTests
     {
-        private ImmediateTaskScheduler _immediateTaskScheduler;
+        ImmediateTaskScheduler _immediateTaskScheduler;
 
         ImmediateTaskScheduler TaskScheduler
         {

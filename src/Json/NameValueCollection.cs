@@ -57,7 +57,7 @@ namespace Mannex.Json
             WriteJsonStringToImpl(collection, writer);
         }
 
-        private static TextWriter WriteJsonStringToImpl(NameValueCollection collection, TextWriter writer)
+        static TextWriter WriteJsonStringToImpl(NameValueCollection collection, TextWriter writer)
         {
             Debug.Assert(writer != null);
 

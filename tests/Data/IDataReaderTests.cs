@@ -270,8 +270,8 @@ namespace Mannex.Tests.Data
 
         class DataReaderStub<T> : IDataReader
         {
-            private int _index;
-            private readonly T[] _values;
+            int _index;
+            readonly T[] _values;
 
             public DataReaderStub(params T[] values)
             {

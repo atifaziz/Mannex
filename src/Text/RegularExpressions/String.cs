@@ -162,7 +162,7 @@ namespace Mannex.Text.RegularExpressions
             return MatchesImpl(str, pattern, options, selector);
         }
 
-        private static IEnumerable<T> MatchesImpl<T>(string str, string pattern, RegexOptions options, Func<Match, T> selector)
+        static IEnumerable<T> MatchesImpl<T>(string str, string pattern, RegexOptions options, Func<Match, T> selector)
         {
             var match = str.Match(pattern, options);
             while (match.Success)

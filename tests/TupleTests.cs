@@ -99,7 +99,7 @@ namespace Mannex.Tests
             AssertEqual(Tuple.Create(1, 2, 3, 4, 5, 6, 7).AsEnumerable(), 1, 2, 3, 4, 5, 6, 7);
         }
         
-        private static void AssertArgumentNullExceptionForNullThis(Assert.ThrowsDelegate testCode)
+        static void AssertArgumentNullExceptionForNullThis(Assert.ThrowsDelegate testCode)
         {
             var e = Assert.Throws<ArgumentNullException>(testCode);
             Assert.Equal("tuple", e.ParamName);
