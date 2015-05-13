@@ -37,8 +37,8 @@ namespace Mannex.Text.RegularExpressions
 
     static partial class MatchExtensions
     {
-        private static readonly Func<Match, string, int, Group> NamedBinder = (match, name, num) => match.Groups[name];
-        private static readonly Func<Match, string, int, Group> NumberBinder = (match, name, num) => match.Groups[num];
+        static readonly Func<Match, string, int, Group> NamedBinder = (match, name, num) => match.Groups[name];
+        static readonly Func<Match, string, int, Group> NumberBinder = (match, name, num) => match.Groups[num];
 
         /// <summary>
         /// Binds match group names to corresponding parameter names of a
@@ -100,7 +100,7 @@ namespace Mannex.Text.RegularExpressions
             return Bind(match, NumberBinder, resultSelector);
         }
 
-        private static TResult Bind<TResult>(Match match, 
+        static TResult Bind<TResult>(Match match, 
             Func<Match, string, int, Group> groupSelector, 
             Func<Group, Group, TResult> resultSelector)
         {
@@ -137,14 +137,14 @@ namespace Mannex.Text.RegularExpressions
             return Bind(match, NumberBinder, resultSelector);
         }
 
-        private static TResult Bind<TResult>(Match match,
+        static TResult Bind<TResult>(Match match,
             Func<Match, string, int, Group> groupSelector,
             Func<Group, Group, Group, TResult> resultSelector)
         {
             return Bind(match, groupSelector, groupSelector, groupSelector, resultSelector);
         }
 
-        private static TResult Bind<T1, TResult>(Match match,
+        static TResult Bind<T1, TResult>(Match match,
             Func<Match, string, int, T1> selector,
             Func<T1, TResult> resultSelector)
         {
@@ -153,7 +153,7 @@ namespace Mannex.Text.RegularExpressions
                        resultSelector, null, null, null);
         }
 
-        private static TResult Bind<T1, T2, TResult>(Match match,
+        static TResult Bind<T1, T2, TResult>(Match match,
             Func<Match, string, int, T1> selector1,
             Func<Match, string, int, T2> selector2,
             Func<T1, T2, TResult> resultSelector)
@@ -163,7 +163,7 @@ namespace Mannex.Text.RegularExpressions
                        null, resultSelector, null, null);
         }
 
-        private static TResult Bind<T1, T2, T3, TResult>(Match match,
+        static TResult Bind<T1, T2, T3, TResult>(Match match,
             Func<Match, string, int, T1> selector1,
             Func<Match, string, int, T2> selector2,
             Func<Match, string, int, T3> selector3,

@@ -58,7 +58,7 @@ namespace Mannex.IO
             return ReadLinesImpl(info.FullName, encoding);
         }
 
-        private static IEnumerable<string> ReadLinesImpl(string path, Encoding encoding)
+        static IEnumerable<string> ReadLinesImpl(string path, Encoding encoding)
         {
             var reader = encoding == null 
                        ? new StreamReader(path, true) 

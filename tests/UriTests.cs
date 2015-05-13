@@ -63,7 +63,7 @@ namespace Mannex.Tests
             Assert.Throws<ArgumentNullException>(() => UriExtensions.TryGetUserNamePassword(null));
         }
  
-        private static void TryGetUserNamePassword(string url, NetworkCredential expectedCredential)
+        static void TryGetUserNamePassword(string url, NetworkCredential expectedCredential)
         {
             var result = new Uri(url).TryGetUserNamePassword();
             if (expectedCredential == null) 
@@ -107,12 +107,12 @@ namespace Mannex.Tests
             Assert.Throws<ArgumentNullException>(() => UriExtensions.GetUserNamePassword(null));
         }
 
-        private static void GetUserNamePassword(string url)
+        static void GetUserNamePassword(string url)
         {
             GetUserNamePassword(url, null);
         }
 
-        private static void GetUserNamePassword(string url, NetworkCredential expectedCredential)
+        static void GetUserNamePassword(string url, NetworkCredential expectedCredential)
         {
             var credential = new Uri(url).GetUserNamePassword();
             Assert.NotNull(credential);
@@ -160,7 +160,7 @@ namespace Mannex.Tests
             Assert.Throws<ArgumentNullException>(() => UriExtensions.TrySplitUserNamePassword<object>(null, delegate { throw new NotImplementedException(); }));
         }
 
-        private static void TrySplitUserNamePassword(string url, string expectedUrl, NetworkCredential expectedCredential)
+        static void TrySplitUserNamePassword(string url, string expectedUrl, NetworkCredential expectedCredential)
         {
             var result = new Uri(url).TrySplitUserNamePassword((url2, credential) => new { Url = url2, Credential = credential });
             Assert.NotNull(result);
@@ -218,12 +218,12 @@ namespace Mannex.Tests
             Assert.Throws<ArgumentNullException>(() => UriExtensions.SplitUserNamePassword<object>(null, delegate { throw new NotImplementedException(); }));
         }
 
-        private static void SplitUserNamePassword(string url)
+        static void SplitUserNamePassword(string url)
         {
             GetUserNamePassword(url, null);
         }
 
-        private static void SplitUserNamePassword(string url, string expectedUrl, NetworkCredential expectedCredential)
+        static void SplitUserNamePassword(string url, string expectedUrl, NetworkCredential expectedCredential)
         {
             var result = new Uri(url).SplitUserNamePassword((url2, credential) => new { Url = url2, Credential = credential });
             Assert.NotNull(result);

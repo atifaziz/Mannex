@@ -39,7 +39,7 @@ namespace Mannex
 
     static partial class ExceptionExtensions
     {
-        private static readonly Func<Exception, Exception> PrepForRemoting;
+        static readonly Func<Exception, Exception> PrepForRemoting;
 
         static ExceptionExtensions()
         {
@@ -98,7 +98,7 @@ namespace Mannex
             return YieldInnerExceptions(e);
         }
 
-        private static IEnumerable<Exception> YieldInnerExceptions(Exception e)
+        static IEnumerable<Exception> YieldInnerExceptions(Exception e)
         {
             for (; e != null; e = e.InnerException)
                 yield return e;

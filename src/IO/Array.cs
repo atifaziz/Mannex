@@ -75,7 +75,7 @@ namespace Mannex.IO
             return OpenStream(buffer, index, count, true);
         }
 
-        private static Stream OpenStream(byte[] buffer, int? index, int? count, bool writeable)
+        static Stream OpenStream(byte[] buffer, int? index, int? count, bool writeable)
         {
             if (buffer == null) throw new ArgumentNullException("buffer");
             return new MemoryStream(buffer, index ?? 0, count ?? buffer.Length, writeable);

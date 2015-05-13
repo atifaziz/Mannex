@@ -81,7 +81,7 @@ namespace Mannex.Net
             return DownloadStringUsingResponseEncodingImpl(client, client.DownloadData(address));
         }
 
-        private static string DownloadStringUsingResponseEncodingImpl(WebClient client, byte[] data)
+        static string DownloadStringUsingResponseEncodingImpl(WebClient client, byte[] data)
         {
             Debug.Assert(client != null);
             Debug.Assert(data != null);

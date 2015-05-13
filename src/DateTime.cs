@@ -35,7 +35,7 @@ namespace Mannex
 
     static partial class DateTimeExtensions
     {
-        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /// <summary>
         /// Returns number of milliseconds (including fractions) in UTC between the 

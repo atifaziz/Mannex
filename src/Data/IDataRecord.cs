@@ -228,7 +228,7 @@ namespace Mannex.Data
             return Map(record, new ExpandoObject(), nameMapper, valueMapper);
         }
 
-        private static T Map<T>(
+        static T Map<T>(
             this IDataRecord record,
             T target,
             Func<string, string> nameMapper,

@@ -99,7 +99,7 @@ namespace Mannex.IO
 
         sealed class ChainedTextReader : TextReader
         {
-            private TextReader[] _readers;
+            TextReader[] _readers;
 
             public ChainedTextReader(IEnumerable<TextReader> readers)
             {
@@ -110,7 +110,7 @@ namespace Mannex.IO
                                   .ToArray();
             }
 
-            private TextReader GetReader()
+            TextReader GetReader()
             {
                 if (_readers == null) throw new ObjectDisposedException(null);
                 return _readers[0];

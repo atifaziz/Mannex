@@ -80,12 +80,12 @@ namespace Mannex.Tests
                 }
             }
 
-            private static void Bar()
+            static void Bar()
             {
                 Baz();
             }
 
-            private static void Baz()
+            static void Baz()
             {
                 throw new Exception();
             }
