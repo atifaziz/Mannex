@@ -151,10 +151,10 @@ namespace Mannex
         /// </summary>
         public static double HoursInDay(this DateTime date, string timeZoneId)
 		{
-		    var tz = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
+            var tz = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
             if (tz == null)
             {
-                throw new ArgumentOutOfRangeException(timeZoneId);
+                throw new ArgumentOutOfRangeException("timeZoneId");
             }
             return tz.HoursInDay(date);
         }
