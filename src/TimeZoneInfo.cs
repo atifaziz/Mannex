@@ -139,10 +139,10 @@ namespace Mannex
             var startOfWeek = transition.Week * 7 - 6;
 
             // What day of the week does the month start on?
-            var firstDayOfWeek = (int) calendar.GetDayOfWeek(new DateTime(year, transition.Month, 1));
+            var firstDayOfWeek = (int)calendar.GetDayOfWeek(new DateTime(year, transition.Month, 1));
 
             // Determine how much start date has to be adjusted
-            var changeDayOfWeek = (int) transition.DayOfWeek;
+            var changeDayOfWeek = (int)transition.DayOfWeek;
 
             var transitionDay = firstDayOfWeek <= changeDayOfWeek
                                ? startOfWeek + (changeDayOfWeek - firstDayOfWeek)
@@ -160,12 +160,16 @@ namespace Mannex
         /// </summary>
         public static double HoursInDay(this TimeZoneInfo tz, DateTime date)
         {
-            if(!tz.SupportsDaylightSavingTime) return 24;
-			var unzoned=new DateTime(date.Year, date.Month, date.Day,0,0,0,DateTimeKind.Unspecified);
-			return (
-				new DateTimeOffset(unzoned.AddDays(1), tz.GetUtcOffset(unzoned.AddDays(1)))
-				- new DateTimeOffset(unzoned, tz.GetUtcOffset(unzoned))
-				).TotalHours;
+            if (tz == null)
+            {
+                throw new ArgumentOutOfRangeException("tz");
+            }
+            if (!tz.SupportsDaylightSavingTime) return 24;
+            var unzoned = DateTime.SpecifyKind(date, DateTimeKind.Unspecified);
+            return (
+                new DateTimeOffset(unzoned.AddDays(1), tz.GetUtcOffset(unzoned.AddDays(1)))
+                - new DateTimeOffset(unzoned, tz.GetUtcOffset(unzoned))
+                ).TotalHours;
         }
     }
 }
