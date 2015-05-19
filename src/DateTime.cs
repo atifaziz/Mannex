@@ -145,5 +145,18 @@ namespace Mannex
             if (date.Kind != time.Kind) throw new ArgumentException(string.Format("Date ({0}) and time ({1}) kinds do not match.", date.Kind, time.Kind));
             return new DateTime(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second, time.Millisecond);
         }
+
+        /// <summary>
+        /// Gets the number of hours within the current day in the given time zone, taking transitions into account.
+        /// </summary>
+        public static double HoursInDay(this DateTime date, string timeZoneId)
+		{
+		    var tz = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
+            if (tz == null)
+            {
+                throw new ArgumentOutOfRangeException(timeZoneId);
+            }
+            return tz.HoursInDay(date);
+        }
     }
 }

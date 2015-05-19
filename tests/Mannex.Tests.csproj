@@ -81,6 +81,7 @@
     <Compile Include="Threading\Tasks\ImmediateTaskScheduler.cs" />
     <Compile Include="Threading\Tasks\TaskCompletionSourceTests.cs" />
     <Compile Include="Threading\Tasks\TaskTests.cs" />
+    <Compile Include="TimeZoneInfoTests.cs" />
     <Compile Include="TupleTests.cs" />
     <Compile Include="EnumTests.cs" />
     <Compile Include="IServiceProviderTests.cs" />
@@ -135,6 +136,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
