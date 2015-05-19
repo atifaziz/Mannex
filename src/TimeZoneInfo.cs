@@ -154,5 +154,18 @@ namespace Mannex
 
             return new DateTime(year, transition.Month, transitionDay).WithTimeFrom(transition.TimeOfDay);
         }
+
+        /// <summary>
+        /// Gets the number of hours within a given day in the current time zone, taking transitions into account.
+        /// </summary>
+        public static double HoursInDay(this TimeZoneInfo tz, DateTime date)
+        {
+            if(!tz.SupportsDaylightSavingTime) return 24;
+			var unzoned=new DateTime(date.Year, date.Month, date.Day,0,0,0,DateTimeKind.Unspecified);
+			return (
+				new DateTimeOffset(unzoned.AddDays(1), tz.GetUtcOffset(unzoned.AddDays(1)))
+				- new DateTimeOffset(unzoned, tz.GetUtcOffset(unzoned))
+				).TotalHours;
+        }
     }
 }

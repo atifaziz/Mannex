@@ -288,6 +288,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Func+Action.Apply.cs</LastGenOutput>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\AssemblyInfo.g.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfo.g.cs</LastGenOutput>
