@@ -176,37 +176,7 @@ namespace Mannex
         {
             if (type == null) throw new ArgumentNullException("type");
             if (type.IsGenericTypeDefinition || type.IsGenericParameter) throw new ArgumentException(null, "type");
-
-            if (type.IsEnum)
-                return Enum.ToObject(type, type.GetEnumUnderlyingType().GetDefaultValue());
-            if (!type.IsValueType)
-                return /* references */ null;
-            switch (Type.GetTypeCode(type))
-            {
-                case TypeCode.DBNull  : return default(DBNull);
-                case TypeCode.Boolean : return default(bool);
-                case TypeCode.Char    : return default(char);
-                case TypeCode.SByte   : return default(sbyte);
-                case TypeCode.Byte    : return default(byte);
-                case TypeCode.Int16   : return default(short);
-                case TypeCode.UInt16  : return default(ushort);
-                case TypeCode.Int32   : return default(int);
-                case TypeCode.UInt32  : return default(uint);
-                case TypeCode.Int64   : return default(long);
-                case TypeCode.UInt64  : return default(ulong);
-                case TypeCode.Single  : return default(float);
-                case TypeCode.Double  : return default(double);
-                case TypeCode.Decimal : return default(decimal);
-                case TypeCode.DateTime: return default(DateTime);
-                default:
-                    var index = type.GetHashCode() % DefaultValueCache.Length;
-                    var value = DefaultValueCache[index];
-                    if (value != null && value.GetType() == type) return value;
-                    DefaultValueCache[index] = value = Activator.CreateInstance(type);
-                    return value;
-            }
+            return type.IsValueType ? Activator.CreateInstance(type) : null;
         }
-
-        static readonly object[] DefaultValueCache = new object[256];
     }
 }
