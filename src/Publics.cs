@@ -148,6 +148,7 @@ namespace Mannex
         public static partial class AssemblyExtensions { }
         public static partial class ICustomAttributeProviderExtensions { }
         public static partial class MethodInfoExtensions { }
+        public static partial class PropertyInfoExtensions { }
     }
 
     namespace Security.Cryptography
