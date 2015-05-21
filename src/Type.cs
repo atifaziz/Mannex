@@ -30,6 +30,7 @@ namespace Mannex
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Text;
+    using System.Threading;
 
     #endregion
 
@@ -165,6 +166,63 @@ namespace Mannex
             var input = Expression.Parameter(typeof(string), "input");
             var formatProvider = Expression.Parameter(typeof(IFormatProvider), "formatProvider");
             return Expression.Lambda<Func<string, IFormatProvider, object>>(Expression.Convert(Expression.Call(method, input, formatProvider), typeof(object)), input, formatProvider);
+        }
+
+        /// <summary>
+        /// Gets the default value for the type.
+        /// </summary>
+
+        public static object GetDefaultValue(this Type type)
+        {
+            if (type == null) throw new ArgumentNullException("type");
+            if (type.IsGenericTypeDefinition || type.IsGenericParameter) throw new ArgumentException(null, "type");
+
+            if (type.IsEnum)
+                type = type.GetEnumUnderlyingType();
+            if (!type.IsValueType)
+                return /* references */ null;
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.DBNull  : return default(DBNull);
+                case TypeCode.Boolean : return default(bool);
+                case TypeCode.Char    : return default(char);
+                case TypeCode.SByte   : return default(sbyte);
+                case TypeCode.Byte    : return default(byte);
+                case TypeCode.Int16   : return default(short);
+                case TypeCode.UInt16  : return default(ushort);
+                case TypeCode.Int32   : return default(int);
+                case TypeCode.UInt32  : return default(uint);
+                case TypeCode.Int64   : return default(long);
+                case TypeCode.UInt64  : return default(ulong);
+                case TypeCode.Single  : return default(float);
+                case TypeCode.Double  : return default(double);
+                case TypeCode.Decimal : return default(decimal);
+                case TypeCode.DateTime: return default(DateTime);
+                default:
+                    var index = type.GetHashCode() % DefaultValue.Cache.Length;
+                    var value = DefaultValue.Cache[index];
+                    if (value != null && value.GetType() == type) return value;
+                    DefaultValue.Cache[index] = value = DefaultValue.Create(type);
+                    return value;
+            }
+        }
+
+        static class DefaultValue
+        {
+            public static readonly object[] Cache = new object[256];
+
+            // Credit: http://stackoverflow.com/a/4027869/6682
+
+            static object GetDefault<T>() { return default(T); }
+            static readonly RuntimeMethodHandle GetDefaultGenericMethod = new Func<object>(GetDefault<object>).Method.GetGenericMethodDefinition().MethodHandle;
+
+            public static object Create(Type type)
+            {
+                var genericMethod = (MethodInfo) MethodBase.GetMethodFromHandle(GetDefaultGenericMethod);
+                var method = genericMethod.MakeGenericMethod(type);
+                var function = (Func<object>) Delegate.CreateDelegate(typeof(Func<object>), method);
+                return function();
+            }
         }
     }
 }
