@@ -199,30 +199,14 @@ namespace Mannex
                 case TypeCode.Decimal : return default(decimal);
                 case TypeCode.DateTime: return default(DateTime);
                 default:
-                    var index = type.GetHashCode() % DefaultValue.Cache.Length;
-                    var value = DefaultValue.Cache[index];
+                    var index = type.GetHashCode() % DefaultValueCache.Length;
+                    var value = DefaultValueCache[index];
                     if (value != null && value.GetType() == type) return value;
-                    DefaultValue.Cache[index] = value = DefaultValue.Create(type);
+                    DefaultValueCache[index] = value = Activator.CreateInstance(type);
                     return value;
             }
         }
 
-        static class DefaultValue
-        {
-            public static readonly object[] Cache = new object[256];
-
-            // Credit: http://stackoverflow.com/a/4027869/6682
-
-            static object GetDefault<T>() { return default(T); }
-            static readonly RuntimeMethodHandle GetDefaultGenericMethod = new Func<object>(GetDefault<object>).Method.GetGenericMethodDefinition().MethodHandle;
-
-            public static object Create(Type type)
-            {
-                var genericMethod = (MethodInfo) MethodBase.GetMethodFromHandle(GetDefaultGenericMethod);
-                var method = genericMethod.MakeGenericMethod(type);
-                var function = (Func<object>) Delegate.CreateDelegate(typeof(Func<object>), method);
-                return function();
-            }
-        }
+        static readonly object[] DefaultValueCache = new object[256];
     }
 }
