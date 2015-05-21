@@ -178,7 +178,7 @@ namespace Mannex
             if (type.IsGenericTypeDefinition || type.IsGenericParameter) throw new ArgumentException(null, "type");
 
             if (type.IsEnum)
-                type = type.GetEnumUnderlyingType();
+                return Enum.ToObject(type, type.GetEnumUnderlyingType().GetDefaultValue());
             if (!type.IsValueType)
                 return /* references */ null;
             switch (Type.GetTypeCode(type))
