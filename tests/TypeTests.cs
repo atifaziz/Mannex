@@ -27,8 +27,10 @@ namespace Mannex.Tests
 
     using System;
     using System.Globalization;
+    using System.Linq;
     using System.Linq.Expressions;
     using Xunit;
+    using Xunit.Extensions;
 
     #endregion
 
@@ -123,5 +125,45 @@ namespace Mannex.Tests
             var result = parser(input, formatProvider);
             Assert.Equal(DateTimeOffset.Parse(input, formatProvider), result);
         }
+
+        [Fact]
+        public void GetDefaultValueWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetDefaultValue(null));
+            Assert.Equal("type", e.ParamName);
+        }
+
+        [Fact]
+        public void GetDefaultValueWithGenericTypeDefinition()
+        {
+            var e = Assert.Throws<ArgumentException>(() => typeof(Func<>).GetDefaultValue());
+            Assert.Equal("type", e.ParamName);
+        }
+
+        [Fact]
+        public void GetDefaultValueWithGenericParameterType()
+        {
+            var e = Assert.Throws<ArgumentException>(() => typeof(Func<>).GetGenericArguments().First().GetDefaultValue());
+            Assert.Equal("type", e.ParamName);
+        }
+
+        [Theory, MemberData("GetDefaultValueData")]
+        public void GetDefaultValue(object expected, Type type)
+        {
+            Assert.Equal(expected, type.GetDefaultValue());
+        }
+
+        public static readonly object[][] GetDefaultValueData =
+        {
+            new object[] { default(int), typeof(int) },
+            new object[] { default(int?), typeof(int?) },
+            new object[] { default(DateTime), typeof(DateTime) },
+            new object[] { default(DateTimeOffset), typeof(DateTimeOffset) },
+            new object[] { default(Guid), typeof(Guid) },
+            new object[] { StringSplitOptions.None, typeof(StringSplitOptions) },
+            new object[] { default(string), typeof(string) },
+            new object[] { default(object), typeof(object) },
+            new object[] { default(Func<int, int>), typeof(Func<int, int>) },
+        };
     }
 }
