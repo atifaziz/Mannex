@@ -28,8 +28,7 @@ namespace Mannex.Tests
 
     public class TimeZoneInfoTests
     {
-        // TODO uncomment below when fixed
-        // [Theory]
+        [Theory]
         [InlineData(24.0, 2015, 1,  1, 00, 00)]
         [InlineData(24.0, 2015, 1,  1, 00, 00)]
         [InlineData(22.5, 2015, 2, 15, 00, 00)]

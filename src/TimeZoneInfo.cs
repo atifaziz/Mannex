@@ -158,6 +158,7 @@ namespace Mannex
         /// <summary>
         /// Gets the number of hours within a given day in the time zone,
         /// taking transitions into account.
+        /// The hours part of the passed DateTime are ignored, as well as the date kind.
         /// </summary>
 
         public static double HoursInDay(this TimeZoneInfo tz, DateTime date)
@@ -167,7 +168,7 @@ namespace Mannex
                 throw new ArgumentNullException("tz");
             }
             if (!tz.SupportsDaylightSavingTime) return 24;
-            var unzoned = DateTime.SpecifyKind(date, DateTimeKind.Unspecified);
+            var unzoned = DateTime.SpecifyKind(date.Date, DateTimeKind.Unspecified);
             return (
                 new DateTimeOffset(unzoned.AddDays(1), tz.GetUtcOffset(unzoned.AddDays(1)))
                 - new DateTimeOffset(unzoned, tz.GetUtcOffset(unzoned))
