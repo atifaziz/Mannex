@@ -36,7 +36,8 @@ namespace Mannex.Tests
         [InlineData(24.0, 2015, 2, 28)]
         public void HoursInDay(double hours, int year, int month, int day)
         {
-            var tz = TimeZoneInfo.CreateCustomTimeZone("CustomTimeZone", TimeSpan.Zero, "CustomTimeZone", "CustomTimeZone", "CustomTimeZoneDST", new[]
+            const string id = "CustomTimeZone";
+            var tz = TimeZoneInfo.CreateCustomTimeZone(id, TimeSpan.Zero, id, id, id + "DST", new[]
             {
                 TimeZoneInfo.AdjustmentRule.CreateAdjustmentRule(
                     new DateTime(1900, 1, 1), new DateTime(2100, 1, 1), new TimeSpan(1, 30, 0),
