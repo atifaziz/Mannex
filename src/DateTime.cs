@@ -146,17 +146,5 @@ namespace Mannex
             return new DateTime(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second, time.Millisecond);
         }
 
-        /// <summary>
-        /// Gets the number of hours within the current day in the given time zone, taking transitions into account.
-        /// </summary>
-        public static double HoursInDay(this DateTime date, string timeZoneId)
-		{
-            var tz = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
-            if (tz == null)
-            {
-                throw new ArgumentOutOfRangeException("timeZoneId");
-            }
-            return tz.HoursInDay(date);
-        }
     }
 }
