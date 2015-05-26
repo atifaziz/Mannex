@@ -162,7 +162,7 @@ namespace Mannex
         {
             if (tz == null)
             {
-                throw new ArgumentOutOfRangeException("tz");
+                throw new ArgumentNullException("tz");
             }
             if (!tz.SupportsDaylightSavingTime) return 24;
             var unzoned = DateTime.SpecifyKind(date, DateTimeKind.Unspecified);
