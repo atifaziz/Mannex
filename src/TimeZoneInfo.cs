@@ -156,8 +156,10 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Gets the number of hours within a given day in the current time zone, taking transitions into account.
+        /// Gets the number of hours within a given day in the time zone,
+        /// taking transitions into account.
         /// </summary>
+
         public static double HoursInDay(this TimeZoneInfo tz, DateTime date)
         {
             if (tz == null)
