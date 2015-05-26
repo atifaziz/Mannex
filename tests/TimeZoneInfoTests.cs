@@ -20,6 +20,7 @@
 // limitations under the License.
 //
 #endregion
+
 namespace Mannex.Tests
 {
     using System;
@@ -27,22 +28,23 @@ namespace Mannex.Tests
 
     public class TimeZoneInfoTests
     {
-        [Fact]
-        public void HoursInDay()
+        [Theory]
+        [InlineData(24.0, 2015, 1,  1)]
+        [InlineData(22.5, 2015, 2, 15)]
+        [InlineData(24.0, 2015, 2, 18)]
+        [InlineData(25.5, 2015, 2, 20)]
+        [InlineData(24.0, 2015, 2, 28)]
+        public void HoursInDay(double hours, int year, int month, int day)
         {
             var tz = TimeZoneInfo.CreateCustomTimeZone("CustomTimeZone", TimeSpan.Zero, "CustomTimeZone", "CustomTimeZone", "CustomTimeZoneDST", new[]
-                {
-                    TimeZoneInfo.AdjustmentRule.CreateAdjustmentRule(
-                        new DateTime(1900, 1, 1), new DateTime(2100, 1, 1), new TimeSpan(1, 30, 0),
-                        TimeZoneInfo.TransitionTime.CreateFixedDateRule(new DateTime(1, 1, 1, 2, 0, 0), 2, 15),
-                        TimeZoneInfo.TransitionTime.CreateFixedDateRule(new DateTime(1, 1, 1, 2, 0, 0), 2, 20)
-                    )
-                });
-            Assert.Equal(24.0, tz.HoursInDay(new DateTime(2015, 1, 1)));
-            Assert.Equal(22.5, tz.HoursInDay(new DateTime(2015, 2, 15)));
-            Assert.Equal(24.0, tz.HoursInDay(new DateTime(2015, 2, 18)));
-            Assert.Equal(25.5, tz.HoursInDay(new DateTime(2015, 2, 20)));
-            Assert.Equal(24.0, tz.HoursInDay(new DateTime(2015, 2, 28)));
+            {
+                TimeZoneInfo.AdjustmentRule.CreateAdjustmentRule(
+                    new DateTime(1900, 1, 1), new DateTime(2100, 1, 1), new TimeSpan(1, 30, 0),
+                    TimeZoneInfo.TransitionTime.CreateFixedDateRule(new DateTime(1, 1, 1, 2, 0, 0), 2, 15),
+                    TimeZoneInfo.TransitionTime.CreateFixedDateRule(new DateTime(1, 1, 1, 2, 0, 0), 2, 20)
+                )
+            });
+            Assert.Equal(hours, tz.HoursInDay(new DateTime(year, month, day)));
         }
     }
 }
