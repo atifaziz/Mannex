@@ -28,6 +28,7 @@ if not exist "%MSBUILD%" (
     echo machine, which is required to build the solution.
     exit /b 1
 )
+nuget restore && ^
 call :build 3.5 Debug   %* && ^
 call :build 3.5 Release %* && ^
 call :build 4.0 Debug   %* && ^

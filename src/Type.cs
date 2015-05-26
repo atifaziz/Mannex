@@ -30,6 +30,7 @@ namespace Mannex
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Text;
+    using System.Threading;
 
     #endregion
 
@@ -165,6 +166,17 @@ namespace Mannex
             var input = Expression.Parameter(typeof(string), "input");
             var formatProvider = Expression.Parameter(typeof(IFormatProvider), "formatProvider");
             return Expression.Lambda<Func<string, IFormatProvider, object>>(Expression.Convert(Expression.Call(method, input, formatProvider), typeof(object)), input, formatProvider);
+        }
+
+        /// <summary>
+        /// Gets the default value for the type.
+        /// </summary>
+
+        public static object GetDefaultValue(this Type type)
+        {
+            if (type == null) throw new ArgumentNullException("type");
+            if (type.IsGenericTypeDefinition || type.IsGenericParameter) throw new ArgumentException(null, "type");
+            return type.IsValueType ? Activator.CreateInstance(type) : null;
         }
     }
 }
