@@ -1,11 +1,7 @@
 #region License, Terms and Author(s)
 //
 // Mannex - Extension methods for .NET
-// Copyright (c) 2015 Philippe Raemy. All rights reserved.
-//
-//  Author(s):
-//
-//      Philippe Raemy
+// Copyright (c) 2009 Atif Aziz. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
