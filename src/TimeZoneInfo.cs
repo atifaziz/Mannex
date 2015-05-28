@@ -167,10 +167,7 @@ namespace Mannex
 
         public static double HoursInDay(this TimeZoneInfo tz, DateTime date)
         {
-            if (tz == null)
-            {
-                throw new ArgumentNullException("tz");
-            }
+            if (tz == null) throw new ArgumentNullException("tz");
             if (!tz.SupportsDaylightSavingTime) return 24;
             var unzoned = DateTime.SpecifyKind(date.Date, DateTimeKind.Unspecified);
             return (
