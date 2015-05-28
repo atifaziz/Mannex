@@ -36,6 +36,14 @@ namespace Mannex.Tests
             )
         });
 
+        [Fact]
+        public void HoursInDayWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                        TimeZoneInfoExtensions.HoursInDay(null, DateTime.MinValue));
+            Assert.Equal("tz", e.ParamName);
+        }
+
         [Theory]
         [MemberData("GetDayLengthTestData")]
         public void HoursInDay(double hours, int year, int month, int day, int hour, int minute)
