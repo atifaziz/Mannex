@@ -156,12 +156,13 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Gets the number of hours within a given day in the time zone,
+        /// Gets the number of hours within a given day of the time zone,
         /// taking transitions into account.
         /// </summary>
         /// <remarks>
-        /// The time part (hours, minutes, seconds, etc.) of the passed <see cref="DateTime"/>
-        /// are ignored, as well as the date kind.
+        /// The time part (hours, minutes, seconds, etc.) of
+        /// <paramref name="date"/>, as well as whether its local or UTC,
+        /// is ignored.
         /// </remarks>
 
         public static double HoursInDay(this TimeZoneInfo tz, DateTime date)
