@@ -167,13 +167,28 @@ namespace Mannex
 
         public static double HoursInDay(this TimeZoneInfo tz, DateTime date)
         {
+            return tz.GetDayLength(date).TotalHours;
+        }
+
+        /// <summary>
+        /// Gets the length of a given day in the time zone, taking
+        /// transitions into account.
+        /// </summary>
+        /// <remarks>
+        /// The time part (hours, minutes, seconds, etc.) of
+        /// <paramref name="date"/>, as well as whether its local or UTC,
+        /// is ignored.
+        /// </remarks>
+
+        public static TimeSpan GetDayLength(this TimeZoneInfo tz, DateTime date)
+        {
             if (tz == null) throw new ArgumentNullException("tz");
-            if (!tz.SupportsDaylightSavingTime) return 24;
-            var unzoned = DateTime.SpecifyKind(date.Date, DateTimeKind.Unspecified);
-            return (
-                new DateTimeOffset(unzoned.AddDays(1), tz.GetUtcOffset(unzoned.AddDays(1)))
-                - new DateTimeOffset(unzoned, tz.GetUtcOffset(unzoned))
-                ).TotalHours;
+            if (!tz.SupportsDaylightSavingTime) return TimeSpan.FromHours(24);
+            date = DateTime.SpecifyKind(date.Date, DateTimeKind.Unspecified);
+            var dateMidnight = new DateTimeOffset(date, tz.GetUtcOffset(date));
+            var nextDate = date.AddDays(1);
+            var nextDateMidnight = new DateTimeOffset(nextDate, tz.GetUtcOffset(nextDate));
+            return nextDateMidnight - dateMidnight;
         }
     }
 }
