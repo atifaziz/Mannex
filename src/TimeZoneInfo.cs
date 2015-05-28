@@ -158,7 +158,8 @@ namespace Mannex
         /// <summary>
         /// Gets the number of hours within a given day in the time zone,
         /// taking transitions into account.
-        /// The hours part of the passed DateTime are ignored, as well as the date kind.
+        /// The time part (hours, minutes, seconds, etc.) of the passed DateTime 
+        /// are ignored, as well as the date kind.
         /// </summary>
 
         public static double HoursInDay(this TimeZoneInfo tz, DateTime date)
