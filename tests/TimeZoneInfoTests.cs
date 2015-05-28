@@ -20,31 +20,54 @@
 namespace Mannex.Tests
 {
     using System;
+    using System.Collections.Generic;
     using Xunit;
 
     public class TimeZoneInfoTests
     {
+        const string CustomTimeZoneId = "CustomTimeZone";
+
+        static readonly TimeZoneInfo CustomTimeZone = TimeZoneInfo.CreateCustomTimeZone(CustomTimeZoneId, TimeSpan.Zero, CustomTimeZoneId, CustomTimeZoneId, CustomTimeZoneId + "DST", new[]
+        {
+            TimeZoneInfo.AdjustmentRule.CreateAdjustmentRule(
+                new DateTime(1900, 1, 1), new DateTime(2100, 1, 1), new TimeSpan(1, 30, 0),
+                TimeZoneInfo.TransitionTime.CreateFixedDateRule(new DateTime(1, 1, 1, 2, 0, 0), 2, 15),
+                TimeZoneInfo.TransitionTime.CreateFixedDateRule(new DateTime(1, 1, 1, 2, 0, 0), 2, 20)
+            )
+        });
+
         [Theory]
-        [InlineData(24.0, 2015, 1,  1, 00, 00)]
-        [InlineData(24.0, 2015, 1,  1, 00, 00)]
-        [InlineData(22.5, 2015, 2, 15, 00, 00)]
-        [InlineData(22.5, 2015, 2, 15, 12, 34)]
-        [InlineData(24.0, 2015, 2, 18, 00, 00)]
-        [InlineData(25.5, 2015, 2, 20, 00, 00)]
-        [InlineData(25.5, 2015, 2, 20, 12, 34)]
-        [InlineData(24.0, 2015, 2, 28, 00, 00)]
+        [MemberData("GetDayLengthTestData")]
         public void HoursInDay(double hours, int year, int month, int day, int hour, int minute)
         {
-            const string id = "CustomTimeZone";
-            var tz = TimeZoneInfo.CreateCustomTimeZone(id, TimeSpan.Zero, id, id, id + "DST", new[]
-            {
-                TimeZoneInfo.AdjustmentRule.CreateAdjustmentRule(
-                    new DateTime(1900, 1, 1), new DateTime(2100, 1, 1), new TimeSpan(1, 30, 0),
-                    TimeZoneInfo.TransitionTime.CreateFixedDateRule(new DateTime(1, 1, 1, 2, 0, 0), 2, 15),
-                    TimeZoneInfo.TransitionTime.CreateFixedDateRule(new DateTime(1, 1, 1, 2, 0, 0), 2, 20)
-                )
-            });
-            Assert.Equal(hours, tz.HoursInDay(new DateTime(year, month, day, hour, minute, 0)));
+            Assert.Equal(hours, CustomTimeZone.HoursInDay(new DateTime(year, month, day, hour, minute, 0)));
         }
+
+        [Fact]
+        public void GetDayLengthWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                        TimeZoneInfoExtensions.GetDayLength(null, DateTime.MinValue));
+            Assert.Equal("tz", e.ParamName);
+        }
+
+        [Theory]
+        [MemberData("GetDayLengthTestData")]
+        public void GetDayLength(double hours, int year, int month, int day, int hour, int minute)
+        {
+            Assert.Equal(TimeSpan.FromHours(hours), CustomTimeZone.GetDayLength(new DateTime(year, month, day, hour, minute, 0)));
+        }
+
+        public static IEnumerable<object[]> GetDayLengthTestData = new[]
+        {
+            new object[] { 24.0, 2015, 1,  1, 00, 00 },
+            new object[] { 24.0, 2015, 1,  1, 00, 00 },
+            new object[] { 22.5, 2015, 2, 15, 00, 00 },
+            new object[] { 22.5, 2015, 2, 15, 12, 34 },
+            new object[] { 24.0, 2015, 2, 18, 00, 00 },
+            new object[] { 25.5, 2015, 2, 20, 00, 00 },
+            new object[] { 25.5, 2015, 2, 20, 12, 34 },
+            new object[] { 24.0, 2015, 2, 28, 00, 00 },
+        };
     }
 }
