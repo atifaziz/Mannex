@@ -24,8 +24,6 @@
 namespace Mannex
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// Extension methods for <see cref="Delegate"/>.
