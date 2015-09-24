@@ -78,6 +78,7 @@
     <Compile Include="Data\DataRow.cs" />
     <Compile Include="Data\DataTable.cs" />
     <Compile Include="DateTimeTests.cs" />
+    <Compile Include="DelegateTests.cs" />
     <Compile Include="SingleTests.cs" />
     <Compile Include="DoubleTests.cs" />
     <Compile Include="Net\WebHeaderCollectionTests.cs" />
