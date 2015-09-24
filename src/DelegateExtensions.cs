@@ -28,8 +28,7 @@ namespace Mannex
     using System.Linq;
 
     /// <summary>
-    /// Extension methods for <see cref="Delegate"/> and
-    /// <see cref="MulticastDelegate"/>.
+    /// Extension methods for <see cref="Delegate"/>.
     /// </summary>
 
     static partial class DelegateExtensions
