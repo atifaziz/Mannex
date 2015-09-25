@@ -66,7 +66,7 @@ namespace Mannex
     {
         public static partial class NameValueCollectionExtensions { }
     }
-    
+
     namespace Collections.Generic
     {
         public static partial class DictionaryExtensions { }
@@ -162,7 +162,7 @@ namespace Mannex
     {
         public static partial class StringBuilderExtensions { }
     }
-    
+
     namespace Text.RegularExpressions
     {
         public static partial class MatchExtensions { }
@@ -176,6 +176,7 @@ namespace Mannex
         #if NET4
         namespace Tasks
         {
+            public static partial class CancellationTokenExtensions { }
             public static partial class TaskFactoryExtensions { }
             public static partial class TaskExtensions { }
             public static partial class TaskCompletionSourceExtensions { }

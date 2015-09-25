@@ -183,6 +183,7 @@
       <DependentUpon>AssemblyInfo.g.tt</DependentUpon>
     </Compile>
     <Compile Include="Reflection\PropertyInfo.cs" />
+    <Compile Include="Threading\Tasks\CancellationToken.cs" />
     <Compile Include="TimeZoneInfo.cs" />
     <Compile Include="Text\StringBuilder.cs" />
     <Compile Include="Single.cs" />
