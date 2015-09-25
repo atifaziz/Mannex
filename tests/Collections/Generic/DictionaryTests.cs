@@ -95,5 +95,30 @@ namespace Mannex.Tests.Collections.Generic
             var dict = new Dictionary<string, int> { { "foo", 42 } };
             Assert.Equal(42, dict.GetValue("foo", null));
         }
+
+        [Fact]
+        public void PopFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                DictionaryExtensions.Pop<object, object>(null, new object()));
+            Assert.Equal(e.ParamName, "dictionary");
+        }
+
+        [Fact]
+        public void PopFailsWhenKeyNotFound()
+        {
+            var map = new Dictionary<object, object>();
+            Assert.Throws<KeyNotFoundException>(() => map.Pop(new object()));
+        }
+
+        [Fact]
+        public void Pop()
+        {
+            var k = new object();
+            var v = new object();
+            var map = new Dictionary<object, object> { { k, v } };
+            Assert.Equal(v, map.Pop(k));
+            Assert.Equal(0, map.Count);
+        }
     }
 }
