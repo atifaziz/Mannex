@@ -153,6 +153,7 @@
     <Compile Include="Array.cs" />
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="Diagnostics\ProcessStartInfo.cs" />
+    <Compile Include="Disposable.cs" />
     <Compile Include="OperatingSystem.cs" />
     <Compile Include="Boolean.cs" />
     <Compile Include="Collections\ArrayList.cs" />
