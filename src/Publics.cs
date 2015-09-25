@@ -31,6 +31,7 @@ namespace Mannex
     public static partial class BooleanExtensions { }
     public static partial class DateTimeExtensions { }
     public static partial class DelegateExtensions { }
+    public static partial class DisposableExtensions { }
     public static partial class DoubleExtensions { }
     public static partial class EnumExtensions { }
     public static partial class EventHandlerExtensions { }
