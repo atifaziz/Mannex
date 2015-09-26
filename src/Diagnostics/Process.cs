@@ -211,9 +211,9 @@ namespace Mannex.Diagnostics
         /// the execution of the process as a result or error for the task.
         /// </summary>
         /// <remarks>
-        /// If <see cref="errorSelector"/> return <c>null</c> then the task
-        /// is considered to have succeeded and <see cref="resultSelector"/>
-        /// determines its result. If <see cref="errorSelector"/> returns
+        /// If <paramref name="errorSelector"/> return <c>null</c> then the task
+        /// is considered to have succeeded and <paramref name="resultSelector"/>
+        /// determines its result. If <paramref name="errorSelector"/> returns
         /// an instance of <see cref="Exception"/> then the task is
         /// considered to have failed with that exception.
         /// </remarks>
