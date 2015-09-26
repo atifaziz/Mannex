@@ -30,7 +30,9 @@ namespace Mannex.Diagnostics
     using System.Diagnostics;
     using System.IO;
     using System.Threading;
+    #if NET4
     using System.Threading.Tasks;
+    #endif
     using Threading;
 
     #endregion
@@ -176,6 +178,8 @@ namespace Mannex.Diagnostics
             };
         }
 
+        #if NET4
+
         /// <summary>
         /// Creates <see cref="Task"/> that completes when the process exits
         /// with an exit code of zero and throws an <see cref="Exception"/>
@@ -239,7 +243,13 @@ namespace Mannex.Diagnostics
                 var result = resultSelector(temp);
                 if (dispose)
                     process.Dispose();
+                #if NET45
                 return Task.FromResult(result);
+                #else
+                    tcs = new TaskCompletionSource<TResult>();
+                    tcs.SetResult(result);
+                    return tcs.Task;
+                #endif
             }
 
             tcs = new TaskCompletionSource<TResult>();
@@ -264,5 +274,7 @@ namespace Mannex.Diagnostics
             };
             return tcs.Task;
         }
+
+        #endif // NET4
     }
 }
