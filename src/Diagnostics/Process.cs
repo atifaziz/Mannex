@@ -200,9 +200,8 @@ namespace Mannex.Diagnostics
 
         public static Task AsTask(this Process process, Func<Process, Exception> errorSelector)
         {
-            return process.AsTask(true, p => p,
-                                  p => p.ExitCode != 0 ? errorSelector(p) : null,
-                                  p => (object) null);
+            return process.AsTask(true, p => p.ExitCode != 0 ? errorSelector(p) : null,
+                                  e => e, _ => (object) null);
         }
 
         /// <summary>
@@ -228,51 +227,35 @@ namespace Mannex.Diagnostics
             if (errorSelector == null) throw new ArgumentNullException("errorSelector");
             if (resultSelector == null) throw new ArgumentNullException("resultSelector");
 
-            TaskCompletionSource<TResult> tcs;
+            var tcs = new TaskCompletionSource<TResult>();
 
             if (process.HasExited)
             {
-                var temp = selector(process);
-                var e = errorSelector(temp);
-                if (e != null)
-                {
-                    tcs = new TaskCompletionSource<TResult>();
-                    tcs.SetException(e);
-                    return tcs.Task;
-                }
-                var result = resultSelector(temp);
-                if (dispose)
-                    process.Dispose();
-                #if NET45
-                return Task.FromResult(result);
-                #else
-                    tcs = new TaskCompletionSource<TResult>();
-                    tcs.SetResult(result);
-                    return tcs.Task;
-                #endif
+                OnExit(process, dispose, selector, errorSelector, resultSelector, tcs);
+            }
+            else
+            {
+                process.EnableRaisingEvents = true;
+                process.Exited += delegate { OnExit(process, dispose, selector, errorSelector, resultSelector, tcs); };
             }
 
-            tcs = new TaskCompletionSource<TResult>();
-            process.EnableRaisingEvents = true;
-            process.Exited += delegate
-            {
-                var temp = selector(process);
-                var e = errorSelector(temp);
-                if (e != null)
-                {
-                    if (dispose)
-                        process.Dispose();
-                    tcs.SetException(e);
-                }
-                else
-                {
-                    var result = resultSelector(temp);
-                    if (dispose)
-                        process.Dispose();
-                    tcs.TrySetResult(result);
-                }
-            };
             return tcs.Task;
+        }
+
+        static void OnExit<T, TResult>(Process process, bool dispose,
+            Func<Process, T> selector,
+            Func<T, Exception> errorSelector,
+            Func<T, TResult> resultSelector,
+            TaskCompletionSource<TResult> tcs)
+        {
+            var capture = selector(process);
+            if (dispose)
+                process.Dispose();
+            var e = errorSelector(capture);
+            if (e != null)
+                tcs.SetException(e);
+            else
+                tcs.TrySetResult(resultSelector(capture));
         }
 
         #endif // NET4
