@@ -40,7 +40,7 @@ namespace Mannex.Collections.Generic
     {
         /// <summary>
         /// Finds the value for a key, returning the default value for
-        /// <typeparamref name="TKey"/> if the key is not present.
+        /// <typeparamref name="TValue"/> if the key is not present.
         /// </summary>
 
         [DebuggerStepThrough]
@@ -50,8 +50,8 @@ namespace Mannex.Collections.Generic
         }
 
         /// <summary>
-        /// Finds the value for a key, returning a given default value for
-        /// <typeparamref name="TKey"/> if the key is not present.
+        /// Finds the value for a key, returning a given default value if the
+        /// key is not present.
         /// </summary>
 
         [DebuggerStepThrough]
