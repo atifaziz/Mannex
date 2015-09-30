@@ -26,6 +26,7 @@ namespace Mannex.Tests.Threading.Tasks
     #region Imports
 
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Mannex.Threading.Tasks;
     using Xunit;
@@ -93,6 +94,38 @@ namespace Mannex.Tests.Threading.Tasks
             Assert.Same(result, actualResult);
             Assert.NotNull(isCompletedDuringCallback);
             Assert.True((bool)isCompletedDuringCallback);
+        }
+
+        [Fact]
+        public async void WhenAllCompletedFailsWithNullThis()
+        {
+            var e = await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                Mannex.Threading.Tasks.TaskExtensions.WhenAllCompleted((IEnumerable<Task>)null));
+            Assert.Equal("tasks", e.ParamName);
+        }
+
+        [Fact]
+        public async void WhenAllCompleted()
+        {
+            var t1 = Task.FromResult(1);
+
+            var tcs2 = new TaskCompletionSource<int>();
+            tcs2.SetException(new Exception());
+            var t2 = tcs2.Task;
+
+            var tcs3 = new TaskCompletionSource<int>();
+            tcs3.SetCanceled();
+            var t3 = tcs3.Task;
+
+            var result = await new[] { t1, t2, t3 }.WhenAllCompleted();
+
+            Assert.Equal(t1, result[0]); // Returns in same order
+            Assert.Equal(t2, result[1]);
+            Assert.Equal(t3, result[2]);
+
+            Assert.Equal(TaskStatus.RanToCompletion, t1.Status);
+            Assert.Equal(TaskStatus.Faulted        , t2.Status);
+            Assert.Equal(TaskStatus.Canceled       , t3.Status);
         }
     }
 }
