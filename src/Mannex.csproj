@@ -184,6 +184,7 @@
     </Compile>
     <Compile Include="Reflection\PropertyInfo.cs" />
     <Compile Include="Threading\Tasks\CancellationToken.cs" />
+    <Compile Include="Threading\Tasks\Exception.cs" />
     <Compile Include="TimeZoneInfo.cs" />
     <Compile Include="Text\StringBuilder.cs" />
     <Compile Include="Single.cs" />
