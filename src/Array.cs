@@ -58,7 +58,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Formats bytes in hexadecimal format, appending to the 
+        /// Formats bytes in hexadecimal format, appending to the
         /// supplied <see cref="StringBuilder"/>.
         /// </summary>
 
@@ -83,11 +83,11 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Rotates the elements of the array (in-place) such that all 
-        /// elements are shifted left by one position, with the exception of 
+        /// Rotates the elements of the array (in-place) such that all
+        /// elements are shifted left by one position, with the exception of
         /// the first element which assumes the last position in the array.
         /// </summary>
-        
+
         public static void Rotate<T>(this T[] array)
         {
             if (array == null) throw new ArgumentNullException("array");
@@ -98,7 +98,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Updates this array with results of applying a function to 
+        /// Updates this array with results of applying a function to
         /// elements paired from this and the source array.
         /// </summary>
         /// <remarks>
@@ -113,9 +113,9 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Updates this array with results of applying a function to 
+        /// Updates this array with results of applying a function to
         /// elements paired from this and the source array. An additional
-        /// parameter to supplied function provides the index of the 
+        /// parameter to supplied function provides the index of the
         /// elements.
         /// </summary>
         /// <remarks>
@@ -141,9 +141,9 @@ namespace Mannex
 
             Array.Copy(results, 0, target, 0, results.Length);
         }
-    
+
         /// <summary>
-        /// Updates this array with results of applying a function to 
+        /// Updates this array with results of applying a function to
         /// elements paired from this and the source array.
         /// </summary>
         /// <remarks>
@@ -158,9 +158,9 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Updates this array with results of applying a function to 
+        /// Updates this array with results of applying a function to
         /// elements paired from this and the source array. An additional
-        /// parameter to supplied function provides the index of the 
+        /// parameter to supplied function provides the index of the
         /// elements.
         /// </summary>
         /// <remarks>
@@ -357,6 +357,52 @@ namespace Mannex
         {
             for (var y = array.GetLowerBound(0); y < array.GetLength(0); y++)
                 yield return function(array[y, index1], array[y, index2], array[y, index3], array[y, index4]);
+        }
+
+        internal static class Empty<T>
+        {
+            public static readonly T[] Value = new T[0];
+        }
+
+        /// <summary>
+        /// Partitions the array in two parts at the given index where the
+        /// first part contains items up to (excluding) the index and the
+        /// second contains items from the index and onward. The strict
+        /// semantics require that the index ranges from zero to the length
+        /// of the array.
+        /// </summary>
+
+        public static TResult PartitionStrictly<T, TResult>(this T[] array,
+            int index, Func<T[], T[], TResult> selector)
+        {
+            if (array == null) throw new ArgumentNullException("array");
+            if (selector == null) throw new ArgumentNullException("selector");
+            if (index < 0 || index > array.Length) throw new ArgumentOutOfRangeException("index", index, null);
+            return array.Partition(index, selector);
+        }
+
+        /// <summary>
+        /// Partitions the array in two parts at the given index where the
+        /// first part contains items up to (excluding) the index and the
+        /// second contains items from the index and onward.
+        /// </summary>
+
+        public static TResult Partition<T, TResult>(this T[] array, int index,
+            Func<T[], T[], TResult> selector)
+        {
+            if (array == null) throw new ArgumentNullException("array");
+            if (selector == null) throw new ArgumentNullException("selector");
+            if (index < 0) throw new ArgumentOutOfRangeException("index", index, null);
+
+            index = Math.Min(index, array.Length);
+            var left  = index > 0 ? new T[index] : Empty<T>.Value;
+            if (left.Length > 0)
+                Array.Copy(array, 0, left, 0, left.Length);
+            var rightCount = array.Length - index;
+            var right = index + rightCount <= array.Length ? new T[rightCount] : Empty<T>.Value;
+            if (right.Length > 0)
+                Array.Copy(array, index, right, 0, right.Length);
+            return selector(left, right);
         }
     }
 }

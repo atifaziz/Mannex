@@ -27,6 +27,7 @@ namespace Mannex.Tests
 
     using System;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Text;
     using Xunit;
 
@@ -37,7 +38,7 @@ namespace Mannex.Tests
         [Fact]
         public void ToHexFailsWithNullThis()
         {
-            Assert.Throws<ArgumentNullException>(() => 
+            Assert.Throws<ArgumentNullException>(() =>
                 ArrayExtensions.ToHex(null, 0, 0, new StringBuilder()));
         }
 
@@ -50,7 +51,7 @@ namespace Mannex.Tests
         [Fact]
         public void ToHexFailsWithInvalidRanges()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => 
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
                 new byte[] { 1, 2, 3 }.ToHex(-1, 0, new StringBuilder()));
             Assert.Throws<ArgumentOutOfRangeException>(() =>
                 new byte[] { 1, 2, 3 }.ToHex(4, 0, new StringBuilder()));
@@ -81,7 +82,7 @@ namespace Mannex.Tests
                         +"c0c1c2c3c4c5c6c7c8c9cacbcccdcecf"
                         +"d0d1d2d3d4d5d6d7d8d9dadbdcdddedf"
                         +"e0e1e2e3e4e5e6e7e8e9eaebecedeeef"
-                        +"f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff", 
+                        +"f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
                         result);
         }
 
@@ -119,31 +120,31 @@ namespace Mannex.Tests
             array.Rotate();
             Assert.Equal(new[] { 2, 3, 1 }, array);
         }
- 
+
         [Fact]
         public void UpdateFailsWithNullThis()
         {
             ArgumentNullException e1, e2;
 
-            e1 = Assert.Throws<ArgumentNullException>(() => 
+            e1 = Assert.Throws<ArgumentNullException>(() =>
                      ArrayExtensions.Update<object, object>(null, new object[0], (t, s, i) => -1));
             Assert.Equal("target", e1.ParamName);
 
-            e2 = Assert.Throws<ArgumentNullException>(() => 
+            e2 = Assert.Throws<ArgumentNullException>(() =>
                      ArrayExtensions.Update<object, object>(null, new object[0], (t, s, i) => -1));
             Assert.Equal("target", e2.ParamName);
         }
- 
+
         [Fact]
         public void UpdateFailsWithNullFunction()
         {
             ArgumentNullException e1, e2;
 
-            e1 = Assert.Throws<ArgumentNullException>(() => 
+            e1 = Assert.Throws<ArgumentNullException>(() =>
                      new object[0].Update(new object[0], (Func<object, object, int, object>) null));
             Assert.Equal("function", e1.ParamName);
 
-            e2 = Assert.Throws<ArgumentNullException>(() => 
+            e2 = Assert.Throws<ArgumentNullException>(() =>
                      new object[0].Update(new object[0], (Func<object, object, object>) null));
             Assert.Equal("function", e2.ParamName);
         }
@@ -153,15 +154,15 @@ namespace Mannex.Tests
         {
             ArgumentNullException e1, e2;
 
-            e1 = Assert.Throws<ArgumentNullException>(() => 
+            e1 = Assert.Throws<ArgumentNullException>(() =>
                      new object[0].Update((object[]) null, (t, s, i) => null));
             Assert.Equal("source", e1.ParamName);
 
-            e2 = Assert.Throws<ArgumentNullException>(() => 
+            e2 = Assert.Throws<ArgumentNullException>(() =>
                      new object[0].Update((object[]) null, (t, s) => null));
             Assert.Equal("source", e2.ParamName);
         }
- 
+
         [Fact]
         public void Update()
         {
@@ -243,6 +244,92 @@ namespace Mannex.Tests
             var comparer = StringComparer.OrdinalIgnoreCase;
             Assert.Equal(new[] { "foo",        "baz",
                                  "foo", "bar", "baz" }, ns.Remove("BaR", comparer));
+        }
+
+        [Fact]
+        public void PartitionFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                ArrayExtensions.Partition<object, object>(null, 0, delegate { return null; }));
+            Assert.Equal("array", e.ParamName);
+        }
+
+        [Fact]
+        public void PartitionFailsWithNullSelector()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                new object[0].Partition<object, object>(0, null));
+            Assert.Equal("selector", e.ParamName);
+        }
+
+        [Fact]
+        public void PartitionFailsWithNegativeIndex()
+        {
+            const int minus1 = -1;
+            var e = Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new object[0].Partition(minus1, (lhs, rhs) => new { Left = lhs, Right = rhs }));
+            Assert.Equal("index", e.ParamName);
+            Assert.Equal(minus1, e.ActualValue);
+        }
+
+        [Theory]
+        [InlineData(0, new int[0], new int[0], new int[0])]
+        [InlineData(1, new int[0], new int[0], new int[0])]
+        [InlineData(2, new int[0], new int[0], new int[0])]
+        [InlineData(0, new[] { 1, 2, 3, 4, 5 }, new int[0], new[] { 1, 2, 3, 4, 5 })]
+        [InlineData(1, new[] { 1, 2, 3, 4, 5 }, new[] { 1 }, new[] { 2, 3, 4, 5 })]
+        [InlineData(2, new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2 }, new[] { 3, 4, 5 })]
+        [InlineData(3, new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2, 3 }, new[] { 4, 5 })]
+        [InlineData(4, new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2, 3, 4 }, new[] { 5 })]
+        [InlineData(5, new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2, 3, 4, 5 }, new int[0])]
+        [InlineData(6, new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2, 3, 4, 5 }, new int[0])]
+        public void Partition(int index, int[] array, int[] left, int[] right)
+        {
+            var result = array.Partition(index, (lhs, rhs) => new { Left = lhs, Right = rhs });
+            Assert.Equal(left, result.Left);
+            Assert.Equal(right, result.Right);
+        }
+
+        [Fact]
+        public void PartitionStrictlyFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                ArrayExtensions.PartitionStrictly<object, object>(null, 0, delegate { return null; }));
+            Assert.Equal("array", e.ParamName);
+        }
+
+        [Fact]
+        public void PartitionStrictlyFailsWithNullSelector()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                new object[0].PartitionStrictly<object, object>(0, null));
+            Assert.Equal("selector", e.ParamName);
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(1)]
+        public void PartitionStrictlyFailsWithOutOfBoundIndex(int index)
+        {
+            var e = Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new object[0].PartitionStrictly(index, (lhs, rhs) => new { Left = lhs, Right = rhs }));
+            Assert.Equal("index", e.ParamName);
+            Assert.Equal(index, e.ActualValue);
+        }
+
+        [Theory]
+        [InlineData(0, new int[0], new int[0], new int[0])]
+        [InlineData(0, new[] { 1, 2, 3, 4, 5 }, new int[0], new[] { 1, 2, 3, 4, 5 })]
+        [InlineData(1, new[] { 1, 2, 3, 4, 5 }, new[] { 1 }, new[] { 2, 3, 4, 5 })]
+        [InlineData(2, new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2 }, new[] { 3, 4, 5 })]
+        [InlineData(3, new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2, 3 }, new[] { 4, 5 })]
+        [InlineData(4, new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2, 3, 4 }, new[] { 5 })]
+        [InlineData(5, new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2, 3, 4, 5 }, new int[0])]
+        public void PartitionStrictly(int index, int[] array, int[] left, int[] right)
+        {
+            var result = array.PartitionStrictly(index, (lhs, rhs) => new { Left = lhs, Right = rhs });
+            Assert.Equal(left, result.Left);
+            Assert.Equal(right, result.Right);
         }
     }
 }
