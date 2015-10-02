@@ -94,6 +94,7 @@
     <Compile Include="Threading\Tasks\ImmediateTaskScheduler.cs" />
     <Compile Include="Threading\Tasks\TaskCompletionSourceTests.cs" />
     <Compile Include="Threading\Tasks\TaskTests.cs" />
+    <Compile Include="TimeSpanTests.cs" />
     <Compile Include="TimeZoneInfoTests.cs" />
     <Compile Include="TupleTests.cs" />
     <Compile Include="EnumTests.cs" />
