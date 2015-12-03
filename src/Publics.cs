@@ -23,10 +23,15 @@
 
 namespace Mannex
 {
+    using System;
+
     public static partial class ActionExtensions { }
-    public static partial class ArrayExtensions { }
+    public static partial class ArrayExtensions {
+    }
     public static partial class BooleanExtensions { }
     public static partial class DateTimeExtensions { }
+    public static partial class DelegateExtensions { }
+    public static partial class DisposableExtensions { }
     public static partial class DoubleExtensions { }
     public static partial class EnumExtensions { }
     public static partial class EventHandlerExtensions { }
@@ -39,6 +44,9 @@ namespace Mannex
     public static partial class RuntimeMethodHandleExtensions { }
     public static partial class SingleExtensions { }
     public static partial class StringExtensions { }
+    #if NET4
+    public static partial class TimeSpanExtensions { }
+    #endif
     public static partial class TimeZoneInfoExtensions { }
     #if NET4
     public static partial class TupleExtensions { }
@@ -61,7 +69,7 @@ namespace Mannex
     {
         public static partial class NameValueCollectionExtensions { }
     }
-    
+
     namespace Collections.Generic
     {
         public static partial class DictionaryExtensions { }
@@ -101,6 +109,7 @@ namespace Mannex
     namespace Diagnostics
     {
         public static partial class ProcessExtensions { }
+        public static partial class ProcessStartInfoExtensions { }
     }
 
     namespace Globalization
@@ -144,6 +153,7 @@ namespace Mannex
         public static partial class AssemblyExtensions { }
         public static partial class ICustomAttributeProviderExtensions { }
         public static partial class MethodInfoExtensions { }
+        public static partial class PropertyInfoExtensions { }
     }
 
     namespace Security.Cryptography
@@ -155,7 +165,7 @@ namespace Mannex
     {
         public static partial class StringBuilderExtensions { }
     }
-    
+
     namespace Text.RegularExpressions
     {
         public static partial class MatchExtensions { }
@@ -169,6 +179,8 @@ namespace Mannex
         #if NET4
         namespace Tasks
         {
+            public static partial class CancellationTokenExtensions { }
+            public static partial class ExceptionExtensions { }
             public static partial class TaskFactoryExtensions { }
             public static partial class TaskExtensions { }
             public static partial class TaskCompletionSourceExtensions { }

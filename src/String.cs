@@ -124,7 +124,7 @@ namespace Mannex
             return SliceImpl(str, start, end ?? str.Length);
         }
 
-        private static string SliceImpl(this string str, int start, int end)
+        static string SliceImpl(this string str, int start, int end)
         {
             if (str == null) throw new ArgumentNullException("str");
             var length = str.Length;
@@ -430,7 +430,7 @@ namespace Mannex
         /// Neither half in the resulting pair is ever <c>null</c>.
         /// </remarks>
         
-        private static T SplitRemoving<T>(string str, int index, int count, Func<string, string, T> resultFunc)
+        static T SplitRemoving<T>(string str, int index, int count, Func<string, string, T> resultFunc)
         {
             Debug.Assert(str != null);
             Debug.Assert(count > 0);
@@ -478,7 +478,7 @@ namespace Mannex
             return SplitIntoLinesImpl(str);
         }
  
-        private static IEnumerable<string> SplitIntoLinesImpl(string str)
+        static IEnumerable<string> SplitIntoLinesImpl(string str)
         {
             using (var reader = str.Read())
             using (var line = reader.ReadLines())

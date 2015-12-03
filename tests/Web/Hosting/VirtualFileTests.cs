@@ -107,7 +107,7 @@ namespace Mannex.Tests.Web.Hosting
 
         sealed class TestVirtualFile : VirtualFile
         {
-            private readonly byte[] _content;
+            readonly byte[] _content;
 
             TestVirtualFile(string virtualPath, byte[] content) : 
                 base(virtualPath)

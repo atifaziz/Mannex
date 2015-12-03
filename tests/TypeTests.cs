@@ -26,8 +26,11 @@ namespace Mannex.Tests
     #region Imports
 
     using System;
-    using System.Net;
+    using System.Globalization;
+    using System.Linq;
+    using System.Linq.Expressions;
     using Xunit;
+    using Xunit.Extensions;
 
     #endregion
 
@@ -43,22 +46,21 @@ namespace Mannex.Tests
         [Fact]
         public void IsConstructionOfGenericTypeDefinitionWithNullGenericTypeDefinition()
         {
-            var e = Assert.Throws<ArgumentNullException>(() => TypeExtensions.IsConstructionOfGenericTypeDefinition(typeof(Nullable<int>), null));
+            var e = Assert.Throws<ArgumentNullException>(() => typeof(int?).IsConstructionOfGenericTypeDefinition(null));
             Assert.Equal("genericTypeDefinition", e.ParamName);
         }
 
         [Fact]
         public void IsConstructionOfGenericTypeDefinitionWithNonGenericTypeDefinition()
         {
-            var e = Assert.Throws<ArgumentException>(() => TypeExtensions.IsConstructionOfGenericTypeDefinition(typeof(Nullable<int>), typeof(int)));
+            var e = Assert.Throws<ArgumentException>(() => typeof(int?).IsConstructionOfGenericTypeDefinition(typeof(int)));
             Assert.Equal("genericTypeDefinition", e.ParamName);
         }
 
         [Fact]
         public void IsConstructionOfGenericTypeDefinitionReturnsTrueWhenTypeIsConstructionOfGenericTypeDefinition()
         {
-            Assert.True(typeof(Nullable<int>).IsConstructionOfGenericTypeDefinition(typeof(Nullable<>)));
-            
+            Assert.True(typeof(int?).IsConstructionOfGenericTypeDefinition(typeof(Nullable<>)));
         }
 
         [Fact]
@@ -76,8 +78,7 @@ namespace Mannex.Tests
         [Fact]
         public void IsConstructionOfNullableReturnsTrueWhenTypeIsNullable()
         {
-            Assert.True(typeof(Nullable<int>).IsConstructionOfNullable());
-            
+            Assert.True(typeof(int?).IsConstructionOfNullable());
         }
 
         [Fact]
@@ -85,5 +86,84 @@ namespace Mannex.Tests
         {
             Assert.False(typeof(int).IsConstructionOfNullable());
         }
+
+        [Fact]
+        public void FindParseMethodWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => TypeExtensions.FindParseMethod(null));
+            Assert.Equal("type", e.ParamName);
+        }
+
+        [Fact]
+        public void FindParseMethod()
+        {
+            Expression<Func<int>> e = () => int.Parse(null, null);
+            var mce = (MethodCallExpression) e.Body;
+            Assert.Equal(mce.Method, typeof(int).FindParseMethod());
+        }
+
+        [Fact]
+        public void FindParseMethodWithTypeHavingNoParseMethod()
+        {
+            Assert.Null(typeof(Unparseable).FindParseMethod());
+        }
+
+        class Unparseable
+        {   // ReSharper disable once UnusedMember.Local
+            // ReSharper disable UnusedParameter.Local
+            public static object Parse(string s, IFormatProvider fp) { return null; }
+            // ReSharper restore UnusedParameter.Local
+        }
+
+        [Fact]
+        public void GetParser()
+        {
+            var parser = typeof(DateTimeOffset).GetParser();
+            Assert.NotNull(parser);
+            var formatProvider = new CultureInfo("en-US");
+            const string input = "3/27/2015 12:34:56 AM +02:30";
+            var result = parser(input, formatProvider);
+            Assert.Equal(DateTimeOffset.Parse(input, formatProvider), result);
+        }
+
+        [Fact]
+        public void GetDefaultValueWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetDefaultValue(null));
+            Assert.Equal("type", e.ParamName);
+        }
+
+        [Fact]
+        public void GetDefaultValueWithGenericTypeDefinition()
+        {
+            var e = Assert.Throws<ArgumentException>(() => typeof(Func<>).GetDefaultValue());
+            Assert.Equal("type", e.ParamName);
+        }
+
+        [Fact]
+        public void GetDefaultValueWithGenericParameterType()
+        {
+            var e = Assert.Throws<ArgumentException>(() => typeof(Func<>).GetGenericArguments().First().GetDefaultValue());
+            Assert.Equal("type", e.ParamName);
+        }
+
+        [Theory, MemberData("GetDefaultValueData")]
+        public void GetDefaultValue(object expected, Type type)
+        {
+            Assert.Equal(expected, type.GetDefaultValue());
+        }
+
+        public static readonly object[][] GetDefaultValueData =
+        {
+            new object[] { default(int), typeof(int) },
+            new object[] { default(int?), typeof(int?) },
+            new object[] { default(DateTime), typeof(DateTime) },
+            new object[] { default(DateTimeOffset), typeof(DateTimeOffset) },
+            new object[] { default(Guid), typeof(Guid) },
+            new object[] { StringSplitOptions.None, typeof(StringSplitOptions) },
+            new object[] { default(string), typeof(string) },
+            new object[] { default(object), typeof(object) },
+            new object[] { default(Func<int, int>), typeof(Func<int, int>) },
+        };
     }
 }

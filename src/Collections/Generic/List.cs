@@ -307,7 +307,7 @@ namespace Mannex.Collections.Generic
             return SliceImpl(list, start, end);
         }
 
-        private static IEnumerable<T> SliceImpl<T>(IList<T> list, int start, int end)
+        static IEnumerable<T> SliceImpl<T>(IList<T> list, int start, int end)
         {
             //
             // This method copies up to, but not including, the element 
@@ -324,7 +324,7 @@ namespace Mannex.Collections.Generic
                 yield return list[i];
         }
 
-        private static int ClipIndex<T>(this ICollection<T> collection, int index)
+        static int ClipIndex<T>(this ICollection<T> collection, int index)
         {
             Debug.Assert(collection != null);
             return Math.Min(collection.Count, index < 0 ? Math.Max(0, collection.Count + index) : index);
@@ -403,6 +403,44 @@ namespace Mannex.Collections.Generic
         {
             if (list == null) throw new ArgumentNullException("list");
             return list.IsReadOnly ? list : new ReadOnlyCollection<T>(list);
+        }
+
+        /// <summary>
+        /// Removes and returns the item at a given index of the list.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static T PopAt<T>(this IList<T> list, int index)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            var item = list[index];
+            list.RemoveAt(index);
+            return item;
+        }
+
+        /// <summary>
+        /// Removes and returns the item at a given index of the list. If the
+        /// list has fewer items then the default value of <typeparamref name="T"/>
+        /// is returned instead.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static T TryPopAt<T>(this IList<T> list, int index)
+        {
+            return TryPopAt(list, index, default(T));
+        }
+
+        /// <summary>
+        /// Removes and returns the item at a given index of the list. If the
+        /// list has fewer items then a user-supplied value of
+        /// <typeparamref name="T"/> is returned instead.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static T TryPopAt<T>(this IList<T> list, int index, T emptyValue)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            return index < list.Count ? list.PopAt(index) : emptyValue;
         }
     }
 }

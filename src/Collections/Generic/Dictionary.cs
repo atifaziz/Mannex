@@ -39,8 +39,8 @@ namespace Mannex.Collections.Generic
     static partial class DictionaryExtensions
     {
         /// <summary>
-        /// Finds the value for a key, returning the default value for 
-        /// <typeparamref name="TKey"/> if the key is not present.
+        /// Finds the value for a key, returning the default value for
+        /// <typeparamref name="TValue"/> if the key is not present.
         /// </summary>
 
         [DebuggerStepThrough]
@@ -50,8 +50,8 @@ namespace Mannex.Collections.Generic
         }
 
         /// <summary>
-        /// Finds the value for a key, returning a given default value for 
-        /// <typeparamref name="TKey"/> if the key is not present.
+        /// Finds the value for a key, returning a given default value if the
+        /// key is not present.
         /// </summary>
 
         [DebuggerStepThrough]
@@ -63,14 +63,14 @@ namespace Mannex.Collections.Generic
         }
 
         /// <summary>
-        /// Gets the value associated with the specified key. If the key is 
-        /// not present then a function is called back with the key to 
+        /// Gets the value associated with the specified key. If the key is
+        /// not present then a function is called back with the key to
         /// determine the exception to be thrown.
         /// </summary>
         /// <remarks>
-        /// If the function called when the key is not found returns a null 
+        /// If the function called when the key is not found returns a null
         /// reference then a <see cref="KeyNotFoundException"/> is thrown.
-        /// The same happens if a null reference is supplied for the 
+        /// The same happens if a null reference is supplied for the
         /// function.
         /// </remarks>
 
@@ -89,7 +89,7 @@ namespace Mannex.Collections.Generic
         #if NET45
 
         /// <summary>
-        /// Returns a <see cref="ReadOnlyDictionary{TKey,TValue}"/> that 
+        /// Returns a <see cref="ReadOnlyDictionary{TKey,TValue}"/> that
         /// wraps this dictionary, rendering it effectively read-only.
         /// </summary>
 
@@ -101,5 +101,19 @@ namespace Mannex.Collections.Generic
         }
 
         #endif
+
+        /// <summary>
+        /// Removes the key from the dictionary and returns the associated
+        /// value.
+        /// </summary>
+
+        [DebuggerStepThrough]
+        public static TValue Pop<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
+        {
+            if (dictionary == null) throw new ArgumentNullException("dictionary");
+            var value = dictionary[key];
+            dictionary.Remove(key);
+            return value;
+        }
     }
 }

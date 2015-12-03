@@ -8,9 +8,9 @@
     Func<int, string> tf = concat("T");
     Func<int, string> argf = concat("arg");
 
-    Func<string, Func<IEnumerable<string>, string>> 
+    Func<string, Func<IEnumerable<string>, string>>
         join0 = sep => ss => string.Join(sep, ss.ToArray());
-    Func<IEnumerable<string>, string> 
+    Func<IEnumerable<string>, string>
         @join = join0(", ");
 
     Func<int, int, IEnumerable<int>> range = Enumerable.Range;
@@ -19,7 +19,7 @@
 
     var q = from x in range(2, max)
             from y in range(1, x - 1)
-            
+
             let ns = new
             {
                 args  = range(1, x).ToArray(),
@@ -32,12 +32,12 @@
             let bound = @join(ns.bound.Select(n => tf(n) + " " + argf(n)))
             let free  = @join(ns.free.Select(argf))
             let all   = @join(ns.args.Select(argf))
-            
+
             select (Action<string, string, string>) ((ft, fs, rt) => { #>
 
         /// <summary>
-        /// Partially applies the first <#= bound.Count() > 1 
-                                            ? bound.Count() + " arguments" 
+        /// Partially applies the first <#= ns.bound.Count() > 1
+                                            ? ns.bound.Count() + " arguments"
                                             : "argument" #> of
         /// <see cref="<#= ft #>{<#= join0(",")(ns.args.Select(tf)) #><#= rt.Replace(" ", string.Empty) #>}"/>.
         /// </summary>
@@ -95,7 +95,7 @@ namespace Mannex
     /// </summary>
 
     static partial class ActionExtensions
-    {<# 
+    {<#
         foreach (var f in q) f("Action", "action", string.Empty); #>
     }
 }

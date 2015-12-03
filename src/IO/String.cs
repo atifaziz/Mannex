@@ -40,10 +40,10 @@ namespace Mannex.IO
 
     static partial class StringExtensions
     {
-        private static readonly char[] _badFileNameChars;
-        private static readonly string _badFileNameCharsPattern;
-        private static readonly char[] _badPathChars;
-        private static readonly string _badPathCharsPattern;
+        static readonly char[] _badFileNameChars;
+        static readonly string _badFileNameCharsPattern;
+        static readonly char[] _badPathChars;
+        static readonly string _badPathCharsPattern;
 
         static StringExtensions()
         {
@@ -53,7 +53,7 @@ namespace Mannex.IO
             _badPathCharsPattern = Patternize(_badPathChars);
         }
 
-        private static string Patternize(IEnumerable<char> chars)
+        static string Patternize(IEnumerable<char> chars)
         {
             Debug.Assert(chars != null);
             return "[" 
@@ -144,7 +144,7 @@ namespace Mannex.IO
                 _badPathChars, _badPathCharsPattern);
         }
 
-        private static string SanitizePathComponent(string str, string replacement, char[] badChars, string badPattern)
+        static string SanitizePathComponent(string str, string replacement, char[] badChars, string badPattern)
         {
             Debug.Assert(replacement != null);
             if (str == null) throw new ArgumentNullException("str");

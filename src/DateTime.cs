@@ -35,7 +35,7 @@ namespace Mannex
 
     static partial class DateTimeExtensions
     {
-        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /// <summary>
         /// Returns number of milliseconds (including fractions) in UTC between the 
@@ -145,5 +145,6 @@ namespace Mannex
             if (date.Kind != time.Kind) throw new ArgumentException(string.Format("Date ({0}) and time ({1}) kinds do not match.", date.Kind, time.Kind));
             return new DateTime(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second, time.Millisecond);
         }
+
     }
 }

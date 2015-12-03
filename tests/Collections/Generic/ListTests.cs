@@ -393,5 +393,64 @@ namespace Mannex.Tests.Collections.Generic
             Assert.True(roList.IsReadOnly);
             Assert.Same(roList, roList.AsReadOnly());
         }
+
+        [Fact]
+        public void PopAtFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => ListExtensions.PopAt<object>(null, 0));
+            Assert.Equal("list", e.ParamName);
+        }
+
+        [Fact]
+        public void PopAtFailsWithIndexOutOfRange()
+        {
+            var e = Assert.Throws<ArgumentOutOfRangeException>(() => new List<object>().PopAt(1));
+            Assert.Equal("index", e.ParamName);
+        }
+
+        [Fact]
+        public void PopAt()
+        {
+            const int a = 123;
+            const int b = 456;
+            const int c = 789;
+            var list = new[] { a, b, c }.ToList();
+            Assert.Equal(b, list.PopAt(1));
+            Assert.Equal(2, list.Count);
+            Assert.Equal(a, list[0]);
+            Assert.Equal(c, list[1]);
+        }
+
+        [Fact]
+        public void TryPopAtFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => ListExtensions.TryPopAt<object>(null, 0));
+            Assert.Equal("list", e.ParamName);
+        }
+
+        [Fact]
+        public void TryPopAtWithoutEmptyValue()
+        {
+            Assert.Equal(0, new List<int>().TryPopAt(10));
+        }
+
+        [Fact]
+        public void TryPopAtWithOutOfBoundsIndexAndUserSpecificEmpty()
+        {
+            Assert.Equal(-1, new List<int>().TryPopAt(10, -1));
+        }
+
+        [Fact]
+        public void TryPopAt()
+        {
+            const int a = 123;
+            const int b = 456;
+            const int c = 789;
+            var list = new[] { a, b, c }.ToList();
+            Assert.Equal(b, list.TryPopAt(1));
+            Assert.Equal(2, list.Count);
+            Assert.Equal(a, list[0]);
+            Assert.Equal(c, list[1]);
+        }
     }
 }

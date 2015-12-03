@@ -50,7 +50,7 @@ namespace Mannex.Collections.Generic
             return ic == null ? new InvertingComparer<T>(comparer) : ic.Inner;
         }
 
-        private class InvertingComparer<T> : IComparer<T>
+        class InvertingComparer<T> : IComparer<T>
         {
             internal readonly IComparer<T> Inner;
 

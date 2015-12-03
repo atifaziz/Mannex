@@ -21,28 +21,31 @@
 //
 #endregion
 
-#region Imports
+#if NET4
 
-using System.Reflection;
+namespace Mannex.Threading.Tasks
+{
+    using System;
+    using System.Threading.Tasks;
 
-using CLSCompliantAttribute = System.CLSCompliantAttribute;
-using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
+    /// <summary>
+    /// Extension methods for <see cref="Exception"/>.
+    /// </summary>
 
-#endregion
+    static partial class ExceptionExtensions
+    {
+        /// <summary>
+        /// Creates a task in the faulted state with the given exception.
+        /// </summary>
 
-[assembly: AssemblyTitle("Mannex.Tests")]
-[assembly: AssemblyDescription("Unit test library for Mannex")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mannex")]
-[assembly: AssemblyCopyright("Copyright (c) 2009, Atif Aziz. All rights reserved.")]
-[assembly: AssemblyCulture("")]
+        public static Task<T> AsTask<T>(this Exception exception)
+        {
+            if (exception == null) throw new ArgumentNullException("exception");
+            var tcs = new TaskCompletionSource<T>();
+            tcs.SetException(exception);
+            return tcs.Task;
+        }
+    }
+}
 
-[assembly: AssemblyVersion("1.0.*")]
-
-#if DEBUG
-[assembly: AssemblyConfiguration("DEBUG")]
-#else
-[assembly: AssemblyConfiguration("RELEASE")]
 #endif
-
-[assembly: ComVisible(false)]

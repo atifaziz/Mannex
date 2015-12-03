@@ -162,20 +162,20 @@ namespace Mannex.IO
         #region Argument Validation
 
         [DebuggerStepThrough]
-        private static void ValidateArguments(Stream input)
+        static void ValidateArguments(Stream input)
         {
             ValidateInputStream(input);
         }
 
         [DebuggerStepThrough]
-        private static void ValidateArguments(Stream input, Stream output)
+        static void ValidateArguments(Stream input, Stream output)
         {
             ValidateInputStream(input);
             ValidateOutputStream(output);
         }
 
         [DebuggerStepThrough]
-        private static void ValidateArguments(Stream input, Stream output, int bufferSize)
+        static void ValidateArguments(Stream input, Stream output, int bufferSize)
         {
             ValidateInputStream(input);
             ValidateOutputStream(output);
@@ -183,47 +183,47 @@ namespace Mannex.IO
         }
 
         [DebuggerStepThrough]
-        private static void ValidateArguments(Stream input, byte[] buffer)
+        static void ValidateArguments(Stream input, byte[] buffer)
         {
             ValidateInputStream(input);
             ValidateBuffer(buffer);
         }
 
         [DebuggerStepThrough]
-        private static void ValidateArguments(Stream input, byte[] buffer, int offset, int count)
+        static void ValidateArguments(Stream input, byte[] buffer, int offset, int count)
         {
             ValidateInputStream(input);
             ValidateBuffer(buffer, offset, count);
         }
 
         [DebuggerStepThrough]
-        private static void ValidateInputStream(Stream input)
+        static void ValidateInputStream(Stream input)
         {
             if (input == null) throw new ArgumentNullException("input");
             if (!input.CanRead) throw new ArgumentException("Cannot read from input stream", "input");
         }
 
         [DebuggerStepThrough]
-        private static void ValidateOutputStream(Stream output)
+        static void ValidateOutputStream(Stream output)
         {
             if (output == null) throw new ArgumentNullException("output");
             if (!output.CanWrite) throw new ArgumentException("Cannot write to output stream", "output");
         }
 
         [DebuggerStepThrough]
-        private static void ValidateBufferSize(int bufferSize)
+        static void ValidateBufferSize(int bufferSize)
         {
             if (bufferSize < 0) throw new ArgumentException("Invalid buffer size.", "bufferSize");
         }
 
         [DebuggerStepThrough]
-        private static void ValidateBuffer(byte[] buffer)
+        static void ValidateBuffer(byte[] buffer)
         {
             if (buffer == null) throw new ArgumentNullException("buffer");
         }
 
         [DebuggerStepThrough]
-        private static void ValidateBuffer(byte[] buffer, int offset, int count)
+        static void ValidateBuffer(byte[] buffer, int offset, int count)
         {
             ValidateBuffer(buffer);
             if (offset < 0) throw new ArgumentOutOfRangeException("offset", offset, null);

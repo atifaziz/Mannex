@@ -27,8 +27,6 @@ namespace Mannex
 
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Diagnostics;
     using System.Globalization;
     using System.Linq;
 
@@ -139,10 +137,10 @@ namespace Mannex
             var startOfWeek = transition.Week * 7 - 6;
 
             // What day of the week does the month start on?
-            var firstDayOfWeek = (int) calendar.GetDayOfWeek(new DateTime(year, transition.Month, 1));
+            var firstDayOfWeek = (int)calendar.GetDayOfWeek(new DateTime(year, transition.Month, 1));
 
             // Determine how much start date has to be adjusted
-            var changeDayOfWeek = (int) transition.DayOfWeek;
+            var changeDayOfWeek = (int)transition.DayOfWeek;
 
             var transitionDay = firstDayOfWeek <= changeDayOfWeek
                                ? startOfWeek + (changeDayOfWeek - firstDayOfWeek)
@@ -153,6 +151,42 @@ namespace Mannex
                 transitionDay -= 7;
 
             return new DateTime(year, transition.Month, transitionDay).WithTimeFrom(transition.TimeOfDay);
+        }
+
+        /// <summary>
+        /// Gets the number of hours within a given day of the time zone,
+        /// taking transitions into account.
+        /// </summary>
+        /// <remarks>
+        /// The time part (hours, minutes, seconds, etc.) of
+        /// <paramref name="date"/>, as well as whether its local or UTC,
+        /// is ignored.
+        /// </remarks>
+
+        public static double HoursInDay(this TimeZoneInfo tz, DateTime date)
+        {
+            return tz.GetDayLength(date).TotalHours;
+        }
+
+        /// <summary>
+        /// Gets the length of a given day in the time zone, taking
+        /// transitions into account.
+        /// </summary>
+        /// <remarks>
+        /// The time part (hours, minutes, seconds, etc.) of
+        /// <paramref name="date"/>, as well as whether its local or UTC,
+        /// is ignored.
+        /// </remarks>
+
+        public static TimeSpan GetDayLength(this TimeZoneInfo tz, DateTime date)
+        {
+            if (tz == null) throw new ArgumentNullException("tz");
+            if (!tz.SupportsDaylightSavingTime) return TimeSpan.FromHours(24);
+            date = DateTime.SpecifyKind(date.Date, DateTimeKind.Unspecified);
+            var dateMidnight = new DateTimeOffset(date, tz.GetUtcOffset(date));
+            var nextDate = date.AddDays(1);
+            var nextDateMidnight = new DateTimeOffset(nextDate, tz.GetUtcOffset(nextDate));
+            return nextDateMidnight - dateMidnight;
         }
     }
 }

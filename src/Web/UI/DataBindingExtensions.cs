@@ -126,7 +126,7 @@ namespace Mannex.Web.UI
             return format.FormatWith(provider, FormatTokenBinder, args);
         }
 
-        private static string FormatTokenBinder(string token, object[] args, IFormatProvider provider)
+        static string FormatTokenBinder(string token, object[] args, IFormatProvider provider)
         {
             Debug.Assert(token != null);
 

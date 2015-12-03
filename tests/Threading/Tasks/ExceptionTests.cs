@@ -21,28 +21,30 @@
 //
 #endregion
 
-#region Imports
+namespace Mannex.Tests.Threading.Tasks
+{
+    using System;
+    using Mannex.Threading.Tasks;
+    using Xunit;
 
-using System.Reflection;
+    public class ExceptionTests
+    {
+        [Fact]
+        public async void AsTaskNullThis()
+        {
+            var e = await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                ExceptionExtensions.AsTask<int>(null));
+            Assert.Equal("exception", e.ParamName);
+        }
 
-using CLSCompliantAttribute = System.CLSCompliantAttribute;
-using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
-
-#endregion
-
-[assembly: AssemblyTitle("Mannex.Tests")]
-[assembly: AssemblyDescription("Unit test library for Mannex")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mannex")]
-[assembly: AssemblyCopyright("Copyright (c) 2009, Atif Aziz. All rights reserved.")]
-[assembly: AssemblyCulture("")]
-
-[assembly: AssemblyVersion("1.0.*")]
-
-#if DEBUG
-[assembly: AssemblyConfiguration("DEBUG")]
-#else
-[assembly: AssemblyConfiguration("RELEASE")]
-#endif
-
-[assembly: ComVisible(false)]
+        [Fact]
+        public void AsTask()
+        {
+            var e = new Exception();
+            var task = e.AsTask<int>();
+            Assert.NotNull(task);
+            Assert.True(task.IsFaulted);
+            Assert.Equal(e, task.Exception.GetBaseException());
+        }
+    }
+}

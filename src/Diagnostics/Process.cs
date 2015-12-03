@@ -30,6 +30,9 @@ namespace Mannex.Diagnostics
     using System.Diagnostics;
     using System.IO;
     using System.Threading;
+    #if NET4
+    using System.Threading.Tasks;
+    #endif
     using Threading;
 
     #endregion
@@ -174,5 +177,87 @@ namespace Mannex.Diagnostics
                     eof();
             };
         }
+
+        #if NET4
+
+        /// <summary>
+        /// Creates <see cref="Task"/> that completes when the process exits
+        /// with an exit code of zero and throws an <see cref="Exception"/>
+        /// otherwise.
+        /// </summary>
+
+        public static Task AsTask(this Process process)
+        {
+            return AsTask(process, p => new Exception(string.Format("Process exited with the non-zero code {0}.", p.ExitCode)));
+        }
+
+        /// <summary>
+        /// Creates <see cref="Task"/> that completes when the process exits
+        /// with an exit code of zero and throws an <see cref="Exception"/>
+        /// otherwise. An additional parameter enables a function to
+        /// customize the <see cref="Exception"/> object thrown.
+        /// </summary>
+
+        public static Task AsTask(this Process process, Func<Process, Exception> errorSelector)
+        {
+            return process.AsTask(true, p => p.ExitCode != 0 ? errorSelector(p) : null,
+                                  e => e, _ => (object) null);
+        }
+
+        /// <summary>
+        /// Creates <see cref="Task"/> that completes when the process exits.
+        /// Additional parameters specify how to project the results from
+        /// the execution of the process as a result or error for the task.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="errorSelector"/> return <c>null</c> then the task
+        /// is considered to have succeeded and <paramref name="resultSelector"/>
+        /// determines its result. If <paramref name="errorSelector"/> returns
+        /// an instance of <see cref="Exception"/> then the task is
+        /// considered to have failed with that exception.
+        /// </remarks>
+
+        public static Task<TResult> AsTask<T, TResult>(this Process process, bool dispose,
+            Func<Process, T> selector,
+            Func<T, Exception> errorSelector,
+            Func<T, TResult> resultSelector)
+        {
+            if (process == null) throw new ArgumentNullException("process");
+            if (selector == null) throw new ArgumentNullException("selector");
+            if (errorSelector == null) throw new ArgumentNullException("errorSelector");
+            if (resultSelector == null) throw new ArgumentNullException("resultSelector");
+
+            var tcs = new TaskCompletionSource<TResult>();
+
+            if (process.HasExited)
+            {
+                OnExit(process, dispose, selector, errorSelector, resultSelector, tcs);
+            }
+            else
+            {
+                process.EnableRaisingEvents = true;
+                process.Exited += delegate { OnExit(process, dispose, selector, errorSelector, resultSelector, tcs); };
+            }
+
+            return tcs.Task;
+        }
+
+        static void OnExit<T, TResult>(Process process, bool dispose,
+            Func<Process, T> selector,
+            Func<T, Exception> errorSelector,
+            Func<T, TResult> resultSelector,
+            TaskCompletionSource<TResult> tcs)
+        {
+            var capture = selector(process);
+            if (dispose)
+                process.Dispose();
+            var e = errorSelector(capture);
+            if (e != null)
+                tcs.SetException(e);
+            else
+                tcs.TrySetResult(resultSelector(capture));
+        }
+
+        #endif // NET4
     }
 }

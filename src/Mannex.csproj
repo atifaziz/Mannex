@@ -42,6 +42,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NETFX 4.5 Release|AnyCPU'">
     <OutputPath>..\bin\net-4.5\Release\</OutputPath>
@@ -150,6 +151,9 @@
       <DependentUpon>Action.Return.g.tt</DependentUpon>
     </Compile>
     <Compile Include="Array.cs" />
+    <Compile Include="Delegate.cs" />
+    <Compile Include="Diagnostics\ProcessStartInfo.cs" />
+    <Compile Include="Disposable.cs" />
     <Compile Include="OperatingSystem.cs" />
     <Compile Include="Boolean.cs" />
     <Compile Include="Collections\ArrayList.cs" />
@@ -178,6 +182,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyInfo.g.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reflection\PropertyInfo.cs" />
+    <Compile Include="Threading\Tasks\CancellationToken.cs" />
+    <Compile Include="Threading\Tasks\Exception.cs" />
+    <Compile Include="TimeSpan.cs" />
     <Compile Include="TimeZoneInfo.cs" />
     <Compile Include="Text\StringBuilder.cs" />
     <Compile Include="Single.cs" />

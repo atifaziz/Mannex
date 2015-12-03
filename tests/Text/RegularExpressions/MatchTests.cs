@@ -25,6 +25,8 @@ namespace Mannex.Tests.Text.RegularExpressions
 {
     #region Imports
 
+    using System.Text.RegularExpressions;
+    using System.Web.UI.WebControls.WebParts;
     using Xunit;
     using Mannex.Text.RegularExpressions;
 
@@ -32,38 +34,85 @@ namespace Mannex.Tests.Text.RegularExpressions
 
     public class MatchTests
     {
+
         [Fact]
-        public void MatchBinds()
+        public void MatchBinds3()
         {
-            const string pattern = @"(?x:     (?<mo>\w+) 
-                                          \s+ (?<d>[0-9]{1,2}) , 
-                                          \s+ (?<y>19|20[0-9]{2}) )";
-            var result = "Dec 4, 2000".Match(pattern, m => m.Bind((d, mo, y) => new
+            var result = Regexes.Date.Match("Dec 4, 2000").Bind((d, mo, y) => new
             {
                 Day   = d.Value,
                 Month = mo.Value,
                 Year  = y.Value
-            }));
+            });
             Assert.Equal("4", result.Day);
             Assert.Equal("Dec", result.Month);
             Assert.Equal("2000", result.Year);
         }
 
         [Fact]
-        public void MatchBindNum()
+        public void MatchBindNum3()
         {
-            const string pattern = @"(?x:     (?<mo>\w+) 
-                                          \s+ (?<d>[0-9]{1,2}) , 
-                                          \s+ (?<y>19|20[0-9]{2}) )";
-            var result = "Dec 4, 2000".Match(pattern, m => m.BindNum((mo, d, y) => new
+            var result = Regexes.Date.Match("Dec 4, 2000").BindNum((mo, d, y) => new
             {
-                Day = d.Value,
+                Day   = d.Value,
                 Month = mo.Value,
-                Year = y.Value
-            }));
+                Year  = y.Value
+            });
             Assert.Equal("4", result.Day);
             Assert.Equal("Dec", result.Month);
             Assert.Equal("2000", result.Year);
+        }
+
+        [Fact]
+        public void MatchBinds4()
+        {
+            var result = Regexes.DateWithWeekday.Match("Mon, Dec 4, 2000").Bind((d, mo, y, wd) => new
+            {
+                Weekday = wd.Value,
+                Day     = d.Value,
+                Month   = mo.Value,
+                Year    = y.Value
+            });
+            Assert.Equal("Mon", result.Weekday);
+            Assert.Equal("4", result.Day);
+            Assert.Equal("Dec", result.Month);
+            Assert.Equal("2000", result.Year);
+        }
+
+        [Fact]
+        public void MatchBindNum4()
+        {
+            var result = Regexes.DateWithWeekday.Match("Mon, Dec 4, 2000").BindNum((wd, mo, d, y) => new
+            {
+                Weekday = wd.Value,
+                Day     = d.Value,
+                Month   = mo.Value,
+                Year    = y.Value
+            });
+            Assert.Equal("Mon", result.Weekday);
+            Assert.Equal("4", result.Day);
+            Assert.Equal("Dec", result.Month);
+            Assert.Equal("2000", result.Year);
+        }
+
+        static class Regexes
+        {
+            public static readonly Regex Date = Regex(
+                @"    (?<mo>\w+)
+                  \s+ (?<d>[0-9]{1,2})  ,
+                  \s+ (?<y>19|20[0-9]{2})");
+
+            public static readonly Regex DateWithWeekday = Regex(
+                @"    (?<wd>\w+)        ,
+                  \s+ (?<mo>\w+)
+                  \s+ (?<d>[0-9]{1,2})  ,
+                  \s+ (?<y>19|20[0-9]{2})");
+
+            static Regex Regex(string pattern)
+            {
+                return new Regex(pattern, RegexOptions.IgnorePatternWhitespace
+                                        | RegexOptions.CultureInvariant);
+            }
         }
     }
 }

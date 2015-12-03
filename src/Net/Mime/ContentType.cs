@@ -100,7 +100,7 @@ namespace Mannex.Net.Mime
             return mediaType.Substring(mediaType.IndexOf('/') + 1);
         }
 
-        private static bool EqualsOrdinalIgnoreCase(string left, string right)
+        static bool EqualsOrdinalIgnoreCase(string left, string right)
         {
             return left.Equals(right, StringComparison.OrdinalIgnoreCase);
         }

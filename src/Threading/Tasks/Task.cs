@@ -42,7 +42,7 @@ namespace Mannex.Threading.Tasks
         /// <summary>
         /// Returns a <see cref="Task{T}"/> that can be used as the
         /// <see cref="IAsyncResult"/> return value from the method
-        /// that begin the operation of an API following the 
+        /// that begin the operation of an API following the
         /// <a href="http://msdn.microsoft.com/en-us/library/ms228963.aspx">Asynchronous Programming Model</a>.
         /// If an <see cref="AsyncCallback"/> is supplied, it is invoked
         /// when the supplied task concludes (fails, cancels or completes
@@ -57,7 +57,7 @@ namespace Mannex.Threading.Tasks
         /// <summary>
         /// Returns a <see cref="Task{T}"/> that can be used as the
         /// <see cref="IAsyncResult"/> return value from the method
-        /// that begin the operation of an API following the 
+        /// that begin the operation of an API following the
         /// <a href="http://msdn.microsoft.com/en-us/library/ms228963.aspx">Asynchronous Programming Model</a>.
         /// If an <see cref="AsyncCallback"/> is supplied, it is invoked
         /// when the supplied task concludes (fails, cancels or completes
@@ -78,7 +78,7 @@ namespace Mannex.Threading.Tasks
             Task t = task;
             if (tcs != null)
             {
-                t = t.ContinueWith(delegate { tcs.TryConcludeFrom(task); }, 
+                t = t.ContinueWith(delegate { tcs.TryConcludeFrom(task); },
                                    CancellationToken.None,
                                    TaskContinuationOptions.ExecuteSynchronously,
                                    TaskScheduler.Default);
@@ -91,14 +91,14 @@ namespace Mannex.Threading.Tasks
                                    TaskContinuationOptions.None,
                                    scheduler ?? TaskScheduler.Default);
             }
-            
+
             return result;
         }
 
         /// <summary>
         /// Returns a <see cref="Task{T}"/> that can be used as the
         /// <see cref="IAsyncResult"/> return value from the method
-        /// that begin the operation of an API following the 
+        /// that begin the operation of an API following the
         /// <a href="http://msdn.microsoft.com/en-us/library/ms228963.aspx">Asynchronous Programming Model</a>.
         /// If an <see cref="AsyncCallback"/> is supplied, it is invoked
         /// when the supplied task concludes (fails, cancels or completes
@@ -144,19 +144,69 @@ namespace Mannex.Threading.Tasks
 
 namespace Mannex.Threading.Tasks
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Runtime.CompilerServices;
+    using System.Threading;
     using System.Threading.Tasks;
 
     static partial class TaskExtensions
     {
         /// <summary>
-        /// Specifies whether an awaiter used to wait this 
+        /// Specifies whether an awaiter used to wait this
         /// <see cref="Task"/> continues on the captured context.
         /// </summary>
 
         public static ConfiguredTaskAwaitable<T> ContinueOnCapturedContext<T>(this Task<T> task, bool value)
         {
             return task.ConfigureAwait(value);
+        }
+
+        /// <summary>
+        /// Creates a task that will complete when all of the task in the
+        /// sequence complete, whether they succeed, fail or cancel. An
+        /// additional
+        /// </summary>
+        /// <remarks>
+        /// This method differs from <see cref="Task.WhenAll(IEnumerable{Task})"/>
+        /// in that it completes irrespective of whether the tasks succeeded,
+        /// failed or cancelled.
+        /// </remarks>
+
+        public static Task<T[]> WhenAllCompleted<T>(this IEnumerable<T> tasks)
+            where T : Task
+        {
+            return tasks.WhenAllCompleted(CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Creates a task that will complete when all of the task in the
+        /// sequence complete, whether they succeed, fail or cancel. An
+        /// additional parameter specifies a <see cref="CancellationToken"/>
+        /// the can be used to cancel the returned task.
+        /// </summary>
+        /// <remarks>
+        /// This method differs from <see cref="Task.WhenAll(IEnumerable{Task})"/>
+        /// in that it completes irrespective of whether the tasks succeeded,
+        /// failed or cancelled.
+        /// </remarks>
+
+        public static async Task<T[]> WhenAllCompleted<T>(this IEnumerable<T> tasks,
+            CancellationToken cancellationToken)
+            where T : Task
+        {
+            if (tasks == null) throw new ArgumentNullException("tasks");
+            var result = tasks.ToArray();
+            var pending = result.ToList();
+            while (pending.Count > 0)
+            {
+                if (cancellationToken.CanBeCanceled)
+                    cancellationToken.ThrowIfCancellationRequested();
+                var task = await Task.WhenAny(pending).ConfigureAwait(false);
+                pending.Remove((T) task);
+            }
+            return result;
         }
     }
 }
