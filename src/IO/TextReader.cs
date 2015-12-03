@@ -27,7 +27,6 @@ namespace Mannex.IO
 
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using Collections.Generic;
@@ -65,7 +64,7 @@ namespace Mannex.IO
 
         /// <summary>
         /// Returns a new <see cref="TextReader"/> that represents the
-        /// concatenated content of one or more supplied 
+        /// concatenated content of one or more supplied
         /// <see cref="TextReader"/> objects.
         /// </summary>
         /// <remarks>
@@ -82,7 +81,7 @@ namespace Mannex.IO
 
         /// <summary>
         /// Returns a new <see cref="TextReader"/> that represents the
-        /// concatenated content of one or more supplied 
+        /// concatenated content of one or more supplied
         /// <see cref="TextReader"/> objects.
         /// </summary>
         /// <remarks>
@@ -153,8 +152,8 @@ namespace Mannex.IO
             public override void Close()
             {
                 OnDisposeOrClose(r => r.Close());
-            } 
-        
+            }
+
             protected override void Dispose(bool disposing)
             {
                 base.Dispose(disposing);
@@ -172,7 +171,7 @@ namespace Mannex.IO
         }
 
         /// <summary>
-        /// Parses delimited text like CSV (command-separated values) and 
+        /// Parses delimited text like CSV (command-separated values) and
         /// returns each row of data as a sequence of items.
         /// </summary>
 
@@ -183,7 +182,7 @@ namespace Mannex.IO
         }
 
         /// <summary>
-        /// Parses delimited text like CSV (command-separated values) and 
+        /// Parses delimited text like CSV (command-separated values) and
         /// returns each row of data as a sequence of items.
         /// </summary>
 
@@ -195,7 +194,7 @@ namespace Mannex.IO
         }
 
         /// <summary>
-        /// Parses delimited text like CSV (command-separated values) and 
+        /// Parses delimited text like CSV (command-separated values) and
         /// returns each row of data as a sequence of items.
         /// </summary>
 
@@ -207,7 +206,7 @@ namespace Mannex.IO
         }
 
         /// <summary>
-        /// Parses delimited text like CSV (command-separated values) and 
+        /// Parses delimited text like CSV (command-separated values) and
         /// returns each row of data as a sequence of items.
         /// </summary>
 
@@ -219,13 +218,13 @@ namespace Mannex.IO
             if (headerSelector == null) throw new ArgumentNullException("headerSelector");
             if (resultSelector == null) throw new ArgumentNullException("resultSelector");
 
-            return reader.ParseXsv(delimiter, quoted, 
-                                   (_, hs) => headerSelector(hs), 
+            return reader.ParseXsv(delimiter, quoted,
+                                   (_, hs) => headerSelector(hs),
                                    (_, hs, vs) => resultSelector(hs, vs));
         }
 
         /// <summary>
-        /// Parses delimited text like CSV (command-separated values) and 
+        /// Parses delimited text like CSV (command-separated values) and
         /// returns each row of data as a sequence of items.
         /// </summary>
 
@@ -238,28 +237,14 @@ namespace Mannex.IO
             if (headerSelector == null) throw new ArgumentNullException("headerSelector");
             if (resultSelector == null) throw new ArgumentNullException("resultSelector");
 
-            return ParseXsv(() => new TextFieldParser(reader)
+            using (var parser = new TextFieldParser(reader)
             {
-                TextFieldType  = FieldType.Delimited,
-                Delimiters = new[] { delimiter }, 
+                TextFieldType = FieldType.Delimited,
+                Delimiters = new[] { delimiter },
                 HasFieldsEnclosedInQuotes = quoted,
                 TrimWhiteSpace = false,
-            }, headerSelector, resultSelector).GetEnumerator();
-        }
-
-        static IEnumerable<TResult> ParseXsv<THeader, TResult>(
-            Func<TextFieldParser> opener, 
-            Func<long, string[], THeader> headerSelector,
-            Func<long, THeader, string[], TResult> resultSelector)
-        {
-            Debug.Assert(opener != null);
-            Debug.Assert(headerSelector != null);
-            Debug.Assert(resultSelector != null);
-
-            using (var parser = opener())
+            })
             {
-                if (parser == null)
-                    throw new NullReferenceException("Unexpected null reference where an instance of TextFieldParser was expected.");
                 var headerInitialzed = false;
                 var header = default(THeader);
                 while (!parser.EndOfData)
@@ -276,7 +261,7 @@ namespace Mannex.IO
                 }
             }
         }
-        
+
         /*
         abstract class DataReader : DbDataReader
         {
@@ -367,7 +352,7 @@ namespace Mannex.IO
 
             void UndisposedGuard()
             {
-                if (IsDisposed()) 
+                if (IsDisposed())
                     throw new ObjectDisposedException(GetType().FullName);
             }
 
@@ -376,7 +361,7 @@ namespace Mannex.IO
 
             public override void Close()
             {
-                if (_cursor == null) 
+                if (_cursor == null)
                     return;
                 _cursor.Dispose();
                 _cursor = null;
@@ -412,7 +397,7 @@ namespace Mannex.IO
                 var table = new DataTable();
                 return table;
             }
-            
+
             public override bool NextResult()
             {
                 // TODO close enumerator
@@ -433,7 +418,7 @@ namespace Mannex.IO
 
                 public Enumerator(IEnumerator<T> inner) { _inner = inner; }
                 public void Dispose() { _inner.Dispose(); }
-            
+
                 public bool MoveNext()
                 {
                     _started = true;
@@ -450,10 +435,10 @@ namespace Mannex.IO
 
                 public T Current
                 {
-                    get 
-                    { 
-                        if (!_started) throw new InvalidOperationException(@"Invalid attempt to read when no data is present."); 
-                        return _inner.Current; 
+                    get
+                    {
+                        if (!_started) throw new InvalidOperationException(@"Invalid attempt to read when no data is present.");
+                        return _inner.Current;
                     }
                 }
             }
