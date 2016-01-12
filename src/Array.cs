@@ -27,6 +27,7 @@ namespace Mannex
 
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
 
     #endregion
@@ -215,6 +216,50 @@ namespace Mannex
                     target[i / columns, i % columns] = defaultValue;
             }
             return target;
+        }
+
+        /// <summary>
+        /// Enumerates the elements at a specific row of a two-dimensional
+        /// array.
+        /// </summary>
+        /// <remarks>
+        /// This method uses deferred execution.
+        /// </remarks>
+
+        public static IEnumerable<T> Row<T>(this T[,] array, int index)
+        {
+            if (array == null) throw new ArgumentNullException("array");
+            var zero = array.GetLowerBound(0);
+            if (index < zero || index >= array.GetLength(0) - zero) throw new ArgumentOutOfRangeException("index", index, null);
+            return RowImpl(array, index);
+        }
+
+        static IEnumerable<T> RowImpl<T>(T[,] array, int y)
+        {
+            return from x in Enumerable.Range(array.GetLowerBound(1), array.GetLength(1))
+                   select array[y, x];
+        }
+
+        /// <summary>
+        /// Enumerates the elements at a specific columns of a two-dimensional
+        /// array.
+        /// </summary>
+        /// <remarks>
+        /// This method uses deferred execution.
+        /// </remarks>
+
+        public static IEnumerable<T> Column<T>(this T[,] array, int index)
+        {
+            if (array == null) throw new ArgumentNullException("array");
+            var zero = array.GetLowerBound(1);
+            if (index < zero || index >= array.GetLength(1) - zero) throw new ArgumentOutOfRangeException("index", index, null);
+            return ColumnImpl(array, index);
+        }
+
+        static IEnumerable<T> ColumnImpl<T>(T[,] array, int x)
+        {
+            return from y in Enumerable.Range(array.GetLowerBound(0), array.GetLength(0))
+                   select array[y, x];
         }
     }
 }
