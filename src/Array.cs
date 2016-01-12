@@ -173,5 +173,48 @@ namespace Mannex
             target.Update(source, function);
             return target;
         }
+
+        /// <summary>
+        /// Converts a one-dimensional array into a two-dimensional array of
+        /// user-specified width.
+        /// </summary>
+
+        public static T[,] ToArray2D<T>(this T[] source, int columns)
+        {
+            return ToArray2DImpl(source, columns, default(T), fill: false);
+        }
+
+        /// <summary>
+        /// Converts a one-dimensional array into a two-dimensional array of
+        /// user-specified width. An additional parameter specifies the default
+        /// value to use to fill the resulting array when source array has too
+        /// few elements.
+        /// </summary>
+
+        public static T[,] ToArray2D<T>(this T[] source, int columns, T defaultValue)
+        {
+            return ToArray2DImpl(source, columns, defaultValue, fill: true);
+        }
+
+        static T[,] ToArray2DImpl<T>(T[] source, int columns, T defaultValue, bool fill)
+        {
+            if (source == null) throw new ArgumentNullException("source");
+            if (columns < 0) throw new ArgumentOutOfRangeException("source", columns, null);
+            if (columns == 0) return new T[0, 0];
+
+            var rows = source.Length / columns + (source.Length % columns == 0 ? 0 : 1);
+            var target = new T[rows, columns];
+
+            for (var i = 0; i < source.Length; i++)
+                target[i / columns, i % columns] = source[i];
+
+            if (fill && source.Length < target.Length
+                     && !EqualityComparer<T>.Default.Equals(defaultValue, default(T)))
+            {
+                for (var i = source.Length; i < target.Length; i++)
+                    target[i / columns, i % columns] = defaultValue;
+            }
+            return target;
+        }
     }
 }
