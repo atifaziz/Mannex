@@ -112,7 +112,10 @@ namespace Mannex.Data
                                }, 
                                (bs, vs) => 
                                    from b in bs
-                                   select b.Converter(b.Index >= 0 ? vs[b.Index] : null)))
+                                   select b.Converter(b.Index < 0
+                                                      ? null
+                                                      : b.Index < vs.Length ? vs[b.Index]
+                                                      : null)))
             {
                 while (e.MoveNext())                     // ReSharper disable CoVariantArrayConversion
                     table.Rows.Add(e.Current.ToArray()); // ReSharper restore CoVariantArrayConversion
