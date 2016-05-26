@@ -178,7 +178,7 @@ namespace Mannex.IO
         public static IEnumerator<KeyValuePair<string, string>[]> ParseXsv(
             this TextReader reader, string delimiter, bool quoted)
         {
-            return reader.ParseXsv(delimiter, quoted, hs => hs, (hs, vs) => Enumerable.Range(0, hs.Length).Select(i => hs[i].AsKeyTo(vs[i])).ToArray());
+            return reader.ParseXsv(delimiter, quoted, hs => hs, (hs, vs) => Enumerable.Range(0, hs.Length).Select(i => hs[i].AsKeyTo(i < vs.Length ? vs[i] : null)).ToArray());
         }
 
         /// <summary>
