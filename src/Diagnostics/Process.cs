@@ -146,9 +146,8 @@ namespace Mannex.Diagnostics
         {
             if (process == null) throw new ArgumentNullException("process");
 
-            return BeginReadLineImpl(process,
-                output ?? (TextWriter.Null.WriteLine),
-                error ?? (TextWriter.Null.WriteLine));
+            return BeginReadLineImpl(process, output ?? TextWriter.Null.WriteLine,
+                                              error  ?? TextWriter.Null.WriteLine);
         }
 
         static Func<TimeSpan?, bool> BeginReadLineImpl(Process process, Action<string> output, Action<string> error)
