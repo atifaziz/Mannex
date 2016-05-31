@@ -185,6 +185,7 @@
     <Compile Include="Reflection\PropertyInfo.cs" />
     <Compile Include="Threading\Tasks\CancellationToken.cs" />
     <Compile Include="Threading\Tasks\Exception.cs" />
+    <Compile Include="Threading\WaitHandleExtensions.cs" />
     <Compile Include="TimeSpan.cs" />
     <Compile Include="TimeZoneInfo.cs" />
     <Compile Include="Text\StringBuilder.cs" />

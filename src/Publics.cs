@@ -177,6 +177,10 @@ namespace Mannex
         public static partial class TimeSpanExtensions { }
 
         #if NET4
+        public static partial class WaitHandleExtensions { }
+        #endif
+
+        #if NET4
         namespace Tasks
         {
             public static partial class CancellationTokenExtensions { }
