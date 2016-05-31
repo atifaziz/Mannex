@@ -61,14 +61,14 @@ namespace Mannex.Diagnostics
             catch (InvalidOperationException e)
             {
                 // Occurs when:
-                // - process has already exited. 
+                // - process has already exited.
                 // - no process is associated with this Process object.
                 return e;
             }
             catch (Win32Exception e)
             {
                 // Occurs when:
-                // - associated process could not be terminated. 
+                // - associated process could not be terminated.
                 // - process is terminating.
                 // - associated process is a Win16 executable.
                 return e;
@@ -76,7 +76,7 @@ namespace Mannex.Diagnostics
         }
 
         /// <summary>
-        /// Instructs the <see cref="Process"/> component to wait the specified 
+        /// Instructs the <see cref="Process"/> component to wait the specified
         /// amount of time for the associated process to exit. If the specified
         /// time-out period is <c>null</c> then the wait is indefinite.
         /// </summary>
@@ -88,8 +88,8 @@ namespace Mannex.Diagnostics
         }
 
         /// <summary>
-        /// Begins asynchronous read operations on the re-directed <see cref="Process.StandardOutput"/> 
-        /// and <see cref="Process.StandardError"/> of the application. 
+        /// Begins asynchronous read operations on the re-directed <see cref="Process.StandardOutput"/>
+        /// and <see cref="Process.StandardError"/> of the application.
         /// Each line on the standard output is written to a <see cref="TextWriter"/>.
         /// </summary>
         /// <returns>
@@ -102,7 +102,7 @@ namespace Mannex.Diagnostics
         }
 
         /// <summary>
-        /// Begins asynchronous read operations on the re-directed <see cref="Process.StandardOutput"/> 
+        /// Begins asynchronous read operations on the re-directed <see cref="Process.StandardOutput"/>
         /// and <see cref="Process.StandardError"/> of the application.
         /// Each line on either is written to a respective <see cref="TextWriter"/>.
         /// </summary>
@@ -114,43 +114,44 @@ namespace Mannex.Diagnostics
         {
             if (process == null) throw new ArgumentNullException("process");
 
-            return BeginReadLineImpl(process,
-                (output ?? TextWriter.Null).WriteLine,
-                (error ?? TextWriter.Null).WriteLine);
+            return BeginReadLine(process, (output ?? TextWriter.Null).WriteLine,
+                                          (error  ?? TextWriter.Null).WriteLine);
         }
 
         /// <summary>
-        /// Begins asynchronous read operations on the re-directed <see cref="Process.StandardOutput"/> 
+        /// Begins asynchronous read operations on the re-directed <see cref="Process.StandardOutput"/>
         /// and <see cref="Process.StandardError"/> of the application. Each line on the standard output
         /// is sent to a callback.
         /// </summary>
         /// <returns>
         /// Returns an action that can be used to wait on outputs to drain.
         /// </returns>
-        
+
         public static Func<TimeSpan?, bool> BeginReadLine(this Process process, Action<string> output)
         {
             return BeginReadLine(process, output, null);
         }
 
         /// <summary>
-        /// Begins asynchronous read operations on the re-directed <see cref="Process.StandardOutput"/> 
-        /// and <see cref="Process.StandardError"/> of the application. Each line on either is
-        /// sent to a respective callback.
+        /// Begins asynchronous read operations on the re-directed
+        /// <see cref="Process.StandardOutput"/> and
+        /// <see cref="Process.StandardError"/> of the application. Each line
+        /// on either is sent to a respective callback.
         /// </summary>
         /// <returns>
         /// Returns an action that can be used to wait on outputs to drain.
         /// </returns>
-        
+
         public static Func<TimeSpan?, bool> BeginReadLine(this Process process, Action<string> output, Action<string> error)
         {
             if (process == null) throw new ArgumentNullException("process");
 
-            return BeginReadLineImpl(process, output ?? TextWriter.Null.WriteLine,
-                                              error  ?? TextWriter.Null.WriteLine);
+            var e = BeginReadLineImpl(process, output ?? TextWriter.Null.WriteLine,
+                                               error  ?? TextWriter.Null.WriteLine);
+            return timeout => e.WaitOne(timeout.ToTimeout());
         }
 
-        static Func<TimeSpan?, bool> BeginReadLineImpl(Process process, Action<string> output, Action<string> error)
+        static ManualResetEvent BeginReadLineImpl(Process process, Action<string> output, Action<string> error)
         {
             var done = new ManualResetEvent(false);
             var pending = 2;
@@ -162,8 +163,30 @@ namespace Mannex.Diagnostics
             process.ErrorDataReceived += OnDataReceived(error, onEof);
             process.BeginErrorReadLine();
 
-            return timeout => done.WaitOne(timeout.ToTimeout());
+            return done;
         }
+
+        #if NET4
+
+        /// <summary>
+        /// Begins asynchronous read operations on the re-directed
+        /// <see cref="Process.StandardOutput"/> and
+        /// <see cref="Process.StandardError"/> of the application. Each line
+        /// on either is sent to a respective callback.
+        /// </summary>
+        /// <returns>
+        /// Returns an action that can be used to asynchronously wait on
+        /// outputs to drain.
+        /// </returns>
+
+        public static Func<TimeSpan?, Task<bool>> BeginReadLineAsync(this Process process, Action<string> output, Action<string> error)
+        {
+            var e = BeginReadLineImpl(process, output ?? TextWriter.Null.WriteLine,
+                                               error ?? TextWriter.Null.WriteLine);
+            return timeout => e.WaitOneAsync(timeout);
+        }
+
+        #endif
 
         static DataReceivedEventHandler OnDataReceived(
             Action<string> line, Action eof)
