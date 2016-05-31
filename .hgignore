@@ -10,3 +10,4 @@ _ReSharper.*
 *.orig
 dist/**
 packages/**
+.vs/
