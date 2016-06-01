@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Mannex</id>
-        <version>2.14.2</version>
+        <version>2.15</version>
         <title>Mannex</title>
         <authors>Atif Aziz</authors>
         <owners>Atif Aziz</owners>
@@ -12,8 +12,7 @@
         <description>Extension methods for .NET.</description>
         <copyright>Copyright (c) 2009, Atif Aziz. All rights reserved.</copyright>
         <tags>extension methods</tags>
-        <releaseNotes>Service release with bug fix for ParseXsvAsDataTable (extension for TextReader).
-See https://bitbucket.org/raboof/mannex/wiki/ApiChanges for API changes across versions.</releaseNotes>
+        <releaseNotes>See https://bitbucket.org/raboof/mannex/wiki/ApiChanges for API changes across versions.</releaseNotes>
     </metadata>
     <files>
         <file src="..\bin\net-3.5\Release\*" target="lib\net35" />
