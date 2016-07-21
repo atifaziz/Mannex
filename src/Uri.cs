@@ -28,9 +28,12 @@ namespace Mannex
     using System;
     using System.Collections.Specialized;
     using System.Diagnostics;
+    using System.Linq;
     using System.Net;
     using System.Text;
     using System.Web;
+    using Collections.Specialized;
+    using Web;
 
     #endregion
 
@@ -62,6 +65,54 @@ namespace Mannex
         {
             if (uri == null) throw new ArgumentNullException("uri");
             return HttpUtility.ParseQueryString(uri.Query, encoding ?? Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// Parses <see cref="Uri.Query"/> into <see cref="NameValueCollection"/>
+        /// and merges with another <see cref="NameValueCollection"/> to form
+        /// the final and resulting URI with the new query.
+        /// </summary>
+
+        public static Uri MergeQuery(this Uri uri, NameValueCollection updates)
+        {
+            if (uri == null) throw new ArgumentNullException("uri");
+
+            if (updates == null)
+                return uri;
+
+            var query = uri.ParseQuery();
+            var merge = new NameValueCollection();
+
+            for (var i = 0; i < query.Count; i++)
+            {
+                var key = query.GetKey(i);
+                string[] values;
+                if (updates.ContainsKey(key))
+                {
+                    values = updates.GetValues(key);
+                    updates.Remove(key);
+                }
+                else
+                {
+                    values = query.GetValues(i);
+                }
+                if (values == null)
+                    continue;
+                foreach (var value in values)
+                    merge.Add(key, value);
+            }
+
+            for (var i = 0; i < updates.Count; i++)
+            {
+                var key = updates.GetKey(i);
+                var values = updates.GetValues(i);
+                Debug.Assert(values != null);
+                foreach (var value in values)
+                    merge.Add(key, value);
+            }
+
+            var qs = merge.ToQueryString();
+            return new UriBuilder(uri) { Query = qs.TryCharAt(0) == '?' ? qs.Substring(1) : qs }.Uri;
         }
 
         /// <summary>

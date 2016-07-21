@@ -26,6 +26,7 @@ namespace Mannex.Tests
     #region Imports
 
     using System;
+    using System.Collections.Specialized;
     using System.Net;
     using Xunit;
 
@@ -282,6 +283,69 @@ namespace Mannex.Tests
         {
             var url = new Uri("http://johndoe:secret@www.example.com/").RemoveUserNamePassword();
             Assert.Equal(new Uri("http://www.example.com/"), url);
+        }
+
+        [Fact]
+        public void MergeQueryFailsWithNullUri()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => UriExtensions.MergeQuery(null, null));
+            Assert.Equal("uri", e.ParamName);
+        }
+
+        [Fact]
+        public void MergeQueryWithNullCollectionReturnsOriginalUrl()
+        {
+            var url = new Uri("http://www.example.com/?query");
+            var result = url.MergeQuery(null);
+            Assert.Equal(url, result);
+        }
+
+        [Fact]
+        public void MergeQuerySinglePair()
+        {
+            var url = new Uri("http://www.example.com/?a=1&b=2&c=3");
+            var result = url.MergeQuery(new NameValueCollection
+            {
+                { "b", "foo" },
+                { "d", "bar" },
+            });
+            Assert.Equal(new Uri("http://www.example.com/?a=1&b=foo&c=3&d=bar"), result);
+        }
+
+        [Fact]
+        public void MergeQueryMultiValue()
+        {
+            var url = new Uri("http://www.example.com/?a=1&b=2&c=3");
+            var result = url.MergeQuery(new NameValueCollection
+            {
+                { "b", "foo" },
+                { "b", "bar" },
+            });
+            Assert.Equal(new Uri("http://www.example.com/?a=1&b=foo&b=bar&c=3"), result);
+        }
+
+        [Fact]
+        public void MergeQueryNullValue()
+        {
+            var url = new Uri("http://www.example.com/?a=1&b=2&c=3");
+            var result = url.MergeQuery(new NameValueCollection
+            {
+                { "b", null },
+            });
+            Assert.Equal(new Uri("http://www.example.com/?a=1&c=3"), result);
+        }
+
+        [Fact]
+        public void MergeQueryWithBlankInitialQuery()
+        {
+            var url = new Uri("http://www.example.com/");
+            var result = url.MergeQuery(new NameValueCollection
+            {
+                { "a", "foo" },
+                { "b", "bar" },
+                { "c", "baz" },
+            });
+            Assert.Equal(new Uri("http://www.example.com/?a=foo&b=bar&c=baz"), result);
         }
     }
 }
