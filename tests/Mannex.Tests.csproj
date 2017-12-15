@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
   <PropertyGroup>
@@ -80,6 +80,7 @@
     <Compile Include="Data\DataTable.cs" />
     <Compile Include="DateTimeTests.cs" />
     <Compile Include="DelegateTests.cs" />
+    <Compile Include="Globalization\CalendarTests.cs" />
     <Compile Include="SingleTests.cs" />
     <Compile Include="DoubleTests.cs" />
     <Compile Include="Net\WebHeaderCollectionTests.cs" />
