@@ -41,18 +41,45 @@ namespace Mannex.Globalization
         /// week given the year, week-rule and which day of the
         /// week should be used as the first of the week.
         /// </summary>
-        
+
         public static DateTime FirstDateOfWeek(this Calendar calendar, int year, int weekOfYear, CalendarWeekRule weekRule, DayOfWeek firstDayOfWeek)
+        {
+            return FirstDateOfWeek(calendar, year, weekOfYear, weekRule, firstDayOfWeek, firstDayOfWeek);
+        }
+
+        /// <summary>
+        /// Calculates the first date that occurs in a calendar
+        /// week given the year and as defined per
+        /// <a href="https://en.wikipedia.org/wiki/ISO_week_date">ISO
+        /// week date</a>.
+        /// </summary>
+
+        public static DateTime FirstDateOfIsoWeek(this Calendar calendar, int year, int weekOfYear)
+        {
+            return calendar.FirstDateOfWeek(year, weekOfYear,
+                                            CalendarWeekRule.FirstFourDayWeek,
+                                            DayOfWeek.Monday,
+                                            DayOfWeek.Thursday);
+        }
+
+        /// <summary>
+        /// Calculates the first date that occurs in a calendar
+        /// week given the year, week-rule, which day of the
+        /// week should be used as the first of the week and which
+        /// day of the week should be used as the first of the year.
+        /// </summary>
+        
+        public static DateTime FirstDateOfWeek(this Calendar calendar, int year, int weekOfYear, CalendarWeekRule weekRule, DayOfWeek firstDayOfWeek, DayOfWeek yearFirstDayOfWeek)
         {
             // Source & credit: 
             // http://stackoverflow.com/questions/662379/calculate-date-from-week-number/914943#914943
+            // https://stackoverflow.com/a/9064954/6682
 
-            if (calendar == null) throw new ArgumentNullException("calendar");
             var jan1 = new DateTime(year, 1, 1);
-            var daysOffset = (int) firstDayOfWeek - (int) jan1.DayOfWeek;
-            var firstMonday = jan1.AddDays(daysOffset);
-            var firstWeek = calendar.GetWeekOfYear(jan1, weekRule, firstDayOfWeek);
-            return firstMonday.AddDays((weekOfYear - (firstWeek <= 1 ? 1 : 0)) * 7);
+            var daysOffset = (int) yearFirstDayOfWeek - (int) jan1.DayOfWeek;
+            var firstDay = jan1.AddDays(daysOffset);
+            var firstWeek = calendar.GetWeekOfYear(firstDay, weekRule, firstDayOfWeek);
+            return firstDay.AddDays((weekOfYear - (firstWeek <= 1 ? 1 : 0)) * 7 - (yearFirstDayOfWeek - firstDayOfWeek));
         }
     }
 }
