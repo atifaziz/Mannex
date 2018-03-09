@@ -12,8 +12,7 @@
         <description>Extension methods for .NET.</description>
         <copyright>Copyright (c) 2009, Atif Aziz. All rights reserved.</copyright>
         <tags>extension methods</tags>
-        <releaseNotes>Service release to align assembly version.
-See https://bitbucket.org/raboof/mannex/wiki/ApiChanges for API changes across versions.</releaseNotes>
+        <releaseNotes>https://github.com/atifaziz/Mannex/releases</releaseNotes>
     </metadata>
     <files>
         <file src="..\bin\net-3.5\Release\*" target="lib\net35" />
