@@ -77,9 +77,9 @@ namespace Mannex.Globalization
 
             var jan1 = new DateTime(year, 1, 1);
             var daysOffset = (int) yearFirstDayOfWeek - (int) jan1.DayOfWeek;
-            var firstMonday = jan1.AddDays(daysOffset);
-            var firstWeek = calendar.GetWeekOfYear(firstMonday, weekRule, firstDayOfWeek);
-            return firstMonday.AddDays((weekOfYear - (firstWeek <= 1 ? 1 : 0)) * 7 - (yearFirstDayOfWeek - firstDayOfWeek));
+            var firstDay = jan1.AddDays(daysOffset);
+            var firstWeek = calendar.GetWeekOfYear(firstDay, weekRule, firstDayOfWeek);
+            return firstDay.AddDays((weekOfYear - (firstWeek <= 1 ? 1 : 0)) * 7 - (yearFirstDayOfWeek - firstDayOfWeek));
         }
     }
 }
