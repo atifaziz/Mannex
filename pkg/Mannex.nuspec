@@ -7,7 +7,7 @@
         <authors>Atif Aziz</authors>
         <owners>Atif Aziz</owners>
         <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
-        <projectUrl>https://bitbucket.org/raboof/mannex</projectUrl>
+        <projectUrl>https://github.com/atifaziz/Mannex</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Extension methods for .NET.</description>
         <copyright>Copyright (c) 2009, Atif Aziz. All rights reserved.</copyright>
