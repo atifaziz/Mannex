@@ -23,8 +23,6 @@
 
 namespace Mannex.Threading.Tasks
 {
-    #if NET4
-
     #region Imports
 
     using System;
@@ -213,6 +211,4 @@ namespace Mannex.Threading.Tasks
             return tcs.Task;
         }
     }
-
-    #endif // NET4
 }

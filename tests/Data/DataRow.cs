@@ -26,10 +26,7 @@ namespace Mannex.Tests.Data
     #region Imports
 
     using System;
-    using System.Collections.Generic;
     using System.Data;
-    using System.Linq;
-    using System.Web.UI.WebControls;
     using Mannex.Data;
     using Xunit;
 

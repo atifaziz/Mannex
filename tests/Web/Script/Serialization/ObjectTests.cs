@@ -21,6 +21,8 @@
 //
 #endregion
 
+#if ASPNET
+
 namespace Mannex.Tests.Web.Script.Serialization
 {
     #region Imports
@@ -57,3 +59,5 @@ namespace Mannex.Tests.Web.Script.Serialization
         }
     }
 }
+
+#endif // ASPNET

@@ -21,6 +21,8 @@
 //
 #endregion
 
+#if VB
+
 namespace Mannex.Data
 {
     #region Imports
@@ -204,3 +206,5 @@ namespace Mannex.Data
         }
     }
 }
+
+#endif // VB

@@ -39,13 +39,13 @@ namespace Mannex.Tests
         {
             // ReSharper disable InvokeAsExtensionMethod
             
-            AssertArgumentNullExceptionForNullThis(() => TupleExtensions.AsEnumerable((Tuple<object>)null));
-            AssertArgumentNullExceptionForNullThis(() => TupleExtensions.AsEnumerable((Tuple<object, object>)null));
-            AssertArgumentNullExceptionForNullThis(() => TupleExtensions.AsEnumerable((Tuple<object, object, object>)null));
-            AssertArgumentNullExceptionForNullThis(() => TupleExtensions.AsEnumerable((Tuple<object, object, object, object>)null));
-            AssertArgumentNullExceptionForNullThis(() => TupleExtensions.AsEnumerable((Tuple<object, object, object, object, object>)null));
-            AssertArgumentNullExceptionForNullThis(() => TupleExtensions.AsEnumerable((Tuple<object, object, object, object, object, object>)null));
-            AssertArgumentNullExceptionForNullThis(() => TupleExtensions.AsEnumerable((Tuple<object, object, object, object, object, object, object>)null));
+            AssertArgumentNullExceptionForNullThis(() => Mannex.TupleExtensions.AsEnumerable((Tuple<object>)null));
+            AssertArgumentNullExceptionForNullThis(() => Mannex.TupleExtensions.AsEnumerable((Tuple<object, object>)null));
+            AssertArgumentNullExceptionForNullThis(() => Mannex.TupleExtensions.AsEnumerable((Tuple<object, object, object>)null));
+            AssertArgumentNullExceptionForNullThis(() => Mannex.TupleExtensions.AsEnumerable((Tuple<object, object, object, object>)null));
+            AssertArgumentNullExceptionForNullThis(() => Mannex.TupleExtensions.AsEnumerable((Tuple<object, object, object, object, object>)null));
+            AssertArgumentNullExceptionForNullThis(() => Mannex.TupleExtensions.AsEnumerable((Tuple<object, object, object, object, object, object>)null));
+            AssertArgumentNullExceptionForNullThis(() => Mannex.TupleExtensions.AsEnumerable((Tuple<object, object, object, object, object, object, object>)null));
 
             // ReSharper restore InvokeAsExtensionMethod
         }

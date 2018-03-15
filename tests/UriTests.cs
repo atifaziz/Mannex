@@ -64,7 +64,7 @@ namespace Mannex.Tests
             Assert.Throws<ArgumentNullException>(() => UriExtensions.TryGetUserNamePassword(null));
         }
  
-        static void TryGetUserNamePassword(string url, NetworkCredential expectedCredential)
+        static void TestTryGetUserNamePassword(string url, NetworkCredential expectedCredential)
         {
             var result = new Uri(url).TryGetUserNamePassword();
             if (expectedCredential == null) 
@@ -77,27 +77,27 @@ namespace Mannex.Tests
         [Fact]
         public void TryGetUserNamePassword()
         {
-            TryGetUserNamePassword(
+            TestTryGetUserNamePassword(
                 "http://johndoe:secret@www.example.com/", 
                 new NetworkCredential("johndoe", "secret"));
 
-            TryGetUserNamePassword(
+            TestTryGetUserNamePassword(
                 "http://www.example.com/", 
                 null);
 
-            TryGetUserNamePassword(
+            TestTryGetUserNamePassword(
                 "http://john%3adoe:sec%3aret@www.example.com/", 
                 new NetworkCredential("john:doe", "sec:ret"));            
 
-            TryGetUserNamePassword(
+            TestTryGetUserNamePassword(
                 "http://johndoe@www.example.com/", 
                 new NetworkCredential("johndoe", (string) null));
 
-            TryGetUserNamePassword(
+            TestTryGetUserNamePassword(
                 "http://:secret@www.example.com/", 
                 null);
 
-            TryGetUserNamePassword(
+            TestTryGetUserNamePassword(
                 "http://:@www.example.com/",
                 null);
         }
@@ -108,12 +108,7 @@ namespace Mannex.Tests
             Assert.Throws<ArgumentNullException>(() => UriExtensions.GetUserNamePassword(null));
         }
 
-        static void GetUserNamePassword(string url)
-        {
-            GetUserNamePassword(url, null);
-        }
-
-        static void GetUserNamePassword(string url, NetworkCredential expectedCredential)
+        static void TestGetUserNamePassword(string url, NetworkCredential expectedCredential = null)
         {
             var credential = new Uri(url).GetUserNamePassword();
             Assert.NotNull(credential);
@@ -124,34 +119,34 @@ namespace Mannex.Tests
         [Fact]
         public void GetUserNamePassword()
         {
-            GetUserNamePassword("http://johndoe:secret@www.example.com/", 
+            TestGetUserNamePassword("http://johndoe:secret@www.example.com/", 
                 new NetworkCredential("johndoe", "secret"));
 
-            GetUserNamePassword("http://john%3adoe:sec%3aret@www.example.com/", 
+            TestGetUserNamePassword("http://john%3adoe:sec%3aret@www.example.com/", 
                 new NetworkCredential("john:doe", "sec:ret"));
 
-            GetUserNamePassword("http://johndoe@www.example.com/",
+            TestGetUserNamePassword("http://johndoe@www.example.com/",
                 new NetworkCredential("johndoe", (string) null));
         }
  
         [Fact]
         public void GetUserNamePasswordFailsWhenUserInfoAbsent()
         {
-            var e = Assert.Throws<ArgumentException>(() => GetUserNamePassword("http://www.example.com/"));
+            var e = Assert.Throws<ArgumentException>(() => TestGetUserNamePassword("http://www.example.com/"));
             Assert.Equal("http://www.example.com/ is missing user credentials.", e.Message);
         }
  
         [Fact]
         public void GetUserNamePasswordFailsWithPasswordOnly()
         {
-            var e = Assert.Throws<ArgumentException>(() => GetUserNamePassword("http://:secret@www.example.com/"));
+            var e = Assert.Throws<ArgumentException>(() => TestGetUserNamePassword("http://:secret@www.example.com/"));
             Assert.Equal("http://:secret@www.example.com/ is missing user credentials.", e.Message);
         }
 
         [Fact]
         public void GetUserNamePasswordFailsWithEmptyUserNameAndPassword()
         {
-            var e = Assert.Throws<ArgumentException>(() => GetUserNamePassword("http://:@www.example.com/"));
+            var e = Assert.Throws<ArgumentException>(() => TestGetUserNamePassword("http://:@www.example.com/"));
             Assert.Equal("http://:@www.example.com/ is missing user credentials.", e.Message);
         }
 
@@ -161,7 +156,7 @@ namespace Mannex.Tests
             Assert.Throws<ArgumentNullException>(() => UriExtensions.TrySplitUserNamePassword<object>(null, delegate { throw new NotImplementedException(); }));
         }
 
-        static void TrySplitUserNamePassword(string url, string expectedUrl, NetworkCredential expectedCredential)
+        static void TestTrySplitUserNamePassword(string url, string expectedUrl, NetworkCredential expectedCredential)
         {
             var result = new Uri(url).TrySplitUserNamePassword((url2, credential) => new { Url = url2, Credential = credential });
             Assert.NotNull(result);
@@ -182,32 +177,32 @@ namespace Mannex.Tests
         [Fact]
         public void TrySplitUserNamePassword()
         {
-            TrySplitUserNamePassword(
+            TestTrySplitUserNamePassword(
                 "http://johndoe:secret@www.example.com/", 
                 "http://www.example.com/", 
                 new NetworkCredential("johndoe", "secret"));
 
-            TrySplitUserNamePassword(
+            TestTrySplitUserNamePassword(
                 "http://www.example.com/", 
                 "http://www.example.com/", 
                 null);
 
-            TrySplitUserNamePassword(
+            TestTrySplitUserNamePassword(
                 "http://john%3adoe:sec%3aret@www.example.com/", 
                 "http://www.example.com/", 
                 new NetworkCredential("john:doe", "sec:ret"));            
 
-            TrySplitUserNamePassword(
+            TestTrySplitUserNamePassword(
                 "http://johndoe@www.example.com/", 
                 "http://www.example.com/",
                 new NetworkCredential("johndoe", (string) null));
 
-            TrySplitUserNamePassword(
+            TestTrySplitUserNamePassword(
                 "http://:secret@www.example.com/", 
                 "http://www.example.com/", 
                 null);
 
-            TrySplitUserNamePassword(
+            TestTrySplitUserNamePassword(
                 "http://:@www.example.com/",
                 "http://www.example.com/",
                 null);
@@ -219,12 +214,12 @@ namespace Mannex.Tests
             Assert.Throws<ArgumentNullException>(() => UriExtensions.SplitUserNamePassword<object>(null, delegate { throw new NotImplementedException(); }));
         }
 
-        static void SplitUserNamePassword(string url)
+        static void TestSplitUserNamePassword(string url)
         {
-            GetUserNamePassword(url, null);
+            TestGetUserNamePassword(url, null);
         }
 
-        static void SplitUserNamePassword(string url, string expectedUrl, NetworkCredential expectedCredential)
+        static void TestSplitUserNamePassword(string url, string expectedUrl, NetworkCredential expectedCredential)
         {
             var result = new Uri(url).SplitUserNamePassword((url2, credential) => new { Url = url2, Credential = credential });
             Assert.NotNull(result);
@@ -238,15 +233,15 @@ namespace Mannex.Tests
         [Fact]
         public void SplitUserNamePassword()
         {
-            SplitUserNamePassword("http://johndoe:secret@www.example.com/", 
+            TestSplitUserNamePassword("http://johndoe:secret@www.example.com/", 
                 "http://www.example.com/",
                 new NetworkCredential("johndoe", "secret"));
 
-            SplitUserNamePassword("http://john%3adoe:sec%3aret@www.example.com/", 
+            TestSplitUserNamePassword("http://john%3adoe:sec%3aret@www.example.com/", 
                 "http://www.example.com/",
                 new NetworkCredential("john:doe", "sec:ret"));
 
-            SplitUserNamePassword("http://johndoe@www.example.com/", 
+            TestSplitUserNamePassword("http://johndoe@www.example.com/", 
                 "http://www.example.com/",
                 new NetworkCredential("johndoe", (string) null));
         }
@@ -254,21 +249,21 @@ namespace Mannex.Tests
         [Fact]
         public void SplitUserNamePasswordFailsWhenUserInfoAbsent()
         {
-            var e = Assert.Throws<ArgumentException>(() => SplitUserNamePassword("http://www.example.com/"));
+            var e = Assert.Throws<ArgumentException>(() => TestSplitUserNamePassword("http://www.example.com/"));
             Assert.Equal("http://www.example.com/ is missing user credentials.", e.Message);
         }
  
         [Fact]
         public void SplitUserNamePasswordFailsWithPasswordOnly()
         {
-            var e = Assert.Throws<ArgumentException>(() => SplitUserNamePassword("http://:secret@www.example.com/"));
+            var e = Assert.Throws<ArgumentException>(() => TestSplitUserNamePassword("http://:secret@www.example.com/"));
             Assert.Equal("http://:secret@www.example.com/ is missing user credentials.", e.Message);
         }
 
         [Fact]
         public void SplitUserNamePasswordFailsWithEmptyUserNameAndPassword()
         {
-            var e = Assert.Throws<ArgumentException>(() => SplitUserNamePassword("http://:@www.example.com/"));
+            var e = Assert.Throws<ArgumentException>(() => TestSplitUserNamePassword("http://:@www.example.com/"));
             Assert.Equal("http://:@www.example.com/ is missing user credentials.", e.Message);
         }
 

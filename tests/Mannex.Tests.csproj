@@ -1,176 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3729AB0B-288A-4752-9807-3C6997B51502}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mannex.Tests</RootNamespace>
-    <AssemblyName>Mannex.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>6e78ec42</NuGetPackageImportStamp>
+    <TargetFrameworks>net45;netcoreapp2.0</TargetFrameworks>
+    <IsPackable>false</IsPackable>
+    <Description>Unit test library for Mannex</Description>
+    <Copyright>Copyright (c) 2009 Atif Aziz. All rights reserved.</Copyright>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NETFX 4.5 Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>5</LangVersion>
+
+  <PropertyGroup Condition="'$(TargetFramework)' != 'netcoreapp2.0'">
+    <DefineConstants>$(DefineConstants);ASPNET;VB</DefineConstants>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Mannex.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp2.0'">
     <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.assert, Version=2.0.0.2929, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.0.0\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.assert.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.core, Version=2.0.0.2929, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.0.0\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Collections\BitArrayTests.cs" />
-    <Compile Include="Collections\Generic\IEnumeratorTests.cs" />
-    <Compile Include="Collections\Generic\IEqualityComparerTests.cs" />
-    <Compile Include="Collections\Generic\PairingTests.cs" />
-    <Compile Include="Collections\Generic\IComparerTests.cs" />
-    <Compile Include="Collections\Specialized\NameValueCollectionTests.cs" />
-    <Compile Include="ActionTests.cs" />
-    <Compile Include="Data\DataRow.cs" />
-    <Compile Include="Data\DataTable.cs" />
-    <Compile Include="DateTimeTests.cs" />
-    <Compile Include="DelegateTests.cs" />
-    <Compile Include="Globalization\CalendarTests.cs" />
-    <Compile Include="SingleTests.cs" />
-    <Compile Include="DoubleTests.cs" />
-    <Compile Include="Net\WebHeaderCollectionTests.cs" />
-    <Compile Include="Net\Mime\ContentTypeTests.cs" />
-    <Compile Include="IComparableTests.cs" />
-    <Compile Include="Data\IDataRecordTests.cs" />
-    <Compile Include="IFormattableTests.cs" />
-    <Compile Include="ICloneableTests.cs" />
-    <Compile Include="Reflection\MethodInfoTests.cs" />
-    <Compile Include="Text\StringBuilderTests.cs" />
-    <Compile Include="Threading\Tasks\ExceptionTests.cs" />
-    <Compile Include="Threading\Tasks\ImmediateTaskScheduler.cs" />
-    <Compile Include="Threading\Tasks\TaskCompletionSourceTests.cs" />
-    <Compile Include="Threading\Tasks\TaskTests.cs" />
-    <Compile Include="Threading\WaitHandleTests.cs" />
-    <Compile Include="TimeSpanTests.cs" />
-    <Compile Include="TimeZoneInfoTests.cs" />
-    <Compile Include="TupleTests.cs" />
-    <Compile Include="EnumTests.cs" />
-    <Compile Include="IServiceProviderTests.cs" />
-    <Compile Include="ExceptionTests.cs" />
-    <Compile Include="FuncTests.cs" />
-    <Compile Include="Int64Tests.cs" />
-    <Compile Include="Text\RegularExpressions\MatchTests.cs" />
-    <Compile Include="TypeTests.cs" />
-    <Compile Include="UriTests.cs" />
-    <Compile Include="Data\IDataReaderTests.cs" />
-    <Compile Include="Collections\Generic\ListTests.cs" />
-    <Compile Include="Collections\Generic\DictionaryTests.cs" />
-    <Compile Include="BooleanTests.cs" />
-    <Compile Include="ArrayTests.cs" />
-    <Compile Include="IO\TextReaderTests.cs" />
-    <Compile Include="IO\StringTests.cs" />
-    <Compile Include="Json\StringTests.cs" />
-    <Compile Include="Reflection\ICustomAttributeProviderTests.cs" />
-    <Compile Include="StringTests.cs" />
-    <Compile Include="EventHandlerTests.cs" />
-    <Compile Include="PredicateTests.cs" />
-    <Compile Include="Int32Tests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Text\RegularExpressions\StringTests.cs" />
-    <Compile Include="Threading\TimeSpanTests.cs" />
-    <Compile Include="Web\Hosting\VirtualFileTests.cs" />
-    <Compile Include="Web\NameValueCollectionTests.cs" />
-    <Compile Include="Web\Script\Serialization\ObjectTests.cs" />
-    <Compile Include="Web\UI\DataBindingTests.cs" />
-    <Compile Include="Web\StringHtmlTests.cs" />
-    <Compile Include="Xml\Linq\XElementTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\src\Mannex.csproj">
-      <Project>{F577B73C-2D61-4D06-A641-7610D173C1E0}</Project>
-      <Name>Mannex</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

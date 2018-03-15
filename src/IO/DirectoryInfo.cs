@@ -160,8 +160,6 @@ namespace Mannex.IO
                       .ToArray();
         }
 
-        #if NET4
-
         /// <summary>
         /// Same as <see cref="DirectoryInfo.GetFileSystemInfos(String,SearchOption)"/>
         /// except filters hidden and system entries.
@@ -302,7 +300,5 @@ namespace Mannex.IO
                    where e.IsUserVisible()
                    select e;
         }
-
-        #endif
     }
 }

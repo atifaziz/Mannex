@@ -33,8 +33,6 @@ namespace Mannex
     /// </summary>
     static partial class EnumExtensions
     {
-        #if NET4
-
         /// <summary>
         /// Determines whether any of the given bit fields are set in the 
         /// current instance.
@@ -111,7 +109,5 @@ namespace Mannex
                  ? Enumerable.Repeat((T)(object) value, 1) 
                  : Enumerable.Empty<T>();
         }
-
-        #endif
     }
 }

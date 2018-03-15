@@ -26,9 +26,8 @@ namespace Mannex.Tests.Text.RegularExpressions
     #region Imports
 
     using System.Text.RegularExpressions;
-    using System.Web.UI.WebControls.WebParts;
-    using Xunit;
     using Mannex.Text.RegularExpressions;
+    using Xunit;
 
     #endregion
 

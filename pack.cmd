@@ -1,15 +1,15 @@
 @echo off
-setlocal
-chcp 1252 > nul
-for %%i in (NuGet.exe) do set nuget=%%~dpnx$PATH:i
-if "%nuget%"=="" goto :nonuget
-cd "%~dp0"
-if not exist dist md dist
-if not %errorlevel%==0 exit /b %errorlevel%
-call build /v:m && for %%i in (pkg\*.nuspec) do NuGet pack %%i -Symbols -OutputDirectory dist
+pushd "%~dp0"
+call :main %*
+popd
 goto :EOF
 
-:nonuget
-echo NuGet executable not found in PATH
-echo For more on NuGet, see http://nuget.codeplex.com
-exit /b 2
+:main
+setlocal
+if not exist dist md dist
+if not %errorlevel%==0 exit /b %errorlevel%
+set VERSION_SUFFIX=
+if not "%~1"=="" set VERSION_SUFFIX=/p:VersionSuffix=%1
+call build /v:m ^
+  && call msbuild.cmd /v:m /t:Pack /p:Configuration=Release %VERSION_SUFFIX%
+goto :EOF

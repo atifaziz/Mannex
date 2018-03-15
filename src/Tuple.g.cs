@@ -26,8 +26,6 @@ namespace Mannex
     using System;
     using System.Collections.Generic;
 
-    #if NET4
-
     partial class TupleExtensions
     {
         /// <summary>
@@ -286,6 +284,4 @@ namespace Mannex
         }
 
     }
-
-    #endif // NET4
 }

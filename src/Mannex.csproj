@@ -1,316 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F577B73C-2D61-4D06-A641-7610D173C1E0}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mannex</RootNamespace>
-    <AssemblyName>Mannex</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>net45;net40;netstandard2.0</TargetFrameworks>
+    <VersionPrefix>3.0.0</VersionPrefix>
+    <Copyright>Copyright (c) 2009 Atif Aziz. All rights reserved.</Copyright>
+    <Description>Extension methods for .NET.</Description>
+    <Authors>Atif Aziz</Authors>
+    <Owners>Atif Aziz</Owners>
+    <Company></Company>
+    <PackageProjectUrl>https://github.com/atifaziz/Mannex</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/atifaziz/Mannex</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>extension;methods</PackageTags>
+    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <PackageOutputPath>..\dist</PackageOutputPath>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NETFX 4.5 Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\bin\net-4.5\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET4;NET45</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>5</LangVersion>
+
+  <PropertyGroup Condition="'$(TargetFramework)' != 'netstandard2.0'">
+    <DefineConstants>$(DefineConstants);ASPNET;VB</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NETFX 4.5 Release|AnyCPU'">
-    <OutputPath>..\bin\net-4.5\Release\</OutputPath>
-    <DefineConstants>TRACE;NET4;NET45</DefineConstants>
-    <DocumentationFile>..\bin\net-4.5\Release\Mannex.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'NETFX 4.0 Debug|AnyCPU' ">
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\bin\net-4.0\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET4</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'NETFX 4.0 Release|AnyCPU' ">
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\bin\net-4.0\Release\</OutputPath>
-    <DefineConstants>TRACE;NET4</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\bin\net-4.0\Release\Mannex.xml</DocumentationFile>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NETFX 3.5 Debug|AnyCPU'">
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\bin\net-3.5\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>..\bin\Debug\Mannex.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NETFX 3.5 Release|AnyCPU'">
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <OutputPath>..\bin\net-3.5\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>..\bin\net-3.5\Release\Mannex.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>..\bin\Release\Mannex.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Security" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Web.Abstractions" Condition="'$(Configuration)' == 'NETFX 3.5 Debug' Or '$(Configuration)' == 'NETFX 3.5 Release'">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Content Include="..\COPYING.txt" Link="COPYING.txt">
+      <PackagePath />
+    </Content>
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Action.Return.g.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Action.Return.g.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Array.cs" />
-    <Compile Include="Delegate.cs" />
-    <Compile Include="Diagnostics\ProcessStartInfo.cs" />
-    <Compile Include="Disposable.cs" />
-    <Compile Include="OperatingSystem.cs" />
-    <Compile Include="Boolean.cs" />
-    <Compile Include="Collections\ArrayList.cs" />
-    <Compile Include="Collections\Generic\IEnumerator.cs" />
-    <Compile Include="Collections\Generic\IEqualityComparer.cs" />
-    <Compile Include="Collections\Generic\KeyValuePair.cs" />
-    <Compile Include="Collections\Generic\Pairing.cs" />
-    <Compile Include="Collections\Generic\List.cs" />
-    <Compile Include="Collections\Generic\Dictionary.cs" />
-    <Compile Include="Collections\IEnumerator.cs" />
-    <Compile Include="Collections\Specialized\NameValueCollection.cs" />
-    <Compile Include="ComponentModel\Design\IServiceContainer.cs" />
-    <Compile Include="ComponentModel\INotifyPropertyChanged.cs" />
-    <Compile Include="Collections\Generic\IComparer.cs" />
-    <Compile Include="Action.cs" />
-    <None Include="Action.Return.g.tt">
+    <None Update="Action.Return.g.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Action.Return.g.cs</LastGenOutput>
     </None>
-    <Compile Include="Collections\BitArray.cs" />
-    <Compile Include="Data\DataRow.cs" />
-    <Compile Include="IO\FileSystemInfo.cs" />
-    <Compile Include="IO\DirectoryInfo.cs" />
-    <Compile Include="Properties\AssemblyInfo.g.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AssemblyInfo.g.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Reflection\PropertyInfo.cs" />
-    <Compile Include="Threading\Tasks\CancellationToken.cs" />
-    <Compile Include="Threading\Tasks\Exception.cs" />
-    <Compile Include="Threading\WaitHandleExtensions.cs" />
-    <Compile Include="TimeSpan.cs" />
-    <Compile Include="TimeZoneInfo.cs" />
-    <Compile Include="Text\StringBuilder.cs" />
-    <Compile Include="Single.cs" />
-    <Compile Include="Double.cs" />
-    <Compile Include="Data\IDbCommand.cs" />
-    <Compile Include="IComparable.cs" />
-    <Compile Include="Data\DataTable.cs" />
-    <Compile Include="Data\TextReader.cs" />
-    <Compile Include="IFormattable.cs" />
-    <Compile Include="Globalization\NumberStyles.cs" />
-    <Compile Include="Data\Common\DbConnection.cs" />
-    <Compile Include="ICloneable.cs" />
-    <Compile Include="Net\WebHeaderCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RuntimeMethodHandle.cs" />
-    <Compile Include="Reflection\MethodInfo.cs" />
-    <Compile Include="Threading\Tasks\Task.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Threading\Tasks\TaskCompletionSource.cs" />
-    <Compile Include="Tuple.cs" />
-    <Compile Include="Data\IDataRecord.cs" />
-    <Compile Include="Enum.cs" />
-    <Compile Include="IServiceProvider.cs" />
-    <Compile Include="Data\IDataReader.cs" />
-    <Compile Include="Diagnostics\Process.cs" />
-    <Compile Include="Exception.cs" />
-    <Compile Include="Func+Action.Apply.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Func+Action.Apply.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Func.cs" />
-    <Compile Include="Int64.cs" />
-    <Compile Include="Reflection\Assembly.cs" />
-    <Compile Include="Reflection\ICustomAttributeProvider.cs" />
-    <Compile Include="Text\RegularExpressions\Match.cs" />
-    <Compile Include="Threading\Tasks\TaskFactory.cs" />
-    <Compile Include="Threading\TimeSpan.cs" />
-    <Compile Include="Tuple.g.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Tuple.g.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Type.cs" />
-    <Compile Include="Globalization\Calendar.cs" />
-    <Compile Include="Globalization\DateTimeFormatInfo.cs" />
-    <Compile Include="IO\FileInfo.cs" />
-    <Compile Include="Security\Cryptography\Array.cs" />
-    <Compile Include="Uri.cs" />
-    <Compile Include="DateTime.cs" />
-    <Compile Include="IO\Array.cs" />
-    <Compile Include="IO\ArraySegment.cs" />
-    <Compile Include="IO\Stream.cs" />
-    <Compile Include="IO\String.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IO\TextReader.cs" />
-    <Compile Include="Json\NameValueCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Json\String.cs" />
-    <Compile Include="Net\Mime\ContentType.cs" />
-    <Compile Include="Net\WebClient.cs" />
-    <Compile Include="String.cs" />
-    <Compile Include="EventHandler.cs" />
-    <Compile Include="Int32.cs" />
-    <Compile Include="Predicate.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Publics.cs" />
-    <Compile Include="Text\RegularExpressions\String.cs" />
-    <Compile Include="Web\Hosting\VirtualFile.cs" />
-    <Compile Include="Web\HttpRequest.cs" />
-    <Compile Include="Web\NameValueCollection.cs" />
-    <Compile Include="Web\StringHtml.cs" />
-    <Compile Include="Web\UI\Control.cs" />
-    <Compile Include="Web\Uri.cs" />
-    <Compile Include="Web\Script\Serialization\Object.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Web\UI\DataBindingExtensions.cs" />
-    <Compile Include="Xml\Linq\XElement.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Func+Action.Apply.tt">
+    <None Update="Func+Action.Apply.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Func+Action.Apply.cs</LastGenOutput>
     </None>
-    <None Include="Properties\AssemblyInfo.g.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyInfo.g.cs</LastGenOutput>
-    </None>
-    <None Include="Tuple.g.tt">
+    <None Update="Tuple.g.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Tuple.g.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'netstandard2.0'">
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+      <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Action.Return.g.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Action.Return.g.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Tuple.g.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Tuple.g.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

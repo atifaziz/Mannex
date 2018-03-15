@@ -29,6 +29,7 @@ namespace Mannex.Tests.Threading
     using System.Threading.Tasks;
     using Mannex.Threading;
     using Xunit;
+    using WaitHandleExtensions = Mannex.Threading.WaitHandleExtensions;
 
     public class WaitHandleTests
     {

@@ -21,6 +21,8 @@
 //
 #endregion
 
+#if ASPNET
+
 namespace Mannex.Tests.Web.Hosting
 {
     #region Imports
@@ -133,3 +135,5 @@ namespace Mannex.Tests.Web.Hosting
         }
     }
 }
+
+#endif // ASPNET

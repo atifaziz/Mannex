@@ -41,6 +41,8 @@ namespace Mannex.Tests
                 ExceptionExtensions.PrepareForRethrow(null));
         }
 
+        #if NET45
+
         [Fact]
         public void PrepareForRethrowPreservesStackTrace()
         {
@@ -51,6 +53,19 @@ namespace Mannex.Tests
             Console.WriteLine(e.StackTrace);
             Assert.Contains("Baz", e.StackTrace);
         }
+
+        #else
+
+        [Fact]
+        public void PrepareForRethrowPreservesStackTrace()
+        {
+            Assert.Throws<PlatformNotSupportedException>(() => Bad.Foo(ex =>
+            {
+                throw ex.PrepareForRethrow();
+            }));
+        }
+
+        #endif
 
         [Fact]
         public void RethrowFailsWithNullSelf()

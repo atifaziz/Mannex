@@ -23,11 +23,8 @@
 
 namespace Mannex
 {
-    using System;
-
     public static partial class ActionExtensions { }
-    public static partial class ArrayExtensions {
-    }
+    public static partial class ArrayExtensions { }
     public static partial class BooleanExtensions { }
     public static partial class DateTimeExtensions { }
     public static partial class DelegateExtensions { }
@@ -44,13 +41,9 @@ namespace Mannex
     public static partial class RuntimeMethodHandleExtensions { }
     public static partial class SingleExtensions { }
     public static partial class StringExtensions { }
-    #if NET4
     public static partial class TimeSpanExtensions { }
-    #endif
     public static partial class TimeZoneInfoExtensions { }
-    #if NET4
     public static partial class TupleExtensions { }
-    #endif
     public static partial class TypeExtensions { }
     public static partial class UriExtensions { }
     public static partial class ICloneableExtensions { }
@@ -176,11 +169,8 @@ namespace Mannex
     {
         public static partial class TimeSpanExtensions { }
 
-        #if NET4
         public static partial class WaitHandleExtensions { }
-        #endif
 
-        #if NET4
         namespace Tasks
         {
             public static partial class CancellationTokenExtensions { }
@@ -189,7 +179,6 @@ namespace Mannex
             public static partial class TaskExtensions { }
             public static partial class TaskCompletionSourceExtensions { }
         }
-        #endif
     }
 
     namespace Web

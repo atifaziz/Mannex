@@ -29,6 +29,7 @@ namespace Mannex
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Reflection;
+    using System.Runtime.ExceptionServices;
     using System.Runtime.InteropServices;
 
     #endregion
@@ -49,7 +50,7 @@ namespace Mannex
 
             PrepForRemoting = method != null
                             ? (Func<Exception, Exception>) Delegate.CreateDelegate(typeof(Func<Exception, Exception>), method)
-                            : (e => e);
+                            : (_ => null);
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace Mannex
         {
             if (e == null) throw new ArgumentNullException("e");
 
-            return PrepForRemoting(e);
+            return PrepForRemoting(e) ?? throw new PlatformNotSupportedException();
         }
 
         /// <summary>
@@ -79,7 +80,20 @@ namespace Mannex
         public static void Rethrow(this Exception e)
         {
             if (e == null) throw new ArgumentNullException("e");
-            throw e.PrepareForRethrow();
+
+            var ee = PrepForRemoting(e);
+            if (ee == null)
+            {
+#if NET40
+                throw new PlatformNotSupportedException();
+#else
+                ExceptionDispatchInfo.Capture(e).Throw();
+#endif
+            }
+            else
+            {
+                throw ee;
+            }
         }
 
         /// <summary>

@@ -21,8 +21,6 @@
 //
 #endregion
 
-#if NET4
-
 namespace Mannex.Threading.Tasks
 {
     #region Imports
@@ -137,8 +135,6 @@ namespace Mannex.Threading.Tasks
         }
     }
 }
-
-#endif // NET4
 
 #if NET45
 

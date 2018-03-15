@@ -83,8 +83,6 @@ namespace Mannex
             return (arg1, arg2, arg3, arg4) => { action(arg1, arg2, arg3, arg4); return result; };
         }
         
-        #if NET4
-        
         /// <summary>
         /// Creates a <see cref="Func{T1,T2,T3,T4,T5,TResult}"/> from the 
         /// <see cref="Action{T1,T2,T3,T4,T5}"/> which when invoked will 
@@ -390,7 +388,5 @@ namespace Mannex
             if (action == null) throw new ArgumentNullException("action");
             return (arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16) => { action(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16); return result; };
         }
-        
-        #endif
     }
 }

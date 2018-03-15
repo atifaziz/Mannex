@@ -21,8 +21,6 @@
 //
 #endregion
 
-#if NET4
-
 namespace Mannex
 {
     #region Imports
@@ -106,5 +104,3 @@ namespace Mannex
         }
     }
 }
-
-#endif

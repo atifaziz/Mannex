@@ -21,8 +21,6 @@
 //
 #endregion
 
-#if NET4
-
 namespace Mannex.Threading.Tasks
 {
     using System.Threading;
@@ -77,5 +75,3 @@ namespace Mannex.Threading.Tasks
         }
     }
 }
-
-#endif

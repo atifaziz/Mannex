@@ -90,9 +90,6 @@ namespace Mannex.Reflection
             if (!method.IsStatic) throw new ArgumentException(null, "method");
             
             var returnsVoid = method.ReturnType == typeof(void);
-        #if !NET4
-            if (returnsVoid) throw new ArgumentException(null, "method");
-        #endif
 
             var argsParameter = Expression.Parameter(typeof(object[]), "args");
 
@@ -107,7 +104,7 @@ namespace Mannex.Reflection
             var e = (Expression) Expression.Call(method, args.ToArray());
             if (!returnsVoid) 
                 e = Expression.Convert(e, typeof(object));
-        #if NET4
+
             var statements = new List<Expression>
             {
                 Expression.Call(ValidateArgCountMethod, argsParameter, Expression.Constant(parameters.Length)),
@@ -116,7 +113,6 @@ namespace Mannex.Reflection
             if (returnsVoid) 
                 statements.Add(Expression.Constant(null));
             e = Expression.Block(statements);
-        #endif
             
             return Expression.Lambda<Func<object[], object>>(e, argsParameter).Compile();
         }

@@ -26,7 +26,6 @@ namespace Mannex.Tests
     #region Imports
 
     using System;
-    using System.Diagnostics.Eventing.Reader;
     using Xunit;
 
     #endregion

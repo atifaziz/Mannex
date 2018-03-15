@@ -30,8 +30,6 @@ namespace Mannex
     using System;
     using System.Collections.Generic;
 
-    #if NET4
-
     partial class TupleExtensions
     {
 <#      
@@ -96,6 +94,4 @@ namespace Mannex
 
 <#      } #>
     }
-
-    #endif // NET4
 }

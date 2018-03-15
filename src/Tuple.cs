@@ -30,8 +30,6 @@ namespace Mannex
 
     #endregion
 
-    #if NET4
-
     /// <summary>
     /// Extension methods for <see cref="Tuple"/>.
     /// </summary>
@@ -70,6 +68,4 @@ namespace Mannex
         }
 
     }
-    
-    #endif // NET4
 }

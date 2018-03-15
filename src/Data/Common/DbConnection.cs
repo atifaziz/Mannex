@@ -29,6 +29,7 @@ namespace Mannex.Data.Common
     using System.Collections.Generic;
     using System.Data;
     using System.Data.Common;
+    using System.Linq;
 
     #endregion
     
@@ -61,8 +62,8 @@ namespace Mannex.Data.Common
         public static IEnumerable<DataRow> GetColumnsSchema(this DbConnection connection, string tableNameRestriction)
         {
             if (connection == null) throw new ArgumentNullException("connection");
-            return connection.GetSchema("Columns", new[] { null, null, tableNameRestriction, null })
-                             .AsEnumerable();
+            return from DataRow row in connection.GetSchema("Columns", new[] { null, null, tableNameRestriction, null }).Rows
+                   select row;
         }
     }
 }

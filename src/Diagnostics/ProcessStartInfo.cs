@@ -29,9 +29,7 @@ namespace Mannex.Diagnostics
     using System.Diagnostics;
     using System.IO;
     using System.Threading;
-    #if NET4
     using System.Threading.Tasks;
-    #endif
 
     #endregion
 
@@ -41,8 +39,6 @@ namespace Mannex.Diagnostics
 
     static partial class ProcessStartInfoExtensions
     {
-        #if NET4
-
         /// <summary>
         /// Starts the process and waits for it to complete asynchronously.
         /// </summary>
@@ -204,7 +200,5 @@ namespace Mannex.Diagnostics
 
             return tcs.Task;
         }
-
-        #endif
     }
 }

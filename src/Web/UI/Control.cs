@@ -21,6 +21,8 @@
 //
 #endregion
 
+#if ASPNET
+
 namespace Mannex.Web.UI
 {
     #region Imports
@@ -114,3 +116,5 @@ namespace Mannex.Web.UI
         }
     }
 }
+
+#endif // ASPNET

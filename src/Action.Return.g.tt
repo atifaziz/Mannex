@@ -58,9 +58,7 @@ namespace Mannex
                 Doc  = string.Join(",",  from item in items select item.Type),
                 Args = string.Join(", ", from item in items select item.Arg ),
             };
-            if (i == 5) { #>        
-        #if NET4
-<#          } #>        
+#>        
         /// <summary>
         /// Creates a <see cref="Func{<#= ts.Doc #>,TResult}"/> from the 
         /// <see cref="Action{<#= ts.Doc #>}"/> which when invoked will 
@@ -79,7 +77,5 @@ namespace Mannex
             return (<#= ts.Args #>) => { action(<#= ts.Args #>); return result; };
         }
 <#      } #>
-        
-        #endif
     }
 }

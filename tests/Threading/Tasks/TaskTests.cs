@@ -96,6 +96,8 @@ namespace Mannex.Tests.Threading.Tasks
             Assert.True((bool)isCompletedDuringCallback);
         }
 
+        #if NET45
+
         [Fact]
         public async void WhenAllCompletedFailsWithNullThis()
         {
@@ -127,5 +129,7 @@ namespace Mannex.Tests.Threading.Tasks
             Assert.Equal(TaskStatus.Faulted        , t2.Status);
             Assert.Equal(TaskStatus.Canceled       , t3.Status);
         }
+
+        #endif // NET45
     }
 }

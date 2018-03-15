@@ -21,8 +21,6 @@
 //
 #endregion
 
-#if NET4
-
 namespace Mannex.Threading
 {
     using System;
@@ -116,5 +114,3 @@ namespace Mannex.Threading
         }
     }
 }
-
-#endif

@@ -29,9 +29,7 @@ namespace Mannex.Data
     using System.Collections.Generic;
     using System.Data;
     using System.Diagnostics;
-#if NET4
     using System.Dynamic;
-#endif
     using System.Linq;
     using System.Reflection;
     using Collections.Generic;
@@ -195,7 +193,6 @@ namespace Mannex.Data
             }
         }
 
-#if NET4
         /// <summary>
         /// Converts the record into a dyamic object (specifically 
         /// <see cref="ExpandoObject"/>) where each field and its
@@ -247,6 +244,5 @@ namespace Mannex.Data
 
             return target;
         }
-#endif
     }
 }

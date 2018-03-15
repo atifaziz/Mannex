@@ -30,8 +30,6 @@ namespace Mannex.IO
     using System.IO;
     using System.Linq;
     using Collections.Generic;
-    using TextFieldParser = Microsoft.VisualBasic.FileIO.TextFieldParser;
-    using FieldType = Microsoft.VisualBasic.FileIO.FieldType;
 
     #endregion
 
@@ -169,7 +167,27 @@ namespace Mannex.IO
                 _readers = null;
             }
         }
+    }
+}
 
+#if VB
+
+namespace Mannex.IO
+{
+    #region Imports
+
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using Collections.Generic;
+    using TextFieldParser = Microsoft.VisualBasic.FileIO.TextFieldParser;
+    using FieldType = Microsoft.VisualBasic.FileIO.FieldType;
+
+    #endregion
+
+    static partial class TextReaderExtensions
+    {
         /// <summary>
         /// Parses delimited text like CSV (command-separated values) and
         /// returns each row of data as a sequence of items.
@@ -446,3 +464,5 @@ namespace Mannex.IO
         */
     }
 }
+
+#endif // VB

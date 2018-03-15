@@ -30,9 +30,7 @@ namespace Mannex.Diagnostics
     using System.Diagnostics;
     using System.IO;
     using System.Threading;
-    #if NET4
     using System.Threading.Tasks;
-    #endif
     using Threading;
 
     #endregion
@@ -166,8 +164,6 @@ namespace Mannex.Diagnostics
             return done;
         }
 
-        #if NET4
-
         /// <summary>
         /// Begins asynchronous read operations on the re-directed
         /// <see cref="Process.StandardOutput"/> and
@@ -186,8 +182,6 @@ namespace Mannex.Diagnostics
             return timeout => e.WaitOneAsync(timeout);
         }
 
-        #endif
-
         static DataReceivedEventHandler OnDataReceived(
             Action<string> line, Action eof)
         {
@@ -199,8 +193,6 @@ namespace Mannex.Diagnostics
                     eof();
             };
         }
-
-        #if NET4
 
         /// <summary>
         /// Creates <see cref="Task"/> that completes when the process exits
@@ -279,7 +271,5 @@ namespace Mannex.Diagnostics
             else
                 tcs.TrySetResult(resultSelector(capture));
         }
-
-        #endif // NET4
     }
 }
