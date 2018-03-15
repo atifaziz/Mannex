@@ -27,6 +27,7 @@ namespace Mannex.Tests
 
     using System;
     using System.IO;
+    using System.Runtime.CompilerServices;
     using Xunit;
 
     #endregion
@@ -68,6 +69,7 @@ namespace Mannex.Tests
 
         static class Bad
         {
+            [MethodImpl(MethodImplOptions.NoInlining)]
             public static void Foo(Action<Exception> @throw)
             {
                 try
@@ -80,11 +82,13 @@ namespace Mannex.Tests
                 }
             }
 
+            [MethodImpl(MethodImplOptions.NoInlining)]
             static void Bar()
             {
                 Baz();
             }
 
+            [MethodImpl(MethodImplOptions.NoInlining)]
             static void Baz()
             {
                 throw new Exception();
