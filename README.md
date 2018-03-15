@@ -40,6 +40,6 @@ Mannex is also [available as a NuGet package][pkg]!
 [pkg]: http://nuget.org/packages/Mannex/
 [pkg-badge]: https://badge.fury.io/nu/Mannex.svg
 [ci]: https://ci.appveyor.com/project/raboof/mannex
-[ci-badge]: https://ci.appveyor.com/api/projects/status/w64gkmfok9fedtxg?svg=true
+[ci-badge]: https://ci.appveyor.com/api/projects/status/4r4verdebglogg96/branch/master?svg=true
 [static-linking]: http://en.wikipedia.org/wiki/Static_linking
 [ilmerge]: http://research.microsoft.com/en-us/people/mbarnett/ilmerge.aspx
