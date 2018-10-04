@@ -55,7 +55,7 @@ namespace Mannex.Collections
 
         public static ArrayList ToList(this IEnumerator enumerator)
         {
-            if (enumerator == null) throw new ArgumentNullException("enumerator");
+            if (enumerator == null) throw new ArgumentNullException(nameof(enumerator));
             var list = new ArrayList(4);
             try
             {

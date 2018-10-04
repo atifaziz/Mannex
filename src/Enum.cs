@@ -99,7 +99,7 @@ namespace Mannex
             }
 
             if (!typeof(T).IsEquivalentTo(type))
-                throw new ArgumentException(null, "value");
+                throw new ArgumentException(null, nameof(value));
 
             return type.IsDefined(typeof(FlagsAttribute), false)
                  ? from Enum flag in Enum.GetValues(type)

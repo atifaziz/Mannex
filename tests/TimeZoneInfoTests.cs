@@ -45,7 +45,7 @@ namespace Mannex.Tests
         }
 
         [Theory]
-        [MemberData("GetDayLengthTestData")]
+        [MemberData(nameof(GetDayLengthTestData))]
         public void HoursInDay(double hours, int year, int month, int day, int hour, int minute)
         {
             Assert.Equal(hours, CustomTimeZone.HoursInDay(new DateTime(year, month, day, hour, minute, 0)));
@@ -60,7 +60,7 @@ namespace Mannex.Tests
         }
 
         [Theory]
-        [MemberData("GetDayLengthTestData")]
+        [MemberData(nameof(GetDayLengthTestData))]
         public void GetDayLength(double hours, int year, int month, int day, int hour, int minute)
         {
             Assert.Equal(TimeSpan.FromHours(hours), CustomTimeZone.GetDayLength(new DateTime(year, month, day, hour, minute, 0)));

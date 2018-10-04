@@ -75,7 +75,7 @@ namespace Mannex.Threading
 
         public static Task<bool> WaitOneAsync(this WaitHandle handle, TimeSpan? timeout, CancellationToken cancellationToken)
         {
-            if (handle == null) throw new ArgumentNullException("handle");
+            if (handle == null) throw new ArgumentNullException(nameof(handle));
 
             cancellationToken.ThrowIfCancellationRequested();
 

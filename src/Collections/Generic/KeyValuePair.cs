@@ -38,7 +38,7 @@ namespace Mannex.Collections.Generic
 
         public static T Select<TKey, TValue, T>(this KeyValuePair<TKey, TValue> pair, Func<TKey, TValue, T> selector)
         {
-            if (selector == null) throw new ArgumentNullException("selector");
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
             return selector(pair.Key, pair.Value);
         }
     }

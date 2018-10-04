@@ -43,7 +43,7 @@ namespace Mannex.Text
 
         public static StringBuilder Append(this StringBuilder sb, char? value)
         {
-            if (sb == null) throw new ArgumentNullException("sb");
+            if (sb == null) throw new ArgumentNullException(nameof(sb));
             return value != null ? sb.Append(value.Value) : sb;
         }
     }

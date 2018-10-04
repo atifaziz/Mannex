@@ -44,8 +44,8 @@ namespace Mannex.Data
 
         public static IEnumerator<T> Select<T>(this IDataReader reader, Func<IDataRecord, T> selector)
         {
-            if (reader == null) throw new ArgumentNullException("reader");
-            if (selector == null) throw new ArgumentNullException("selector");
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
             
             return SelectImpl(reader, selector);
         }

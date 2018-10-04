@@ -61,7 +61,7 @@ namespace Mannex.Data.Common
 
         public static IEnumerable<DataRow> GetColumnsSchema(this DbConnection connection, string tableNameRestriction)
         {
-            if (connection == null) throw new ArgumentNullException("connection");
+            if (connection == null) throw new ArgumentNullException(nameof(connection));
             return from DataRow row in connection.GetSchema("Columns", new[] { null, null, tableNameRestriction, null }).Rows
                    select row;
         }

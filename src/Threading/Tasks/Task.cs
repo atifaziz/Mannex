@@ -192,7 +192,7 @@ namespace Mannex.Threading.Tasks
             CancellationToken cancellationToken)
             where T : Task
         {
-            if (tasks == null) throw new ArgumentNullException("tasks");
+            if (tasks == null) throw new ArgumentNullException(nameof(tasks));
             var result = tasks.ToArray();
             var pending = result.ToList();
             while (pending.Count > 0)

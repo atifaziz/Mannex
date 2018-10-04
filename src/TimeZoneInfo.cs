@@ -81,9 +81,9 @@ namespace Mannex
         public static T GetDaylightTransitionsInYear<T>(this TimeZoneInfo timeZone, int year, Calendar calendar,
             Func<DateTime, DateTime, T> selector, T noneValue)
         {
-            if (timeZone == null) throw new ArgumentNullException("timeZone");
-            if (selector == null) throw new ArgumentNullException("selector");
-            if (year < 0 || year > DateTime.MaxValue.Year) throw new ArgumentOutOfRangeException("year", year, null);
+            if (timeZone == null) throw new ArgumentNullException(nameof(timeZone));
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
+            if (year < 0 || year > DateTime.MaxValue.Year) throw new ArgumentOutOfRangeException(nameof(year), year, null);
 
             // Derived from TimeZoneInfo.GetAdjustmentRules example found on:
             // https://msdn.microsoft.com/en-us/library/system.timezoneinfo.getadjustmentrules(v=vs.90).aspx
@@ -180,7 +180,7 @@ namespace Mannex
 
         public static TimeSpan GetDayLength(this TimeZoneInfo tz, DateTime date)
         {
-            if (tz == null) throw new ArgumentNullException("tz");
+            if (tz == null) throw new ArgumentNullException(nameof(tz));
             if (!tz.SupportsDaylightSavingTime) return TimeSpan.FromHours(24);
             date = DateTime.SpecifyKind(date.Date, DateTimeKind.Unspecified);
             var dateMidnight = new DateTimeOffset(date, tz.GetUtcOffset(date));

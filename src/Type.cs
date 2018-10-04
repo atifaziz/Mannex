@@ -66,11 +66,11 @@ namespace Mannex
 
         public static bool IsConstructionOfGenericTypeDefinition(this Type type, Type genericTypeDefinition)
         {
-            if (type == null) throw new ArgumentNullException("type");
-            if (genericTypeDefinition == null) throw new ArgumentNullException("genericTypeDefinition");
+            if (type == null) throw new ArgumentNullException(nameof(type));
+            if (genericTypeDefinition == null) throw new ArgumentNullException(nameof(genericTypeDefinition));
 
             if (!genericTypeDefinition.IsGenericTypeDefinition)
-                throw new ArgumentException(string.Format("{0} is not a generic type definition.", genericTypeDefinition), "genericTypeDefinition");
+                throw new ArgumentException(string.Format("{0} is not a generic type definition.", genericTypeDefinition), nameof(genericTypeDefinition));
             
             return type.IsGenericType
                 && !type.IsGenericTypeDefinition
@@ -87,7 +87,7 @@ namespace Mannex
 
         public static MethodInfo FindParseMethod(this Type type)
         {
-            if (type == null) throw new ArgumentNullException("type");
+            if (type == null) throw new ArgumentNullException(nameof(type));
             var method = type.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static, null, ParseParameterTypes, null);
             return method != null && method.ReturnType == type ? method : null;
         }
@@ -174,8 +174,8 @@ namespace Mannex
 
         public static object GetDefaultValue(this Type type)
         {
-            if (type == null) throw new ArgumentNullException("type");
-            if (type.IsGenericTypeDefinition || type.IsGenericParameter) throw new ArgumentException(null, "type");
+            if (type == null) throw new ArgumentNullException(nameof(type));
+            if (type.IsGenericTypeDefinition || type.IsGenericParameter) throw new ArgumentException(null, nameof(type));
             return type.IsValueType ? Activator.CreateInstance(type) : null;
         }
     }

@@ -63,7 +63,7 @@ namespace Mannex
         [DebuggerStepThrough]
         public static NameValueCollection ParseQuery(this Uri uri, Encoding encoding)
         {
-            if (uri == null) throw new ArgumentNullException("uri");
+            if (uri == null) throw new ArgumentNullException(nameof(uri));
             return HttpUtility.ParseQueryString(uri.Query, encoding ?? Encoding.UTF8);
         }
 
@@ -75,7 +75,7 @@ namespace Mannex
 
         public static Uri MergeQuery(this Uri uri, NameValueCollection updates)
         {
-            if (uri == null) throw new ArgumentNullException("uri");
+            if (uri == null) throw new ArgumentNullException(nameof(uri));
 
             if (updates == null)
                 return uri;
@@ -122,7 +122,7 @@ namespace Mannex
         [DebuggerStepThrough]
         public static bool IsHttpOrHttps(this Uri uri)
         {
-            if (uri == null) throw new ArgumentNullException("uri");
+            if (uri == null) throw new ArgumentNullException(nameof(uri));
             return uri.Scheme == Uri.UriSchemeHttp
                 || uri.Scheme == Uri.UriSchemeHttps;
         }
@@ -140,8 +140,8 @@ namespace Mannex
         public static T SplitUserNamePassword<T>(this Uri url, 
             Func<Uri, NetworkCredential, T> resultFunc)
         {
-            if (url == null) throw new ArgumentNullException("url");
-            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            if (url == null) throw new ArgumentNullException(nameof(url));
+            if (resultFunc == null) throw new ArgumentNullException(nameof(resultFunc));
             return resultFunc(RemoveUserNamePassword(url), GetUserNamePassword(url));
         }
 
@@ -155,8 +155,8 @@ namespace Mannex
         public static T TrySplitUserNamePassword<T>(this Uri url, 
             Func<Uri, NetworkCredential, T> resultFunc)
         {
-            if (url == null) throw new ArgumentNullException("url");
-            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            if (url == null) throw new ArgumentNullException(nameof(url));
+            if (resultFunc == null) throw new ArgumentNullException(nameof(resultFunc));
             return resultFunc(RemoveUserNamePassword(url), TryGetUserNamePassword(url));
         }
 
@@ -168,7 +168,7 @@ namespace Mannex
         
         public static Uri RemoveUserNamePassword(this Uri url)
         {
-            if (url == null) throw new ArgumentNullException("url");
+            if (url == null) throw new ArgumentNullException(nameof(url));
 
             return url.UserInfo.Length == 0 ? url 
                  : new UriBuilder(url) { UserName = null, Password = null }.Uri;
@@ -204,7 +204,7 @@ namespace Mannex
 
         public static NetworkCredential TryGetUserNamePassword(this Uri url)
         {
-            if (url == null) throw new ArgumentNullException("url");
+            if (url == null) throw new ArgumentNullException(nameof(url));
             
             return url.UserInfo.Split(':', (uid, pwd) 
                 => uid.Length != 0 

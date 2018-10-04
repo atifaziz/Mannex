@@ -45,7 +45,7 @@ namespace Mannex.IO
 
         public static bool IsUserVisible(this FileSystemInfo info)
         {
-            if (info == null) throw new ArgumentNullException("info");
+            if (info == null) throw new ArgumentNullException(nameof(info));
             return 0 == (info.Attributes & (FileAttributes.Hidden | FileAttributes.System))
                 && (!Environment.OSVersion.IsUnix() || info.Name.TryCharAt(0) != '.');
         }
@@ -57,7 +57,7 @@ namespace Mannex.IO
 
         public static bool HasAttributes(this FileSystemInfo info, FileAttributes attributes)
         {
-            if (info == null) throw new ArgumentNullException("info");
+            if (info == null) throw new ArgumentNullException(nameof(info));
             return (info.Attributes & attributes) == attributes;
         }
 
@@ -75,7 +75,7 @@ namespace Mannex.IO
 
         public static DirectoryInfo GetParentDirectory(FileSystemInfo info)
         {
-            if (info == null) throw new ArgumentNullException("info");
+            if (info == null) throw new ArgumentNullException(nameof(info));
             var dir = info as DirectoryInfo;
             return dir != null ? dir.Parent : ((FileInfo) info).Directory;
         }

@@ -55,8 +55,8 @@ namespace Mannex.Data
             where TRecord : IDataRecord
         {
             // ReSharper disable once CompareNonConstrainedGenericWithNull
-            if (record == null) throw new ArgumentNullException("record");
-            if (selector == null) throw new ArgumentNullException("selector");
+            if (record == null) throw new ArgumentNullException(nameof(record));
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
             var result = selector(record, record.GetOrdinals());
             return record is IDataReader ? result.ToArray() : result;
         }
@@ -72,7 +72,7 @@ namespace Mannex.Data
 
         public static IEnumerable<string> GetNames(this IDataRecord record)
         {
-            if (record == null) throw new ArgumentNullException("record");
+            if (record == null) throw new ArgumentNullException(nameof(record));
             return Ordinally(record, (r, ords) => ords.Select(r.GetName));
         }
 
@@ -87,7 +87,7 @@ namespace Mannex.Data
 
         public static IEnumerable<object> GetValues(this IDataRecord record)
         {
-            if (record == null) throw new ArgumentNullException("record");
+            if (record == null) throw new ArgumentNullException(nameof(record));
             return Ordinally(record, (r, ords) => ords.Select(r.GetValue));
         }
 
@@ -103,7 +103,7 @@ namespace Mannex.Data
 
         public static IEnumerable<KeyValuePair<string, object>> GetFields(this IDataRecord record)
         {
-            if (record == null) throw new ArgumentNullException("record");
+            if (record == null) throw new ArgumentNullException(nameof(record));
             return Ordinally(record, (r, ords) => from i in ords 
                                                   select r.GetName(i).AsKeyTo(r.GetValue(i)));
         }
@@ -123,7 +123,7 @@ namespace Mannex.Data
 
         public static T GetValue<T>(this IDataRecord record, string name)
         {
-            if (record == null) throw new ArgumentNullException("record");
+            if (record == null) throw new ArgumentNullException(nameof(record));
             return record.GetValue<T>(record.GetOrdinal(name));
         }
 
@@ -142,7 +142,7 @@ namespace Mannex.Data
 
         public static T GetValue<T>(this IDataRecord record, int i)
         {
-            if (record == null) throw new ArgumentNullException("record");
+            if (record == null) throw new ArgumentNullException(nameof(record));
             return GetValueImpl<T>.Impl(record[i]);
         }
 
@@ -218,9 +218,9 @@ namespace Mannex.Data
             Func<string, string> nameMapper,
             Func<string, object, object> valueMapper)
         {
-            if (record == null) throw new ArgumentNullException("record");
-            if (nameMapper == null) throw new ArgumentNullException("nameMapper");
-            if (valueMapper == null) throw new ArgumentNullException("valueMapper");
+            if (record == null) throw new ArgumentNullException(nameof(record));
+            if (nameMapper == null) throw new ArgumentNullException(nameof(nameMapper));
+            if (valueMapper == null) throw new ArgumentNullException(nameof(valueMapper));
 
             return Map(record, new ExpandoObject(), nameMapper, valueMapper);
         }

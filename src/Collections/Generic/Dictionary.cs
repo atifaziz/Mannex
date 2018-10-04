@@ -57,7 +57,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key, TValue @default)
         {
-            if (dict == null) throw new ArgumentNullException("dict");
+            if (dict == null) throw new ArgumentNullException(nameof(dict));
             TValue value;
             return dict.TryGetValue(key, out value) ? value : @default;
         }
@@ -77,7 +77,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static TValue GetValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TKey, Exception> errorSelector)
         {
-            if (dictionary == null) throw new ArgumentNullException("dictionary");
+            if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
             TValue value;
             if (!dictionary.TryGetValue(key, out value))
@@ -96,7 +96,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static ReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue>  dictionary)
         {
-            if (dictionary == null) throw new ArgumentNullException("dictionary");
+            if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
             return new ReadOnlyDictionary<TKey, TValue>(dictionary);
         }
 
@@ -110,7 +110,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static TValue Pop<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
-            if (dictionary == null) throw new ArgumentNullException("dictionary");
+            if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
             var value = dictionary[key];
             dictionary.Remove(key);
             return value;

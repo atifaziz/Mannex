@@ -44,7 +44,7 @@ namespace Mannex
 
         public static IEnumerable<T> AsEnumerable<T>(this Tuple<T> tuple)
         {
-            if (tuple == null) throw new ArgumentNullException("tuple");
+            if (tuple == null) throw new ArgumentNullException(nameof(tuple));
             return AsEnumerableImpl(tuple);
         }
 
@@ -62,8 +62,8 @@ namespace Mannex
         /// 
         public static TResult Fold<T, TResult>(this Tuple<T> tuple, Func<T, TResult> selector)
         {
-            if (tuple == null) throw new ArgumentNullException("tuple");
-            if (selector == null) throw new ArgumentNullException("selector");
+            if (tuple == null) throw new ArgumentNullException(nameof(tuple));
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
             return selector(tuple.Item1);
         }
 

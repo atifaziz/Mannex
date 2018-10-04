@@ -54,7 +54,7 @@ namespace Mannex.Security.Cryptography
 
         public static byte[] Protect(this byte[] bytes, DataProtectionScope scope, byte[] entropy)
         {
-            if (bytes == null) throw new ArgumentNullException("bytes");
+            if (bytes == null) throw new ArgumentNullException(nameof(bytes));
             return ProtectedData.Protect(bytes, entropy, scope);
         }
 
@@ -76,7 +76,7 @@ namespace Mannex.Security.Cryptography
 
         public static byte[] Unprotect(this byte[] bytes, DataProtectionScope scope, byte[] entropy)
         {
-            if (bytes == null) throw new ArgumentNullException("bytes");
+            if (bytes == null) throw new ArgumentNullException(nameof(bytes));
             return ProtectedData.Unprotect(bytes, entropy, scope);
         }
     }

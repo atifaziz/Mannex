@@ -68,7 +68,7 @@ namespace Mannex.Web
 
         public static Uri Randomize(this Uri url, string key, object value)
         {
-            if (url == null) throw new ArgumentNullException("url");
+            if (url == null) throw new ArgumentNullException(nameof(url));
             var builder = new UriBuilder(url);
             var qs = HttpUtility.ParseQueryString(builder.Query);
             qs[string.IsNullOrEmpty(key) ? "__rnd" : key] = value.ToString();

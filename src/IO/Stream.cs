@@ -199,36 +199,36 @@ namespace Mannex.IO
         [DebuggerStepThrough]
         static void ValidateInputStream(Stream input)
         {
-            if (input == null) throw new ArgumentNullException("input");
-            if (!input.CanRead) throw new ArgumentException("Cannot read from input stream", "input");
+            if (input == null) throw new ArgumentNullException(nameof(input));
+            if (!input.CanRead) throw new ArgumentException("Cannot read from input stream", nameof(input));
         }
 
         [DebuggerStepThrough]
         static void ValidateOutputStream(Stream output)
         {
-            if (output == null) throw new ArgumentNullException("output");
-            if (!output.CanWrite) throw new ArgumentException("Cannot write to output stream", "output");
+            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (!output.CanWrite) throw new ArgumentException("Cannot write to output stream", nameof(output));
         }
 
         [DebuggerStepThrough]
         static void ValidateBufferSize(int bufferSize)
         {
-            if (bufferSize < 0) throw new ArgumentException("Invalid buffer size.", "bufferSize");
+            if (bufferSize < 0) throw new ArgumentException("Invalid buffer size.", nameof(bufferSize));
         }
 
         [DebuggerStepThrough]
         static void ValidateBuffer(byte[] buffer)
         {
-            if (buffer == null) throw new ArgumentNullException("buffer");
+            if (buffer == null) throw new ArgumentNullException(nameof(buffer));
         }
 
         [DebuggerStepThrough]
         static void ValidateBuffer(byte[] buffer, int offset, int count)
         {
             ValidateBuffer(buffer);
-            if (offset < 0) throw new ArgumentOutOfRangeException("offset", offset, null);
-            if (count < 0) throw new ArgumentOutOfRangeException("count", count, null);
-            if (offset + count > buffer.Length) throw new ArgumentOutOfRangeException("offset", offset, null);
+            if (offset < 0) throw new ArgumentOutOfRangeException(nameof(offset), offset, null);
+            if (count < 0) throw new ArgumentOutOfRangeException(nameof(count), count, null);
+            if (offset + count > buffer.Length) throw new ArgumentOutOfRangeException(nameof(offset), offset, null);
         }
 
         #endregion    

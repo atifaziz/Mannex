@@ -63,7 +63,7 @@ namespace Mannex
 
         public static Exception PrepareForRethrow(this Exception e)
         {
-            if (e == null) throw new ArgumentNullException("e");
+            if (e == null) throw new ArgumentNullException(nameof(e));
 
             return PrepForRemoting(e) ?? throw new PlatformNotSupportedException();
         }
@@ -79,7 +79,7 @@ namespace Mannex
         [DebuggerStepThrough]
         public static void Rethrow(this Exception e)
         {
-            if (e == null) throw new ArgumentNullException("e");
+            if (e == null) throw new ArgumentNullException(nameof(e));
 
             var ee = PrepForRemoting(e);
             if (ee == null)
@@ -108,7 +108,7 @@ namespace Mannex
         [DebuggerStepThrough]
         public static IEnumerable<Exception> InnerExceptions(this Exception e)
         {
-            if (e == null) throw new ArgumentNullException("e");
+            if (e == null) throw new ArgumentNullException(nameof(e));
             return YieldInnerExceptions(e);
         }
 
@@ -126,7 +126,7 @@ namespace Mannex
 
         public static bool IsSharingViolation(this Exception exception)
         {
-            if (exception == null) throw new ArgumentNullException("exception");
+            if (exception == null) throw new ArgumentNullException(nameof(exception));
             // http://support.microsoft.com/kb/316609
             return /* ERROR_SHARING_VIOLATION */ 0x80070020 == (uint) Marshal.GetHRForException(exception);
         }

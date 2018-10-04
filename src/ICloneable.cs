@@ -37,7 +37,7 @@ namespace Mannex
 
         public static T CloneObject<T>(this T source) where T : class, ICloneable
         {
-            if (source == null) throw new ArgumentNullException("source");
+            if (source == null) throw new ArgumentNullException(nameof(source));
             return (T) source.Clone();
         }
     }

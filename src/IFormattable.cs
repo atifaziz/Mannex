@@ -51,7 +51,7 @@ namespace Mannex
         [DebuggerStepThrough]
         public static string ToInvariantString(this IFormattable formattable, string format)
         {
-            if (formattable == null) throw new ArgumentNullException("formattable");
+            if (formattable == null) throw new ArgumentNullException(nameof(formattable));
             return formattable.ToString(format, CultureInfo.InvariantCulture);
         }
     }

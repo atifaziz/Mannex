@@ -43,7 +43,7 @@ namespace Mannex
         [DebuggerStepThrough]
         public static Converter<TInput, TOutput> ToConverter<TInput, TOutput>(this Func<TInput, TOutput> converter)
         {
-            if (converter == null) throw new ArgumentNullException("converter");
+            if (converter == null) throw new ArgumentNullException(nameof(converter));
             return input => converter(input);
         }
 
@@ -55,7 +55,7 @@ namespace Mannex
         [DebuggerStepThrough]
         public static Predicate<T> ToPredicate<T>(this Func<T, bool> predicate)
         {
-            if (predicate == null) throw new ArgumentNullException("predicate");
+            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
             return arg => predicate(arg);
         }
     }

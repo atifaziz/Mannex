@@ -42,7 +42,7 @@ namespace Mannex.Collections
 
         public static T[] ToArray<T>(this ArrayList list)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             return (T[]) list.ToArray(typeof(T));
         }
     }

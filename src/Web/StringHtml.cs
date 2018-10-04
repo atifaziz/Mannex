@@ -44,7 +44,7 @@ namespace Mannex.Web
 
         public static string HtmlEncode(this string str)
         {
-            if (str == null) throw new ArgumentNullException("str");
+            if (str == null) throw new ArgumentNullException(nameof(str));
             return HttpUtility.HtmlEncode(str);
         }
     }

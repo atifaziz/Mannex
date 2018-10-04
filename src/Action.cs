@@ -47,7 +47,7 @@ namespace Mannex
         [DebuggerStepThrough]
         public static Func<TResult> Return<TResult>(this Action action, TResult result)
         {
-            if (action == null) throw new ArgumentNullException("action");
+            if (action == null) throw new ArgumentNullException(nameof(action));
             return () => { action(); return result; };
         }
 
@@ -63,7 +63,7 @@ namespace Mannex
         [DebuggerStepThrough]
         public static Func<T, TResult> Return<T, TResult>(this Action<T> action, TResult result)
         {
-            if (action == null) throw new ArgumentNullException("action");
+            if (action == null) throw new ArgumentNullException(nameof(action));
             return arg => { action(arg); return result; };
         }
     }

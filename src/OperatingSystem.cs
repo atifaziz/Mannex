@@ -44,7 +44,7 @@ namespace Mannex
         [DebuggerStepThrough]
         public static bool IsUnix(this OperatingSystem os)
         {
-            if (os == null) throw new ArgumentNullException("os");
+            if (os == null) throw new ArgumentNullException(nameof(os));
             return os.Platform == PlatformID.Unix
                 // Testing Path.DirectorySeparatorChar for a forward slash
                 // seems to be the most reliable method for assuming a *nix

@@ -140,8 +140,8 @@ namespace Mannex.Threading.Tasks
             CancellationToken cancellationToken, TaskCreationOptions creationOptions, 
             TaskScheduler scheduler)
         {
-            if (taskFactory == null) throw new ArgumentNullException("taskFactory");
-            if (job == null) throw new ArgumentNullException("job");
+            if (taskFactory == null) throw new ArgumentNullException(nameof(taskFactory));
+            if (job == null) throw new ArgumentNullException(nameof(job));
 
             var tcs = new TaskCompletionSource<object>(state, creationOptions);
 

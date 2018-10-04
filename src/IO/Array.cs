@@ -71,13 +71,13 @@ namespace Mannex.IO
 
         public static Stream OpenReadWrite(this byte[] buffer, int index, int count)
         {
-            if (buffer == null) throw new ArgumentNullException("buffer");
+            if (buffer == null) throw new ArgumentNullException(nameof(buffer));
             return OpenStream(buffer, index, count, true);
         }
 
         static Stream OpenStream(byte[] buffer, int? index, int? count, bool writeable)
         {
-            if (buffer == null) throw new ArgumentNullException("buffer");
+            if (buffer == null) throw new ArgumentNullException(nameof(buffer));
             return new MemoryStream(buffer, index ?? 0, count ?? buffer.Length, writeable);
         }
     }

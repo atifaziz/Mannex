@@ -58,7 +58,7 @@ namespace Mannex.Reflection
 
         public static TextReader GetManifestResourceReader(this Assembly assembly, Type type, string name, Encoding encoding)
         {
-            if (assembly == null) throw new ArgumentNullException("assembly");
+            if (assembly == null) throw new ArgumentNullException(nameof(assembly));
             var stream = assembly.GetManifestResourceStream(type, name);
             if (stream == null)
                 return null;
@@ -86,7 +86,7 @@ namespace Mannex.Reflection
 
         public static string GetManifestResourceString(this Assembly assembly, Type type, string name, Encoding encoding)
         {
-            if (assembly == null) throw new ArgumentNullException("assembly");
+            if (assembly == null) throw new ArgumentNullException(nameof(assembly));
             using (var reader = assembly.GetManifestResourceReader(type, name))
                 return reader != null ? reader.ReadToEnd() : null;
         }

@@ -95,7 +95,7 @@ namespace Mannex.Diagnostics
 
         static Task<T> StartAsync<T>(ProcessStartInfo startInfo, bool captureStandardError, CancellationToken cancellationToken, Func<Process, string, string, T> selector)
         {
-            if (selector == null) throw new ArgumentNullException("selector");
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
             var stdout = new StringWriter();
             var stderr = captureStandardError ? new StringWriter() : null;
             var task = StartAsync(startInfo, stdout, stderr, cancellationToken);
@@ -144,7 +144,7 @@ namespace Mannex.Diagnostics
             TextWriter stdout, TextWriter stderr,
             CancellationToken cancellationToken)
         {
-            if (startInfo == null) throw new ArgumentNullException("startInfo");
+            if (startInfo == null) throw new ArgumentNullException(nameof(startInfo));
 
             cancellationToken.ThrowIfCancellationRequested();
 

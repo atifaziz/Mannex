@@ -43,7 +43,7 @@ namespace Mannex.Globalization
         
         public static DateTime FirstDateOfWeek(this DateTimeFormatInfo info, int year, int weekOfYear)
         {
-            if (info == null) throw new ArgumentNullException("info");
+            if (info == null) throw new ArgumentNullException(nameof(info));
             return info.Calendar.FirstDateOfWeek(year, weekOfYear, info.CalendarWeekRule, info.FirstDayOfWeek);
         }
     }

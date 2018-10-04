@@ -147,9 +147,9 @@ namespace Mannex.IO
         static string SanitizePathComponent(string str, string replacement, char[] badChars, string badPattern)
         {
             Debug.Assert(replacement != null);
-            if (str == null) throw new ArgumentNullException("str");
-            if (str.Length == 0) throw new ArgumentException(null, "str");
-            if (replacement.IndexOfAny(badChars) >= 0) throw new ArgumentException(null, "replacement");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (str.Length == 0) throw new ArgumentException(null, nameof(str));
+            if (replacement.IndexOfAny(badChars) >= 0) throw new ArgumentException(null, nameof(replacement));
             return Regex.Replace(str, badPattern, replacement);
         }
 
@@ -159,7 +159,7 @@ namespace Mannex.IO
 
         public static TextReader Read(this string str)
         {
-            if (str == null) throw new ArgumentNullException("str");
+            if (str == null) throw new ArgumentNullException(nameof(str));
             return new StringReader(str);
         }
     }

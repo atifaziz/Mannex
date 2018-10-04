@@ -44,7 +44,7 @@ namespace Mannex
             this Func<T1, T2, TResult> func,
             T1 arg1)
         {
-            if (func == null) throw new ArgumentNullException("func");
+            if (func == null) throw new ArgumentNullException(nameof(func));
             return (arg2) => func(arg1, arg2);
         }
 
@@ -58,7 +58,7 @@ namespace Mannex
             this Func<T1, T2, T3, TResult> func,
             T1 arg1)
         {
-            if (func == null) throw new ArgumentNullException("func");
+            if (func == null) throw new ArgumentNullException(nameof(func));
             return (arg2, arg3) => func(arg1, arg2, arg3);
         }
 
@@ -72,7 +72,7 @@ namespace Mannex
             this Func<T1, T2, T3, TResult> func,
             T1 arg1, T2 arg2)
         {
-            if (func == null) throw new ArgumentNullException("func");
+            if (func == null) throw new ArgumentNullException(nameof(func));
             return (arg3) => func(arg1, arg2, arg3);
         }
 
@@ -86,7 +86,7 @@ namespace Mannex
             this Func<T1, T2, T3, T4, TResult> func,
             T1 arg1)
         {
-            if (func == null) throw new ArgumentNullException("func");
+            if (func == null) throw new ArgumentNullException(nameof(func));
             return (arg2, arg3, arg4) => func(arg1, arg2, arg3, arg4);
         }
 
@@ -100,7 +100,7 @@ namespace Mannex
             this Func<T1, T2, T3, T4, TResult> func,
             T1 arg1, T2 arg2)
         {
-            if (func == null) throw new ArgumentNullException("func");
+            if (func == null) throw new ArgumentNullException(nameof(func));
             return (arg3, arg4) => func(arg1, arg2, arg3, arg4);
         }
 
@@ -114,7 +114,7 @@ namespace Mannex
             this Func<T1, T2, T3, T4, TResult> func,
             T1 arg1, T2 arg2, T3 arg3)
         {
-            if (func == null) throw new ArgumentNullException("func");
+            if (func == null) throw new ArgumentNullException(nameof(func));
             return (arg4) => func(arg1, arg2, arg3, arg4);
         }
     }
@@ -135,7 +135,7 @@ namespace Mannex
             this Action<T1, T2> action,
             T1 arg1)
         {
-            if (action == null) throw new ArgumentNullException("action");
+            if (action == null) throw new ArgumentNullException(nameof(action));
             return (arg2) => action(arg1, arg2);
         }
 
@@ -149,7 +149,7 @@ namespace Mannex
             this Action<T1, T2, T3> action,
             T1 arg1)
         {
-            if (action == null) throw new ArgumentNullException("action");
+            if (action == null) throw new ArgumentNullException(nameof(action));
             return (arg2, arg3) => action(arg1, arg2, arg3);
         }
 
@@ -163,7 +163,7 @@ namespace Mannex
             this Action<T1, T2, T3> action,
             T1 arg1, T2 arg2)
         {
-            if (action == null) throw new ArgumentNullException("action");
+            if (action == null) throw new ArgumentNullException(nameof(action));
             return (arg3) => action(arg1, arg2, arg3);
         }
 
@@ -177,7 +177,7 @@ namespace Mannex
             this Action<T1, T2, T3, T4> action,
             T1 arg1)
         {
-            if (action == null) throw new ArgumentNullException("action");
+            if (action == null) throw new ArgumentNullException(nameof(action));
             return (arg2, arg3, arg4) => action(arg1, arg2, arg3, arg4);
         }
 
@@ -191,7 +191,7 @@ namespace Mannex
             this Action<T1, T2, T3, T4> action,
             T1 arg1, T2 arg2)
         {
-            if (action == null) throw new ArgumentNullException("action");
+            if (action == null) throw new ArgumentNullException(nameof(action));
             return (arg3, arg4) => action(arg1, arg2, arg3, arg4);
         }
 
@@ -205,7 +205,7 @@ namespace Mannex
             this Action<T1, T2, T3, T4> action,
             T1 arg1, T2 arg2, T3 arg3)
         {
-            if (action == null) throw new ArgumentNullException("action");
+            if (action == null) throw new ArgumentNullException(nameof(action));
             return (arg4) => action(arg1, arg2, arg3, arg4);
         }
     }

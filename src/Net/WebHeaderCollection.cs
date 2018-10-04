@@ -55,8 +55,8 @@ namespace Mannex.Net
 
         public static T Map<T>(this WebHeaderCollection headers, HttpResponseHeader header, T defaultValue, Func<string, T> mapper)
         {
-            if (headers == null) throw new ArgumentNullException("headers");
-            if (mapper == null) throw new ArgumentNullException("mapper");
+            if (headers == null) throw new ArgumentNullException(nameof(headers));
+            if (mapper == null) throw new ArgumentNullException(nameof(mapper));
             var value = headers[header];
             return string.IsNullOrEmpty(value) ? defaultValue : mapper(value);
         }

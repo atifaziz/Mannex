@@ -45,7 +45,7 @@ namespace Mannex.Web.UI
 
         public static T GetDataItem<T>(this Control control)
         {
-            if (control == null) throw new ArgumentNullException("control");
+            if (control == null) throw new ArgumentNullException(nameof(control));
             var page = control.Page;
             if (page == null)
                 throw new InvalidOperationException("Data-binding methods such as Eval(), XPath(), and Bind() can only be used in controls contained in a page.");
@@ -111,7 +111,7 @@ namespace Mannex.Web.UI
 
         public static string EvalMany(this Control control, string format, params string[] expressions)
         {
-            if (expressions == null) throw new ArgumentNullException("expressions");
+            if (expressions == null) throw new ArgumentNullException(nameof(expressions));
             return string.Format(format, expressions.Select(e => control.Eval(e)).ToArray());
         }
     }

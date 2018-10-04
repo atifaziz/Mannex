@@ -43,8 +43,8 @@ namespace Mannex
         [DebuggerStepThrough]
         public static Predicate<T> And<T>(this Predicate<T> lhs, Predicate<T> rhs)
         {
-            if (lhs == null) throw new ArgumentNullException("lhs");
-            if (rhs == null) throw new ArgumentNullException("rhs");
+            if (lhs == null) throw new ArgumentNullException(nameof(lhs));
+            if (rhs == null) throw new ArgumentNullException(nameof(rhs));
             return obj => lhs(obj) && rhs(obj);
         }
 
@@ -55,8 +55,8 @@ namespace Mannex
         [DebuggerStepThrough]
         public static Predicate<T> Or<T>(this Predicate<T> lhs, Predicate<T> rhs)
         {
-            if (lhs == null) throw new ArgumentNullException("lhs");
-            if (rhs == null) throw new ArgumentNullException("rhs");
+            if (lhs == null) throw new ArgumentNullException(nameof(lhs));
+            if (rhs == null) throw new ArgumentNullException(nameof(rhs));
             return obj => lhs(obj) || rhs(obj);
         }
     }

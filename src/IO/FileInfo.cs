@@ -54,7 +54,7 @@ namespace Mannex.IO
 
         public static IEnumerable<string> ReadLines(this FileInfo info, Encoding encoding)
         {
-            if (info == null) throw new ArgumentNullException("info");
+            if (info == null) throw new ArgumentNullException(nameof(info));
             return ReadLinesImpl(info.FullName, encoding);
         }
 

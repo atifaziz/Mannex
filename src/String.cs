@@ -65,7 +65,7 @@ namespace Mannex
 
         public static bool HasPrefix(this string str, string prefix, StringComparison comparison)
         {
-            if (str == null) throw new ArgumentNullException("str");
+            if (str == null) throw new ArgumentNullException(nameof(str));
 
             return !string.IsNullOrEmpty(prefix)
                 && str.Length > prefix.Length
@@ -79,7 +79,7 @@ namespace Mannex
 
         public static bool HasSuffix(this string str, string suffix, StringComparison comparison)
         {
-            if (str == null) throw new ArgumentNullException("str");
+            if (str == null) throw new ArgumentNullException(nameof(str));
 
             return !string.IsNullOrEmpty(suffix)
                 && str.Length > suffix.Length
@@ -120,13 +120,13 @@ namespace Mannex
         [DebuggerStepThrough]
         public static string Slice(this string str, int start, int? end)
         {
-            if (str == null) throw new ArgumentNullException("str");
+            if (str == null) throw new ArgumentNullException(nameof(str));
             return SliceImpl(str, start, end ?? str.Length);
         }
 
         static string SliceImpl(this string str, int start, int end)
         {
-            if (str == null) throw new ArgumentNullException("str");
+            if (str == null) throw new ArgumentNullException(nameof(str));
             var length = str.Length;
 
             if (start < 0)
@@ -166,8 +166,8 @@ namespace Mannex
 
         public static string Embed(this string str, string target)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (target == null) throw new ArgumentNullException("target");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (target == null) throw new ArgumentNullException(nameof(target));
             return string.Format(target, str);
         }
 
@@ -179,7 +179,7 @@ namespace Mannex
 
         public static string Wrap(this string str, string lhs, string rhs)
         {
-            if (str == null) throw new ArgumentNullException("str");
+            if (str == null) throw new ArgumentNullException(nameof(str));
             return lhs + str + rhs;
         }
 
@@ -190,7 +190,7 @@ namespace Mannex
 
         public static string Quote(this string str, string quote, string escape)
         {
-            if (str == null) throw new ArgumentNullException("str");
+            if (str == null) throw new ArgumentNullException(nameof(str));
             StringBuilder sb = null;
             var start = 0;
             int index;
@@ -230,8 +230,8 @@ namespace Mannex
         public static string FormatWith(this string format,
             IFormatProvider provider, Func<string, object[], IFormatProvider, string> binder, params object[] args)
         {
-            if (format == null) throw new ArgumentNullException("format");
-            if (binder == null) throw new ArgumentNullException("binder");
+            if (format == null) throw new ArgumentNullException(nameof(format));
+            if (binder == null) throw new ArgumentNullException(nameof(binder));
 
             Debug.Assert(binder != null);
 
@@ -292,8 +292,8 @@ namespace Mannex
 
         public static T Split<T>(this string str, char separator, Func<string, string, T> resultFunc)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (resultFunc == null) throw new ArgumentNullException(nameof(resultFunc));
             return SplitRemoving(str, str.IndexOf(separator), 1, resultFunc);
         }
 
@@ -307,8 +307,8 @@ namespace Mannex
         
         public static T Split<T>(this string str, char separator, Func<string, string, string, T> resultFunc)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (resultFunc == null) throw new ArgumentNullException(nameof(resultFunc));
             return str.Split(separator, (a, rest) => rest.Split(separator, (b, c) => resultFunc(a, b, c)));
         }
 
@@ -322,8 +322,8 @@ namespace Mannex
 
         public static T Split<T>(this string str, char separator, Func<string, string, string, string, T> resultFunc)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (resultFunc == null) throw new ArgumentNullException(nameof(resultFunc));
             return str.Split(separator, (a, b, rest) => rest.Split(separator, (c, d) => resultFunc(a, b, c, d)));
         }
 
@@ -337,8 +337,8 @@ namespace Mannex
 
         public static T Split<T>(this string str, char[] separators, Func<string, string, T> resultFunc)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (resultFunc == null) throw new ArgumentNullException(nameof(resultFunc));
 
             return separators == null || separators.Length == 0
                  ? resultFunc(str, string.Empty)
@@ -355,8 +355,8 @@ namespace Mannex
 
         public static T Split<T>(this string str, char[] separators, Func<string, string, string, T> resultFunc)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (resultFunc == null) throw new ArgumentNullException(nameof(resultFunc));
             return str.Split(separators, (a, rest) => rest.Split(separators, (b, c) => resultFunc(a, b, c)));
         }
 
@@ -370,8 +370,8 @@ namespace Mannex
 
         public static T Split<T>(this string str, char[] separators, Func<string, string, string, string, T> resultFunc)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (resultFunc == null) throw new ArgumentNullException(nameof(resultFunc));
             return str.Split(separators, (a, b, rest) => rest.Split(separators, (c, d) => resultFunc(a, b, c, d)));
         }
 
@@ -386,8 +386,8 @@ namespace Mannex
 
         public static T Split<T>(this string str, string separator, StringComparison comparison, Func<string, string, T> resultFunc)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (resultFunc == null) throw new ArgumentNullException(nameof(resultFunc));
             return SplitRemoving(str, str.IndexOf(separator, comparison), separator.Length, resultFunc);
         }
 
@@ -402,8 +402,8 @@ namespace Mannex
         
         public static T Split<T>(this string str, string separator, StringComparison comparison, Func<string, string, string, T> resultFunc)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (resultFunc == null) throw new ArgumentNullException(nameof(resultFunc));
             return str.Split(separator, comparison, (a, rest) => rest.Split(separator, comparison, (b, c) => resultFunc(a, b, c)));
         }
 
@@ -418,8 +418,8 @@ namespace Mannex
 
         public static T Split<T>(this string str, string separator, StringComparison comparison, Func<string, string, string, string, T> resultFunc)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (resultFunc == null) throw new ArgumentNullException(nameof(resultFunc));
             return str.Split(separator, comparison, (a, b, rest) => rest.Split(separator, comparison, (c, d) => resultFunc(a, b, c, d)));
         }
 
@@ -474,7 +474,7 @@ namespace Mannex
 
         public static IEnumerable<string> SplitIntoLines(this string str)
         {
-            if (str == null) throw new ArgumentNullException("str");
+            if (str == null) throw new ArgumentNullException(nameof(str));
             return SplitIntoLinesImpl(str);
         }
  
@@ -494,7 +494,7 @@ namespace Mannex
 
         public static string NormalizeWhiteSpace(this string str)
         {
-            if (str == null) throw new ArgumentNullException("str");
+            if (str == null) throw new ArgumentNullException(nameof(str));
             return Regex.Replace(str, @"\s+", " ").Trim();
         }
 
@@ -532,8 +532,8 @@ namespace Mannex
 
         public static T Substrings<T>(this string str, int index, int length, Func<string, string, string, T> resultor)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (resultor == null) throw new ArgumentNullException("resultor");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (resultor == null) throw new ArgumentNullException(nameof(resultor));
 
             return resultor(str.Substring(0, index),
                             str.Substring(index, length),
@@ -565,7 +565,7 @@ namespace Mannex
         
         public static char? TryCharAt(this string str, int index)
         {
-            if (str == null) throw new ArgumentNullException("str");
+            if (str == null) throw new ArgumentNullException(nameof(str));
             return index < str.Length 
                  ? index < 0 
                  ? str.Length + index < 0 
@@ -586,7 +586,7 @@ namespace Mannex
 
         public static string TrimCommonLeadingSpace(this string str)
         {
-            if (str == null) throw new ArgumentNullException("str");
+            if (str == null) throw new ArgumentNullException(nameof(str));
 
             var output =
                 from lines in new[] { str.SplitIntoLines() }
@@ -623,7 +623,7 @@ namespace Mannex
 
         public static IEnumerable<string> Partition(this string str, int size)
         {
-            if (str == null) throw new ArgumentNullException("str");
+            if (str == null) throw new ArgumentNullException(nameof(str));
             return PartitionImpl(str, size);
         }
 
@@ -645,9 +645,9 @@ namespace Mannex
 
         public static string Replace(this string str, string oldValue, string newValue, StringComparison comparison)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (oldValue == null) throw new ArgumentNullException("oldValue");
-            if (oldValue.Length == 0) throw new ArgumentException("String cannot be of zero length.", "oldValue");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (oldValue == null) throw new ArgumentNullException(nameof(oldValue));
+            if (oldValue.Length == 0) throw new ArgumentException("String cannot be of zero length.", nameof(oldValue));
 
             StringBuilder sb = null;
             var previousIndex = 0;
@@ -674,8 +674,8 @@ namespace Mannex
 
         public static string Repeat(this string str, int count)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (count < 0) throw new ArgumentOutOfRangeException("count", count, null);
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (count < 0) throw new ArgumentOutOfRangeException(nameof(count), count, null);
             return count == 0 || str.Length == 0
                  ? string.Empty
                  : count == 1

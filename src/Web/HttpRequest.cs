@@ -47,7 +47,7 @@ namespace Mannex.Web
 
         public static bool IsHttpMethod(this HttpRequest request, string verb)
         {
-            if (request == null) throw new ArgumentNullException("request");
+            if (request == null) throw new ArgumentNullException(nameof(request));
             return StringComparer.OrdinalIgnoreCase.Equals(verb, request.HttpMethod);
         }
 
@@ -58,7 +58,7 @@ namespace Mannex.Web
 
         public static bool IsHttpMethod(this HttpRequestBase request, string verb)
         {
-            if (request == null) throw new ArgumentNullException("request");
+            if (request == null) throw new ArgumentNullException(nameof(request));
             return StringComparer.OrdinalIgnoreCase.Equals(verb, request.HttpMethod);
         }
 
@@ -68,7 +68,7 @@ namespace Mannex.Web
 
         public static bool IsAjax(this HttpRequest request)
         {
-            if (request == null) throw new ArgumentNullException("request");
+            if (request == null) throw new ArgumentNullException(nameof(request));
             return IsAjax(request.Headers);
         }
 
@@ -78,7 +78,7 @@ namespace Mannex.Web
 
         public static bool IsAjax(this HttpRequestBase request)
         {
-            if (request == null) throw new ArgumentNullException("request");
+            if (request == null) throw new ArgumentNullException(nameof(request));
             return IsAjax(request.Headers);
         }
 

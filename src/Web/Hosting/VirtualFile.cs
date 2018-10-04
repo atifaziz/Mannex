@@ -60,13 +60,13 @@ namespace Mannex.Web.Hosting
 
         public static string ReadAllText(this VirtualFile file, Encoding encoding)
         {
-            if (encoding == null) throw new ArgumentNullException("encoding");
+            if (encoding == null) throw new ArgumentNullException(nameof(encoding));
             return ReadAllTextImpl(file, encoding);
         }
 
         static string ReadAllTextImpl(this VirtualFile file, Encoding encoding)
         {
-            if (file == null) throw new ArgumentNullException("file");
+            if (file == null) throw new ArgumentNullException(nameof(file));
             using (var stream = file.Open())
             using (var reader = encoding == null
                               ? new StreamReader(stream)
@@ -85,7 +85,7 @@ namespace Mannex.Web.Hosting
 
         public static IEnumerable<string> ReadLines(this VirtualFile file)
         {
-            if (file == null) throw new ArgumentNullException("file");
+            if (file == null) throw new ArgumentNullException(nameof(file));
             return ReadLinesImpl(file, null);
         }
 
@@ -98,8 +98,8 @@ namespace Mannex.Web.Hosting
 
         public static IEnumerable<string> ReadLines(this VirtualFile file, Encoding encoding)
         {
-            if (file == null) throw new ArgumentNullException("file");
-            if (encoding == null) throw new ArgumentNullException("encoding");
+            if (file == null) throw new ArgumentNullException(nameof(file));
+            if (encoding == null) throw new ArgumentNullException(nameof(encoding));
             return ReadLinesImpl(file, encoding);
         }
 

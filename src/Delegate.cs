@@ -43,7 +43,7 @@ namespace Mannex
             where T : EventArgs // constraint removed post-.NET 4
             #endif
         {
-            if (del == null) throw new ArgumentNullException("del");
+            if (del == null) throw new ArgumentNullException(nameof(del));
             // ReSharper disable once PossibleInvalidCastExceptionInForeachLoop
             foreach (EventHandler<T> handler in del.GetInvocationList())
                 try { handler(sender, args); } catch { /* ignored */ }

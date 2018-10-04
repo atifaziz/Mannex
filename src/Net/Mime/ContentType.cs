@@ -44,7 +44,7 @@ namespace Mannex.Net.Mime
 
         public static bool IsPlainText(this ContentType contentType)
         {
-            if (contentType == null) throw new ArgumentNullException("contentType");
+            if (contentType == null) throw new ArgumentNullException(nameof(contentType));
             return EqualsOrdinalIgnoreCase(MediaTypeNames.Text.Plain, contentType.MediaType);
         }
 
@@ -54,7 +54,7 @@ namespace Mannex.Net.Mime
 
         public static bool IsText(this ContentType contentType)
         {
-            if (contentType == null) throw new ArgumentNullException("contentType");
+            if (contentType == null) throw new ArgumentNullException(nameof(contentType));
             return EqualsOrdinalIgnoreCase("text", GetMediaBaseType(contentType));
         }
 
@@ -64,7 +64,7 @@ namespace Mannex.Net.Mime
 
         public static bool IsHtml(this ContentType contentType)
         {
-            if (contentType == null) throw new ArgumentNullException("contentType");
+            if (contentType == null) throw new ArgumentNullException(nameof(contentType));
             return EqualsOrdinalIgnoreCase(MediaTypeNames.Text.Html, contentType.MediaType);
         }
 
@@ -74,7 +74,7 @@ namespace Mannex.Net.Mime
 
         public static bool IsImage(this ContentType contentType)
         {
-            if (contentType == null) throw new ArgumentNullException("contentType");
+            if (contentType == null) throw new ArgumentNullException(nameof(contentType));
             return EqualsOrdinalIgnoreCase("image", GetMediaBaseType(contentType));
         }
 
@@ -84,7 +84,7 @@ namespace Mannex.Net.Mime
 
         public static string GetMediaBaseType(this ContentType contentType)
         {
-            if (contentType == null) throw new ArgumentNullException("contentType");
+            if (contentType == null) throw new ArgumentNullException(nameof(contentType));
             var mediaType = contentType.MediaType;
             return mediaType.Substring(0, mediaType.IndexOf('/'));
         }
@@ -95,7 +95,7 @@ namespace Mannex.Net.Mime
 
         public static string GetMediaSubType(this ContentType contentType)
         {
-            if (contentType == null) throw new ArgumentNullException("contentType");
+            if (contentType == null) throw new ArgumentNullException(nameof(contentType));
             var mediaType = contentType.MediaType;
             return mediaType.Substring(mediaType.IndexOf('/') + 1);
         }
@@ -154,7 +154,7 @@ namespace Mannex.Net.Mime
 
         public static Encoding EncodingFromCharSet(this ContentType contentType, Encoding defaultEncoding, Func<string, Encoding> encodingSelector)
         {
-            if (contentType == null) throw new ArgumentNullException("contentType");
+            if (contentType == null) throw new ArgumentNullException(nameof(contentType));
             return string.IsNullOrEmpty(contentType.CharSet)
                  ? defaultEncoding
                  : (encodingSelector ?? Encoding.GetEncoding)(contentType.CharSet);

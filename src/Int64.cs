@@ -56,7 +56,7 @@ namespace Mannex
         [DebuggerStepThrough]
         public static T DivRem<T>(this long dividend, long divisor, Func<long, long, T> resultFunc)
         {
-            if (resultFunc == null) throw new ArgumentNullException("resultFunc");
+            if (resultFunc == null) throw new ArgumentNullException(nameof(resultFunc));
             var quotient = dividend / divisor;
             var remainder = dividend % divisor;
             return resultFunc(quotient, remainder);

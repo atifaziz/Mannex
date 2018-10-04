@@ -64,9 +64,9 @@ namespace Mannex
 
         public static StringBuilder ToHex(this byte[] buffer, int index, int count, StringBuilder sb)
         {
-            if (buffer == null) throw new ArgumentNullException("buffer");
-            if (index < 0 || index > buffer.Length) throw new ArgumentOutOfRangeException("index");
-            if (index + count > buffer.Length) throw new ArgumentOutOfRangeException("count");
+            if (buffer == null) throw new ArgumentNullException(nameof(buffer));
+            if (index < 0 || index > buffer.Length) throw new ArgumentOutOfRangeException(nameof(index));
+            if (index + count > buffer.Length) throw new ArgumentOutOfRangeException(nameof(count));
 
             if (sb == null)
                 sb = new StringBuilder(count * 2);
@@ -90,7 +90,7 @@ namespace Mannex
 
         public static void Rotate<T>(this T[] array)
         {
-            if (array == null) throw new ArgumentNullException("array");
+            if (array == null) throw new ArgumentNullException(nameof(array));
             if (array.Length == 0) return;
             var first = array[0];
             Array.Copy(array, 1, array, 0, array.Length - 1);
@@ -108,7 +108,7 @@ namespace Mannex
 
         public static void Update<TTarget, TSource>(this TTarget[] target, IEnumerable<TSource> source, Func<TTarget, TSource, TTarget> function)
         {
-            if (function == null) throw new ArgumentNullException("function");
+            if (function == null) throw new ArgumentNullException(nameof(function));
             target.Update(source, (l, r, i) => function(l, r));
         }
 
@@ -125,9 +125,9 @@ namespace Mannex
 
         public static void Update<TTarget, TSource>(this TTarget[] target, IEnumerable<TSource> source, Func<TTarget, TSource, int, TTarget> function)
         {
-            if (target == null) throw new ArgumentNullException("target");
-            if (function == null) throw new ArgumentNullException("function");
-            if (source == null) throw new ArgumentNullException("source");
+            if (target == null) throw new ArgumentNullException(nameof(target));
+            if (function == null) throw new ArgumentNullException(nameof(function));
+            if (source == null) throw new ArgumentNullException(nameof(source));
 
             var results = new TTarget[target.Length];
 
@@ -199,7 +199,7 @@ namespace Mannex
 
         public static T[] Remove<T>(this T[] array, T item, IEqualityComparer<T> comparer)
         {
-            if (array == null) throw new ArgumentNullException("array");
+            if (array == null) throw new ArgumentNullException(nameof(array));
 
             var index = comparer == null
                       ? Array.IndexOf(array, item)
@@ -236,8 +236,8 @@ namespace Mannex
 
         static T[,] ToArray2DImpl<T>(T[] source, int columns, T defaultValue, bool fill)
         {
-            if (source == null) throw new ArgumentNullException("source");
-            if (columns < 0) throw new ArgumentOutOfRangeException("source", columns, null);
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (columns < 0) throw new ArgumentOutOfRangeException(nameof(source), columns, null);
             if (columns == 0) return new T[0, 0];
 
             var rows = source.Length / columns + (source.Length % columns == 0 ? 0 : 1);
@@ -265,9 +265,9 @@ namespace Mannex
 
         public static IEnumerable<T> Row<T>(this T[,] array, int index)
         {
-            if (array == null) throw new ArgumentNullException("array");
+            if (array == null) throw new ArgumentNullException(nameof(array));
             var zero = array.GetLowerBound(0);
-            if (index < zero || index >= array.GetLength(0) - zero) throw new ArgumentOutOfRangeException("index", index, null);
+            if (index < zero || index >= array.GetLength(0) - zero) throw new ArgumentOutOfRangeException(nameof(index), index, null);
             return RowImpl(array, index);
         }
 
@@ -287,9 +287,9 @@ namespace Mannex
 
         public static IEnumerable<T> Column<T>(this T[,] array, int index)
         {
-            if (array == null) throw new ArgumentNullException("array");
+            if (array == null) throw new ArgumentNullException(nameof(array));
             var zero = array.GetLowerBound(1);
-            if (index < zero || index >= array.GetLength(1) - zero) throw new ArgumentOutOfRangeException("index", index, null);
+            if (index < zero || index >= array.GetLength(1) - zero) throw new ArgumentOutOfRangeException(nameof(index), index, null);
             return ColumnImpl(array, index);
         }
 
@@ -308,8 +308,8 @@ namespace Mannex
 
         public static IEnumerable<TResult> Apply<T, TResult>(this T[,] array, int index1, int index2, Func<T, T, TResult> function)
         {
-            if (array == null) throw new ArgumentNullException("array");
-            if (function == null) throw new ArgumentNullException("function");
+            if (array == null) throw new ArgumentNullException(nameof(array));
+            if (function == null) throw new ArgumentNullException(nameof(function));
             return ApplyImpl(array, index1, index2, function);
         }
 
@@ -328,8 +328,8 @@ namespace Mannex
 
         public static IEnumerable<TResult> Apply<T, TResult>(this T[,] array, int index1, int index2, int index3, Func<T, T, T, TResult> function)
         {
-            if (array == null) throw new ArgumentNullException("array");
-            if (function == null) throw new ArgumentNullException("function");
+            if (array == null) throw new ArgumentNullException(nameof(array));
+            if (function == null) throw new ArgumentNullException(nameof(function));
             return ApplyImpl(array, index1, index2, index3, function);
         }
 
@@ -348,8 +348,8 @@ namespace Mannex
 
         public static IEnumerable<TResult> Apply<T, TResult>(this T[,] array, int index1, int index2, int index3, int index4, Func<T, T, T, T, TResult> function)
         {
-            if (array == null) throw new ArgumentNullException("array");
-            if (function == null) throw new ArgumentNullException("function");
+            if (array == null) throw new ArgumentNullException(nameof(array));
+            if (function == null) throw new ArgumentNullException(nameof(function));
             return ApplyImpl(array, index1, index2, index3, index4, function);
         }
 
@@ -375,9 +375,9 @@ namespace Mannex
         public static TResult PartitionStrictly<T, TResult>(this T[] array,
             int index, Func<T[], T[], TResult> selector)
         {
-            if (array == null) throw new ArgumentNullException("array");
-            if (selector == null) throw new ArgumentNullException("selector");
-            if (index < 0 || index > array.Length) throw new ArgumentOutOfRangeException("index", index, null);
+            if (array == null) throw new ArgumentNullException(nameof(array));
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
+            if (index < 0 || index > array.Length) throw new ArgumentOutOfRangeException(nameof(index), index, null);
             return array.Partition(index, selector);
         }
 
@@ -390,9 +390,9 @@ namespace Mannex
         public static TResult Partition<T, TResult>(this T[] array, int index,
             Func<T[], T[], TResult> selector)
         {
-            if (array == null) throw new ArgumentNullException("array");
-            if (selector == null) throw new ArgumentNullException("selector");
-            if (index < 0) throw new ArgumentOutOfRangeException("index", index, null);
+            if (array == null) throw new ArgumentNullException(nameof(array));
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
+            if (index < 0) throw new ArgumentOutOfRangeException(nameof(index), index, null);
 
             index = Math.Min(index, array.Length);
             var left  = index > 0 ? new T[index] : Empty<T>.Value;

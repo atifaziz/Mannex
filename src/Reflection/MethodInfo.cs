@@ -56,7 +56,7 @@ namespace Mannex.Reflection
 
         public static IEnumerable<KeyValuePair<ParameterInfo, object>> ZipArgs(this MethodInfo method, params object[] args)
         {
-            if (method == null) throw new ArgumentNullException("method");
+            if (method == null) throw new ArgumentNullException(nameof(method));
             return ZipArgsImpl(method.GetParameters(), args);
         }
 
@@ -86,8 +86,8 @@ namespace Mannex.Reflection
         
         public static Func<object[], object> CompileStaticInvoker(this MethodInfo method)
         {
-            if (method == null) throw new ArgumentNullException("method");
-            if (!method.IsStatic) throw new ArgumentException(null, "method");
+            if (method == null) throw new ArgumentNullException(nameof(method));
+            if (!method.IsStatic) throw new ArgumentException(null, nameof(method));
             
             var returnsVoid = method.ReturnType == typeof(void);
 
@@ -126,6 +126,6 @@ namespace Mannex.Reflection
         
         static RuntimeMethodHandle _validateArgCountHandle;
         static MethodInfo ValidateArgCountMethod { get { return (_validateArgCountHandle != default(RuntimeMethodHandle) ? _validateArgCountHandle : (_validateArgCountHandle = ((Action<object[], int>) ValidateArgCount).Method.MethodHandle)).GetMethodInfo(); } }
-        static void ValidateArgCount(object[] args, int count) { if (args.Length != count) throw new ArgumentException(null, "args"); }
+        static void ValidateArgCount(object[] args, int count) { if (args.Length != count) throw new ArgumentException(null, nameof(args)); }
     }
 }

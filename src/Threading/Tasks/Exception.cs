@@ -38,7 +38,7 @@ namespace Mannex.Threading.Tasks
 
         public static Task<T> AsTask<T>(this Exception exception)
         {
-            if (exception == null) throw new ArgumentNullException("exception");
+            if (exception == null) throw new ArgumentNullException(nameof(exception));
             var tcs = new TaskCompletionSource<T>();
             tcs.SetException(exception);
             return tcs.Task;

@@ -234,7 +234,7 @@ namespace Mannex.Text.RegularExpressions
             Func<T1, T2, T3, TResult> r3,
             Func<T1, T2, T3, T4, TResult> r4)
         {
-            if (match == null) throw new ArgumentNullException("match");
+            if (match == null) throw new ArgumentNullException(nameof(match));
 
             var d = r1 ?? r2 ?? r3 ?? (Delegate)r4;
             if (d == null)

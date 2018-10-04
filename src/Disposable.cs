@@ -46,7 +46,7 @@ namespace Mannex
         [DebuggerStepThrough]
         public static void Dispose(this IDisposable disposable)
         {
-            if (disposable == null) throw new ArgumentNullException("disposable");
+            if (disposable == null) throw new ArgumentNullException(nameof(disposable));
             disposable.Dispose();
         }
     }

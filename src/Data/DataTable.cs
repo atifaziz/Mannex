@@ -58,7 +58,7 @@ namespace Mannex.Data
 
         public static IEnumerable<DataColumn> FindColumns(this DataTable table, params string[] names)
         {
-            if (table == null) throw new ArgumentNullException("table");
+            if (table == null) throw new ArgumentNullException(nameof(table));
             return from name in names select table.Columns[name];
         }
 
@@ -81,7 +81,7 @@ namespace Mannex.Data
 
         public static void SetColumnsOrder(this DataTable table, params DataColumn[] columns)
         {
-            if (table == null) throw new ArgumentNullException("table");
+            if (table == null) throw new ArgumentNullException(nameof(table));
             
             if (columns == null || columns.Length == 0)
                 return;
@@ -93,13 +93,13 @@ namespace Mannex.Data
                 {
                     var message = string.Format(@"Column in position {0} not set to a {1} instance.", e.
                                                 Key, typeof(DataColumn).Name);
-                    throw new ArgumentException(message, "columns");
+                    throw new ArgumentException(message, nameof(columns));
                 }
                 if (column.Table != table)
                 {
                     var message = string.Format(@"Column '{0}' does not belong to the table.", 
                                                 column.ColumnName);
-                    throw new ArgumentException(message, "columns");
+                    throw new ArgumentException(message, nameof(columns));
                 }
                 column.SetOrdinal(e.Key);
             }
@@ -114,7 +114,7 @@ namespace Mannex.Data
 
         public static IEnumerable<IDataRecord> GetRecords(this DataTable table)
         {
-            if (table == null) throw new ArgumentNullException("table");
+            if (table == null) throw new ArgumentNullException(nameof(table));
             return GetRecordsImpl(table);
         }
         

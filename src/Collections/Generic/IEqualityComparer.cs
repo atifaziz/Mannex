@@ -38,7 +38,7 @@ namespace Mannex.Collections.Generic
         
         public static Func<T, T, bool> EqualsFunc<T>(this IEqualityComparer<T> comparer)
         {
-            if (comparer == null) throw new ArgumentNullException("comparer");
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
             return comparer.Equals;
         }
 
@@ -48,7 +48,7 @@ namespace Mannex.Collections.Generic
 
         public static Func<T, int> GetHashCodeFunc<T>(this IEqualityComparer<T> comparer)
         {
-            if (comparer == null) throw new ArgumentNullException("comparer");
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
             return comparer.GetHashCode;
         }
     }

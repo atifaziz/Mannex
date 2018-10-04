@@ -69,7 +69,7 @@ namespace Mannex.ComponentModel
             {
                 var member = expression.Body as MemberExpression;
                 if (member == null)
-                    throw new ArgumentException(null, "expression");
+                    throw new ArgumentException(null, nameof(expression));
                 propertyName = member.Member.Name;
             }
 
@@ -95,8 +95,8 @@ namespace Mannex.ComponentModel
 
         public static PropertyChangedEventHandler OnPropertyChanged(this INotifyPropertyChanged source, string propertyName, PropertyChangedEventHandler handler)
         {
-            if (source == null) throw new ArgumentNullException("source");
-            if (handler == null) throw new ArgumentNullException("handler");
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (handler == null) throw new ArgumentNullException(nameof(handler));
 
             PropertyChangedEventHandler onChanged = (sender, args) =>
             {

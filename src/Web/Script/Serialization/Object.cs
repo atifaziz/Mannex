@@ -68,7 +68,7 @@ namespace Mannex.Web.Script.Serialization
         [DebuggerStepThrough]
         public static void BuildJsonStringTo(this object obj, StringBuilder output)
         {
-            if (output == null) throw new ArgumentNullException("output");
+            if (output == null) throw new ArgumentNullException(nameof(output));
             _serializer.Serialize(obj, output);
         }
     }

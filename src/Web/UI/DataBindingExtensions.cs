@@ -58,7 +58,7 @@ namespace Mannex.Web.UI
 
         public static T DataBind<T>(this object obj, string expression)
         {
-            if (obj == null) throw new ArgumentNullException("obj");
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
             return (T) obj.DataBind(expression);
         }
 
@@ -83,7 +83,7 @@ namespace Mannex.Web.UI
 
         public static object DataBind(this object obj, string expression)
         {
-            if (obj == null) throw new ArgumentNullException("obj");
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
 
             //
             // The ASP.NET DataBinder.Eval method does not like an empty or null

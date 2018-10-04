@@ -48,7 +48,7 @@ namespace Mannex.Collections
         [DebuggerStepThrough]
         public static IEnumerable<bool> AsEnumerable(this BitArray array)
         {
-            if (array == null) throw new ArgumentNullException("array");
+            if (array == null) throw new ArgumentNullException(nameof(array));
             return array.Cast<bool>();
         }
     }

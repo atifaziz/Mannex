@@ -45,7 +45,7 @@ namespace Mannex.IO
 
         public static IEnumerator<string> ReadLines(this TextReader reader)
         {
-            if (reader == null) throw new ArgumentNullException("reader");
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
             return ReadLinesImpl(reader);
         }
 
@@ -72,8 +72,8 @@ namespace Mannex.IO
 
         public static TextReader Concat(this TextReader first, IEnumerable<TextReader> others)
         {
-            if (first == null) throw new ArgumentNullException("first");
-            if (others == null) throw new ArgumentNullException("others");
+            if (first == null) throw new ArgumentNullException(nameof(first));
+            if (others == null) throw new ArgumentNullException(nameof(others));
             return Concat(first, others.ToArray());
         }
 
@@ -89,8 +89,8 @@ namespace Mannex.IO
 
         public static TextReader Concat(this TextReader first, params TextReader[] others)
         {
-            if (first == null) throw new ArgumentNullException("first");
-            if (others == null) throw new ArgumentNullException("others");
+            if (first == null) throw new ArgumentNullException(nameof(first));
+            if (others == null) throw new ArgumentNullException(nameof(others));
             return new ChainedTextReader(new[] { first }.Concat(others));
         }
 
@@ -100,7 +100,7 @@ namespace Mannex.IO
 
             public ChainedTextReader(IEnumerable<TextReader> readers)
             {
-                if (readers == null) throw new ArgumentNullException("readers");
+                if (readers == null) throw new ArgumentNullException(nameof(readers));
 
                 _readers = readers.Select(r => r ?? Null)
                     /*sentinel */ .Concat(new TextReader[] { null })
@@ -233,8 +233,8 @@ namespace Mannex.IO
             Func<string[], THeader> headerSelector,
             Func<THeader, string[], TResult> resultSelector)
         {
-            if (headerSelector == null) throw new ArgumentNullException("headerSelector");
-            if (resultSelector == null) throw new ArgumentNullException("resultSelector");
+            if (headerSelector == null) throw new ArgumentNullException(nameof(headerSelector));
+            if (resultSelector == null) throw new ArgumentNullException(nameof(resultSelector));
 
             return reader.ParseXsv(delimiter, quoted,
                                    (_, hs) => headerSelector(hs),
@@ -251,9 +251,9 @@ namespace Mannex.IO
             Func<long, string[], THeader> headerSelector,
             Func<long, THeader, string[], TResult> resultSelector)
         {
-            if (reader == null) throw new ArgumentNullException("reader");
-            if (headerSelector == null) throw new ArgumentNullException("headerSelector");
-            if (resultSelector == null) throw new ArgumentNullException("resultSelector");
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
+            if (headerSelector == null) throw new ArgumentNullException(nameof(headerSelector));
+            if (resultSelector == null) throw new ArgumentNullException(nameof(resultSelector));
 
             using (var parser = new TextFieldParser(reader)
             {

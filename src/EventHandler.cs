@@ -46,9 +46,9 @@ namespace Mannex
                                    Action<EventHandler<T>> removeHandler)
             where T : EventArgs
         {
-            if (handler == null) throw new ArgumentNullException("handler");
-            if (addHandler == null) throw new ArgumentNullException("addHandler");
-            if (removeHandler == null) throw new ArgumentNullException("removeHandler");
+            if (handler == null) throw new ArgumentNullException(nameof(handler));
+            if (addHandler == null) throw new ArgumentNullException(nameof(addHandler));
+            if (removeHandler == null) throw new ArgumentNullException(nameof(removeHandler));
 
             var proxy = new EventHandler<T>[1];
             addHandler(proxy[0] = (sender, args) =>
@@ -67,9 +67,9 @@ namespace Mannex
                                 Action<EventHandler> addHandler,
                                 Action<EventHandler> removeHandler)
         {
-            if (handler == null) throw new ArgumentNullException("handler");
-            if (addHandler == null) throw new ArgumentNullException("addHandler");
-            if (removeHandler == null) throw new ArgumentNullException("removeHandler");
+            if (handler == null) throw new ArgumentNullException(nameof(handler));
+            if (addHandler == null) throw new ArgumentNullException(nameof(addHandler));
+            if (removeHandler == null) throw new ArgumentNullException(nameof(removeHandler));
 
             var proxy = new EventHandler[1];
             addHandler(proxy[0] = (sender, args) =>
@@ -91,8 +91,8 @@ namespace Mannex
         public static bool Fire<T>(this EventHandler<T> handler, object sender, T args) 
             where T : EventArgs
         {
-            if (sender == null) throw new ArgumentNullException("sender");
-            if (args == null) throw new ArgumentNullException("args");
+            if (sender == null) throw new ArgumentNullException(nameof(sender));
+            if (args == null) throw new ArgumentNullException(nameof(args));
 
             if (handler == null)
                 return false;
@@ -112,8 +112,8 @@ namespace Mannex
 
         public static bool Fire(this EventHandler handler, object sender, EventArgs args)
         {
-            if (sender == null) throw new ArgumentNullException("sender");
-            if (args == null) throw new ArgumentNullException("args");
+            if (sender == null) throw new ArgumentNullException(nameof(sender));
+            if (args == null) throw new ArgumentNullException(nameof(args));
 
             if (handler == null)
                 return false;

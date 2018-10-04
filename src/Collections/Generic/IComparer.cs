@@ -45,7 +45,7 @@ namespace Mannex.Collections.Generic
         
         public static IComparer<T> Invert<T>(this IComparer<T> comparer)
         {
-            if (comparer == null) throw new ArgumentNullException("comparer");
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
             var ic = comparer as InvertingComparer<T>;
             return ic == null ? new InvertingComparer<T>(comparer) : ic.Inner;
         }

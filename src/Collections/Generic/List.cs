@@ -47,7 +47,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static int LastIndex<T>(this IList<T> list)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             return list.Count - 1;
         }
 
@@ -64,7 +64,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static void Push<T>(this IList<T> list, T value)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             list.Add(value);
         }
 
@@ -79,7 +79,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static T Pop<T>(this IList<T> list)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
 
             var value = list.Last();
             list.RemoveAt(list.LastIndex());
@@ -108,7 +108,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static T TryPop<T>(this IList<T> list, T emptyValue)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             return list.Count > 0 ? list.Pop() : emptyValue;
         }
 
@@ -123,7 +123,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static T Peek<T>(this IList<T> list)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             return list.First();
         }
 
@@ -147,7 +147,7 @@ namespace Mannex.Collections.Generic
 
         public static T TryPeek<T>(this IList<T> list, T emptyValue)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             return list.Count > 0 ? list.Peek() : emptyValue;
         }
 
@@ -162,7 +162,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static void Unshift<T>(this IList<T> list, T value)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             list.Insert(0, value);
         }
 
@@ -176,7 +176,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static T Shift<T>(this IList<T> list)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             var value = list.First();
             list.RemoveAt(0);
             return value;
@@ -191,7 +191,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static T TryShift<T>(this IList<T> list)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             return list.TryShift(default(T));
         }
 
@@ -203,7 +203,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static T TryShift<T>(this IList<T> list, T emptyValue)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             return list.Count > 0 ? list.Shift() : emptyValue;
         }
 
@@ -278,7 +278,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static IEnumerable<T> Slice<T>(this IList<T> list, int start)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             return list.Slice(start, list.Count);
         }
 
@@ -303,7 +303,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static IEnumerable<T> Slice<T>(this IList<T> list, int start, int end /* exclusive */)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             return SliceImpl(list, start, end);
         }
 
@@ -348,7 +348,7 @@ namespace Mannex.Collections.Generic
 
         public static int BinarySearch<T>(this IList<T> list, T value, IComparer<T> comparer)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             return list.BinarySearch(0, list.Count, value, comparer);
         }
 
@@ -370,7 +370,7 @@ namespace Mannex.Collections.Generic
 
         public static int BinarySearch<T>(this IList<T> list, int index, int length, T value, IComparer<T> comparer)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             
             comparer = comparer ?? Comparer<T>.Default;
 
@@ -401,7 +401,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static IList<T> AsReadOnly<T>(this IList<T> list)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             return list.IsReadOnly ? list : new ReadOnlyCollection<T>(list);
         }
 
@@ -412,7 +412,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static T PopAt<T>(this IList<T> list, int index)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             var item = list[index];
             list.RemoveAt(index);
             return item;
@@ -439,7 +439,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static T TryPopAt<T>(this IList<T> list, int index, T emptyValue)
         {
-            if (list == null) throw new ArgumentNullException("list");
+            if (list == null) throw new ArgumentNullException(nameof(list));
             return index < list.Count ? list.PopAt(index) : emptyValue;
         }
     }

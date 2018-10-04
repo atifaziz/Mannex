@@ -43,7 +43,7 @@ namespace Mannex.Reflection
 
         public static bool IsDefined<T>(this ICustomAttributeProvider provider, bool inherit) where T : class
         {
-            if (provider == null) throw new ArgumentNullException("provider");
+            if (provider == null) throw new ArgumentNullException(nameof(provider));
             return provider.IsDefined(typeof(T), inherit);
         }
 
@@ -54,7 +54,7 @@ namespace Mannex.Reflection
 
         public static T[] GetCustomAttributes<T>(this ICustomAttributeProvider provider, bool inherit) where T : class
         {
-            if (provider == null) throw new ArgumentNullException("provider");
+            if (provider == null) throw new ArgumentNullException(nameof(provider));
             return (T[]) provider.GetCustomAttributes(typeof(T), inherit);
         }
 
@@ -64,7 +64,7 @@ namespace Mannex.Reflection
 
         public static T GetCustomAttribute<T>(this ICustomAttributeProvider provider, bool inherit) where T : class
         {
-            if (provider == null) throw new ArgumentNullException("provider");
+            if (provider == null) throw new ArgumentNullException(nameof(provider));
             var attributes = provider.GetCustomAttributes<T>(inherit);
             if (attributes.Length == 0)
                 return null;

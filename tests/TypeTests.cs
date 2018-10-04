@@ -147,7 +147,7 @@ namespace Mannex.Tests
             Assert.Equal("type", e.ParamName);
         }
 
-        [Theory, MemberData("GetDefaultValueData")]
+        [Theory, MemberData(nameof(GetDefaultValueData))]
         public void GetDefaultValue(object expected, Type type)
         {
             Assert.Equal(expected, type.GetDefaultValue());

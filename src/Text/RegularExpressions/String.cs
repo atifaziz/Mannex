@@ -56,8 +56,8 @@ namespace Mannex.Text.RegularExpressions
 
         public static bool IsMatch(this string str, string pattern, RegexOptions options)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (pattern == null) throw new ArgumentNullException("pattern");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (pattern == null) throw new ArgumentNullException(nameof(pattern));
             return Regex.IsMatch(str, pattern, options);
         }
 
@@ -98,9 +98,9 @@ namespace Mannex.Text.RegularExpressions
 
         public static T Match<T>(this string str, string pattern, RegexOptions options, Func<Match, T> selector)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (pattern == null) throw new ArgumentNullException("pattern");
-            if (selector == null) throw new ArgumentNullException("selector");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (pattern == null) throw new ArgumentNullException(nameof(pattern));
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
             return selector(Regex.Match(str, pattern, options));
         }
 
@@ -156,9 +156,9 @@ namespace Mannex.Text.RegularExpressions
 
         public static IEnumerable<T> Matches<T>(this string str, string pattern, RegexOptions options, Func<Match, T> selector)
         {
-            if (str == null) throw new ArgumentNullException("str");
-            if (pattern == null) throw new ArgumentNullException("pattern");
-            if (selector == null) throw new ArgumentNullException("selector");
+            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (pattern == null) throw new ArgumentNullException(nameof(pattern));
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
             return MatchesImpl(str, pattern, options, selector);
         }
 

@@ -53,7 +53,7 @@ namespace Mannex.Collections.Generic
 
         public static List<T> ToList<T>(this IEnumerator<T> enumerator)
         {
-            if (enumerator == null) throw new ArgumentNullException("enumerator");
+            if (enumerator == null) throw new ArgumentNullException(nameof(enumerator));
             var list = new List<T>();
             using (enumerator)
             {
@@ -70,7 +70,7 @@ namespace Mannex.Collections.Generic
 
         public static T Read<T>(this IEnumerator<T> enumerator)
         {
-            if (enumerator == null) throw new ArgumentNullException("enumerator");
+            if (enumerator == null) throw new ArgumentNullException(nameof(enumerator));
             if (!enumerator.MoveNext()) throw new InvalidOperationException();
             return enumerator.Current;
         }
@@ -94,7 +94,7 @@ namespace Mannex.Collections.Generic
 
         public static T TryRead<T>(this IEnumerator<T> enumerator, T sentinel)
         {
-            if (enumerator == null) throw new ArgumentNullException("enumerator");
+            if (enumerator == null) throw new ArgumentNullException(nameof(enumerator));
             return enumerator.MoveNext() ? enumerator.Current : sentinel;
         }
     }

@@ -53,7 +53,7 @@ namespace Mannex.Data
             this TextReader reader, string delimiter, bool quoted,
             params DataColumn[] columns)
         {
-            if (columns == null) throw new ArgumentNullException("columns");
+            if (columns == null) throw new ArgumentNullException(nameof(columns));
             return reader.ParseXsvAsDataTable(delimiter, quoted, 
                        columns.Select(c => c.AsKeyTo(new Func<string, object>(s => s)))
                               .ToArray());
@@ -70,9 +70,9 @@ namespace Mannex.Data
             this TextReader reader, string delimiter, bool quoted, 
             params KeyValuePair<DataColumn, Func<string, object>>[] columns)
         {
-            if (columns == null) throw new ArgumentNullException("columns");
+            if (columns == null) throw new ArgumentNullException(nameof(columns));
             if (columns.Any(e => e.Key.Table != null || e.Value == null))
-                throw new ArgumentException(null, "columns");
+                throw new ArgumentException(null, nameof(columns));
 
             var table = new DataTable();
             table.Columns.AddRange(columns.Select(e => e.Key).ToArray());
@@ -148,9 +148,9 @@ namespace Mannex.Data
             this TextReader reader, 
             params KeyValuePair<DataColumn, Func<string, object>>[] columns)
         {
-            if (columns == null) throw new ArgumentNullException("columns");
+            if (columns == null) throw new ArgumentNullException(nameof(columns));
             if (columns.Any(e => e.Key.Table != null || e.Value == null))
-                throw new ArgumentException(null, "columns");
+                throw new ArgumentException(null, nameof(columns));
 
             var table = new DataTable();
             var dataColumns = table.Columns;

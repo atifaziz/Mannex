@@ -63,7 +63,7 @@ namespace Mannex.IO
 
         public static IEnumerable<DirectoryInfo> SelfAndParents(this DirectoryInfo dir)
         {
-            if (dir == null) throw new ArgumentNullException("dir");
+            if (dir == null) throw new ArgumentNullException(nameof(dir));
             return SelfAndParentsImpl(dir);
         }
 

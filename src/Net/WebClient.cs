@@ -48,7 +48,7 @@ namespace Mannex.Net
 
         public static ContentType GetResponseContentType(this WebClient client)
         {
-            if (client == null) throw new ArgumentNullException("client");
+            if (client == null) throw new ArgumentNullException(nameof(client));
 
             var headers = client.ResponseHeaders;
             if (headers == null)
@@ -65,7 +65,7 @@ namespace Mannex.Net
 
         public static string DownloadStringUsingResponseEncoding(this WebClient client, string address)
         {
-            if (client == null) throw new ArgumentNullException("client");
+            if (client == null) throw new ArgumentNullException(nameof(client));
             return DownloadStringUsingResponseEncodingImpl(client, client.DownloadData(address));
         }
 
@@ -77,7 +77,7 @@ namespace Mannex.Net
 
         public static string DownloadStringUsingResponseEncoding(this WebClient client, Uri address)
         {
-            if (client == null) throw new ArgumentNullException("client");
+            if (client == null) throw new ArgumentNullException(nameof(client));
             return DownloadStringUsingResponseEncodingImpl(client, client.DownloadData(address));
         }
 

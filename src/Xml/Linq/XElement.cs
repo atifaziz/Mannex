@@ -48,7 +48,7 @@ namespace Mannex.Xml.Linq
 
         public static IEnumerable<KeyValuePair<string, XNamespace>> GetNamespacesInScope(this XElement element)
         {
-            if (element == null) throw new ArgumentNullException("element");
+            if (element == null) throw new ArgumentNullException(nameof(element));
             
             // With some inspiration from:
             // http://www.hanselman.com/blog/GetNamespacesFromAnXMLDocumentWithXPathDocumentAndLINQToXML.aspx

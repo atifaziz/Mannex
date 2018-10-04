@@ -89,7 +89,7 @@ namespace Mannex.Web
 
         static string W3FormEncode(NameValueCollection collection, string prefix, Func<string, string> encoder)
         {
-            if (collection == null) throw new ArgumentNullException("collection");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
 
             if (collection.Count == 0)
                 return string.Empty;

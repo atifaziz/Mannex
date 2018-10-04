@@ -40,7 +40,7 @@ namespace Mannex
         public static T MinMax<T>(this T value, T min, T max)
             where T : IComparable<T>
         {
-            if (value == null) throw new ArgumentNullException("value");
+            if (value == null) throw new ArgumentNullException(nameof(value));
             return value.CompareTo(min) < 0 ? min : value.CompareTo(max) > 0 ? max : value;
         }
 
@@ -64,7 +64,7 @@ namespace Mannex
         public static bool IsBetween<T>(this T value, T lower, T upper)
             where T : IComparable<T>
         {
-            if (value == null) throw new ArgumentNullException("value");
+            if (value == null) throw new ArgumentNullException(nameof(value));
             return value.CompareTo(lower) >= 0 && value.CompareTo(upper) <= 0;
         }
 
@@ -88,7 +88,7 @@ namespace Mannex
         public static bool IsInBetween<T>(this T value, T lower, T upper)
             where T : IComparable<T>
         {
-            if (value == null) throw new ArgumentNullException("value");
+            if (value == null) throw new ArgumentNullException(nameof(value));
             return value.CompareTo(lower) > 0 && value.CompareTo(upper) < 0;
         }
 

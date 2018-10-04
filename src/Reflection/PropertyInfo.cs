@@ -88,10 +88,10 @@ namespace Mannex.Reflection
 
         static void ValidateGetterLambdaThis(PropertyInfo info)
         {
-            if (info == null) throw new ArgumentNullException("info");
-            if (!info.CanRead) throw new ArgumentException(null, "info");
-            if (info.GetIndexParameters().Length > 0) throw new ArgumentException(null, "info");
-            if (info.GetGetMethod().IsStatic) throw new ArgumentException(null, "info");
+            if (info == null) throw new ArgumentNullException(nameof(info));
+            if (!info.CanRead) throw new ArgumentException(null, nameof(info));
+            if (info.GetIndexParameters().Length > 0) throw new ArgumentException(null, nameof(info));
+            if (info.GetGetMethod().IsStatic) throw new ArgumentException(null, nameof(info));
         }
 
         static LambdaExpression CreateGetterLambda(PropertyInfo info, Type declaringType, Type resultType)

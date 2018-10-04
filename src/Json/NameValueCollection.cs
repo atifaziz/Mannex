@@ -53,7 +53,7 @@ namespace Mannex.Json
 
         public static void WriteJsonStringTo(this NameValueCollection collection, TextWriter writer)
         {
-            if (writer == null) throw new ArgumentNullException("writer");
+            if (writer == null) throw new ArgumentNullException(nameof(writer));
             WriteJsonStringToImpl(collection, writer);
         }
 

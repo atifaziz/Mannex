@@ -59,9 +59,9 @@ namespace Mannex.Threading.Tasks
         public static bool TryConcludeFrom<T, TTask>(this TaskCompletionSource<T> source, TTask task, Func<TTask, T> resultSelector)
             where TTask : Task
         {
-            if (source == null) throw new ArgumentNullException("source");
-            if (task == null) throw new ArgumentNullException("task");
-            if (resultSelector == null) throw new ArgumentNullException("resultSelector");
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (task == null) throw new ArgumentNullException(nameof(task));
+            if (resultSelector == null) throw new ArgumentNullException(nameof(resultSelector));
 
             if (task.IsCanceled)
             {

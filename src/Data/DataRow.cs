@@ -53,7 +53,7 @@ namespace Mannex.Data
 
         public static bool TrySetField<T>(this DataRow row, string name, T value)
         {
-            if (row == null) throw new ArgumentNullException("row");
+            if (row == null) throw new ArgumentNullException(nameof(row));
             var column = row.Table.Columns[name];
             if (column == null)
                 return false;

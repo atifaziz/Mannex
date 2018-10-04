@@ -42,7 +42,7 @@ namespace Mannex.ComponentModel.Design
 
         public static void AddService<T>(this IServiceContainer container, T service)
         {
-            if (container == null) throw new ArgumentNullException("container");
+            if (container == null) throw new ArgumentNullException(nameof(container));
             container.AddService(typeof(T), service);
         }
     }

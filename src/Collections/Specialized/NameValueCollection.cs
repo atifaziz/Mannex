@@ -62,7 +62,7 @@ namespace Mannex.Collections.Specialized
 
         public static T TryGetValue<T>(this NameValueCollection collection, string key, T defaultValue, Func<string, T> selector)
         {
-            if (selector == null) throw new ArgumentNullException("selector");
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
             var value = collection[key];
             return value == null ? defaultValue : selector(value);
         }
@@ -75,7 +75,7 @@ namespace Mannex.Collections.Specialized
         public static NameValueCollection ToNameValueCollection(
             this IEnumerable<KeyValuePair<string, string>> source)
         {
-            if (source == null) throw new ArgumentNullException("source");
+            if (source == null) throw new ArgumentNullException(nameof(source));
 
             var collection = CreateCollection(source as ICollection<KeyValuePair<string, string>>);
             collection.Add(source);
@@ -93,9 +93,9 @@ namespace Mannex.Collections.Specialized
             Func<T, string> nameSelector,
             Func<T, IEnumerable<string>> valuesSelector)
         {
-            if (source == null) throw new ArgumentNullException("source");
-            if (nameSelector == null) throw new ArgumentNullException("nameSelector");
-            if (valuesSelector == null) throw new ArgumentNullException("valuesSelector");
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (nameSelector == null) throw new ArgumentNullException(nameof(nameSelector));
+            if (valuesSelector == null) throw new ArgumentNullException(nameof(valuesSelector));
 
             var collection = CreateCollection(source as ICollection<T>);
             collection.Add(source, nameSelector, valuesSelector);
@@ -114,10 +114,10 @@ namespace Mannex.Collections.Specialized
             Func<T, string> nameSelector,
             Func<T, IEnumerable<string>> valuesSelector)
         {
-            if (collection == null) throw new ArgumentNullException("collection");
-            if (source == null) throw new ArgumentNullException("source");
-            if (nameSelector == null) throw new ArgumentNullException("nameSelector");
-            if (valuesSelector == null) throw new ArgumentNullException("valuesSelector");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (nameSelector == null) throw new ArgumentNullException(nameof(nameSelector));
+            if (valuesSelector == null) throw new ArgumentNullException(nameof(valuesSelector));
 
             var items = from item in source
                         from value in valuesSelector(item)
@@ -135,8 +135,8 @@ namespace Mannex.Collections.Specialized
             this NameValueCollection collection,
             IEnumerable<KeyValuePair<string, string>> source)
         {
-            if (collection == null) throw new ArgumentNullException("collection");
-            if (source == null) throw new ArgumentNullException("source");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
+            if (source == null) throw new ArgumentNullException(nameof(source));
 
             foreach (var item in source)
                 collection.Add(item.Key, item.Value);
@@ -157,8 +157,8 @@ namespace Mannex.Collections.Specialized
         public static T Filter<T>(this T collection, Func<string, bool> predicate)
             where T : NameValueCollection, new()
         {
-            if (collection == null) throw new ArgumentNullException("collection");
-            if (predicate == null) throw new ArgumentNullException("predicate");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
+            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
             return collection.Filter(predicate, key => key);
         }
 
@@ -171,9 +171,9 @@ namespace Mannex.Collections.Specialized
         public static T Filter<T>(this T collection, Func<string, bool> predicate, Func<string, string> keySelector)
             where T : NameValueCollection, new()
         {
-            if (collection == null) throw new ArgumentNullException("collection");
-            if (predicate == null) throw new ArgumentNullException("predicate");
-            if (keySelector == null) throw new ArgumentNullException("keySelector");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
+            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+            if (keySelector == null) throw new ArgumentNullException(nameof(keySelector));
 
             var selection =
                 from i in Enumerable.Range(0, collection.Count)
@@ -194,7 +194,7 @@ namespace Mannex.Collections.Specialized
         public static T FilterByPrefix<T>(this T collection, string prefix)
             where T : NameValueCollection, new()
         {
-            if (collection == null) throw new ArgumentNullException("collection");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
             return string.IsNullOrEmpty(prefix)
                  ? new T { collection }
                  : collection.Filter(key => key != null && key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase), 
@@ -209,7 +209,7 @@ namespace Mannex.Collections.Specialized
 
         public static IEnumerable<KeyValuePair<string, string[]>> NonBlanks(this NameValueCollection collection)
         {
-            if (collection == null) throw new ArgumentNullException("collection");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
 
             return from e in collection.AsEnumerable()
                    let vs = e.Value.Length > 1
@@ -233,8 +233,8 @@ namespace Mannex.Collections.Specialized
 
         public static void Update(this NameValueCollection collection, NameValueCollection source)
         {
-            if (collection == null) throw new ArgumentNullException("collection");
-            if (source == null) throw new ArgumentNullException("source");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
+            if (source == null) throw new ArgumentNullException(nameof(source));
 
             for (var i = 0; i < source.Count; i++)
             {
@@ -264,7 +264,7 @@ namespace Mannex.Collections.Specialized
 
         public static IEnumerable<KeyValuePair<string, string[]>> AsEnumerable(this NameValueCollection collection)
         {
-            if (collection == null) throw new ArgumentNullException("collection");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
             return collection.AsEnumerable((c, k, i) => k.AsKeyTo(c.GetValues(i)));
         }
 
@@ -281,8 +281,8 @@ namespace Mannex.Collections.Specialized
         public static IEnumerable<TResult> AsEnumerable<T, TResult>(this T collection, Func<T, string, int, TResult> selector) 
             where T : NameValueCollection
         {
-            if (collection == null) throw new ArgumentNullException("collection");
-            if (selector == null) throw new ArgumentNullException("selector");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
             
             return from i in Enumerable.Range(0, collection.Count)
                    select collection.GetKey(i).AsKeyTo(i) into e
@@ -296,7 +296,7 @@ namespace Mannex.Collections.Specialized
     
         public static bool ContainsKey(this NameValueCollection collection, string name)
         {
-            if (collection == null) throw new ArgumentNullException("collection");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
             return collection.ContainsKey(name, null);
         }
 
@@ -309,7 +309,7 @@ namespace Mannex.Collections.Specialized
 
         public static bool ContainsKey(this NameValueCollection collection, string name, StringComparer comparer)
         {
-            if (collection == null) throw new ArgumentNullException("collection");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
             var keys = from string key in collection.Keys select key;
             return keys.Contains(name, comparer ?? StringComparer.OrdinalIgnoreCase);
         }

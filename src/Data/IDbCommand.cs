@@ -72,8 +72,8 @@ namespace Mannex.Data
 
         public static IEnumerable<int> ExecuteForEach<T>(this IDbCommand command, int startIndex, IEnumerable<IEnumerable<T>> rows)
         {
-            if (command == null) throw new ArgumentNullException("command");
-            if (rows == null) throw new ArgumentNullException("rows");
+            if (command == null) throw new ArgumentNullException(nameof(command));
+            if (rows == null) throw new ArgumentNullException(nameof(rows));
 
             return ExecuteForEachImpl(command, startIndex, rows);
         }

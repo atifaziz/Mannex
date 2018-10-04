@@ -37,7 +37,7 @@ namespace Mannex
 
         public static T GetService<T>(this IServiceProvider sp) where T : class
         {
-            if (sp == null) throw new ArgumentNullException("sp");
+            if (sp == null) throw new ArgumentNullException(nameof(sp));
             return (T) sp.GetService(typeof(T));
         }
 

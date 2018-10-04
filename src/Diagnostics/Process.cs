@@ -49,7 +49,7 @@ namespace Mannex.Diagnostics
 
         public static Exception TryKill(this Process process)
         {
-            if (process == null) throw new ArgumentNullException("process");
+            if (process == null) throw new ArgumentNullException(nameof(process));
 
             try
             {
@@ -81,7 +81,7 @@ namespace Mannex.Diagnostics
 
         public static bool WaitForExit(this Process process, TimeSpan? timeout)
         {
-            if (process == null) throw new ArgumentNullException("process");
+            if (process == null) throw new ArgumentNullException(nameof(process));
             return process.WaitForExit(timeout.ToTimeout());
         }
 
@@ -110,7 +110,7 @@ namespace Mannex.Diagnostics
 
         public static Func<TimeSpan?, bool> BeginReadLine(this Process process, TextWriter output, TextWriter error)
         {
-            if (process == null) throw new ArgumentNullException("process");
+            if (process == null) throw new ArgumentNullException(nameof(process));
 
             return BeginReadLine(process, (output ?? TextWriter.Null).WriteLine,
                                           (error  ?? TextWriter.Null).WriteLine);
@@ -142,7 +142,7 @@ namespace Mannex.Diagnostics
 
         public static Func<TimeSpan?, bool> BeginReadLine(this Process process, Action<string> output, Action<string> error)
         {
-            if (process == null) throw new ArgumentNullException("process");
+            if (process == null) throw new ArgumentNullException(nameof(process));
 
             var e = BeginReadLineImpl(process, output ?? TextWriter.Null.WriteLine,
                                                error  ?? TextWriter.Null.WriteLine);
@@ -236,10 +236,10 @@ namespace Mannex.Diagnostics
             Func<T, Exception> errorSelector,
             Func<T, TResult> resultSelector)
         {
-            if (process == null) throw new ArgumentNullException("process");
-            if (selector == null) throw new ArgumentNullException("selector");
-            if (errorSelector == null) throw new ArgumentNullException("errorSelector");
-            if (resultSelector == null) throw new ArgumentNullException("resultSelector");
+            if (process == null) throw new ArgumentNullException(nameof(process));
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
+            if (errorSelector == null) throw new ArgumentNullException(nameof(errorSelector));
+            if (resultSelector == null) throw new ArgumentNullException(nameof(resultSelector));
 
             var tcs = new TaskCompletionSource<TResult>();
 
