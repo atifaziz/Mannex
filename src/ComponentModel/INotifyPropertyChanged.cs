@@ -67,8 +67,7 @@ namespace Mannex.ComponentModel
 
             if (expression != null)
             {
-                var member = expression.Body as MemberExpression;
-                if (member == null)
+                if (!(expression.Body is MemberExpression member))
                     throw new ArgumentException(null, nameof(expression));
                 propertyName = member.Member.Name;
             }

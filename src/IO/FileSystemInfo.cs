@@ -76,8 +76,7 @@ namespace Mannex.IO
         public static DirectoryInfo GetParentDirectory(FileSystemInfo info)
         {
             if (info == null) throw new ArgumentNullException(nameof(info));
-            var dir = info as DirectoryInfo;
-            return dir != null ? dir.Parent : ((FileInfo) info).Directory;
+            return info is DirectoryInfo dir ? dir.Parent : ((FileInfo) info).Directory;
         }
 
         /// <summary>
