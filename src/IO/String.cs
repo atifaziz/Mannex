@@ -40,17 +40,17 @@ namespace Mannex.IO
 
     static partial class StringExtensions
     {
-        static readonly char[] _badFileNameChars;
-        static readonly string _badFileNameCharsPattern;
-        static readonly char[] _badPathChars;
-        static readonly string _badPathCharsPattern;
+        static readonly char[] BadFileNameChars;
+        static readonly string BadFileNameCharsPattern;
+        static readonly char[] BadPathChars;
+        static readonly string BadPathCharsPattern;
 
         static StringExtensions()
         {
-            _badFileNameChars = Path.GetInvalidFileNameChars();
-            _badFileNameCharsPattern = Patternize(_badFileNameChars);
-            _badPathChars = Path.GetInvalidPathChars();
-            _badPathCharsPattern = Patternize(_badPathChars);
+            BadFileNameChars = Path.GetInvalidFileNameChars();
+            BadFileNameCharsPattern = Patternize(BadFileNameChars);
+            BadPathChars = Path.GetInvalidPathChars();
+            BadPathCharsPattern = Patternize(BadPathChars);
         }
 
         static string Patternize(IEnumerable<char> chars)
@@ -100,7 +100,7 @@ namespace Mannex.IO
         {
             return SanitizePathComponent(str,
                 (replacement ?? string.Empty).MaskEmpty("_"),
-                _badFileNameChars, _badFileNameCharsPattern);
+                BadFileNameChars, BadFileNameCharsPattern);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Mannex.IO
         {
             return SanitizePathComponent(str,
                 (replacement ?? string.Empty).MaskEmpty("_"),
-                _badPathChars, _badPathCharsPattern);
+                BadPathChars, BadPathCharsPattern);
         }
 
         static string SanitizePathComponent(string str, string replacement, char[] badChars, string badPattern)

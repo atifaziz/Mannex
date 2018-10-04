@@ -46,7 +46,7 @@ namespace Mannex.Web.Script.Serialization
         // 'System.Web.Script.Serialization.JavaScriptSerializer.JavaScriptSerializer()' is obsolete:
         // 'The recommended alternative is System.Runtime.Serialization.DataContractJsonSerializer.'
 
-        static readonly JavaScriptSerializer _serializer = new JavaScriptSerializer();
+        static readonly JavaScriptSerializer Serializer = new JavaScriptSerializer();
 
         #pragma warning restore 618
 
@@ -69,7 +69,7 @@ namespace Mannex.Web.Script.Serialization
         public static void BuildJsonStringTo(this object obj, StringBuilder output)
         {
             if (output == null) throw new ArgumentNullException(nameof(output));
-            _serializer.Serialize(obj, output);
+            Serializer.Serialize(obj, output);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Mannex
 
     static partial class DateTimeExtensions
     {
-        static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /// <summary>
         /// Returns number of milliseconds (including fractions) in UTC between the
@@ -44,7 +44,7 @@ namespace Mannex
 
         public static double ToUnixTime(this DateTime localTime)
         {
-            return localTime.ToUniversalTime().Subtract(_epoch).TotalMilliseconds;
+            return localTime.ToUniversalTime().Subtract(Epoch).TotalMilliseconds;
         }
 
         /// <summary>
