@@ -310,13 +310,12 @@ namespace Mannex
         {
             if (array == null) throw new ArgumentNullException(nameof(array));
             if (function == null) throw new ArgumentNullException(nameof(function));
-            return ApplyImpl(array, index1, index2, function);
-        }
 
-        static IEnumerable<TResult> ApplyImpl<T, TResult>(T[,] array, int index1, int index2, Func<T, T, TResult> function)
-        {
-            for (var y = array.GetLowerBound(0); y < array.GetLength(0); y++)
-                yield return function(array[y, index1], array[y, index2]);
+            return _(); IEnumerable<TResult> _()
+            {
+                for (var y = array.GetLowerBound(0); y < array.GetLength(0); y++)
+                    yield return function(array[y, index1], array[y, index2]);
+            }
         }
 
         /// <summary>
@@ -330,13 +329,12 @@ namespace Mannex
         {
             if (array == null) throw new ArgumentNullException(nameof(array));
             if (function == null) throw new ArgumentNullException(nameof(function));
-            return ApplyImpl(array, index1, index2, index3, function);
-        }
 
-        static IEnumerable<TResult> ApplyImpl<T, TResult>(T[,] array, int index1, int index2, int index3, Func<T, T, T, TResult> function)
-        {
-            for (var y = array.GetLowerBound(0); y < array.GetLength(0); y++)
-                yield return function(array[y, index1], array[y, index2], array[y, index3]);
+            return _(); IEnumerable<TResult> _()
+            {
+                for (var y = array.GetLowerBound(0); y < array.GetLength(0); y++)
+                    yield return function(array[y, index1], array[y, index2], array[y, index3]);
+            }
         }
 
         /// <summary>
@@ -350,13 +348,12 @@ namespace Mannex
         {
             if (array == null) throw new ArgumentNullException(nameof(array));
             if (function == null) throw new ArgumentNullException(nameof(function));
-            return ApplyImpl(array, index1, index2, index3, index4, function);
-        }
 
-        static IEnumerable<TResult> ApplyImpl<T, TResult>(T[,] array, int index1, int index2, int index3, int index4, Func<T, T, T, T, TResult> function)
-        {
-            for (var y = array.GetLowerBound(0); y < array.GetLength(0); y++)
-                yield return function(array[y, index1], array[y, index2], array[y, index3], array[y, index4]);
+            return _(); IEnumerable<TResult> _()
+            {
+                for (var y = array.GetLowerBound(0); y < array.GetLength(0); y++)
+                    yield return function(array[y, index1], array[y, index2], array[y, index3], array[y, index4]);
+            }
         }
 
         internal static class Empty<T>

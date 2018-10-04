@@ -475,15 +475,14 @@ namespace Mannex
         public static IEnumerable<string> SplitIntoLines(this string str)
         {
             if (str == null) throw new ArgumentNullException(nameof(str));
-            return SplitIntoLinesImpl(str);
-        }
 
-        static IEnumerable<string> SplitIntoLinesImpl(string str)
-        {
-            using (var reader = str.Read())
-            using (var line = reader.ReadLines())
-                while (line.MoveNext())
-                    yield return line.Current;
+            return _(); IEnumerable<string> _()
+            {
+                using (var reader = str.Read())
+                using (var line = reader.ReadLines())
+                    while (line.MoveNext())
+                        yield return line.Current;
+            }
         }
 
         /// <summary>
@@ -624,14 +623,13 @@ namespace Mannex
         public static IEnumerable<string> Partition(this string str, int size)
         {
             if (str == null) throw new ArgumentNullException(nameof(str));
-            return PartitionImpl(str, size);
-        }
 
-        static IEnumerable<string> PartitionImpl(string str, int size)
-        {
-            var length = str.Length;
-            for (var i = 0; i < length; i += size)
-                yield return str.Substring(i, Math.Min(size, length - i));
+            return _(); IEnumerable<string> _()
+            {
+                var length = str.Length;
+                for (var i = 0; i < length; i += size)
+                    yield return str.Substring(i, Math.Min(size, length - i));
+            }
         }
 
         /// <summary>

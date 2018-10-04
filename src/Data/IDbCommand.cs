@@ -75,30 +75,28 @@ namespace Mannex.Data
             if (command == null) throw new ArgumentNullException(nameof(command));
             if (rows == null) throw new ArgumentNullException(nameof(rows));
 
-            return ExecuteForEachImpl(command, startIndex, rows);
-        }
-
-        static IEnumerable<int> ExecuteForEachImpl<T>(IDbCommand command, int startIndex, IEnumerable<IEnumerable<T>> rows)
-        {
-            Debug.Assert(command != null);
-            Debug.Assert(rows != null);
-
-            var parameters = command.Parameters.Cast<IDbDataParameter>().ToArray();
-            foreach (var args in rows)
+            return _(); IEnumerable<int> _()
             {
-                if (args != null)
+                Debug.Assert(command != null);
+                Debug.Assert(rows != null);
+
+                var parameters = command.Parameters.Cast<IDbDataParameter>().ToArray();
+                foreach (var args in rows)
                 {
-                    var i = startIndex;
-                    using (var arg = args.GetEnumerator())
-                        while (arg.MoveNext())
-                            parameters[i++].Value = arg.Current;
-                    while (i < parameters.Length)
-                        parameters[i++].Value = DBNull.Value;
-                    yield return command.ExecuteNonQuery();
-                }
-                else
-                {
-                    yield return -1;
+                    if (args != null)
+                    {
+                        var i = startIndex;
+                        using (var arg = args.GetEnumerator())
+                            while (arg.MoveNext())
+                                parameters[i++].Value = arg.Current;
+                        while (i < parameters.Length)
+                            parameters[i++].Value = DBNull.Value;
+                        yield return command.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        yield return -1;
+                    }
                 }
             }
         }

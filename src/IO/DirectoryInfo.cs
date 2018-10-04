@@ -64,15 +64,13 @@ namespace Mannex.IO
         public static IEnumerable<DirectoryInfo> SelfAndParents(this DirectoryInfo dir)
         {
             if (dir == null) throw new ArgumentNullException(nameof(dir));
-            return SelfAndParentsImpl(dir);
-        }
 
-        static IEnumerable<DirectoryInfo> SelfAndParentsImpl(DirectoryInfo dir)
-        {
-            for (; dir != null; dir = dir.Parent)
-                yield return dir;
+            return _(); IEnumerable<DirectoryInfo> _()
+            {
+                for (; dir != null; dir = dir.Parent)
+                    yield return dir;
+            }
         }
-
 
         /// <summary>
         /// Same as <see cref="DirectoryInfo.GetFiles()"/>

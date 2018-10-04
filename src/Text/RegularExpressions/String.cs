@@ -159,16 +159,15 @@ namespace Mannex.Text.RegularExpressions
             if (str == null) throw new ArgumentNullException(nameof(str));
             if (pattern == null) throw new ArgumentNullException(nameof(pattern));
             if (selector == null) throw new ArgumentNullException(nameof(selector));
-            return MatchesImpl(str, pattern, options, selector);
-        }
 
-        static IEnumerable<T> MatchesImpl<T>(string str, string pattern, RegexOptions options, Func<Match, T> selector)
-        {
-            var match = str.Match(pattern, options);
-            while (match.Success)
+            return _(); IEnumerable<T> _()
             {
-                yield return selector(match);
-                match = match.NextMatch();
+                var match = str.Match(pattern, options);
+                while (match.Success)
+                {
+                    yield return selector(match);
+                    match = match.NextMatch();
+                }
             }
         }
     }

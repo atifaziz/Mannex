@@ -59,13 +59,14 @@ namespace Mannex
         public static IEnumerable<float> To(this float first, float last, int count)
         {
             if (count < 0) throw new ArgumentOutOfRangeException(nameof(count), count, null);
-            return ToImpl(first, (last - first) / (count - 1), count);
-        }
 
-        static IEnumerable<float> ToImpl(float n, float rate, int count)
-        {
-            for (var i = 0; i < count; n += rate, i++)
-                yield return n;
+            return _(first, (last - first) / (count - 1));
+
+            IEnumerable<float> _(float n, float rate)
+            {
+                for (var i = 0; i < count; n += rate, i++)
+                    yield return n;
+            }
         }
     }
 }

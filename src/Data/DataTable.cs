@@ -115,16 +115,15 @@ namespace Mannex.Data
         public static IEnumerable<IDataRecord> GetRecords(this DataTable table)
         {
             if (table == null) throw new ArgumentNullException(nameof(table));
-            return GetRecordsImpl(table);
-        }
 
-        static IEnumerable<IDataRecord> GetRecordsImpl(DataTable table)
-        {
-            using (var reader = new DataTableReader(table))
+            return _(); IEnumerable<IDataRecord> _()
             {
-                var e = new DbEnumerator(reader);
-                while (e.MoveNext())
-                    yield return (IDataRecord) e.Current;
+                using (var reader = new DataTableReader(table))
+                {
+                    var e = new DbEnumerator(reader);
+                    while (e.MoveNext())
+                        yield return (IDataRecord) e.Current;
+                }
             }
         }
     }

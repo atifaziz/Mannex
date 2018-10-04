@@ -66,14 +66,13 @@ namespace Mannex
         public static IEnumerable<object> AsEnumerable<<#= ts.Def #>>(this Tuple<<#= ts.Def #>> tuple)
         {
             if (tuple == null) throw new ArgumentNullException("tuple");
-            return AsEnumerableImpl(tuple);
-        }
 
-        static IEnumerable<object> AsEnumerableImpl<<#= ts.Def #>>(Tuple<<#= ts.Def #>> tuple)
-        {
+            return _(); IEnumerable<object> _()
+            {
 <#      foreach (var item in items) { #>
-            yield return tuple.<#= item.Property #>;
+                yield return tuple.<#= item.Property #>;
 <#      } #>
+            }
         }
 
         /// <summary>

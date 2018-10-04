@@ -39,13 +39,12 @@ namespace Mannex
         public static IEnumerable<object> AsEnumerable<T1, T2>(this Tuple<T1, T2> tuple)
         {
             if (tuple == null) throw new ArgumentNullException("tuple");
-            return AsEnumerableImpl(tuple);
-        }
 
-        static IEnumerable<object> AsEnumerableImpl<T1, T2>(Tuple<T1, T2> tuple)
-        {
-            yield return tuple.Item1;
-            yield return tuple.Item2;
+            return _(); IEnumerable<object> _()
+            {
+                yield return tuple.Item1;
+                yield return tuple.Item2;
+            }
         }
 
         /// <summary>
@@ -75,14 +74,13 @@ namespace Mannex
         public static IEnumerable<object> AsEnumerable<T1, T2, T3>(this Tuple<T1, T2, T3> tuple)
         {
             if (tuple == null) throw new ArgumentNullException("tuple");
-            return AsEnumerableImpl(tuple);
-        }
 
-        static IEnumerable<object> AsEnumerableImpl<T1, T2, T3>(Tuple<T1, T2, T3> tuple)
-        {
-            yield return tuple.Item1;
-            yield return tuple.Item2;
-            yield return tuple.Item3;
+            return _(); IEnumerable<object> _()
+            {
+                yield return tuple.Item1;
+                yield return tuple.Item2;
+                yield return tuple.Item3;
+            }
         }
 
         /// <summary>
@@ -114,15 +112,14 @@ namespace Mannex
         public static IEnumerable<object> AsEnumerable<T1, T2, T3, T4>(this Tuple<T1, T2, T3, T4> tuple)
         {
             if (tuple == null) throw new ArgumentNullException("tuple");
-            return AsEnumerableImpl(tuple);
-        }
 
-        static IEnumerable<object> AsEnumerableImpl<T1, T2, T3, T4>(Tuple<T1, T2, T3, T4> tuple)
-        {
-            yield return tuple.Item1;
-            yield return tuple.Item2;
-            yield return tuple.Item3;
-            yield return tuple.Item4;
+            return _(); IEnumerable<object> _()
+            {
+                yield return tuple.Item1;
+                yield return tuple.Item2;
+                yield return tuple.Item3;
+                yield return tuple.Item4;
+            }
         }
 
         /// <summary>
@@ -156,16 +153,15 @@ namespace Mannex
         public static IEnumerable<object> AsEnumerable<T1, T2, T3, T4, T5>(this Tuple<T1, T2, T3, T4, T5> tuple)
         {
             if (tuple == null) throw new ArgumentNullException("tuple");
-            return AsEnumerableImpl(tuple);
-        }
 
-        static IEnumerable<object> AsEnumerableImpl<T1, T2, T3, T4, T5>(Tuple<T1, T2, T3, T4, T5> tuple)
-        {
-            yield return tuple.Item1;
-            yield return tuple.Item2;
-            yield return tuple.Item3;
-            yield return tuple.Item4;
-            yield return tuple.Item5;
+            return _(); IEnumerable<object> _()
+            {
+                yield return tuple.Item1;
+                yield return tuple.Item2;
+                yield return tuple.Item3;
+                yield return tuple.Item4;
+                yield return tuple.Item5;
+            }
         }
 
         /// <summary>
@@ -201,17 +197,16 @@ namespace Mannex
         public static IEnumerable<object> AsEnumerable<T1, T2, T3, T4, T5, T6>(this Tuple<T1, T2, T3, T4, T5, T6> tuple)
         {
             if (tuple == null) throw new ArgumentNullException("tuple");
-            return AsEnumerableImpl(tuple);
-        }
 
-        static IEnumerable<object> AsEnumerableImpl<T1, T2, T3, T4, T5, T6>(Tuple<T1, T2, T3, T4, T5, T6> tuple)
-        {
-            yield return tuple.Item1;
-            yield return tuple.Item2;
-            yield return tuple.Item3;
-            yield return tuple.Item4;
-            yield return tuple.Item5;
-            yield return tuple.Item6;
+            return _(); IEnumerable<object> _()
+            {
+                yield return tuple.Item1;
+                yield return tuple.Item2;
+                yield return tuple.Item3;
+                yield return tuple.Item4;
+                yield return tuple.Item5;
+                yield return tuple.Item6;
+            }
         }
 
         /// <summary>
@@ -249,18 +244,17 @@ namespace Mannex
         public static IEnumerable<object> AsEnumerable<T1, T2, T3, T4, T5, T6, T7>(this Tuple<T1, T2, T3, T4, T5, T6, T7> tuple)
         {
             if (tuple == null) throw new ArgumentNullException("tuple");
-            return AsEnumerableImpl(tuple);
-        }
 
-        static IEnumerable<object> AsEnumerableImpl<T1, T2, T3, T4, T5, T6, T7>(Tuple<T1, T2, T3, T4, T5, T6, T7> tuple)
-        {
-            yield return tuple.Item1;
-            yield return tuple.Item2;
-            yield return tuple.Item3;
-            yield return tuple.Item4;
-            yield return tuple.Item5;
-            yield return tuple.Item6;
-            yield return tuple.Item7;
+            return _(); IEnumerable<object> _()
+            {
+                yield return tuple.Item1;
+                yield return tuple.Item2;
+                yield return tuple.Item3;
+                yield return tuple.Item4;
+                yield return tuple.Item5;
+                yield return tuple.Item6;
+                yield return tuple.Item7;
+            }
         }
 
         /// <summary>

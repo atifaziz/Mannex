@@ -45,13 +45,12 @@ namespace Mannex.IO
         public static IEnumerator<string> ReadLines(this TextReader reader)
         {
             if (reader == null) throw new ArgumentNullException(nameof(reader));
-            return ReadLinesImpl(reader);
-        }
 
-        static IEnumerator<string> ReadLinesImpl(this TextReader reader)
-        {
-            for (var line = reader.ReadLine(); line != null; line = reader.ReadLine())
-                yield return line;
+            return _(); IEnumerator<string> _()
+            {
+                for (var line = reader.ReadLine(); line != null; line = reader.ReadLine())
+                    yield return line;
+            }
         }
 
         // Concat derived from StackOverflow answer[1] by Rex Morgan[2].

@@ -47,16 +47,14 @@ namespace Mannex.Data
             if (reader == null) throw new ArgumentNullException(nameof(reader));
             if (selector == null) throw new ArgumentNullException(nameof(selector));
 
-            return SelectImpl(reader, selector);
-        }
-
-        static IEnumerator<T> SelectImpl<T>(IDataReader reader, Func<IDataRecord, T> selector)
-        {
-            using (reader)
+            return _(); IEnumerator<T> _()
             {
-                var e = new DbEnumerator(reader, true);
-                while (e.MoveNext())
-                    yield return selector((IDataRecord) e.Current);
+                using (reader)
+                {
+                    var e = new DbEnumerator(reader, true);
+                    while (e.MoveNext())
+                        yield return selector((IDataRecord) e.Current);
+                }
             }
         }
     }

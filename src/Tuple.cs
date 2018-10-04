@@ -45,12 +45,11 @@ namespace Mannex
         public static IEnumerable<T> AsEnumerable<T>(this Tuple<T> tuple)
         {
             if (tuple == null) throw new ArgumentNullException(nameof(tuple));
-            return AsEnumerableImpl(tuple);
-        }
 
-        static IEnumerable<T> AsEnumerableImpl<T>(this Tuple<T> tuple)
-        {
-            yield return tuple.Item1;
+            return _(); IEnumerable<T> _()
+            {
+                yield return tuple.Item1;
+            }
         }
 
         /// <summary>

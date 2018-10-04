@@ -304,24 +304,23 @@ namespace Mannex.Collections.Generic
         public static IEnumerable<T> Slice<T>(this IList<T> list, int start, int end /* exclusive */)
         {
             if (list == null) throw new ArgumentNullException(nameof(list));
-            return SliceImpl(list, start, end);
-        }
 
-        static IEnumerable<T> SliceImpl<T>(IList<T> list, int start, int end)
-        {
-            //
-            // This method copies up to, but not including, the element
-            // indicated by end. If start is negative, it is
-            // treated as length + start where length is the count of items
-            // in the list. If end is negative, it is treated as
-            // length + end where length is the count of items in the list.
-            // If end is omitted, extraction continues to the end of
-            // the list. If end occurs before start, no elements are
-            // copied to the new list.
-            //
+            return _(); IEnumerable<T> _()
+            {
+                //
+                // This method copies up to, but not including, the element
+                // indicated by end. If start is negative, it is
+                // treated as length + start where length is the count of items
+                // in the list. If end is negative, it is treated as
+                // length + end where length is the count of items in the list.
+                // If end is omitted, extraction continues to the end of
+                // the list. If end occurs before start, no elements are
+                // copied to the new list.
+                //
 
-            for (var i = list.ClipIndex(start); i < list.ClipIndex(end); i++)
-                yield return list[i];
+                for (var i = list.ClipIndex(start); i < list.ClipIndex(end); i++)
+                    yield return list[i];
+            }
         }
 
         static int ClipIndex<T>(this ICollection<T> collection, int index)

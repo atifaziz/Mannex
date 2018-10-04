@@ -109,13 +109,12 @@ namespace Mannex
         public static IEnumerable<Exception> InnerExceptions(this Exception e)
         {
             if (e == null) throw new ArgumentNullException(nameof(e));
-            return YieldInnerExceptions(e);
-        }
 
-        static IEnumerable<Exception> YieldInnerExceptions(Exception e)
-        {
-            for (; e != null; e = e.InnerException)
-                yield return e;
+            return _(); IEnumerable<Exception> _()
+            {
+                for (; e != null; e = e.InnerException)
+                    yield return e;
+            }
         }
 
         /// <summary>

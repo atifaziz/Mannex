@@ -55,20 +55,19 @@ namespace Mannex.IO
         public static IEnumerable<string> ReadLines(this FileInfo info, Encoding encoding)
         {
             if (info == null) throw new ArgumentNullException(nameof(info));
-            return ReadLinesImpl(info.FullName, encoding);
-        }
 
-        static IEnumerable<string> ReadLinesImpl(string path, Encoding encoding)
-        {
-            var reader = encoding == null
-                       ? new StreamReader(path, true)
-                       : new StreamReader(path, encoding);
-
-            using (reader)
-            using (var line = reader.ReadLines())
+            return _(); IEnumerable<string> _()
             {
-                while (line.MoveNext())
-                    yield return line.Current;
+                var reader = encoding == null
+                           ? new StreamReader(info.FullName, true)
+                           : new StreamReader(info.FullName, encoding);
+
+                using (reader)
+                using (var line = reader.ReadLines())
+                {
+                    while (line.MoveNext())
+                        yield return line.Current;
+                }
             }
         }
     }
