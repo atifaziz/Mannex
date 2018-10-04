@@ -9,7 +9,7 @@
     <Owners>Atif Aziz</Owners>
     <Company></Company>
     <PackageProjectUrl>https://github.com/atifaziz/Mannex</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/atifaziz/Mannex</RepositoryUrl>
+    <RepositoryUrl>https://github.com/atifaziz/Mannex.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>extension;methods</PackageTags>
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
