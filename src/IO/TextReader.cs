@@ -254,26 +254,29 @@ namespace Mannex.IO
             if (headerSelector == null) throw new ArgumentNullException(nameof(headerSelector));
             if (resultSelector == null) throw new ArgumentNullException(nameof(resultSelector));
 
-            using (var parser = new TextFieldParser(reader)
+            return _(); IEnumerator<TResult> _()
             {
-                TextFieldType = FieldType.Delimited,
-                Delimiters = new[] { delimiter },
-                HasFieldsEnclosedInQuotes = quoted,
-                TrimWhiteSpace = false,
-            })
-            {
-                var headerInitialzed = false;
-                var header = default(THeader);
-                while (!parser.EndOfData)
+                using (var parser = new TextFieldParser(reader)
                 {
-                    if (!headerInitialzed)
+                    TextFieldType = FieldType.Delimited,
+                    Delimiters = new[] { delimiter },
+                    HasFieldsEnclosedInQuotes = quoted,
+                    TrimWhiteSpace = false,
+                })
+                {
+                    var headerInitialzed = false;
+                    var header = default(THeader);
+                    while (!parser.EndOfData)
                     {
-                        header = headerSelector(parser.LineNumber, parser.ReadFields());
-                        headerInitialzed = true;
-                    }
-                    else
-                    {
-                        yield return resultSelector(parser.LineNumber, header, parser.ReadFields());
+                        if (!headerInitialzed)
+                        {
+                            header = headerSelector(parser.LineNumber, parser.ReadFields());
+                            headerInitialzed = true;
+                        }
+                        else
+                        {
+                            yield return resultSelector(parser.LineNumber, header, parser.ReadFields());
+                        }
                     }
                 }
             }
