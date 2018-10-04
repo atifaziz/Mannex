@@ -286,8 +286,8 @@ namespace Mannex.Tests.Web
                 { "msg", "hello world" },
             };
             string arg = null;
-            Func<string, string> encoder = s => { arg = s; return Uri.EscapeDataString(s); };
-            Assert.Equal("msg=hello%20world", collection.ToW3FormEncoded(encoder));
+            string Encoder(string s) { arg = s; return Uri.EscapeDataString(s); }
+            Assert.Equal("msg=hello%20world", collection.ToW3FormEncoded(Encoder));
             Assert.Equal("hello world", arg);
         }
     }

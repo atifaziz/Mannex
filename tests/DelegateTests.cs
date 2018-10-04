@@ -32,9 +32,9 @@ namespace Mannex.Tests
         [Fact]
         public void InvokeAsEventHandlerWhileIgnoringErrorsFailsWithNonEventHandlers()
         {
-            Action a = () => { };
-            Action b = () => { };
-            var c = Delegate.Combine(a, b);
+            void A() {}
+            void B() {}
+            var c = Delegate.Combine((Action) A, (Action) B);
             Assert.Throws<InvalidCastException>(() =>
                 c.InvokeAsEventHandlerWhileIgnoringErrors(new object(), EventArgs.Empty));
         }

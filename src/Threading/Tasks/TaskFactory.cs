@@ -151,14 +151,22 @@ namespace Mannex.Threading.Tasks
             }
             else
             {
-                IEnumerator<Task> task = null;
-                Action quantum = null;
+                IEnumerator<Task> task;
 
-                quantum = () => // ReSharper disable AccessToModifiedClosure
+                try
                 {
-                    Debug.Assert(task != null);
-                    Debug.Assert(quantum != null);
+                    task = job.GetEnumerator();
+                }
+                catch (Exception e)
+                {
+                    tcs.SetException(e);
+                    return tcs.Task;
+                }
 
+                Quantum();
+
+                void Quantum() // ReSharper disable AccessToModifiedClosure
+                {
                     while (true)
                     {
                         if (cancellationToken.IsCancellationRequested)
@@ -186,26 +194,14 @@ namespace Mannex.Threading.Tasks
                         if (!task.Current.IsCompleted)
                         {
                             if (scheduler != null)
-                                task.Current.ContinueWith(s => quantum(), scheduler);
+                                task.Current.ContinueWith(s => Quantum(), scheduler);
                             else
-                                task.Current.ContinueWith(s => quantum());
+                                task.Current.ContinueWith(s => Quantum());
                             break;
                         }
                     }
-                };
+                }
                 // ReSharper restore AccessToModifiedClosure
-
-                try
-                {
-                    task = job.GetEnumerator();
-                }
-                catch (Exception e)
-                {
-                    tcs.SetException(e);
-                    return tcs.Task;
-                }
-
-                quantum();
             }
 
             return tcs.Task;
