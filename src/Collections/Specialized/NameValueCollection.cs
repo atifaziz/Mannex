@@ -181,8 +181,7 @@ namespace Mannex.Collections.Specialized
                 from value in collection.GetValues(i)
                 select keySelector(collection.GetKey(i)).AsKeyTo(value);
 
-            var result = new T();
-            result.Add(selection);
+            var result = new T { selection };
             return result;
         }
 
