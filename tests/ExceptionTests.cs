@@ -46,10 +46,7 @@ namespace Mannex.Tests
         [Fact]
         public void PrepareForRethrowPreservesStackTrace()
         {
-            var e = Assert.Throws<Exception>(() => Bad.Foo(ex =>
-                    {
-                        throw ex.PrepareForRethrow();
-                    }));
+            var e = Assert.Throws<Exception>(() => Bad.Foo(ex => throw ex.PrepareForRethrow()));
             Console.WriteLine(e.StackTrace);
             Assert.Contains("Baz", e.StackTrace);
         }
