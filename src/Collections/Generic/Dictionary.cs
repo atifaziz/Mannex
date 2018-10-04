@@ -58,8 +58,7 @@ namespace Mannex.Collections.Generic
         public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key, TValue @default)
         {
             if (dict == null) throw new ArgumentNullException(nameof(dict));
-            TValue value;
-            return dict.TryGetValue(key, out value) ? value : @default;
+            return dict.TryGetValue(key, out var value) ? value : @default;
         }
 
         /// <summary>
@@ -79,11 +78,9 @@ namespace Mannex.Collections.Generic
         {
             if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
-            TValue value;
-            if (!dictionary.TryGetValue(key, out value))
-                throw (errorSelector != null ? errorSelector(key) : null) ?? new KeyNotFoundException();
-
-            return value;
+            return dictionary.TryGetValue(key, out var value)
+                 ? value
+                 : throw (errorSelector?.Invoke(key) ?? new KeyNotFoundException());
         }
 
         #if NET45

@@ -134,8 +134,7 @@ namespace Mannex.Web.UI
 
             var source = args[0];
             var dotIndex = token.IndexOf('.');
-            int sourceIndex;
-            if (dotIndex > 0 && int.TryParse(token.Substring(0, dotIndex), NumberStyles.None, CultureInfo.InvariantCulture, out sourceIndex))
+            if (dotIndex > 0 && int.TryParse(token.Substring(0, dotIndex), NumberStyles.None, CultureInfo.InvariantCulture, out var sourceIndex))
             {
                 source = args[sourceIndex];
                 token = token.Substring(dotIndex + 1);
