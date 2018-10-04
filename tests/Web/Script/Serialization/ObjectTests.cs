@@ -27,7 +27,6 @@ namespace Mannex.Tests.Web.Script.Serialization
 {
     #region Imports
 
-    using System;
     using Mannex.Web.Script.Serialization;
     using Xunit;
 

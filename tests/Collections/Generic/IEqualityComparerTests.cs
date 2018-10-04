@@ -26,7 +26,6 @@ namespace Mannex.Tests.Collections.Generic
     #region Imports
 
     using System;
-    using System.Collections.Generic;
     using Mannex.Collections.Generic;
     using Xunit;
 

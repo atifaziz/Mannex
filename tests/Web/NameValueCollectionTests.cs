@@ -27,7 +27,6 @@ namespace Mannex.Tests.Web
 
     using System;
     using System.Collections.Specialized;
-    using System.Web;
     using Mannex.Web;
     using Xunit;
 

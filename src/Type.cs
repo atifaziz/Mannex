@@ -26,11 +26,8 @@ namespace Mannex
     #region Imports
 
     using System;
-    using System.IO;
     using System.Linq.Expressions;
     using System.Reflection;
-    using System.Text;
-    using System.Threading;
 
     #endregion
 

@@ -29,7 +29,6 @@ namespace Mannex.Net
     using System.Diagnostics;
     using System.Net;
     using System.Net.Mime;
-    using System.Text;
     using Mime;
 
     #endregion

@@ -26,7 +26,6 @@ namespace Mannex.Net.Mime
     #region Imports
 
     using System;
-    using System.Net;
     using System.Net.Mime;
     using System.Text;
 

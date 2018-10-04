@@ -29,7 +29,6 @@ namespace Mannex.IO
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Collections.Generic;
 
     #endregion
 

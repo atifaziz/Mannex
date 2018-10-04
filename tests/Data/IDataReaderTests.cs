@@ -27,7 +27,6 @@ namespace Mannex.Tests.Data
 
     using System;
     using System.Data;
-    using System.Linq;
     using Mannex.Collections.Generic;
     using Mannex.Data;
     using Xunit;
