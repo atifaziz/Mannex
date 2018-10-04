@@ -121,8 +121,7 @@ namespace Mannex
 
         public static Func<string, IFormatProvider, object> TryGetParser(this Type type)
         {
-            var expression = type.TryGetParseExpression();
-            return expression != null ? expression.Compile() : null;
+            return type.TryGetParseExpression()?.Compile();
         }
 
         /// <summary>

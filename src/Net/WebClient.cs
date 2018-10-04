@@ -86,11 +86,8 @@ namespace Mannex.Net
             Debug.Assert(data != null);
 
             var contentType = client.GetResponseContentType();
-            var encoding = contentType != null
-                         ? contentType.EncodingFromCharSet(client.Encoding)
-                         : null;
-
-            return (encoding ?? client.Encoding).GetString(data);
+            var encoding = contentType?.EncodingFromCharSet(client.Encoding) ?? client.Encoding;
+            return encoding.GetString(data);
         }
     }
 }

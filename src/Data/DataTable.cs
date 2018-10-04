@@ -69,7 +69,7 @@ namespace Mannex.Data
 
         public static void SetColumnsOrder(this DataTable table, IEnumerable<DataColumn> columns)
         {
-            table.SetColumnsOrder(columns != null ? columns.ToArray() : null);
+            table.SetColumnsOrder(columns?.ToArray());
         }
 
         /// <summary>

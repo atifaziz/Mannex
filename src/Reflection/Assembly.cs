@@ -88,7 +88,7 @@ namespace Mannex.Reflection
         {
             if (assembly == null) throw new ArgumentNullException(nameof(assembly));
             using (var reader = assembly.GetManifestResourceReader(type, name))
-                return reader != null ? reader.ReadToEnd() : null;
+                return reader?.ReadToEnd();
         }
     }
 }

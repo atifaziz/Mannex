@@ -115,7 +115,7 @@ namespace Mannex.IO
             public override int Peek()
             {
                 var reader = GetReader();
-                return reader == null ? -1 : reader.Peek();
+                return reader?.Peek() ?? -1;
             }
 
             public override int Read()

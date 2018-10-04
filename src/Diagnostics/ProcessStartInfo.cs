@@ -101,7 +101,7 @@ namespace Mannex.Diagnostics
             var task = StartAsync(startInfo, stdout, stderr, cancellationToken);
             return task.ContinueWith(t => selector(t.Result,
                                                    stdout.ToString(),
-                                                   (stderr != null ? stderr.ToString() : null)),
+                                                   stderr?.ToString()),
                                      cancellationToken,
                                      TaskContinuationOptions.ExecuteSynchronously,
                                      TaskScheduler.Current);

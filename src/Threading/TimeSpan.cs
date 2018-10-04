@@ -55,9 +55,7 @@ namespace Mannex.Threading
 
         public static int ToTimeout(this TimeSpan? timeout)
         {
-            return timeout == null 
-                 ? Timeout.Infinite 
-                 : timeout.Value.ToTimeout();
+            return timeout?.ToTimeout() ?? Timeout.Infinite;
         }
     }
 }
