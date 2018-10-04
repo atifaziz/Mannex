@@ -218,9 +218,9 @@ namespace Mannex.Text.RegularExpressions
             Func<Match, string, int, T4> selector4,
             Func<T1, T2, T3, T4, TResult> resultSelector)
         {
-            return Bind<T1, T2, T3, T4, TResult>(match,
-                       selector1, selector2, selector3, selector4,
-                       null, null, null, resultSelector);
+            return Bind(match,
+                        selector1, selector2, selector3, selector4,
+                        null, null, null, resultSelector);
         }
 
         internal static TResult Bind<T1, T2, T3, T4, TResult>(
