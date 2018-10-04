@@ -76,13 +76,6 @@ namespace Mannex.Tests.Web.Hosting
         }
 
         [Fact]
-        public void ReadLinesFailsWithNullEncoding()
-        {
-            var e = Assert.Throws<ArgumentNullException>(() => TestVirtualFile.Empty("foo").ReadLines(null));
-            Assert.Equal("encoding", e.ParamName);
-        }
-
-        [Fact]
         public void ReadLinesAutoDetectingEncoding()
         {
             var inputs = new[]

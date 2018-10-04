@@ -99,7 +99,6 @@ namespace Mannex.Web.Hosting
         public static IEnumerable<string> ReadLines(this VirtualFile file, Encoding encoding)
         {
             if (file == null) throw new ArgumentNullException(nameof(file));
-            if (encoding == null) throw new ArgumentNullException(nameof(encoding));
             return ReadLinesImpl(file, encoding);
         }
 
