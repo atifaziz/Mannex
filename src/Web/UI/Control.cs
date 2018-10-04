@@ -112,7 +112,7 @@ namespace Mannex.Web.UI
         public static string EvalMany(this Control control, string format, params string[] expressions)
         {
             if (expressions == null) throw new ArgumentNullException(nameof(expressions));
-            return string.Format(format, expressions.Select(e => control.Eval(e)).ToArray());
+            return string.Format(format, expressions.Select(control.Eval).ToArray());
         }
     }
 }
