@@ -108,8 +108,7 @@ namespace Mannex.Threading
             }
             finally
             {
-                if (rwh != null)
-                    rwh.Unregister(null);
+                rwh?.Unregister(null);
             }
         }
     }

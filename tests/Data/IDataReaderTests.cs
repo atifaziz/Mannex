@@ -284,9 +284,7 @@ namespace Mannex.Tests.Data
 
             public void Dispose()
             {
-                var handler = Disposed;
-                if (handler != null)
-                    handler(this, EventArgs.Empty);
+                Disposed?.Invoke(this, EventArgs.Empty);
             }
 
             #endregion

@@ -65,8 +65,7 @@ namespace Mannex.Collections
             }
             finally
             {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null) disposable.Dispose();
+                (enumerator as IDisposable)?.Dispose();
             }
         }
     }

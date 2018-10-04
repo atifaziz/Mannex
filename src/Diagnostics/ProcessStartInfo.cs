@@ -194,8 +194,7 @@ namespace Mannex.Diagnostics
             }
             finally
             {
-                if (ownedProcess != null)
-                    ownedProcess.Dispose();
+                ownedProcess?.Dispose();
             }
 
             return tcs.Task;
