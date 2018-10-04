@@ -41,7 +41,7 @@ namespace Mannex
         /// Converts <see cref="double.NaN"/> value to a 
         /// <see cref="Nullable{T}"/> of <see cref="double"/> initialized to 
         /// the null state. Otherwise the <see cref="Nullable{T}"/> of 
-        /// <see cref="double"/> retured holds the original input value.
+        /// <see cref="double"/> returned holds the original input value.
         /// </summary>
 
         [DebuggerStepThrough]
