@@ -53,7 +53,7 @@ namespace Mannex
         public static T? MinMax<T>(this T? value, T min, T max)
             where T : struct, IComparable<T>
         {
-            return value != null ? value.Value.MinMax(min, max) : (T?) null;
+            return value is T x ? x.MinMax(min, max) : (T?) null;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Mannex
         public static bool? IsBetween<T>(this T? value, T lower, T upper)
             where T : struct, IComparable<T>
         {
-            return value != null ? value.Value.IsBetween(lower, upper) : (bool?) null;
+            return value is T x ? x.IsBetween(lower, upper) : (bool?) null;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Mannex
         public static bool? IsInBetween<T>(this T? value, T lower, T upper)
             where T : struct, IComparable<T>
         {
-            return value != null ? value.Value.IsInBetween(lower, upper) : (bool?)null;
+            return value is T x ? x.IsInBetween(lower, upper) : (bool?)null;
         }
     }
 }
