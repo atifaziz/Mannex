@@ -42,7 +42,7 @@ namespace Mannex.Tests
         [Fact]
         public void NullNaNReturnsNullWhenNaN()
         {
-            Assert.Equal(null, double.NaN.NullNaN());
+            Assert.Null(double.NaN.NullNaN());
         }
 
         [Fact]

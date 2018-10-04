@@ -91,9 +91,9 @@ namespace Mannex.Tests.Collections.Generic
             Assert.Equal(56, list.Pop());
             Assert.Equal(2, list.Count);
             Assert.Equal(34, list.Pop());
-            Assert.Equal(1, list.Count);
+            Assert.Single(list);
             Assert.Equal(12, list.Pop());
-            Assert.Equal(0, list.Count);
+            Assert.Empty(list);
         }
 
         [Fact]
@@ -118,9 +118,9 @@ namespace Mannex.Tests.Collections.Generic
             Assert.Equal(56, list.TryPop());
             Assert.Equal(2, list.Count);
             Assert.Equal(34, list.TryPop());
-            Assert.Equal(1, list.Count);
+            Assert.Single(list);
             Assert.Equal(12, list.TryPop());
-            Assert.Equal(0, list.Count);
+            Assert.Empty(list);
         }
 
         [Fact]
@@ -198,9 +198,9 @@ namespace Mannex.Tests.Collections.Generic
             Assert.Equal(12, list.Shift());
             Assert.Equal(2, list.Count);
             Assert.Equal(34, list.Shift());
-            Assert.Equal(1, list.Count);
+            Assert.Single(list);
             Assert.Equal(56, list.Shift());
-            Assert.Equal(0, list.Count);
+            Assert.Empty(list);
         }
 
         [Fact]
@@ -225,9 +225,9 @@ namespace Mannex.Tests.Collections.Generic
             Assert.Equal(12, list.TryShift());
             Assert.Equal(2, list.Count);
             Assert.Equal(34, list.TryShift());
-            Assert.Equal(1, list.Count);
+            Assert.Single(list);
             Assert.Equal(56, list.TryShift());
-            Assert.Equal(0, list.Count);
+            Assert.Empty(list);
         }
 
         [Fact]

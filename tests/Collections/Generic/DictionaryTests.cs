@@ -64,7 +64,7 @@ namespace Mannex.Tests.Collections.Generic
         public void GetFailsWithNullThis()
         {
             var e = Assert.Throws<ArgumentNullException>(() => DictionaryExtensions.GetValue<object, object>(null, "foo", delegate { return null; }));
-            Assert.Equal(e.ParamName, "dictionary");
+            Assert.Equal("dictionary", e.ParamName);
         }
 
         [Fact]
@@ -101,7 +101,7 @@ namespace Mannex.Tests.Collections.Generic
         {
             var e = Assert.Throws<ArgumentNullException>(() =>
                 DictionaryExtensions.Pop<object, object>(null, new object()));
-            Assert.Equal(e.ParamName, "dictionary");
+            Assert.Equal("dictionary", e.ParamName);
         }
 
         [Fact]
@@ -118,7 +118,7 @@ namespace Mannex.Tests.Collections.Generic
             var v = new object();
             var map = new Dictionary<object, object> { { k, v } };
             Assert.Equal(v, map.Pop(k));
-            Assert.Equal(0, map.Count);
+            Assert.Empty(map);
         }
     }
 }

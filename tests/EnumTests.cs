@@ -50,7 +50,7 @@ namespace Mannex.Tests
         public void GetFlagsWithSingleFlag()
         {
             var flags = FileAttributes.Archive.GetFlags<FileAttributes>().ToArray();
-            Assert.Equal(1, flags.Length);
+            Assert.Single(flags);
             Assert.Contains(FileAttributes.Archive, flags);
         }
 

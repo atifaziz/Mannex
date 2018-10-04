@@ -373,11 +373,11 @@ namespace Mannex.Tests
             Assert.Equal('r', word.TryCharAt(-2));
             Assert.Equal('o', word.TryCharAt(-3));
             Assert.Equal('w', word.TryCharAt(-4));
-            Assert.Equal(null, word.TryCharAt(-(word.Length + 10)));
-            Assert.Equal(null, word.TryCharAt(word.Length + 10));
-            Assert.Equal(null, string.Empty.TryCharAt(0));
-            Assert.Equal(null, string.Empty.TryCharAt(1));
-            Assert.Equal(null, string.Empty.TryCharAt(-1));
+            Assert.Null(word.TryCharAt(-(word.Length + 10)));
+            Assert.Null(word.TryCharAt(word.Length + 10));
+            Assert.Null(string.Empty.TryCharAt(0));
+            Assert.Null(string.Empty.TryCharAt(1));
+            Assert.Null(string.Empty.TryCharAt(-1));
         }
     
         [Fact]

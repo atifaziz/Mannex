@@ -63,8 +63,8 @@ namespace Mannex.Tests
             Func<Type, bool> isClass = t => t.IsClass;
             var predicate = isClass.ToPredicate();
             Assert.NotNull(predicate);
-            Assert.Equal(true, predicate(typeof(object)));
-            Assert.Equal(false, predicate(typeof(int)));
+            Assert.True(predicate(typeof(object)));
+            Assert.False(predicate(typeof(int)));
         }
     }
 }

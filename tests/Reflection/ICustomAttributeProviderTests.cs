@@ -83,7 +83,7 @@ namespace Mannex.Tests.Reflection
             ICustomAttributeProvider cap = typeof(Test);
             var attributes = cap.GetCustomAttributes<CategoryAttribute>(true);
             Assert.NotNull(attributes);
-            Assert.Equal(0, attributes.Length);
+            Assert.Empty(attributes);
         }
 
         [Fact]
@@ -92,7 +92,7 @@ namespace Mannex.Tests.Reflection
             ICustomAttributeProvider cap = typeof(Subtest);
             var attributes = cap.GetCustomAttributes<TestAttribute>(false);
             Assert.NotNull(attributes);
-            Assert.Equal(0, attributes.Length);
+            Assert.Empty(attributes);
         }
 
         [Fact]

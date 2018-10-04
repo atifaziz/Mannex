@@ -53,7 +53,7 @@ namespace Mannex.Tests
             Assert.Equal(42,   ((int?) 042).MinMax(10, 50));
             Assert.Equal(10,   ((int?) 000).MinMax(10, 50));
             Assert.Equal(50,   ((int?) 100).MinMax(10, 50));
-            Assert.Equal(null, ((int?) null).MinMax(10, 50));
+            Assert.Null(((int?) null).MinMax(10, 50));
         }
 
         [Fact]
