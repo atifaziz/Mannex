@@ -38,7 +38,7 @@ namespace Mannex.Tests
         [Fact]
         public void FireFailsWithNullSender()
         {
-            Assert.Throws<ArgumentNullException>(() => 
+            Assert.Throws<ArgumentNullException>(() =>
                 EventT.Fire(null, EventArgs.Empty));
         }
 
@@ -147,7 +147,7 @@ namespace Mannex.Tests
         {
             var counter = 0;
             EventHandler handler = delegate
-            { 
+            {
                 if (++counter == 1) throw new ApplicationException();
             };
             handler.Once(h => Event += h, h => Event -= h);

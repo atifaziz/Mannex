@@ -37,7 +37,7 @@ namespace Mannex
     static partial class RuntimeMethodHandleExtensions
     {
         /// <summary>
-        /// Gets method information by using the method's internal metadata 
+        /// Gets method information by using the method's internal metadata
         /// representation (handle).
         /// </summary>
 

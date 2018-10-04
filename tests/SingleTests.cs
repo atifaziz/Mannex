@@ -49,16 +49,16 @@ namespace Mannex.Tests
         public void ToIncreasing()
         {
             var expectations = new[]
-            { 
-                -12.500f, 
-                -09.778f, 
-                -07.056f, 
-                -04.333f, 
-                -01.611f, 
-                +01.111f, 
-                +03.833f, 
-                +06.556f, 
-                +09.278f, 
+            {
+                -12.500f,
+                -09.778f,
+                -07.056f,
+                -04.333f,
+                -01.611f,
+                +01.111f,
+                +03.833f,
+                +06.556f,
+                +09.278f,
                 +12.000f,
             };
 
@@ -71,10 +71,10 @@ namespace Mannex.Tests
         public void ToEdgeCase()
         {
             var expectations = new[]
-            { 
-                1.000f, 
-                2.333f, 
-                3.667f, 
+            {
+                1.000f,
+                2.333f,
+                3.667f,
                 5.000f,
             };
 
@@ -87,16 +87,16 @@ namespace Mannex.Tests
         public void ToDecreasing()
         {
             var expectations = new[]
-            { 
+            {
                 +12.000f,
                 +09.278f,
                 +06.556f,
                 +03.833f,
                 +01.111f,
-                -01.611f, 
-                -04.333f, 
-                -07.056f, 
-                -09.778f, 
+                -01.611f,
+                -04.333f,
+                -07.056f,
+                -09.778f,
                 -12.500f,
             };
 

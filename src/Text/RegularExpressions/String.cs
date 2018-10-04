@@ -32,14 +32,14 @@ namespace Mannex.Text.RegularExpressions
     #endregion
 
     /// <summary>
-    /// Extension methods for <see cref="string"/> that help with regular 
+    /// Extension methods for <see cref="string"/> that help with regular
     /// expression matching.
     /// </summary>
 
     static partial class StringExtensions
     {
         /// <summary>
-        /// Indicates whether the string contains a match for the regular 
+        /// Indicates whether the string contains a match for the regular
         /// expression pattern specified as an argument.
         /// </summary>
 
@@ -49,8 +49,8 @@ namespace Mannex.Text.RegularExpressions
         }
 
         /// <summary>
-        /// Indicates whether the string contains a match for the regular 
-        /// expression pattern specified as an argument  along with 
+        /// Indicates whether the string contains a match for the regular
+        /// expression pattern specified as an argument  along with
         /// matching options.
         /// </summary>
 
@@ -62,7 +62,7 @@ namespace Mannex.Text.RegularExpressions
         }
 
         /// <summary>
-        /// Searches string for an occurrence of the regular expression 
+        /// Searches string for an occurrence of the regular expression
         /// specified as an argument.
         /// </summary>
 
@@ -72,7 +72,7 @@ namespace Mannex.Text.RegularExpressions
         }
 
         /// <summary>
-        /// Searches string for an occurrence of the regular expression 
+        /// Searches string for an occurrence of the regular expression
         /// specified as an argument along with matching options.
         /// </summary>
 
@@ -82,7 +82,7 @@ namespace Mannex.Text.RegularExpressions
         }
 
         /// <summary>
-        /// Searches string for an occurrence of the regular expression 
+        /// Searches string for an occurrence of the regular expression
         /// specified as an argument along with matching options.
         /// </summary>
 
@@ -92,7 +92,7 @@ namespace Mannex.Text.RegularExpressions
         }
 
         /// <summary>
-        /// Searches string for an occurrence of the regular expression 
+        /// Searches string for an occurrence of the regular expression
         /// specified as an argument along with matching options.
         /// </summary>
 
@@ -105,7 +105,7 @@ namespace Mannex.Text.RegularExpressions
         }
 
         /// <summary>
-        /// Searches the specified input string for all occurrences of the 
+        /// Searches the specified input string for all occurrences of the
         /// regular expression specified as an argument.
         /// </summary>
         /// <remarks>
@@ -118,7 +118,7 @@ namespace Mannex.Text.RegularExpressions
         }
 
         /// <summary>
-        /// Searches the specified input string for all occurrences of the 
+        /// Searches the specified input string for all occurrences of the
         /// regular expression specified as an argument along with matching
         /// options.
         /// </summary>
@@ -132,7 +132,7 @@ namespace Mannex.Text.RegularExpressions
         }
 
         /// <summary>
-        /// Searches the specified input string for all occurrences of the 
+        /// Searches the specified input string for all occurrences of the
         /// regular expression specified as an argument along with matching
         /// options.
         /// </summary>
@@ -146,7 +146,7 @@ namespace Mannex.Text.RegularExpressions
         }
 
         /// <summary>
-        /// Searches the specified input string for all occurrences of the 
+        /// Searches the specified input string for all occurrences of the
         /// regular expression specified as an argument along with matching
         /// options.
         /// </summary>

@@ -42,7 +42,7 @@ namespace Mannex.ComponentModel
 #if !NO_LINQ_EXPRESSIONS
 
         /// <summary>
-        /// Subscribes to <see cref="INotifyPropertyChanged.PropertyChanged"/> 
+        /// Subscribes to <see cref="INotifyPropertyChanged.PropertyChanged"/>
         /// event of the soure object and calls <paramref name="handler"/> only
         /// when the property identified by <paramref name="expression"/>
         /// has changed.
@@ -56,7 +56,7 @@ namespace Mannex.ComponentModel
         /// property/field access type of expression (see <see cref="MemberExpression"/>).
         /// </exception>
         /// <remarks>
-        /// If <paramref name="expression"/> is <c>null</c> or empty then 
+        /// If <paramref name="expression"/> is <c>null</c> or empty then
         /// <paramref name="handler"/> is called when any property changes.
         /// </remarks>
 
@@ -78,7 +78,7 @@ namespace Mannex.ComponentModel
 #endif
 
         /// <summary>
-        /// Subscribes to <see cref="INotifyPropertyChanged.PropertyChanged"/> 
+        /// Subscribes to <see cref="INotifyPropertyChanged.PropertyChanged"/>
         /// event of the soure object and calls <paramref name="handler"/> only
         /// when the property identified by <paramref name="propertyName"/>
         /// (case-insensitive) has changed.
@@ -88,7 +88,7 @@ namespace Mannex.ComponentModel
         /// can be used for unsubscribing.
         /// </returns>
         /// <remarks>
-        /// If <paramref name="propertyName"/> is <c>null</c> or empty then 
+        /// If <paramref name="propertyName"/> is <c>null</c> or empty then
         /// <paramref name="handler"/> is called when any property changes.
         /// </remarks>
 
@@ -99,7 +99,7 @@ namespace Mannex.ComponentModel
 
             PropertyChangedEventHandler onChanged = (sender, args) =>
             {
-                if (string.IsNullOrEmpty(propertyName) 
+                if (string.IsNullOrEmpty(propertyName)
                     || args.PropertyName.Equals(propertyName, StringComparison.OrdinalIgnoreCase))
                     handler(sender, args);
             };

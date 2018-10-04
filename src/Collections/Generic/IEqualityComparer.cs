@@ -35,7 +35,7 @@ namespace Mannex.Collections.Generic
         /// <summary>
         /// Returns a delegate to <see cref="IEqualityComparer{T}.Equals(T,T)"/>.
         /// </summary>
-        
+
         public static Func<T, T, bool> EqualsFunc<T>(this IEqualityComparer<T> comparer)
         {
             if (comparer == null) throw new ArgumentNullException(nameof(comparer));

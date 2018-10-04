@@ -61,8 +61,8 @@ namespace Mannex.Web
 
         /// <summary>
         /// Randomizes the URL by adding a query string parameter
-        /// named as <paramref name="key"/> and whose random value 
-        /// component is the string representation of 
+        /// named as <paramref name="key"/> and whose random value
+        /// component is the string representation of
         /// <paramref name="value"/>.
         /// </summary>
 

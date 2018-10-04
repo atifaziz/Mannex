@@ -41,7 +41,7 @@ namespace Mannex.Tests.IO
         {
             var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.ToFileNameSafe(null));
             Assert.Equal("str", e.ParamName);
-            
+
             e = Assert.Throws<ArgumentNullException>(() => StringExtensions.ToFileNameSafe(null, string.Empty));
             Assert.Equal("str", e.ParamName);
         }

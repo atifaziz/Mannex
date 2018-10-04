@@ -40,7 +40,7 @@ namespace Mannex.Globalization
         /// Calculates the first date that occurs in a calendar
         /// week given the year.
         /// </summary>
-        
+
         public static DateTime FirstDateOfWeek(this DateTimeFormatInfo info, int year, int weekOfYear)
         {
             if (info == null) throw new ArgumentNullException(nameof(info));

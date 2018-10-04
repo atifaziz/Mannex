@@ -40,7 +40,7 @@ namespace Mannex.Threading.Tasks
         /// <summary>
         /// Attempts to conclude <see cref="TaskCompletionSource{TResult}"/>
         /// as being canceled, faulted or having completed successfully
-        /// based on the corresponding status of the given 
+        /// based on the corresponding status of the given
         /// <see cref="Task{T}"/>.
         /// </summary>
 
@@ -52,7 +52,7 @@ namespace Mannex.Threading.Tasks
         /// <summary>
         /// Attempts to conclude <see cref="TaskCompletionSource{TResult}"/>
         /// as being canceled, faulted or having completed successfully
-        /// based on the corresponding status of the given 
+        /// based on the corresponding status of the given
         /// <see cref="Task{T}"/>.
         /// </summary>
 

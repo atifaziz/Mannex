@@ -43,7 +43,7 @@ namespace Mannex.Tests.Net.Mime
             Assert.Equal("contentType", Assert.Throws<ArgumentNullException>(() => ContentTypeExtensions.EncodingFromCharSet(null, (Func<string, Encoding>)null)).ParamName);
             Assert.Equal("contentType", Assert.Throws<ArgumentNullException>(() => ContentTypeExtensions.EncodingFromCharSet(null, null, null)).ParamName);
         }
-        
+
         [Fact]
         public void EncodingFromCharSet()
         {
@@ -61,7 +61,7 @@ namespace Mannex.Tests.Net.Mime
         {
             Assert.Equal(Encoding.ASCII, new ContentType("text/plain").EncodingFromCharSet(Encoding.ASCII));
         }
-        
+
         [Fact]
         public void EncodingFromCharSetWithEncodingSelector()
         {

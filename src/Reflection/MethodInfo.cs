@@ -42,15 +42,15 @@ namespace Mannex.Reflection
     static partial class MethodInfoExtensions
     {
         /// <summary>
-        /// Returns a sequence of method parameters paired with supplied 
-        /// arguments. Type checking is not performed between parameter 
+        /// Returns a sequence of method parameters paired with supplied
+        /// arguments. Type checking is not performed between parameter
         /// types and arguments.
         /// </summary>
         /// <remarks>
-        /// This method uses deferred execution. Moreover, if fewers 
-        /// arguments are supplied than formal parameters defined on the 
-        /// method then remaining arguments assume the default value of the 
-        /// corresponding optional parameter or <see cref="Missing.Value"/> 
+        /// This method uses deferred execution. Moreover, if fewers
+        /// arguments are supplied than formal parameters defined on the
+        /// method then remaining arguments assume the default value of the
+        /// corresponding optional parameter or <see cref="Missing.Value"/>
         /// if the parameter is not optional or has no default value defined.
         /// </remarks>
 
@@ -74,27 +74,27 @@ namespace Mannex.Reflection
         }
 
         /// <summary>
-        /// Compiles a function that can be used to call a static method 
+        /// Compiles a function that can be used to call a static method
         /// without the performance penalties of late-binding and invocation.
         /// </summary>
         /// <remarks>
-        /// Build targeting .NET Framework 3.5 does not support static 
-        /// methods with a return type of <see cref="System.Void"/>. Use 
-        /// <see cref="Type.Missing"/> for an argument to the invoker to 
+        /// Build targeting .NET Framework 3.5 does not support static
+        /// methods with a return type of <see cref="System.Void"/>. Use
+        /// <see cref="Type.Missing"/> for an argument to the invoker to
         /// have the default value for an optional argument to be filled in.
         /// </remarks>
-        
+
         public static Func<object[], object> CompileStaticInvoker(this MethodInfo method)
         {
             if (method == null) throw new ArgumentNullException(nameof(method));
             if (!method.IsStatic) throw new ArgumentException(null, nameof(method));
-            
+
             var returnsVoid = method.ReturnType == typeof(void);
 
             var argsParameter = Expression.Parameter(typeof(object[]), "args");
 
             var parameters = method.GetParameters();
-            var args = 
+            var args =
                 from p in parameters
                 let arg = Expression.ArrayIndex(argsParameter, Expression.Constant(p.Position))
                 select ParameterAttributes.HasDefault == (p.Attributes & ParameterAttributes.HasDefault)
@@ -102,7 +102,7 @@ namespace Mannex.Reflection
                      : (Expression) Expression.Call(MakeReqArgMethod(p.ParameterType), arg);
 
             var e = (Expression) Expression.Call(method, args.ToArray());
-            if (!returnsVoid) 
+            if (!returnsVoid)
                 e = Expression.Convert(e, typeof(object));
 
             var statements = new List<Expression>
@@ -110,10 +110,10 @@ namespace Mannex.Reflection
                 Expression.Call(ValidateArgCountMethod, argsParameter, Expression.Constant(parameters.Length)),
                 e,
             };
-            if (returnsVoid) 
+            if (returnsVoid)
                 statements.Add(Expression.Constant(null));
             e = Expression.Block(statements);
-            
+
             return Expression.Lambda<Func<object[], object>>(e, argsParameter).Compile();
         }
 
@@ -123,7 +123,7 @@ namespace Mannex.Reflection
         static MethodInfo MakeOptArgMethod(Type type) { return (_genericOptArgHandle != default(RuntimeMethodHandle) ? _genericOptArgHandle : (_genericOptArgHandle = ((Func<object, object, object>) OptArg).Method.GetGenericMethodDefinition().MethodHandle)).GetMethodInfo().MakeGenericMethod(type); }
         static T ReqArg<T>(object arg) { return (T) (arg ?? default(T)); }
         static T OptArg<T>(object arg, T defaultValue) { return (T) (arg == Type.Missing ? defaultValue : arg ?? default(T)); }
-        
+
         static RuntimeMethodHandle _validateArgCountHandle;
         static MethodInfo ValidateArgCountMethod { get { return (_validateArgCountHandle != default(RuntimeMethodHandle) ? _validateArgCountHandle : (_validateArgCountHandle = ((Action<object[], int>) ValidateArgCount).Method.MethodHandle)).GetMethodInfo(); } }
         static void ValidateArgCount(object[] args, int count) { if (args.Length != count) throw new ArgumentException(null, nameof(args)); }

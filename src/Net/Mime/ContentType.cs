@@ -105,8 +105,8 @@ namespace Mannex.Net.Mime
         }
 
         /// <summary>
-        /// Gets an <see cref="Encoding"/> object based on the character set 
-        /// specified in the content-type header in the given headers 
+        /// Gets an <see cref="Encoding"/> object based on the character set
+        /// specified in the content-type header in the given headers
         /// collection and <c>null</c> otherwise.
         /// </summary>
 
@@ -116,9 +116,9 @@ namespace Mannex.Net.Mime
         }
 
         /// <summary>
-        /// Gets an <see cref="Encoding"/> object based on the character set 
-        /// specified in the content-type header in the given headers 
-        /// collection and a default encoding otherwise (that may be 
+        /// Gets an <see cref="Encoding"/> object based on the character set
+        /// specified in the content-type header in the given headers
+        /// collection and a default encoding otherwise (that may be
         /// <c>null</c>).
         /// </summary>
 
@@ -128,12 +128,12 @@ namespace Mannex.Net.Mime
         }
 
         /// <summary>
-        /// Gets an <see cref="Encoding"/> object based on the character set 
-        /// specified in the content-type header in the given headers 
-        /// collection and <c>null</c> otherwise. An additional parameter 
-        /// specifies how to map the character set specification into an 
-        /// <see cref="Encoding"/> object and uses 
-        /// <see cref="Encoding.GetEncoding(string)"/> if <c>null</c>. 
+        /// Gets an <see cref="Encoding"/> object based on the character set
+        /// specified in the content-type header in the given headers
+        /// collection and <c>null</c> otherwise. An additional parameter
+        /// specifies how to map the character set specification into an
+        /// <see cref="Encoding"/> object and uses
+        /// <see cref="Encoding.GetEncoding(string)"/> if <c>null</c>.
         /// </summary>
 
         public static Encoding EncodingFromCharSet(this ContentType contentType, Func<string, Encoding> encodingSelector)
@@ -142,13 +142,13 @@ namespace Mannex.Net.Mime
         }
 
         /// <summary>
-        /// Gets an <see cref="Encoding"/> object based on the character set 
-        /// specified in the content-type header in the given headers 
-        /// collection and a default encoding otherwise (that may be 
-        /// <c>null</c>). An additional parameter specifies how to map the 
-        /// character set specification into an <see cref="Encoding"/> 
-        /// object and uses <see cref="Encoding.GetEncoding(string)"/> if 
-        /// <c>null</c>. 
+        /// Gets an <see cref="Encoding"/> object based on the character set
+        /// specified in the content-type header in the given headers
+        /// collection and a default encoding otherwise (that may be
+        /// <c>null</c>). An additional parameter specifies how to map the
+        /// character set specification into an <see cref="Encoding"/>
+        /// object and uses <see cref="Encoding.GetEncoding(string)"/> if
+        /// <c>null</c>.
         /// </summary>
 
         public static Encoding EncodingFromCharSet(this ContentType contentType, Encoding defaultEncoding, Func<string, Encoding> encodingSelector)

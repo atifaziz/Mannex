@@ -42,21 +42,21 @@ namespace Mannex.Xml.Linq
     {
         /// <summary>
         /// Similar to <see cref="XmlNamespaceManager.GetNamespacesInScope"/>,
-        /// returns a sequence of namespace names and their prefix that are 
+        /// returns a sequence of namespace names and their prefix that are
         /// in scope this element.
         /// </summary>
 
         public static IEnumerable<KeyValuePair<string, XNamespace>> GetNamespacesInScope(this XElement element)
         {
             if (element == null) throw new ArgumentNullException(nameof(element));
-            
+
             // With some inspiration from:
             // http://www.hanselman.com/blog/GetNamespacesFromAnXMLDocumentWithXPathDocumentAndLINQToXML.aspx
 
-            return 
+            return
                 from e in element.AncestorsAndSelf()
-                from d in from a in e.Attributes() 
-                          where a.IsNamespaceDeclaration 
+                from d in from a in e.Attributes()
+                          where a.IsNamespaceDeclaration
                           select XNamespace.Get(a.Value).AsKeyTo(a.Name.LocalName)
                 group d.Value by d.Key into g
                 select g.First().AsKeyTo(g.Key);

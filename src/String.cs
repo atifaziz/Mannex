@@ -48,7 +48,7 @@ namespace Mannex
         /// </summary>
         /// <remarks>
         /// Use this method to guarantee that you never get an empty
-        /// string. Bear in mind, however, that if the mask itself is an 
+        /// string. Bear in mind, however, that if the mask itself is an
         /// empty string then this method could yield an empty string!
         /// </remarks>
 
@@ -59,7 +59,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Determines if a string has another non-empty string as its 
+        /// Determines if a string has another non-empty string as its
         /// prefix and longer by it by at least one character.
         /// </summary>
 
@@ -73,7 +73,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Determines if a string has another non-empty string as its 
+        /// Determines if a string has another non-empty string as its
         /// suffix and longer by it by at least one character.
         /// </summary>
 
@@ -90,10 +90,10 @@ namespace Mannex
         /// Returns a section of a string from a give starting point on.
         /// </summary>
         /// <remarks>
-        /// If <paramref name="start"/> is negative, it is  treated as 
-        /// <c>length</c> + <paramref name="start" /> where <c>length</c> 
+        /// If <paramref name="start"/> is negative, it is  treated as
+        /// <c>length</c> + <paramref name="start" /> where <c>length</c>
         /// is the length of the string. If <paramref name="start"/>
-        /// is greater or equal to the length of the string then 
+        /// is greater or equal to the length of the string then
         /// no characters are copied to the new string.
         /// </remarks>
 
@@ -108,12 +108,12 @@ namespace Mannex
         /// </summary>
         /// <remarks>
         /// This method copies up to, but not including, the element
-        /// indicated by <paramref name="end"/>. If <paramref name="start"/> 
-        /// is negative, it is  treated as <c>length</c> + <paramref name="start" /> 
-        /// where <c>length</c> is the length of the string. If 
-        /// <paramref name="end"/> is negative, it is treated as <c>length</c> + 
+        /// indicated by <paramref name="end"/>. If <paramref name="start"/>
+        /// is negative, it is  treated as <c>length</c> + <paramref name="start" />
+        /// where <c>length</c> is the length of the string. If
+        /// <paramref name="end"/> is negative, it is treated as <c>length</c> +
         /// <paramref name="end"/> where <c>length</c> is the length of the
-        /// string. If <paramref name="end"/> occurs before <paramref name="start"/>, 
+        /// string. If <paramref name="end"/> occurs before <paramref name="start"/>,
         /// no characters are copied to the new string.
         /// </remarks>
 
@@ -158,9 +158,9 @@ namespace Mannex
             return sliceLength > 0 ?
                 str.Substring(start, sliceLength) : string.Empty;
         }
-        
+
         /// <summary>
-        /// Embeds string into <paramref name="target"/>, using {0} 
+        /// Embeds string into <paramref name="target"/>, using {0}
         /// within <paramref name="target"/> as the point of embedding.
         /// </summary>
 
@@ -202,8 +202,8 @@ namespace Mannex
                 sb.Append(escape);
                 start = index + quote.Length;
             }
-            return sb != null 
-                 ? sb.Append(str, start, str.Length - start).Append(quote).ToString() 
+            return sb != null
+                 ? sb.Append(str, start, str.Length - start).Append(quote).ToString()
                  : str.Wrap(quote, quote);
         }
 
@@ -213,7 +213,7 @@ namespace Mannex
         /// determines how to bind and resolve replacement tokens.
         /// </summary>
 
-        public static string FormatWith(this string format, 
+        public static string FormatWith(this string format,
             Func<string, object[], IFormatProvider, string> binder, params object[] args)
         {
             return format.FormatWith(null, binder, args);
@@ -222,7 +222,7 @@ namespace Mannex
         /// <summary>
         /// Format string using <paramref name="args"/> as sources for
         /// replacements and a function, <paramref name="binder"/>, that
-        /// determines how to bind and resolve replacement tokens. In 
+        /// determines how to bind and resolve replacement tokens. In
         /// addition, <paramref name="provider"/> is used for cultural
         /// formatting.
         /// </summary>
@@ -283,7 +283,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Splits a string into a pair using a specified character to 
+        /// Splits a string into a pair using a specified character to
         /// separate the two.
         /// </summary>
         /// <remarks>
@@ -298,13 +298,13 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Splits a string into three parts using any of a specified set of 
+        /// Splits a string into three parts using any of a specified set of
         /// characters to separate the three.
         /// </summary>
         /// <remarks>
         /// None of the resulting parts is ever <c>null</c>.
         /// </remarks>
-        
+
         public static T Split<T>(this string str, char separator, Func<string, string, string, T> resultFunc)
         {
             if (str == null) throw new ArgumentNullException(nameof(str));
@@ -313,7 +313,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Splits a string into four parts using any of a specified set of 
+        /// Splits a string into four parts using any of a specified set of
         /// characters to separate the four.
         /// </summary>
         /// <remarks>
@@ -328,7 +328,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Splits a string into a pair using any of a specified set of 
+        /// Splits a string into a pair using any of a specified set of
         /// characters to separate the two.
         /// </summary>
         /// <remarks>
@@ -346,7 +346,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Splits a string into three parts using any of a specified set of 
+        /// Splits a string into three parts using any of a specified set of
         /// characters to separate the three.
         /// </summary>
         /// <remarks>
@@ -361,7 +361,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Splits a string into four parts using any of a specified set of 
+        /// Splits a string into four parts using any of a specified set of
         /// characters to separate the four.
         /// </summary>
         /// <remarks>
@@ -376,8 +376,8 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Splits a string into a pair using a specified string to 
-        /// separate the two. An aditional parameter specifies comparison 
+        /// Splits a string into a pair using a specified string to
+        /// separate the two. An aditional parameter specifies comparison
         /// rules used to find the separator string.
         /// </summary>
         /// <remarks>
@@ -392,14 +392,14 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Splits a string into three parts using a specified string to 
-        /// separate the three.  An aditional parameter specifies comparison 
+        /// Splits a string into three parts using a specified string to
+        /// separate the three.  An aditional parameter specifies comparison
         /// rules used to find the separator string.
         /// </summary>
         /// <remarks>
         /// None of the resulting parts is ever <c>null</c>.
         /// </remarks>
-        
+
         public static T Split<T>(this string str, string separator, StringComparison comparison, Func<string, string, string, T> resultFunc)
         {
             if (str == null) throw new ArgumentNullException(nameof(str));
@@ -408,8 +408,8 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Splits a string into four parts using a specified string to 
-        /// separate the four. An aditional parameter specifies comparison 
+        /// Splits a string into four parts using a specified string to
+        /// separate the four. An aditional parameter specifies comparison
         /// rules used to find the separator string.
         /// </summary>
         /// <remarks>
@@ -429,26 +429,26 @@ namespace Mannex
         /// <remarks>
         /// Neither half in the resulting pair is ever <c>null</c>.
         /// </remarks>
-        
+
         static T SplitRemoving<T>(string str, int index, int count, Func<string, string, T> resultFunc)
         {
             Debug.Assert(str != null);
             Debug.Assert(count > 0);
             Debug.Assert(resultFunc != null);
 
-            var a = index < 0 
-                  ? str 
+            var a = index < 0
+                  ? str
                   : str.Substring(0, index);
-            
-            var b = index < 0 || index + 1 >= str.Length 
-                  ? string.Empty 
+
+            var b = index < 0 || index + 1 >= str.Length
+                  ? string.Empty
                   : str.Substring(index + count);
-            
+
             return resultFunc(a, b);
         }
 
         /// <summary>
-        /// Splits string into lines where a line is terminated 
+        /// Splits string into lines where a line is terminated
         /// by CR and LF, or just CR or just LF. White space is trimmed off
         /// each line and any resulting blank lines are skipped.
         /// </summary>
@@ -465,7 +465,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Splits string into lines where a line is terminated 
+        /// Splits string into lines where a line is terminated
         /// by CR and LF, or just CR or just LF.
         /// </summary>
         /// <remarks>
@@ -477,7 +477,7 @@ namespace Mannex
             if (str == null) throw new ArgumentNullException(nameof(str));
             return SplitIntoLinesImpl(str);
         }
- 
+
         static IEnumerable<string> SplitIntoLinesImpl(string str)
         {
             using (var reader = str.Read())
@@ -487,8 +487,8 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Collapses all sequences of white space (as deifned by Unicode 
-        /// and identified by <see cref="char.IsWhiteSpace(char)"/>) to a 
+        /// Collapses all sequences of white space (as deifned by Unicode
+        /// and identified by <see cref="char.IsWhiteSpace(char)"/>) to a
         /// single space and trims all leading and trailing white space.
         /// </summary>
 
@@ -503,11 +503,11 @@ namespace Mannex
         /// given the character position and length of the middle substring.
         /// </summary>
         /// <returns>
-        /// Returns a zero-base, single-dimension, array of three elements 
+        /// Returns a zero-base, single-dimension, array of three elements
         /// containing the left, middle and right substrings, respectively.
         /// </returns>
         /// <remarks>
-        /// This function never returns <c>null</c> for any of the 
+        /// This function never returns <c>null</c> for any of the
         /// substrings. For example, even when <paramref name="index"/> is
         /// zero, the first substring will be an empty string, but not null.
         /// </remarks>
@@ -524,9 +524,9 @@ namespace Mannex
         /// project the final result.
         /// </summary>
         /// <remarks>
-        /// This function never supplies <c>null</c> for any of the 
+        /// This function never supplies <c>null</c> for any of the
         /// substrings. For example, even when <paramref name="index"/> is
-        /// zero, the first substring will be an empty string, but not 
+        /// zero, the first substring will be an empty string, but not
         /// <c>null</c>.
         /// </remarks>
 
@@ -540,12 +540,12 @@ namespace Mannex
                             str.Substring(index + length));
         }
 
-        static readonly Regex TruthinessRegex = new Regex(@"\A\s*(?i:true|1|on|yes)\s*\z", 
+        static readonly Regex TruthinessRegex = new Regex(@"\A\s*(?i:true|1|on|yes)\s*\z",
                                                     RegexOptions.CultureInvariant);
 
         /// <summary>
         /// Returns <c>true</c> if the string value reads (excluding leading
-        /// and trailing white space) either <c>"true"</c>, <c>"1"</c>, 
+        /// and trailing white space) either <c>"true"</c>, <c>"1"</c>,
         /// <c>"on"</c> or <c>"yes"</c>. Otherwise it returns <c>false</c>.
         /// </summary>
 
@@ -555,29 +555,29 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Gets the character at the given index in the string otherwise 
-        /// <c>null</c> if the index falls beyond last character of the 
+        /// Gets the character at the given index in the string otherwise
+        /// <c>null</c> if the index falls beyond last character of the
         /// string. If the index is negative it is used to look up
         /// the character from the end of the string where -1 yields that
         /// last character. Again, <c>null</c> is returned if the negative
         /// index goes beyond the first character of the string.
         /// </summary>
-        
+
         public static char? TryCharAt(this string str, int index)
         {
             if (str == null) throw new ArgumentNullException(nameof(str));
-            return index < str.Length 
-                 ? index < 0 
-                 ? str.Length + index < 0 
+            return index < str.Length
+                 ? index < 0
+                 ? str.Length + index < 0
                  ? (char?) null
-                 : str[str.Length + index] 
+                 : str[str.Length + index]
                  : str[index]
                  : null;
         }
 
         /// <summary>
         /// Splits the string into lines and then removes all leading spaces
-        /// that are common in all lines and returns those lines back as a 
+        /// that are common in all lines and returns those lines back as a
         /// single string.
         /// </summary>
         /// <remarks>
@@ -590,7 +590,7 @@ namespace Mannex
 
             var output =
                 from lines in new[] { str.SplitIntoLines() }
-                let indents = 
+                let indents =
                     from line in lines
 #if NET40 || NET45
                     where !string.IsNullOrWhiteSpace(line)
@@ -602,8 +602,8 @@ namespace Mannex
                 let indent = indents.Min() ?? 0
                 from line in lines
                 select line.Slice(indent);
-            
-            return string.Join(Environment.NewLine, 
+
+            return string.Join(Environment.NewLine,
 #if NET40 || NET45
                        output.ToArray()
 #else
@@ -613,7 +613,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Partitions a string into equally sized parts (except possibly 
+        /// Partitions a string into equally sized parts (except possibly
         /// the last one) and returns a sequence containing each partition.
         /// than the given size.
         /// </summary>

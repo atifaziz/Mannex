@@ -26,7 +26,7 @@ namespace Mannex.Collections.Generic
     using System.Collections.Generic;
 
     /// <summary>
-    /// Extension methods for pairing keys and values as 
+    /// Extension methods for pairing keys and values as
     /// <see cref="KeyValuePair{TKey,TValue}"/>.
     /// </summary>
 

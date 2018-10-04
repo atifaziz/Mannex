@@ -39,7 +39,7 @@ namespace Mannex.Tests.Reflection
         [Fact]
         public void IsDefinedFailsWithNullThis()
         {
-            Assert.Throws<ArgumentNullException>(() => 
+            Assert.Throws<ArgumentNullException>(() =>
                 ICustomAttributeProviderExtensions.IsDefined<object>(null, true));
         }
 
@@ -48,7 +48,7 @@ namespace Mannex.Tests.Reflection
         {
             Assert.True(typeof(Test).IsDefined<DescriptionAttribute>(true));
         }
-        
+
         [Fact]
         public void IsDefinedReturnsTrueWhenAttributeIsAbsent()
         {

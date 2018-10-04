@@ -57,7 +57,7 @@ namespace Mannex.Collections.Generic
 
         /// <summary>
         /// Treats list like a stack, pushing <paramref name="value"/>
-        /// on to the list; in other words adding it to the end of 
+        /// on to the list; in other words adding it to the end of
         /// the list.
         /// </summary>
 
@@ -249,7 +249,7 @@ namespace Mannex.Collections.Generic
 
         /// <summary>
         /// Treats list like a queue, removing and returning the
-        /// first value or <paramref name="emptyValue"/> if the 
+        /// first value or <paramref name="emptyValue"/> if the
         /// list is empty.
         /// </summary>
 
@@ -269,7 +269,7 @@ namespace Mannex.Collections.Generic
         /// </summary>
         /// <remarks>
         /// <para>
-        /// If <paramref name="start"/> is negative, it is treated as 
+        /// If <paramref name="start"/> is negative, it is treated as
         /// <see cref="List{T}.Count"/> + <paramref name="start"/>.</para>
         /// <para>
         /// This method uses defered semantics.</para>
@@ -283,18 +283,18 @@ namespace Mannex.Collections.Generic
         }
 
         /// <summary>
-        /// Returns elements from the specified portion of the list, 
-        /// identified by <paramref name="start"/> index and 
+        /// Returns elements from the specified portion of the list,
+        /// identified by <paramref name="start"/> index and
         /// <paramref name="end"/> (exclusive) index.
         /// </summary>
         /// <remarks>
         /// <para>
-        /// This method copies up to, but not including, the element indicated by 
-        /// <paramref name="end"/>. If <paramref name="start"/> is negative, it 
+        /// This method copies up to, but not including, the element indicated by
+        /// <paramref name="end"/>. If <paramref name="start"/> is negative, it
         /// is treated as <see cref="List{T}.Count"/> + <paramref name="start"/>.
-        /// If <paramref name="end"/> is negative, it is treated as 
-        /// <see cref="List{T}.Count"/> + <paramref name="end"/>. 
-        /// If <paramref name="end"/> occurs before <paramref name="start"/>, no 
+        /// If <paramref name="end"/> is negative, it is treated as
+        /// <see cref="List{T}.Count"/> + <paramref name="end"/>.
+        /// If <paramref name="end"/> occurs before <paramref name="start"/>, no
         /// elements returned.</para>
         /// <para>
         /// This method uses defered semantics.</para>
@@ -310,13 +310,13 @@ namespace Mannex.Collections.Generic
         static IEnumerable<T> SliceImpl<T>(IList<T> list, int start, int end)
         {
             //
-            // This method copies up to, but not including, the element 
-            // indicated by end. If start is negative, it is 
+            // This method copies up to, but not including, the element
+            // indicated by end. If start is negative, it is
             // treated as length + start where length is the count of items
-            // in the list. If end is negative, it is treated as 
-            // length + end where length is the count of items in the list. 
-            // If end is omitted, extraction continues to the end of 
-            // the list. If end occurs before start, no elements are 
+            // in the list. If end is negative, it is treated as
+            // length + end where length is the count of items in the list.
+            // If end is omitted, extraction continues to the end of
+            // the list. If end occurs before start, no elements are
             // copied to the new list.
             //
 
@@ -331,9 +331,9 @@ namespace Mannex.Collections.Generic
         }
 
         /// <summary>
-        /// Searches the entire sorted list for a specific element, using 
-        /// the <see cref="IComparable{T}"/> implemented by each element 
-        /// of the list and by the specified object. 
+        /// Searches the entire sorted list for a specific element, using
+        /// the <see cref="IComparable{T}"/> implemented by each element
+        /// of the list and by the specified object.
         /// </summary>
 
         public static int BinarySearch<T>(this IList<T> list, T value)
@@ -342,8 +342,8 @@ namespace Mannex.Collections.Generic
         }
 
         /// <summary>
-        /// Searches the entire sorted list for a value using the specified 
-        /// <see cref="IComparer{T}"/> implementation. 
+        /// Searches the entire sorted list for a value using the specified
+        /// <see cref="IComparer{T}"/> implementation.
         /// </summary>
 
         public static int BinarySearch<T>(this IList<T> list, T value, IComparer<T> comparer)
@@ -353,9 +353,9 @@ namespace Mannex.Collections.Generic
         }
 
         /// <summary>
-        /// Searches a range of elements the sorted list for a value, using 
-        /// the <see cref="IComparable{T}"/> implemented by each element of 
-        /// the list and by the specified value. 
+        /// Searches a range of elements the sorted list for a value, using
+        /// the <see cref="IComparable{T}"/> implemented by each element of
+        /// the list and by the specified value.
         /// </summary>
 
         public static int BinarySearch<T>(this IList<T> list, int index, int length, T value)
@@ -364,37 +364,37 @@ namespace Mannex.Collections.Generic
         }
 
         /// <summary>
-        /// Searches a range of elements in the sorted list for a value, 
-        /// using the specified <see cref="IComparer{T}"/> implementation. 
+        /// Searches a range of elements in the sorted list for a value,
+        /// using the specified <see cref="IComparer{T}"/> implementation.
         /// </summary>
 
         public static int BinarySearch<T>(this IList<T> list, int index, int length, T value, IComparer<T> comparer)
         {
             if (list == null) throw new ArgumentNullException(nameof(list));
-            
+
             comparer = comparer ?? Comparer<T>.Default;
 
-            var first = index; 
-            var last = (index + length) - 1; 
-            
+            var first = index;
+            var last = (index + length) - 1;
+
             while (first <= last)
             {
-                var middle = first + ((last - first) / 2); 
+                var middle = first + ((last - first) / 2);
                 var comparison = comparer.Compare(list[middle], value);
                 if (comparison == 0)
-                    return middle; 
+                    return middle;
                 if (comparison < 0)
                     first = middle + 1;
-                else             
-                    last = middle - 1; 
-            } 
-            
+                else
+                    last = middle - 1;
+            }
+
             return ~first;
         }
 
         /// <summary>
-        /// Returns a read-only wrapper for the list otherwise returns the 
-        /// list itself if its <see cref="ICollection{T}.IsReadOnly"/> is 
+        /// Returns a read-only wrapper for the list otherwise returns the
+        /// list itself if its <see cref="ICollection{T}.IsReadOnly"/> is
         /// <c>true</c>.
         /// </summary>
 

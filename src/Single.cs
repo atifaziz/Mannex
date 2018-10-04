@@ -38,9 +38,9 @@ namespace Mannex
     static partial class SingleExtensions
     {
         /// <summary>
-        /// Converts <see cref="float.NaN"/> value to a 
-        /// <see cref="Nullable{T}"/> of <see cref="float"/> initialized to 
-        /// the null state. Otherwise the <see cref="Nullable{T}"/> of 
+        /// Converts <see cref="float.NaN"/> value to a
+        /// <see cref="Nullable{T}"/> of <see cref="float"/> initialized to
+        /// the null state. Otherwise the <see cref="Nullable{T}"/> of
         /// <see cref="float"/> retured holds the original input value.
         /// </summary>
 
@@ -51,7 +51,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Generates a sequence of given count of values between two values  
+        /// Generates a sequence of given count of values between two values
         /// (inclusive).
         /// </summary>
         /// <remarks>This method uses deferred semantics.</remarks>

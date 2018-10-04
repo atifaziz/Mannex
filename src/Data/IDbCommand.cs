@@ -47,7 +47,7 @@ namespace Mannex.Data
         /// <remarks>
         /// This method uses deferred execution semantics. The command's
         /// parameters are modified with each execution. If a particular row
-        /// has fewer argument than parameters then the remaining parameters 
+        /// has fewer argument than parameters then the remaining parameters
         /// are assigned <see cref="DBNull.Value"/>.
         /// </remarks>
 
@@ -59,14 +59,14 @@ namespace Mannex.Data
         /// <summary>
         /// Executes this command for each row in the given sequence of rows
         /// and returns a sequence of the number of rows affected by each
-        /// execution. An additional parameter specifies the index at which 
+        /// execution. An additional parameter specifies the index at which
         /// to start populating parameters of the commands with values of a
         /// row.
         /// </summary>
         /// <remarks>
         /// This method uses deferred execution semantics. The command's
         /// parameters are modified with each execution. If a particular row
-        /// has fewer argument than parameters then the remaining parameters 
+        /// has fewer argument than parameters then the remaining parameters
         /// are assigned <see cref="DBNull.Value"/>.
         /// </remarks>
 

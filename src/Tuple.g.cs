@@ -29,8 +29,8 @@ namespace Mannex
     partial class TupleExtensions
     {
         /// <summary>
-        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/> 
-        /// whose elements are the items of a given 
+        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/>
+        /// whose elements are the items of a given
         /// <see cref="Tuple{T1,T2}" />.
         /// </summary>
         /// <typeparam name="T1">The type of the tuple's first component.</typeparam>
@@ -41,7 +41,7 @@ namespace Mannex
             if (tuple == null) throw new ArgumentNullException("tuple");
             return AsEnumerableImpl(tuple);
         }
-        
+
         static IEnumerable<object> AsEnumerableImpl<T1, T2>(Tuple<T1, T2> tuple)
         {
             yield return tuple.Item1;
@@ -49,7 +49,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Folds items of a <see cref="Tuple{T1,T2}" /> 
+        /// Folds items of a <see cref="Tuple{T1,T2}" />
         /// into a single element of <typeparamref name="TResult"/>.
         /// </summary>
         /// <typeparam name="T1">The type of the tuple's first component.</typeparam>
@@ -64,8 +64,8 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/> 
-        /// whose elements are the items of a given 
+        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/>
+        /// whose elements are the items of a given
         /// <see cref="Tuple{T1,T2,T3}" />.
         /// </summary>
         /// <typeparam name="T1">The type of the tuple's first component.</typeparam>
@@ -77,7 +77,7 @@ namespace Mannex
             if (tuple == null) throw new ArgumentNullException("tuple");
             return AsEnumerableImpl(tuple);
         }
-        
+
         static IEnumerable<object> AsEnumerableImpl<T1, T2, T3>(Tuple<T1, T2, T3> tuple)
         {
             yield return tuple.Item1;
@@ -86,7 +86,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Folds items of a <see cref="Tuple{T1,T2,T3}" /> 
+        /// Folds items of a <see cref="Tuple{T1,T2,T3}" />
         /// into a single element of <typeparamref name="TResult"/>.
         /// </summary>
         /// <typeparam name="T1">The type of the tuple's first component.</typeparam>
@@ -102,8 +102,8 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/> 
-        /// whose elements are the items of a given 
+        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/>
+        /// whose elements are the items of a given
         /// <see cref="Tuple{T1,T2,T3,T4}" />.
         /// </summary>
         /// <typeparam name="T1">The type of the tuple's first component.</typeparam>
@@ -116,7 +116,7 @@ namespace Mannex
             if (tuple == null) throw new ArgumentNullException("tuple");
             return AsEnumerableImpl(tuple);
         }
-        
+
         static IEnumerable<object> AsEnumerableImpl<T1, T2, T3, T4>(Tuple<T1, T2, T3, T4> tuple)
         {
             yield return tuple.Item1;
@@ -126,7 +126,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Folds items of a <see cref="Tuple{T1,T2,T3,T4}" /> 
+        /// Folds items of a <see cref="Tuple{T1,T2,T3,T4}" />
         /// into a single element of <typeparamref name="TResult"/>.
         /// </summary>
         /// <typeparam name="T1">The type of the tuple's first component.</typeparam>
@@ -143,8 +143,8 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/> 
-        /// whose elements are the items of a given 
+        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/>
+        /// whose elements are the items of a given
         /// <see cref="Tuple{T1,T2,T3,T4,T5}" />.
         /// </summary>
         /// <typeparam name="T1">The type of the tuple's first component.</typeparam>
@@ -158,7 +158,7 @@ namespace Mannex
             if (tuple == null) throw new ArgumentNullException("tuple");
             return AsEnumerableImpl(tuple);
         }
-        
+
         static IEnumerable<object> AsEnumerableImpl<T1, T2, T3, T4, T5>(Tuple<T1, T2, T3, T4, T5> tuple)
         {
             yield return tuple.Item1;
@@ -169,7 +169,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Folds items of a <see cref="Tuple{T1,T2,T3,T4,T5}" /> 
+        /// Folds items of a <see cref="Tuple{T1,T2,T3,T4,T5}" />
         /// into a single element of <typeparamref name="TResult"/>.
         /// </summary>
         /// <typeparam name="T1">The type of the tuple's first component.</typeparam>
@@ -187,8 +187,8 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/> 
-        /// whose elements are the items of a given 
+        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/>
+        /// whose elements are the items of a given
         /// <see cref="Tuple{T1,T2,T3,T4,T5,T6}" />.
         /// </summary>
         /// <typeparam name="T1">The type of the tuple's first component.</typeparam>
@@ -203,7 +203,7 @@ namespace Mannex
             if (tuple == null) throw new ArgumentNullException("tuple");
             return AsEnumerableImpl(tuple);
         }
-        
+
         static IEnumerable<object> AsEnumerableImpl<T1, T2, T3, T4, T5, T6>(Tuple<T1, T2, T3, T4, T5, T6> tuple)
         {
             yield return tuple.Item1;
@@ -215,7 +215,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Folds items of a <see cref="Tuple{T1,T2,T3,T4,T5,T6}" /> 
+        /// Folds items of a <see cref="Tuple{T1,T2,T3,T4,T5,T6}" />
         /// into a single element of <typeparamref name="TResult"/>.
         /// </summary>
         /// <typeparam name="T1">The type of the tuple's first component.</typeparam>
@@ -234,8 +234,8 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/> 
-        /// whose elements are the items of a given 
+        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/>
+        /// whose elements are the items of a given
         /// <see cref="Tuple{T1,T2,T3,T4,T5,T6,T7}" />.
         /// </summary>
         /// <typeparam name="T1">The type of the tuple's first component.</typeparam>
@@ -251,7 +251,7 @@ namespace Mannex
             if (tuple == null) throw new ArgumentNullException("tuple");
             return AsEnumerableImpl(tuple);
         }
-        
+
         static IEnumerable<object> AsEnumerableImpl<T1, T2, T3, T4, T5, T6, T7>(Tuple<T1, T2, T3, T4, T5, T6, T7> tuple)
         {
             yield return tuple.Item1;
@@ -264,7 +264,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Folds items of a <see cref="Tuple{T1,T2,T3,T4,T5,T6,T7}" /> 
+        /// Folds items of a <see cref="Tuple{T1,T2,T3,T4,T5,T6,T7}" />
         /// into a single element of <typeparamref name="TResult"/>.
         /// </summary>
         /// <typeparam name="T1">The type of the tuple's first component.</typeparam>

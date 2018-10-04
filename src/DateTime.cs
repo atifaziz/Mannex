@@ -38,7 +38,7 @@ namespace Mannex
         static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /// <summary>
-        /// Returns number of milliseconds (including fractions) in UTC between the 
+        /// Returns number of milliseconds (including fractions) in UTC between the
         /// specified date and midnight January 1, 1970.
         /// </summary>
 
@@ -48,7 +48,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Trims millisecond component so that the precision of the 
+        /// Trims millisecond component so that the precision of the
         /// resulting time is to the second.
         /// </summary>
 
@@ -58,7 +58,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Trims the second and millisecond components so that the 
+        /// Trims the second and millisecond components so that the
         /// precision of the resulting time is to the minute.
         /// </summary>
 
@@ -68,7 +68,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Trims the minute, second and millisecond components so that the 
+        /// Trims the minute, second and millisecond components so that the
         /// precision of the resulting time is to the hour.
         /// </summary>
 
@@ -78,7 +78,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Trims the time components so that the precision of the resulting 
+        /// Trims the time components so that the precision of the resulting
         /// time is to the day.
         /// </summary>
 
@@ -97,7 +97,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Gets a <see cref="DateTime"/> that represents the first day of 
+        /// Gets a <see cref="DateTime"/> that represents the first day of
         /// the month of this <see cref="DateTime"/>.
         /// </summary>
 
@@ -107,7 +107,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Gets a <see cref="DateTime"/> that represents the first day of 
+        /// Gets a <see cref="DateTime"/> that represents the first day of
         /// the year of this <see cref="DateTime"/>.
         /// </summary>
 
@@ -117,7 +117,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Gets a <see cref="DateTime"/> that represents the first day of 
+        /// Gets a <see cref="DateTime"/> that represents the first day of
         /// the quarter of this <see cref="DateTime"/>.
         /// </summary>
 

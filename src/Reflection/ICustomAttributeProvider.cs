@@ -37,7 +37,7 @@ namespace Mannex.Reflection
     static partial class ICustomAttributeProviderExtensions
     {
         /// <summary>
-        /// Indicates whether one or more instance of <typeparamref name="T"/> 
+        /// Indicates whether one or more instance of <typeparamref name="T"/>
         /// is defined on this member.
         /// </summary>
 
@@ -48,7 +48,7 @@ namespace Mannex.Reflection
         }
 
         /// <summary>
-        /// Returns <typeparamref name="T"/> custom attributes defined on 
+        /// Returns <typeparamref name="T"/> custom attributes defined on
         /// this member.
         /// </summary>
 

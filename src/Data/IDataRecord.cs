@@ -51,7 +51,7 @@ namespace Mannex.Data
             return Enumerable.Range(0, record.FieldCount);
         }
 
-        static IEnumerable<TResult> Ordinally<TRecord, TResult>(TRecord record, Func<TRecord, IEnumerable<int>, IEnumerable<TResult>> selector) 
+        static IEnumerable<TResult> Ordinally<TRecord, TResult>(TRecord record, Func<TRecord, IEnumerable<int>, IEnumerable<TResult>> selector)
             where TRecord : IDataRecord
         {
             // ReSharper disable once CompareNonConstrainedGenericWithNull
@@ -65,8 +65,8 @@ namespace Mannex.Data
         /// Gets an ordered sequence of field names of this record.
         /// </summary>
         /// <remarks>
-        /// This method uses immediate execution semantics if the 
-        /// <see cref="IDataRecord"/> is an <see cref="IDataReader"/> and 
+        /// This method uses immediate execution semantics if the
+        /// <see cref="IDataRecord"/> is an <see cref="IDataReader"/> and
         /// deferred in all other cases.
         /// </remarks>
 
@@ -80,8 +80,8 @@ namespace Mannex.Data
         /// Gets an ordered sequence of field value of this record.
         /// </summary>
         /// <remarks>
-        /// This method uses immediate execution semantics if the 
-        /// <see cref="IDataRecord"/> is an <see cref="IDataReader"/> and 
+        /// This method uses immediate execution semantics if the
+        /// <see cref="IDataRecord"/> is an <see cref="IDataReader"/> and
         /// deferred in all other cases.
         /// </remarks>
 
@@ -92,19 +92,19 @@ namespace Mannex.Data
         }
 
         /// <summary>
-        /// Gets an ordered sequence of fields of this record as 
+        /// Gets an ordered sequence of fields of this record as
         /// key-value pairs.
         /// </summary>
         /// <remarks>
-        /// This method uses immediate execution semantics if the 
-        /// <see cref="IDataRecord"/> is an <see cref="IDataReader"/> and 
+        /// This method uses immediate execution semantics if the
+        /// <see cref="IDataRecord"/> is an <see cref="IDataReader"/> and
         /// deferred in all other cases.
         /// </remarks>
 
         public static IEnumerable<KeyValuePair<string, object>> GetFields(this IDataRecord record)
         {
             if (record == null) throw new ArgumentNullException(nameof(record));
-            return Ordinally(record, (r, ords) => from i in ords 
+            return Ordinally(record, (r, ords) => from i in ords
                                                   select r.GetName(i).AsKeyTo(r.GetValue(i)));
         }
 
@@ -115,9 +115,9 @@ namespace Mannex.Data
         /// <remarks>
         /// If <typeparamref name="T"/> is a reference type and the field
         /// value is <see cref="DBNull.Value"/> then the returned value is
-        /// a null reference. If <typeparamref name="T"/> is a value type 
-        /// and the field value is <see cref="DBNull.Value"/> then 
-        /// <see cref="InvalidCastException"/> is raised unless 
+        /// a null reference. If <typeparamref name="T"/> is a value type
+        /// and the field value is <see cref="DBNull.Value"/> then
+        /// <see cref="InvalidCastException"/> is raised unless
         /// <typeparamref name="T"/> is nullable (<see cref="Nullable{T}"/>).
         /// </remarks>
 
@@ -134,9 +134,9 @@ namespace Mannex.Data
         /// <remarks>
         /// If <typeparamref name="T"/> is a reference type and the field
         /// value is <see cref="DBNull.Value"/> then the returned value is
-        /// a null reference. If <typeparamref name="T"/> is a value type 
-        /// and the field value is <see cref="DBNull.Value"/> then 
-        /// <see cref="InvalidCastException"/> is raised unless 
+        /// a null reference. If <typeparamref name="T"/> is a value type
+        /// and the field value is <see cref="DBNull.Value"/> then
+        /// <see cref="InvalidCastException"/> is raised unless
         /// <typeparamref name="T"/> is nullable (<see cref="Nullable{T}"/>).
         /// </remarks>
 
@@ -168,9 +168,9 @@ namespace Mannex.Data
             static T ValueImpl(object value)
             {
                 if (Convert.IsDBNull(value))
-                { 
+                {
                     throw new InvalidCastException(string.Format(
-                        @"Cannot cast DBNull to type '{0}'. Use '{1}' instead.", 
+                        @"Cannot cast DBNull to type '{0}'. Use '{1}' instead.",
                         typeof(T), typeof(Nullable<>).MakeGenericType(typeof(T))));
                 }
                 return (T) value;
@@ -187,14 +187,14 @@ namespace Mannex.Data
 
             static TValue? NullableImpl<TValue>(object value) where TValue : struct
             {
-                return !Convert.IsDBNull(value) 
-                     ? new TValue?((TValue) value) 
+                return !Convert.IsDBNull(value)
+                     ? new TValue?((TValue) value)
                      : new TValue?();
             }
         }
 
         /// <summary>
-        /// Converts the record into a dyamic object (specifically 
+        /// Converts the record into a dyamic object (specifically
         /// <see cref="ExpandoObject"/>) where each field and its
         /// value become member of the object.
         /// </summary>
@@ -205,7 +205,7 @@ namespace Mannex.Data
         }
 
         /// <summary>
-        /// Converts the record into a dyamic object (specifically 
+        /// Converts the record into a dyamic object (specifically
         /// <see cref="ExpandoObject"/>) where each field and its
         /// value become member of the object. Two additional
         /// parameters specify functions that determine how to

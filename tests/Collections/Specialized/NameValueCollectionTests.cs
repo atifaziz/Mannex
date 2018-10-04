@@ -206,7 +206,7 @@ namespace Mannex.Tests.Collections.Specialized
             Assert.Equal(new[] { "a", "c" }, a.GetValues("kb"));
             Assert.Equal(new[] { "a" }, a.GetValues("kc"));
         }
- 
+
         [Fact]
         public void AsEnumerableFailsWithNullThis()
         {
@@ -264,11 +264,11 @@ namespace Mannex.Tests.Collections.Specialized
             var collection = new NameValueCollection();
             Assert.Equal(-1, collection.TryGetValue("foo", -1, v => int.Parse(v, CultureInfo.InvariantCulture)));
         }
- 
+
         [Fact]
         public void ContainsKeyFailsWithNullCollection()
         {
-            var e = Assert.Throws<ArgumentNullException>(() => 
+            var e = Assert.Throws<ArgumentNullException>(() =>
                         NameValueCollectionExtensions.ContainsKey(null, null));
             Assert.Equal("collection", e.ParamName);
         }
@@ -286,7 +286,7 @@ namespace Mannex.Tests.Collections.Specialized
         {
             Assert.False(new NameValueCollection().ContainsKey("foo"));
         }
- 
+
         [Fact]
         public void ContainsKeyWhenKeyIsDifferentCaseAndComparerIsCaseSensitive()
         {

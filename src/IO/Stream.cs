@@ -48,10 +48,10 @@ namespace Mannex.IO
         }
 
         /// <summary>
-        /// Copies one stream into another using a caller-specified transfer 
+        /// Copies one stream into another using a caller-specified transfer
         /// buffer size.
         /// </summary>
-        
+
         public static void Copy(this Stream input, Stream output, int bufferSize)
         {
             ValidateArguments(input, output, bufferSize);
@@ -59,7 +59,7 @@ namespace Mannex.IO
         }
 
         /// <summary>
-        /// Copies one stream into another using a caller-specified transfer 
+        /// Copies one stream into another using a caller-specified transfer
         /// buffer. If the buffer is null then a default one of 4K is used.
         /// </summary>
 
@@ -110,7 +110,7 @@ namespace Mannex.IO
 
         /// <summary>
         /// Saves the content of the input stream from its current position
-        /// to the given file path using a default transfer buffer size of 
+        /// to the given file path using a default transfer buffer size of
         /// 4K.
         /// </summary>
 
@@ -122,7 +122,7 @@ namespace Mannex.IO
 
         /// <summary>
         /// Saves the content of the input stream from its current position
-        /// to the given file path using a caller-specified transfer 
+        /// to the given file path using a caller-specified transfer
         /// buffer size.
         /// </summary>
 
@@ -149,7 +149,7 @@ namespace Mannex.IO
         }
 
         /// <summary>
-        /// Returns the remaining contents of the input as an array of 
+        /// Returns the remaining contents of the input as an array of
         /// unsigned bytes.
         /// </summary>
 
@@ -158,7 +158,7 @@ namespace Mannex.IO
             ValidateArguments(input);
             return input.Memorize().ToArray();
         }
-        
+
         #region Argument Validation
 
         [DebuggerStepThrough]
@@ -231,6 +231,6 @@ namespace Mannex.IO
             if (offset + count > buffer.Length) throw new ArgumentOutOfRangeException(nameof(offset), offset, null);
         }
 
-        #endregion    
+        #endregion
     }
 }

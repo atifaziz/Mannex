@@ -44,7 +44,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Formats the value of this object using a specific format and the 
+        /// Formats the value of this object using a specific format and the
         /// invariant culture.
         /// </summary>
 

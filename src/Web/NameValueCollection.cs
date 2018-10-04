@@ -57,8 +57,8 @@ namespace Mannex.Web
         /// MIME media type.
         /// </summary>
         /// <remarks>
-        /// Each value is escaped using <see cref="Uri.EscapeDataString"/> 
-        /// but which can throw <see cref="UriFormatException"/> for very 
+        /// Each value is escaped using <see cref="Uri.EscapeDataString"/>
+        /// but which can throw <see cref="UriFormatException"/> for very
         /// large values.
         /// </remarks>
 
@@ -70,13 +70,13 @@ namespace Mannex.Web
         /// <summary>
         /// Encodes the content of the collection to a string
         /// suitably formatted per the <c>application/x-www-form-urlencoded</c>
-        /// MIME media type. An additional parameter specifies a function 
+        /// MIME media type. An additional parameter specifies a function
         /// used to encode the value into the URI.
         /// </summary>
         /// <remarks>
-        /// A null reference is permitted for <paramref name="encoder"/> and 
-        /// in which case <see cref="Uri.EscapeDataString"/> is used by 
-        /// default. However, <see cref="Uri.EscapeDataString"/> may throw 
+        /// A null reference is permitted for <paramref name="encoder"/> and
+        /// in which case <see cref="Uri.EscapeDataString"/> is used by
+        /// default. However, <see cref="Uri.EscapeDataString"/> may throw
         /// <see cref="UriFormatException"/> for very large values.
         /// </remarks>
 
@@ -104,7 +104,7 @@ namespace Mannex.Web
 
                 if (values == null)
                     continue;
-                
+
                 foreach (var value in values)
                 {
                     if (sb.Length > 0)
@@ -113,7 +113,7 @@ namespace Mannex.Web
                     if (!string.IsNullOrEmpty(name))
                         sb.Append(name).Append('=');
 
-                    sb.Append(string.IsNullOrEmpty(value) 
+                    sb.Append(string.IsNullOrEmpty(value)
                               ? string.Empty
                               : (encoder ?? UriEscapeDataString)(value));
                 }

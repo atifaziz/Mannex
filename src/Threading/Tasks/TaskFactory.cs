@@ -41,10 +41,10 @@ namespace Mannex.Threading.Tasks
     {
         /// <summary>
         /// Creates and starts a new <see cref="Task" /> that iterates
-        /// through a sequence of tasks where each task is run as a 
+        /// through a sequence of tasks where each task is run as a
         /// continuation of its predecessor.
         /// </summary>
-        
+
         public static Task StartNew(
             this TaskFactory taskFactory, IEnumerable<Task> job)
         {
@@ -53,10 +53,10 @@ namespace Mannex.Threading.Tasks
 
         /// <summary>
         /// Creates and starts a new <see cref="Task" /> that iterates
-        /// through a sequence of tasks where each task is run as a 
+        /// through a sequence of tasks where each task is run as a
         /// continuation of its predecessor.
         /// </summary>
-        
+
         public static Task StartNew(
             this TaskFactory taskFactory, IEnumerable<Task> job,
             CancellationToken cancellationToken)
@@ -66,10 +66,10 @@ namespace Mannex.Threading.Tasks
 
         /// <summary>
         /// Creates and starts a new <see cref="Task" /> that iterates
-        /// through a sequence of tasks where each task is run as a 
+        /// through a sequence of tasks where each task is run as a
         /// continuation of its predecessor.
         /// </summary>
-        
+
         public static Task StartNew(
             this TaskFactory taskFactory, IEnumerable<Task> job,
             TaskCreationOptions creationOptions)
@@ -79,10 +79,10 @@ namespace Mannex.Threading.Tasks
 
         /// <summary>
         /// Creates and starts a new <see cref="Task" /> that iterates
-        /// through a sequence of tasks where each task is run as a 
+        /// through a sequence of tasks where each task is run as a
         /// continuation of its predecessor.
         /// </summary>
-        
+
         public static Task StartNew(
             this TaskFactory taskFactory, IEnumerable<Task> job,
             CancellationToken cancellationToken, TaskCreationOptions creationOptions,
@@ -93,10 +93,10 @@ namespace Mannex.Threading.Tasks
 
         /// <summary>
         /// Creates and starts a new <see cref="Task" /> that iterates
-        /// through a sequence of tasks where each task is run as a 
+        /// through a sequence of tasks where each task is run as a
         /// continuation of its predecessor.
         /// </summary>
-        
+
         public static Task StartNew(
             this TaskFactory taskFactory, IEnumerable<Task> job, object state)
         {
@@ -105,10 +105,10 @@ namespace Mannex.Threading.Tasks
 
         /// <summary>
         /// Creates and starts a new <see cref="Task" /> that iterates
-        /// through a sequence of tasks where each task is run as a 
+        /// through a sequence of tasks where each task is run as a
         /// continuation of its predecessor.
         /// </summary>
-        
+
         public static Task StartNew(
             this TaskFactory taskFactory, IEnumerable<Task> job, object state,
             CancellationToken cancellationToken)
@@ -118,12 +118,12 @@ namespace Mannex.Threading.Tasks
 
         /// <summary>
         /// Creates and starts a new <see cref="Task" /> that iterates
-        /// through a sequence of tasks where each task is run as a 
+        /// through a sequence of tasks where each task is run as a
         /// continuation of its predecessor.
         /// </summary>
 
         public static Task StartNew(
-            this TaskFactory taskFactory, IEnumerable<Task> job, object state, 
+            this TaskFactory taskFactory, IEnumerable<Task> job, object state,
             TaskCreationOptions creationOptions)
         {
             return StartNew(taskFactory, job, state, CancellationToken.None, creationOptions, null);
@@ -131,13 +131,13 @@ namespace Mannex.Threading.Tasks
 
         /// <summary>
         /// Creates and starts a new <see cref="Task" /> that iterates
-        /// through a sequence of tasks where each task is run as a 
+        /// through a sequence of tasks where each task is run as a
         /// continuation of its predecessor.
         /// </summary>
 
         public static Task StartNew(
-            this TaskFactory taskFactory, IEnumerable<Task> job, object state, 
-            CancellationToken cancellationToken, TaskCreationOptions creationOptions, 
+            this TaskFactory taskFactory, IEnumerable<Task> job, object state,
+            CancellationToken cancellationToken, TaskCreationOptions creationOptions,
             TaskScheduler scheduler)
         {
             if (taskFactory == null) throw new ArgumentNullException(nameof(taskFactory));

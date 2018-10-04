@@ -40,8 +40,8 @@ namespace Mannex.Collections
     static partial class BitArrayExtensions
     {
         /// <summary>
-        /// Returns a sequence of <see cref="bool"/> values where each item 
-        /// of the sequence represents the state of the corresponding bit 
+        /// Returns a sequence of <see cref="bool"/> values where each item
+        /// of the sequence represents the state of the corresponding bit
         /// field of the <see cref="BitArray"/>.
         /// </summary>
 

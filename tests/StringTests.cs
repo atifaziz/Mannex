@@ -135,7 +135,7 @@ namespace Mannex.Tests
             Assert.Equal(@"'foo bar baz'", "foo 'bar' baz".Quote("'", null));
         }
 
-        [Fact] 
+        [Fact]
         public void SplitFailsWithNullThis()
         {
             var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Split(null, ',', (a, b) => a + b));
@@ -144,7 +144,7 @@ namespace Mannex.Tests
             Assert.Equal("str", e.ParamName);
             e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Split(null, ',', (a, b, c, d) => a + b + c + d));
             Assert.Equal("str", e.ParamName);
-            
+
             var separators = new char[0];
             e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Split(null, separators, (a, b) => a + b));
             Assert.Equal("str", e.ParamName);
@@ -176,45 +176,45 @@ namespace Mannex.Tests
         [Fact]
         public void SplitTwoUsingSingleSeparator()
         {
-            Assert.Equal(new[] { "one", "two,three,four,five" }, 
+            Assert.Equal(new[] { "one", "two,three,four,five" },
                 "one,two,three,four,five".Split(',', (a, b) => new[] { a, b }));
         }
 
         [Fact]
         public void SplitThreeUsingSingleSeparator()
         {
-            Assert.Equal(new[] { "one", "two", "three,four,five" }, 
+            Assert.Equal(new[] { "one", "two", "three,four,five" },
                 "one,two,three,four,five".Split(',', (a, b, c) => new[] { a, b, c }));
         }
 
         [Fact]
         public void SplitFourUsingSingleSeparator()
         {
-            Assert.Equal(new[] { "one", "two", "three", "four,five" }, 
+            Assert.Equal(new[] { "one", "two", "three", "four,five" },
                 "one,two,three,four,five".Split(',', (a, b, c, d) => new[] { a, b, c, d }));
         }
 
         [Fact]
         public void SplitTwoUsingMultipleSeparators()
         {
-            Assert.Equal(new[] { "one", "two;three|four,five" }, 
+            Assert.Equal(new[] { "one", "two;three|four,five" },
                 "one,two;three|four,five".Split(new[] { ',', ';' }, (a, b) => new[] { a, b }));
         }
 
         [Fact]
         public void SplitThreeUsingMultipleSeparators()
         {
-            Assert.Equal(new[] { "one", "two", "three|four,five" }, 
+            Assert.Equal(new[] { "one", "two", "three|four,five" },
                 "one,two;three|four,five".Split(new[] { ',', ';' }, (a, b, c) => new[] { a, b, c }));
         }
 
         [Fact]
         public void SplitFourUsingMultipleSeparators()
         {
-            Assert.Equal(new[] { "one", "two", "three|four", "five" }, 
+            Assert.Equal(new[] { "one", "two", "three|four", "five" },
                 "one,two;three|four,five".Split(new[] { ',', ';' }, (a, b, c, d) => new[] { a, b, c, d }));
         }
- 
+
         [Fact]
         public void SplitIntoLinesFailsWithNullThis()
         {
@@ -234,11 +234,11 @@ namespace Mannex.Tests
                 Assert.False(e.MoveNext());
             }
         }
-    
+
         [Fact]
         public void NormalizeWhiteSpaceFailsWithNullThis()
         {
-            var e = Assert.Throws<ArgumentNullException>(() => 
+            var e = Assert.Throws<ArgumentNullException>(() =>
                         StringExtensions.NormalizeWhiteSpace(null));
             Assert.Equal("str", e.ParamName);
         }
@@ -308,10 +308,10 @@ namespace Mannex.Tests
                     new { Before = string.Empty, After = "\x20\t\r\n" },
                     new { Before = "\r\n\t\x20", After = string.Empty },
                 }
-                select new 
-                { 
-                    Input = ws.Before + t.Input + ws.After, 
-                    t.Expected 
+                select new
+                {
+                    Input = ws.Before + t.Input + ws.After,
+                    t.Expected
                 };
 
             foreach (var test in tests)
@@ -321,7 +321,7 @@ namespace Mannex.Tests
         [Fact]
         public void HasPrefixFailsWithNullThis()
         {
-             var e = Assert.Throws<ArgumentNullException>(() => 
+             var e = Assert.Throws<ArgumentNullException>(() =>
                         StringExtensions.HasPrefix(null, string.Empty, StringComparison.Ordinal));
             Assert.Equal("str", e.ParamName);
         }
@@ -339,7 +339,7 @@ namespace Mannex.Tests
         [Fact]
         public void HasSuffixFailsWithNullThis()
         {
-             var e = Assert.Throws<ArgumentNullException>(() => 
+             var e = Assert.Throws<ArgumentNullException>(() =>
                         StringExtensions.HasSuffix(null, string.Empty, StringComparison.Ordinal));
             Assert.Equal("str", e.ParamName);
         }
@@ -353,7 +353,7 @@ namespace Mannex.Tests
             Assert.False("foobar".HasSuffix(string.Empty, StringComparison.Ordinal));
             Assert.False("bar".HasSuffix("bar", StringComparison.Ordinal));
         }
- 
+
         [Fact]
         public void CharAtFailsWithNullThis()
         {
@@ -379,14 +379,14 @@ namespace Mannex.Tests
             Assert.Null(string.Empty.TryCharAt(1));
             Assert.Null(string.Empty.TryCharAt(-1));
         }
-    
+
         [Fact]
         public void TrimCommonLeadingSpaceFailsWithNullThis()
         {
              var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.TrimCommonLeadingSpace(null));
             Assert.Equal("str", e.ParamName);
         }
- 
+
         [Fact]
         public void TrimCommonLeadingSpace()
         {
@@ -399,7 +399,7 @@ namespace Mannex.Tests
                     "    foo",
                     "WHERE bar IS NOT NULL",
                     "ORDER BY id",
-                    string.Empty }), @"  
+                    string.Empty }), @"
                     SELECT
                         *
                     FROM
@@ -449,8 +449,8 @@ namespace Mannex.Tests
         public void SplitTwoUsingStringSeparator()
         {
             const string str = "one|sep|two|sep|three|sep|four|sep|five";
-            Assert.Equal(new[] { "one", "two|sep|three|sep|four|sep|five" }, 
-                str.Split("|SEP|", StringComparison.OrdinalIgnoreCase,  
+            Assert.Equal(new[] { "one", "two|sep|three|sep|four|sep|five" },
+                str.Split("|SEP|", StringComparison.OrdinalIgnoreCase,
                           (a, b) => new[] { a, b }));
         }
 
@@ -458,8 +458,8 @@ namespace Mannex.Tests
         public void SplitThreeUsingStringSeparator()
         {
             const string str = "one|sep|two|sep|three|sep|four|sep|five";
-            Assert.Equal(new[] { "one", "two", "three|sep|four|sep|five" }, 
-                str.Split("|SEP|", StringComparison.OrdinalIgnoreCase, 
+            Assert.Equal(new[] { "one", "two", "three|sep|four|sep|five" },
+                str.Split("|SEP|", StringComparison.OrdinalIgnoreCase,
                           (a, b, c) => new[] { a, b, c }));
         }
 
@@ -467,8 +467,8 @@ namespace Mannex.Tests
         public void SplitFourUsingStringSeparator()
         {
             const string str = "one|sep|two|sep|three|sep|four|sep|five";
-            Assert.Equal(new[] { "one", "two", "three", "four|sep|five" }, 
-                str.Split("|SEP|", StringComparison.OrdinalIgnoreCase, 
+            Assert.Equal(new[] { "one", "two", "three", "four|sep|five" },
+                str.Split("|SEP|", StringComparison.OrdinalIgnoreCase,
                           (a, b, c, d) => new[] { a, b, c, d }));
         }
 
@@ -541,7 +541,7 @@ namespace Mannex.Tests
             Assert.Equal(foo, foo.Repeat(1));
             Assert.Equal(foo + foo, foo.Repeat(2));
             Assert.Equal(foo + foo + foo, foo.Repeat(3));
-            Assert.Equal(foo + foo + foo + foo + foo + foo + foo + foo + foo + foo, 
+            Assert.Equal(foo + foo + foo + foo + foo + foo + foo + foo + foo + foo,
                          foo.Repeat(10));
             Assert.Equal(new string('-', 42), "-".Repeat(42));
         }

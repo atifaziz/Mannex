@@ -97,7 +97,7 @@ namespace Mannex.Tests.Data
         {
             var table = CreateSampleDataTable();
             var cols = table.Columns;
-            DataColumn foo = cols[0], bar = cols[1], baz = cols[2]; 
+            DataColumn foo = cols[0], bar = cols[1], baz = cols[2];
             table.SetColumnsOrder(baz, bar);
             Assert.Equal(new[] { baz, bar, foo }, table.Columns.Cast<DataColumn>().ToArray());
         }

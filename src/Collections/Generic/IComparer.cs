@@ -42,7 +42,7 @@ namespace Mannex.Collections.Generic
         /// that inverts the results of comparing values through
         /// another comparer such that the sort order is inverted.
         /// </summary>
-        
+
         public static IComparer<T> Invert<T>(this IComparer<T> comparer)
         {
             if (comparer == null) throw new ArgumentNullException(nameof(comparer));

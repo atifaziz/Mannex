@@ -329,7 +329,7 @@ namespace Mannex.Tests.Collections.Generic
             Assert.Throws<ArgumentNullException>(() => ListExtensions.BinarySearch(null, "foo", null));
             Assert.Throws<ArgumentNullException>(() => ListExtensions.BinarySearch(null, 0, 10, "foo", null));
         }
- 
+
         [Fact]
         public void BinarySearchReturnsIndexBitwiseComplementFirstElementThatIsLargerThanValueWhenValueNotFound()
         {
@@ -347,7 +347,7 @@ namespace Mannex.Tests.Collections.Generic
             Assert.Equal(1, items.BinarySearch("bravo"));
             Assert.Equal(2, items.BinarySearch("charlie"));
        }
- 
+
         [Fact]
         public void BinarySearchWithComparerReturnsIndexBitwiseComplementFirstElementThatIsLargerThanValueWhenValueNotFound()
         {
@@ -383,7 +383,7 @@ namespace Mannex.Tests.Collections.Generic
             var roList = list.AsReadOnly();
             Assert.True(roList.IsReadOnly);
         }
- 
+
         [Fact]
         public void AsReadOnlyOnReadOnlyListReturnsSameListReference()
         {

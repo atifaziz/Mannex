@@ -36,7 +36,7 @@ namespace Mannex.Web.UI
     #endregion
 
     /// <summary>
-    /// Provides data expression evaluation facilites similar to 
+    /// Provides data expression evaluation facilites similar to
     /// <see cref="DataBinder"/> in ASP.NET.
     /// </summary>
 
@@ -103,7 +103,7 @@ namespace Mannex.Web.UI
         /// </summary>
         /// <remarks>
         /// This method implements most of what is described in
-        /// <a href="http://www.python.org/dev/peps/pep-3101/">PEP 3101 (Advanced String Formatting)</a> 
+        /// <a href="http://www.python.org/dev/peps/pep-3101/">PEP 3101 (Advanced String Formatting)</a>
         /// from Python.
         /// </remarks>
 
@@ -114,12 +114,12 @@ namespace Mannex.Web.UI
 
         /// <summary>
         /// Format string using <paramref name="args"/> as sources for
-        /// data-binding replacements and <paramref name="provider"/> 
+        /// data-binding replacements and <paramref name="provider"/>
         /// for cultural formatting.
         /// </summary>
         /// <remarks>
         /// This method implements most of what is described in
-        /// <a href="http://www.python.org/dev/peps/pep-3101/">PEP 3101 (Advanced String Formatting)</a> 
+        /// <a href="http://www.python.org/dev/peps/pep-3101/">PEP 3101 (Advanced String Formatting)</a>
         /// from Python.
         /// </remarks>
 

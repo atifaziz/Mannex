@@ -34,7 +34,7 @@ namespace Mannex
     static partial class EnumExtensions
     {
         /// <summary>
-        /// Determines whether any of the given bit fields are set in the 
+        /// Determines whether any of the given bit fields are set in the
         /// current instance.
         /// </summary>
 
@@ -44,7 +44,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Determines whether any of the given bit fields are set in the 
+        /// Determines whether any of the given bit fields are set in the
         /// current instance.
         /// </summary>
 
@@ -54,7 +54,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Determines whether any of the given bit fields are set in the 
+        /// Determines whether any of the given bit fields are set in the
         /// current instance.
         /// </summary>
 
@@ -64,14 +64,14 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Determines whether any of the given bit fields are set in the 
+        /// Determines whether any of the given bit fields are set in the
         /// current instance.
         /// </summary>
 
         public static bool HasEitherFlag(this Enum value, Enum flag1, Enum flag2, Enum flag3, Enum flag4, Enum flag5, params Enum[] others)
         {
-            return value.HasEitherFlag(flag1, flag2, flag3, flag4) 
-                || value.HasFlag(flag5) 
+            return value.HasEitherFlag(flag1, flag2, flag3, flag4)
+                || value.HasFlag(flag5)
                 || others.Any(value.HasFlag);
         }
 
@@ -83,7 +83,7 @@ namespace Mannex
         /// <typeparam name="T"/> is not an enumeration.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The <paramref name="value"/> argument is not an instance of 
+        /// The <paramref name="value"/> argument is not an instance of
         /// the enumeration <typeparamref name="T"/>.
         /// </exception>
 
@@ -105,8 +105,8 @@ namespace Mannex
                  ? from Enum flag in Enum.GetValues(type)
                    where value.HasFlag(flag)
                    select (T) (object) flag
-                 : Enum.IsDefined(type, value) 
-                 ? Enumerable.Repeat((T)(object) value, 1) 
+                 : Enum.IsDefined(type, value)
+                 ? Enumerable.Repeat((T)(object) value, 1)
                  : Enumerable.Empty<T>();
         }
     }

@@ -47,7 +47,7 @@ namespace Mannex.Tests.IO
         [Fact]
         public void ReadLinesReturnsAllLines()
         {
-            Assert.Equal(new[] { "line1", "line2", "line3" }, 
+            Assert.Equal(new[] { "line1", "line2", "line3" },
                 new StringReader("line1\nline2\nline3").ReadLines().ToArray());
         }
 
@@ -88,8 +88,8 @@ namespace Mannex.Tests.IO
         [Fact]
         public void Concat()
         {
-            var readers = 
-                from s in new[] { "foo,", "bar,", "baz" } 
+            var readers =
+                from s in new[] { "foo,", "bar,", "baz" }
                 select new StringReader(s);
             var result = TextReader.Null.Concat(readers).ReadToEnd();
             Assert.Equal("foo,bar,baz", result);

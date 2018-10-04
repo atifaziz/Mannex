@@ -54,7 +54,7 @@ namespace Mannex.Data
             params DataColumn[] columns)
         {
             if (columns == null) throw new ArgumentNullException(nameof(columns));
-            return reader.ParseXsvAsDataTable(delimiter, quoted, 
+            return reader.ParseXsvAsDataTable(delimiter, quoted,
                        columns.Select(c => c.AsKeyTo(new Func<string, object>(s => s)))
                               .ToArray());
         }
@@ -67,7 +67,7 @@ namespace Mannex.Data
         /// </summary>
 
         public static DataTable ParseXsvAsDataTable(
-            this TextReader reader, string delimiter, bool quoted, 
+            this TextReader reader, string delimiter, bool quoted,
             params KeyValuePair<DataColumn, Func<string, object>>[] columns)
         {
             if (columns == null) throw new ArgumentNullException(nameof(columns));
@@ -76,16 +76,16 @@ namespace Mannex.Data
 
             var table = new DataTable();
             table.Columns.AddRange(columns.Select(e => e.Key).ToArray());
-            
-            using (var e = reader.ParseXsv(delimiter, quoted, 
+
+            using (var e = reader.ParseXsv(delimiter, quoted,
                                hs =>
                                {
-                                   var bindings = 
+                                   var bindings =
                                        columns.Length == 0
                                        ? from i in Enumerable.Range(0, hs.Length)
                                          select new
                                          {
-                                             Index     = i, 
+                                             Index     = i,
                                              Name      = hs[i],
                                              Converter = new Func<string, object>(s => s)
                                          }
@@ -95,24 +95,24 @@ namespace Mannex.Data
                                              Index     = Array.FindIndex(hs, h => col.Key.ColumnName.Equals(h, StringComparison.Ordinal)),
                                              Name      = col.Key.ColumnName,
                                              Converter = col.Value,
-                                         } 
+                                         }
                                          into col
                                          select new
                                          {
-                                             Index = col.Index >= 0 
-                                                 ? col.Index 
+                                             Index = col.Index >= 0
+                                                 ? col.Index
                                                  : Array.FindIndex(hs, h => col.Name.Equals(h, StringComparison.OrdinalIgnoreCase)),
                                              col.Name,
                                              col.Converter,
                                          };
-                               
+
                                    bindings = bindings.ToArray();
                                    if (columns.Length == 0 && bindings.Any())
                                        table.Columns.AddRange(bindings.Select(b => new DataColumn(b.Name)).ToArray());
-                               
+
                                    return bindings;
-                               }, 
-                               (bs, vs) => 
+                               },
+                               (bs, vs) =>
                                    from b in bs
                                    select b.Converter(b.Index < 0
                                                       ? null
@@ -127,7 +127,7 @@ namespace Mannex.Data
         }
 
         /// <summary>
-        /// Parses text with fixed width fields into a <see cref="DataTable"/> 
+        /// Parses text with fixed width fields into a <see cref="DataTable"/>
         /// object given a set of columns to bind to the source.
         /// </summary>
 
@@ -139,13 +139,13 @@ namespace Mannex.Data
         }
 
         /// <summary>
-        /// Parses text with fixed width fields into a <see cref="DataTable"/> 
-        /// object given a set of columns to bind to the source and 
+        /// Parses text with fixed width fields into a <see cref="DataTable"/>
+        /// object given a set of columns to bind to the source and
         /// functions to convert source text values to required column types.
         /// </summary>
 
         public static DataTable ParseFixedWidthTextFieldRecordsAsDataTable(
-            this TextReader reader, 
+            this TextReader reader,
             params KeyValuePair<DataColumn, Func<string, object>>[] columns)
         {
             if (columns == null) throw new ArgumentNullException(nameof(columns));
@@ -164,15 +164,15 @@ namespace Mannex.Data
                 var headerLine = e.Current;
 
                 var headers =           // ReSharper disable ImplicitlyCapturedClosure
-                    from hs in new[] 
-                    { 
+                    from hs in new[]
+                    {
                         from h in headerLine.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                        select headerLine.IndexOf(h, StringComparison.OrdinalIgnoreCase).AsKeyTo(h) 
+                        select headerLine.IndexOf(h, StringComparison.OrdinalIgnoreCase).AsKeyTo(h)
                     }
                     select hs.Concat(new[] { int.MaxValue.AsKeyTo(string.Empty) }).ToArray() into hs
                     from h in Enumerable.Range(1, hs.Length - 1)
-                                        .Select(i => new { Start = hs[i - 1].Key, 
-                                                           Stop  = hs[i].Key, 
+                                        .Select(i => new { Start = hs[i - 1].Key,
+                                                           Stop  = hs[i].Key,
                                                            Text  = hs[i - 1].Value })
                     let hcol = dataColumns[h.Text]
                     where columns.Length == 0 || hcol != null
@@ -182,7 +182,7 @@ namespace Mannex.Data
                     {
                         h.Start, h.Stop, Column = col,
                         Converter = col != null && columns.Length > 0
-                                  ? columns[col.Ordinal].Value 
+                                  ? columns[col.Ordinal].Value
                                   : (s => s),
                     };
 
@@ -201,7 +201,7 @@ namespace Mannex.Data
                     table.Rows.Add(fields.ToArray());
                 }
             }
-            
+
             return table;
         }
     }

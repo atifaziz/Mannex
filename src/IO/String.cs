@@ -56,7 +56,7 @@ namespace Mannex.IO
         static string Patternize(IEnumerable<char> chars)
         {
             Debug.Assert(chars != null);
-            return "[" 
+            return "["
                  + string.Join(string.Empty, chars.Select(ch => Regex.Escape(ch.ToString())).ToArray())
                  + "]";
         }
@@ -67,7 +67,7 @@ namespace Mannex.IO
         /// <see cref="Path.GetInvalidFileNameChars"/>, with an underscore.
         /// </summary>
         /// <remarks>
-        /// This method is not guaranteed to replace the complete set of 
+        /// This method is not guaranteed to replace the complete set of
         /// characters that are invalid in file and directory names.
         /// The full set of invalid characters can vary by file system.
         /// </remarks>
@@ -80,17 +80,17 @@ namespace Mannex.IO
         /// <summary>
         /// Makes the content of the string safe for use as a file name
         /// by replacing all invalid characters, those returned by
-        /// <see cref="Path.GetInvalidFileNameChars"/>, with 
+        /// <see cref="Path.GetInvalidFileNameChars"/>, with
         /// <paramref name="replacement"/>.
         /// </summary>
         /// <remarks>
         /// <para>
-        /// The <paramref name="replacement"/> string itself cannot 
-        /// carry any invalid file name characters. If 
+        /// The <paramref name="replacement"/> string itself cannot
+        /// carry any invalid file name characters. If
         /// <paramref name="replacement"/> is <c>null</c> or empty
         /// then it assumes the value of an underscore.</para>
         /// <para>
-        /// This method is not guaranteed to replace the complete set of 
+        /// This method is not guaranteed to replace the complete set of
         /// characters that are invalid in file and directory names.
         /// The full set of invalid characters can vary by file system.
         /// </para>
@@ -98,8 +98,8 @@ namespace Mannex.IO
 
         public static string ToFileNameSafe(this string str, string replacement)
         {
-            return SanitizePathComponent(str, 
-                (replacement ?? string.Empty).MaskEmpty("_"), 
+            return SanitizePathComponent(str,
+                (replacement ?? string.Empty).MaskEmpty("_"),
                 _badFileNameChars, _badFileNameCharsPattern);
         }
 
@@ -109,7 +109,7 @@ namespace Mannex.IO
         /// <see cref="Path.GetInvalidPathChars"/>, with an underscore.
         /// </summary>
         /// <remarks>
-        /// This method is not guaranteed to replace the complete set of 
+        /// This method is not guaranteed to replace the complete set of
         /// characters that are invalid in file and directory names.
         /// The full set of invalid characters can vary by file system.
         /// </remarks>
@@ -122,16 +122,16 @@ namespace Mannex.IO
         /// <summary>
         /// Makes the content of the string safe for use as a file name
         /// by replacing all invalid characters, those returned by
-        /// <see cref="Path.GetInvalidPathChars"/>, with 
+        /// <see cref="Path.GetInvalidPathChars"/>, with
         /// <paramref name="replacement"/>.
         /// </summary>
         /// <remarks>
-        /// The <paramref name="replacement"/> string itself cannot 
-        /// carry any invalid file name characters. If 
+        /// The <paramref name="replacement"/> string itself cannot
+        /// carry any invalid file name characters. If
         /// <paramref name="replacement"/> is <c>null</c> or empty
         /// then it assumes the value of an underscore.
         /// <para>
-        /// This method is not guaranteed to replace the complete set of 
+        /// This method is not guaranteed to replace the complete set of
         /// characters that are invalid in file and directory names.
         /// The full set of invalid characters can vary by file system.
         /// </para>

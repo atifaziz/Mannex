@@ -68,10 +68,10 @@ namespace Mannex.Globalization
         /// week should be used as the first of the week and which
         /// day of the week should be used as the first of the year.
         /// </summary>
-        
+
         public static DateTime FirstDateOfWeek(this Calendar calendar, int year, int weekOfYear, CalendarWeekRule weekRule, DayOfWeek firstDayOfWeek, DayOfWeek yearFirstDayOfWeek)
         {
-            // Source & credit: 
+            // Source & credit:
             // http://stackoverflow.com/questions/662379/calculate-date-from-week-number/914943#914943
             // https://stackoverflow.com/a/9064954/6682
 

@@ -32,7 +32,7 @@ namespace Mannex.Data.Common
     using System.Linq;
 
     #endregion
-    
+
     /// <summary>
     /// Extension methods for <see cref="DbConnection"/>.
     /// </summary>
@@ -40,7 +40,7 @@ namespace Mannex.Data.Common
     static partial class DbConnectionExtensions
     {
         /// <summary>
-        /// Retrieves the <c>Columns</c> schema collection information for 
+        /// Retrieves the <c>Columns</c> schema collection information for
         /// the data source of this <see cref="DbConnection"/>.
         /// </summary>
 
@@ -50,8 +50,8 @@ namespace Mannex.Data.Common
         }
 
         /// <summary>
-        /// Retrieves the <c>Columns</c> schema collection information for 
-        /// the data source of this <see cref="DbConnection"/> given a 
+        /// Retrieves the <c>Columns</c> schema collection information for
+        /// the data source of this <see cref="DbConnection"/> given a
         /// table name restriction.
         /// </summary>
         /// <remarks>

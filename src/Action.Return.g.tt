@@ -32,15 +32,15 @@ namespace Mannex
 
     partial class ActionExtensions
     {
-<#      
-        var nths = new[] { "first",      "second",     "third",     "fourth", 
-                           "fifth",      "sixth",      "seventh",   "eight", 
+<#
+        var nths = new[] { "first",      "second",     "third",     "fourth",
+                           "fifth",      "sixth",      "seventh",   "eight",
                            "nineth",     "tenth",      "eleventh",  "twelfth",
                            "thirteenth", "fourteenth", "fifteenth", "sixteenth", };
 
-        foreach (var i in Enumerable.Range(2, nths.Length - 1)) 
-        { 
-            var items = 
+        foreach (var i in Enumerable.Range(2, nths.Length - 1))
+        {
+            var items =
                 from item in Enumerable.Range(1, i)
                                        .Zip(nths, (n, nth) => new { N = n, Nth = nth })
                 let nstr = item.N.ToString(CultureInfo.InvariantCulture)
@@ -58,11 +58,11 @@ namespace Mannex
                 Doc  = string.Join(",",  from item in items select item.Type),
                 Args = string.Join(", ", from item in items select item.Arg ),
             };
-#>        
+#>
         /// <summary>
-        /// Creates a <see cref="Func{<#= ts.Doc #>,TResult}"/> from the 
-        /// <see cref="Action{<#= ts.Doc #>}"/> which when invoked will 
-        /// call the <see cref="Action{<#= ts.Doc #>}"/> and then return 
+        /// Creates a <see cref="Func{<#= ts.Doc #>,TResult}"/> from the
+        /// <see cref="Action{<#= ts.Doc #>}"/> which when invoked will
+        /// call the <see cref="Action{<#= ts.Doc #>}"/> and then return
         /// the given result of type <typeparamref name="TResult"/>.
         /// </summary>
 <#      foreach (var item in items) { #>

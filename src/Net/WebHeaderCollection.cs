@@ -37,8 +37,8 @@ namespace Mannex.Net
     static partial class WebHeaderCollectionExtensions
     {
         /// <summary>
-        /// Applies a projection to response header if the response header 
-        /// is contained in the collection is non-empty. Otherwise it 
+        /// Applies a projection to response header if the response header
+        /// is contained in the collection is non-empty. Otherwise it
         /// returns the default value for the type <typeparamref name="T"/>.
         /// </summary>
 
@@ -48,8 +48,8 @@ namespace Mannex.Net
         }
 
         /// <summary>
-        /// Applies a projection to response header if the response header 
-        /// is contained in the collection is non-empty. Otherwise it 
+        /// Applies a projection to response header if the response header
+        /// is contained in the collection is non-empty. Otherwise it
         /// returns a given default of type <typeparamref name="T"/>.
         /// </summary>
 

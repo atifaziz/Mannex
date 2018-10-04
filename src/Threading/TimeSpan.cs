@@ -48,8 +48,8 @@ namespace Mannex.Threading
 
         /// <summary>
         /// Converts <see cref="TimeSpan"/> to milliseconds as expected by
-        /// most of the <see cref="System.Threading"/> API. If the the 
-        /// <see cref="TimeSpan"/> value is <c>null</c> then the result is 
+        /// most of the <see cref="System.Threading"/> API. If the the
+        /// <see cref="TimeSpan"/> value is <c>null</c> then the result is
         /// same as <see cref="Timeout.Infinite"/>.
         /// </summary>
 

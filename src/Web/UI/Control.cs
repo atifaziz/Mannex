@@ -62,7 +62,7 @@ namespace Mannex.Web.UI
         }
 
         /// <summary>
-        /// Similar to <see cref="TemplateControl.Eval(string)"/> but 
+        /// Similar to <see cref="TemplateControl.Eval(string)"/> but
         /// provides strong-typed result.
         /// </summary>
 
@@ -81,7 +81,7 @@ namespace Mannex.Web.UI
         }
 
         /// <summary>
-        /// Similar to <see cref="TemplateControl.Eval(string)"/> but 
+        /// Similar to <see cref="TemplateControl.Eval(string)"/> but
         /// returns HTML-encoded text.
         /// </summary>
 
@@ -91,10 +91,10 @@ namespace Mannex.Web.UI
         }
 
         /// <summary>
-        /// Similar to <see cref="TemplateControl.Eval(string,string)"/> but 
+        /// Similar to <see cref="TemplateControl.Eval(string,string)"/> but
         /// formats the expression and returns it as HTML-encode text.
         /// </summary>
-        
+
         public static string EvalText(this Control control, string expression, string format)
         {
             return DataBinder.Eval(control.GetDataItem(), expression, format);

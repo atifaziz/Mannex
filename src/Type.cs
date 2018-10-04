@@ -48,12 +48,12 @@ namespace Mannex
 
         /// <summary>
         /// Determines if type is a constructed type of generic type definition.
-        /// For example, this method can be used to test if <see cref="System.Nullable{T}"/> 
-        /// of <see cref="int" /> is indeed a construction of the generic type definition 
+        /// For example, this method can be used to test if <see cref="System.Nullable{T}"/>
+        /// of <see cref="int" /> is indeed a construction of the generic type definition
         /// <see cref="System.Nullable{T}"/>.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">
-        /// Either <paramref name="type"/> or <paramref name="genericTypeDefinition"/> 
+        /// Either <paramref name="type"/> or <paramref name="genericTypeDefinition"/>
         /// is a null reference.
         /// </exception>
         /// <exception cref="System.ArgumentException">
@@ -68,7 +68,7 @@ namespace Mannex
 
             if (!genericTypeDefinition.IsGenericTypeDefinition)
                 throw new ArgumentException(string.Format("{0} is not a generic type definition.", genericTypeDefinition), nameof(genericTypeDefinition));
-            
+
             return type.IsGenericType
                 && !type.IsGenericTypeDefinition
                 && type.GetGenericTypeDefinition() == genericTypeDefinition;

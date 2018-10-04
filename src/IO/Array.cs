@@ -39,14 +39,14 @@ namespace Mannex.IO
         /// <summary>
         /// Creates a read-only stream on top of the supplied byte array.
         /// </summary>
-        
+
         public static Stream OpenRead(this byte[] buffer)
         {
             return OpenStream(buffer, null, null, false);
         }
 
         /// <summary>
-        /// Creates a read-only stream on top of a section of supplied 
+        /// Creates a read-only stream on top of a section of supplied
         /// byte array.
         /// </summary>
 
@@ -65,7 +65,7 @@ namespace Mannex.IO
         }
 
         /// <summary>
-        /// Creates a read-write stream on top of a section of supplied 
+        /// Creates a read-write stream on top of a section of supplied
         /// byte array.
         /// </summary>
 

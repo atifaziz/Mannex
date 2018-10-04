@@ -47,9 +47,9 @@ namespace Mannex
         {
             return value.ToString(CultureInfo.InvariantCulture);
         }
-        
+
         /// <summary>
-        /// Calculates the quotient and remainder from dividing two numbers 
+        /// Calculates the quotient and remainder from dividing two numbers
         /// and returns a user-defined result.
         /// </summary>
 

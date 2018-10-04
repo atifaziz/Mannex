@@ -41,7 +41,7 @@ namespace Mannex.Tests
             IFormattable num = 1234;
             Assert.Equal("1234", WhileInFrance(() => num.ToInvariantString()));
         }
- 
+
         [Fact]
         public void ToInvariantStringWithSpecificFormat()
         {

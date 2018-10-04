@@ -111,7 +111,7 @@ namespace Mannex.Tests.Web.Hosting
         {
             readonly byte[] _content;
 
-            TestVirtualFile(string virtualPath, byte[] content) : 
+            TestVirtualFile(string virtualPath, byte[] content) :
                 base(virtualPath)
             {
                 _content = content ?? new byte[0];
@@ -121,7 +121,7 @@ namespace Mannex.Tests.Web.Hosting
             {
                 return new MemoryStream(_content);
             }
- 
+
             public static VirtualFile Create(string virtualPath, string text, Encoding encoding)
             {
                 var bytes = encoding.GetPreamble().Concat(encoding.GetBytes(text));

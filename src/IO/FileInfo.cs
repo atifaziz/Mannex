@@ -60,8 +60,8 @@ namespace Mannex.IO
 
         static IEnumerable<string> ReadLinesImpl(string path, Encoding encoding)
         {
-            var reader = encoding == null 
-                       ? new StreamReader(path, true) 
+            var reader = encoding == null
+                       ? new StreamReader(path, true)
                        : new StreamReader(path, encoding);
 
             using (reader)

@@ -38,17 +38,17 @@ namespace Mannex.Tests.Xml.Linq
         [Fact]
         public void GetNamespacesInScopeFailsWithNullThis()
         {
-            var e = Assert.Throws<ArgumentNullException>(() => 
+            var e = Assert.Throws<ArgumentNullException>(() =>
                         XElementExtensions.GetNamespacesInScope(null));
             Assert.Equal("element", e.ParamName);
         }
-        
+
         [Fact]
         public void GetNamespacesInScope()
         {
             var doc = XDocument.Parse(@"
-                <soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/' 
-                               xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' 
+                <soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'
+                               xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
                                xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
                   <soap:Body>
                     <soap:Fault>

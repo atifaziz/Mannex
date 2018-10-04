@@ -39,7 +39,7 @@ namespace Mannex.IO
         /// <summary>
         /// Creates a read-only stream on top of the supplied buffer.
         /// </summary>
-        
+
         public static Stream OpenRead(this ArraySegment<byte> buffer)
         {
             return buffer.Array.OpenRead(buffer.Offset, buffer.Count);

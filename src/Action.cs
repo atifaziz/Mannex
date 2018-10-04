@@ -37,9 +37,9 @@ namespace Mannex
     static partial class ActionExtensions
     {
         /// <summary>
-        /// Creates a <see cref="Func{T,TResult}"/> from the 
-        /// <see cref="Action"/> which when invoked will 
-        /// call the <see cref="Action"/> and then return 
+        /// Creates a <see cref="Func{T,TResult}"/> from the
+        /// <see cref="Action"/> which when invoked will
+        /// call the <see cref="Action"/> and then return
         /// the given result of type <typeparamref name="TResult"/>.
         /// </summary>
         /// <typeparam name="TResult">The type of the result.</typeparam>
@@ -52,9 +52,9 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Creates a <see cref="Func{T,TResult}"/> from the 
-        /// <see cref="Action{T}"/> which when invoked will 
-        /// call the <see cref="Action{T}"/> and then return 
+        /// Creates a <see cref="Func{T,TResult}"/> from the
+        /// <see cref="Action{T}"/> which when invoked will
+        /// call the <see cref="Action{T}"/> and then return
         /// the given result of type <typeparamref name="TResult"/>.
         /// </summary>
         /// <typeparam name="T">The type of the first argument.</typeparam>

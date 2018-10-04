@@ -37,7 +37,7 @@ namespace Mannex.Security.Cryptography
     static partial class ArrayExtensions
     {
         /// <summary>
-        /// Protects an array of bytes containing sensitive by encrypting 
+        /// Protects an array of bytes containing sensitive by encrypting
         /// the data based on the user profile or machine.
         /// </summary>
 
@@ -47,7 +47,7 @@ namespace Mannex.Security.Cryptography
         }
 
         /// <summary>
-        /// Protects an array of bytes containing sensitive by encrypting 
+        /// Protects an array of bytes containing sensitive by encrypting
         /// the data based on the user profile or machine. An additional
         /// parameter specifies the entropy to randomize the encrpytion.
         /// </summary>
@@ -59,7 +59,7 @@ namespace Mannex.Security.Cryptography
         }
 
         /// <summary>
-        /// Unprotects an array of bytes containing sensitive by decrypting 
+        /// Unprotects an array of bytes containing sensitive by decrypting
         /// the data based on the user profile or machine.
         /// </summary>
 
@@ -69,7 +69,7 @@ namespace Mannex.Security.Cryptography
         }
 
         /// <summary>
-        /// Unprotects an array of bytes containing sensitive by decrypting 
+        /// Unprotects an array of bytes containing sensitive by decrypting
         /// the data based on the user profile or machine. An additional
         /// parameter specifies the entropy to randomize the encrpytion.
         /// </summary>

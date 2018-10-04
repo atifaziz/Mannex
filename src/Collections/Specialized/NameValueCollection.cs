@@ -40,8 +40,8 @@ namespace Mannex.Collections.Specialized
     static partial class NameValueCollectionExtensions
     {
         /// <summary>
-        /// Gets the values associated with the specified key from the 
-        /// <see cref="NameValueCollection"/> combined into one 
+        /// Gets the values associated with the specified key from the
+        /// <see cref="NameValueCollection"/> combined into one
         /// comma-separated list and then applies a function to convert it
         /// into a value of the return type. If the key is not found then
         /// the result is the default value of the return type.
@@ -53,10 +53,10 @@ namespace Mannex.Collections.Specialized
         }
 
         /// <summary>
-        /// Gets the values associated with the specified key from the 
-        /// <see cref="NameValueCollection"/> combined into one 
+        /// Gets the values associated with the specified key from the
+        /// <see cref="NameValueCollection"/> combined into one
         /// comma-separated list and then applies a function to convert it
-        /// into a value of the return type. An additional parameter 
+        /// into a value of the return type. An additional parameter
         /// specifies the default value to return instead.
         /// </summary>
 
@@ -127,7 +127,7 @@ namespace Mannex.Collections.Specialized
         }
 
         /// <summary>
-        /// Adds items from a sequence of 
+        /// Adds items from a sequence of
         /// <see cref="KeyValuePair{String,String}"/>.
         /// </summary>
 
@@ -144,8 +144,8 @@ namespace Mannex.Collections.Specialized
 
         static NameValueCollection CreateCollection<T>(ICollection<T> collection)
         {
-            return collection != null 
-                 ? new NameValueCollection(collection.Count) 
+            return collection != null
+                 ? new NameValueCollection(collection.Count)
                  : new NameValueCollection();
         }
 
@@ -164,7 +164,7 @@ namespace Mannex.Collections.Specialized
 
         /// <summary>
         /// Returns a new collection with only those entries where keys
-        /// match a given predicate. An additional function provides 
+        /// match a given predicate. An additional function provides
         /// the keys projected in the new collection.
         /// </summary>
 
@@ -196,13 +196,13 @@ namespace Mannex.Collections.Specialized
             if (collection == null) throw new ArgumentNullException(nameof(collection));
             return string.IsNullOrEmpty(prefix)
                  ? new T { collection }
-                 : collection.Filter(key => key != null && key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase), 
+                 : collection.Filter(key => key != null && key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase),
                                      key => key.Length == prefix.Length ? null : key.Substring(prefix.Length));
         }
 
         /// <summary>
-        /// Returns entires of the collection where the values are non-blank. 
-        /// If all the values under a key are blank, then the entry is 
+        /// Returns entires of the collection where the values are non-blank.
+        /// If all the values under a key are blank, then the entry is
         /// entirely omitted.
         /// </summary>
 
@@ -270,19 +270,19 @@ namespace Mannex.Collections.Specialized
         /// <summary>
         /// Returns an <see cref="IEnumerable{T}"/> object that enumerates
         /// the entries of this collection. An additional parameter
-        /// determines how to project each entry given its containing 
+        /// determines how to project each entry given its containing
         /// collection, key and index.
         /// </summary>
         /// <remarks>
         /// This method uses deferred execution.
         /// </remarks>
 
-        public static IEnumerable<TResult> AsEnumerable<T, TResult>(this T collection, Func<T, string, int, TResult> selector) 
+        public static IEnumerable<TResult> AsEnumerable<T, TResult>(this T collection, Func<T, string, int, TResult> selector)
             where T : NameValueCollection
         {
             if (collection == null) throw new ArgumentNullException(nameof(collection));
             if (selector == null) throw new ArgumentNullException(nameof(selector));
-            
+
             return from i in Enumerable.Range(0, collection.Count)
                    select collection.GetKey(i).AsKeyTo(i) into e
                    select selector(collection, e.Key, e.Value);
@@ -292,7 +292,7 @@ namespace Mannex.Collections.Specialized
         /// Determines whether a key exists in the <see cref="NameObjectCollectionBase.Keys"/>
         /// or not. The check is made without regard to case of the key.
         /// </summary>
-    
+
         public static bool ContainsKey(this NameValueCollection collection, string name)
         {
             if (collection == null) throw new ArgumentNullException(nameof(collection));
@@ -302,7 +302,7 @@ namespace Mannex.Collections.Specialized
         /// <summary>
         /// Determines whether a key exists in the <see cref="NameObjectCollectionBase.Keys"/>
         /// or not. An additional parameter sepcifies a <see cref="StringComparer"/>
-        /// to use to compare keys (where <c>null</c> is allowed and defaults 
+        /// to use to compare keys (where <c>null</c> is allowed and defaults
         /// to same as <see cref="StringComparer.OrdinalIgnoreCase"/>).
         /// </summary>
 

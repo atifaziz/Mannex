@@ -38,7 +38,7 @@ namespace Mannex.Tests
         public void AsEnumerableWithNullThis()
         {
             // ReSharper disable InvokeAsExtensionMethod
-            
+
             AssertArgumentNullExceptionForNullThis(() => Mannex.TupleExtensions.AsEnumerable((Tuple<object>)null));
             AssertArgumentNullExceptionForNullThis(() => Mannex.TupleExtensions.AsEnumerable((Tuple<object, object>)null));
             AssertArgumentNullExceptionForNullThis(() => Mannex.TupleExtensions.AsEnumerable((Tuple<object, object, object>)null));

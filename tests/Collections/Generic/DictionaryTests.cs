@@ -37,7 +37,7 @@ namespace Mannex.Tests.Collections.Generic
         [Fact]
         public void FindFailsWithNullThis()
         {
-            Assert.Throws<ArgumentNullException>(() => 
+            Assert.Throws<ArgumentNullException>(() =>
                 DictionaryExtensions.Find<object, object>(null, null));
         }
 

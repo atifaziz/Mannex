@@ -43,7 +43,7 @@ namespace Mannex
     static partial class UriExtensions
     {
         /// <summary>
-        /// Parses <see cref="Uri.Query"/> into a <see cref="NameValueCollection"/> 
+        /// Parses <see cref="Uri.Query"/> into a <see cref="NameValueCollection"/>
         /// using UTF-8 encoding.
         /// </summary>
 
@@ -54,7 +54,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Parses <see cref="Uri.Query"/> into a <see cref="NameValueCollection"/> 
+        /// Parses <see cref="Uri.Query"/> into a <see cref="NameValueCollection"/>
         /// using the specified encoding or UTF-8 is a <c>null</c> reference is
         /// supplied for encoding.
         /// </summary>
@@ -128,15 +128,15 @@ namespace Mannex
 
         /// <summary>
         /// Splits the URI and its <see cref="Uri.UserInfo"/> (using the
-        /// <c>USER ":" PASSWORD</c> syntax) and returns a user-defined 
-        /// aggregate of the two where the resulting URI has the 
+        /// <c>USER ":" PASSWORD</c> syntax) and returns a user-defined
+        /// aggregate of the two where the resulting URI has the
         /// <see cref="Uri.UserInfo"/> portion removed.
         /// </summary>
         /// <exception cref="ArgumentException">
         /// URI does not at least identify the user.
         /// </exception>
 
-        public static T SplitUserNamePassword<T>(this Uri url, 
+        public static T SplitUserNamePassword<T>(this Uri url,
             Func<Uri, NetworkCredential, T> resultFunc)
         {
             if (url == null) throw new ArgumentNullException(nameof(url));
@@ -146,12 +146,12 @@ namespace Mannex
 
         /// <summary>
         /// Attempts to split the URI and its <see cref="Uri.UserInfo"/>
-        /// (using the <c>USER ":" PASSWORD</c> syntax) and returns a 
-        /// user-defined aggregate of the two where the resulting URI has 
+        /// (using the <c>USER ":" PASSWORD</c> syntax) and returns a
+        /// user-defined aggregate of the two where the resulting URI has
         /// the <see cref="Uri.UserInfo"/> portion removed.
         /// </summary>
 
-        public static T TrySplitUserNamePassword<T>(this Uri url, 
+        public static T TrySplitUserNamePassword<T>(this Uri url,
             Func<Uri, NetworkCredential, T> resultFunc)
         {
             if (url == null) throw new ArgumentNullException(nameof(url));
@@ -160,22 +160,22 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Creates a new <see cref="Uri"/> from the this URI that has the 
-        /// <see cref="Uri.UserInfo"/> (using the <c>USER ":" PASSWORD</c> 
+        /// Creates a new <see cref="Uri"/> from the this URI that has the
+        /// <see cref="Uri.UserInfo"/> (using the <c>USER ":" PASSWORD</c>
         /// syntax) portion removed, whether initially present or not.
         /// </summary>
-        
+
         public static Uri RemoveUserNamePassword(this Uri url)
         {
             if (url == null) throw new ArgumentNullException(nameof(url));
 
-            return url.UserInfo.Length == 0 ? url 
+            return url.UserInfo.Length == 0 ? url
                  : new UriBuilder(url) { UserName = null, Password = null }.Uri;
         }
 
         /// <summary>
-        /// Extract the <see cref="Uri.UserInfo"/> portion (using the 
-        /// <c>USER ":" PASSWORD</c> syntax) of the URI and return it as 
+        /// Extract the <see cref="Uri.UserInfo"/> portion (using the
+        /// <c>USER ":" PASSWORD</c> syntax) of the URI and return it as
         /// a <see cref="NetworkCredential"/> object.
         /// </summary>
         /// <exception cref="ArgumentException">
@@ -191,23 +191,23 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Attempts to extract the <see cref="Uri.UserInfo"/> portion 
-        /// (using the <c>USER ":" PASSWORD</c> syntax) of the URI and 
+        /// Attempts to extract the <see cref="Uri.UserInfo"/> portion
+        /// (using the <c>USER ":" PASSWORD</c> syntax) of the URI and
         /// return it as a <see cref="NetworkCredential"/> object.
         /// </summary>
         /// <returns>
         /// <see cref="NetworkCredential"/> representing <see cref="Uri.UserInfo"/>
-        /// or <c>null</c> when <see cref="Uri.UserInfo"/> is missing 
+        /// or <c>null</c> when <see cref="Uri.UserInfo"/> is missing
         /// the user name.
         /// </returns>
 
         public static NetworkCredential TryGetUserNamePassword(this Uri url)
         {
             if (url == null) throw new ArgumentNullException(nameof(url));
-            
-            return url.UserInfo.Split(':', (uid, pwd) 
-                => uid.Length != 0 
-                 ? new NetworkCredential(Uri.UnescapeDataString(uid), Uri.UnescapeDataString(pwd)) 
+
+            return url.UserInfo.Split(':', (uid, pwd)
+                => uid.Length != 0
+                 ? new NetworkCredential(Uri.UnescapeDataString(uid), Uri.UnescapeDataString(pwd))
                  : null);
         }
     }

@@ -39,7 +39,7 @@ namespace Mannex.Reflection
     static partial class AssemblyExtensions
     {
         /// <summary>
-        /// Loads the specified manifest resource, scoped by the namespace 
+        /// Loads the specified manifest resource, scoped by the namespace
         /// of the specified type, from this assembly and returns
         /// it ready for reading as <see cref="TextReader"/>.
         /// </summary>
@@ -50,7 +50,7 @@ namespace Mannex.Reflection
         }
 
         /// <summary>
-        /// Loads the specified manifest resource, scoped by the namespace 
+        /// Loads the specified manifest resource, scoped by the namespace
         /// of the specified type, from this assembly and returns
         /// it ready for reading as <see cref="TextReader"/>. A parameter
         /// specifies the text encoding to be used for reading.
@@ -62,14 +62,14 @@ namespace Mannex.Reflection
             var stream = assembly.GetManifestResourceStream(type, name);
             if (stream == null)
                 return null;
-            return encoding == null 
-                 ? new StreamReader(stream, true) 
+            return encoding == null
+                 ? new StreamReader(stream, true)
                  : new StreamReader(stream, encoding);
         }
 
         /// <summary>
-        /// Loads the specified manifest resource and returns it as a string, 
-        /// scoped by the namespace  of the specified type, from this assembly. 
+        /// Loads the specified manifest resource and returns it as a string,
+        /// scoped by the namespace  of the specified type, from this assembly.
         /// </summary>
 
         public static string GetManifestResourceString(this Assembly assembly, Type type, string name)
@@ -78,9 +78,9 @@ namespace Mannex.Reflection
         }
 
         /// <summary>
-        /// Loads the specified manifest resource and returns it as a string, 
-        /// scoped by the namespace of the specified type, from this assembly. 
-        /// A parameter specifies the text encoding to be used to decode the 
+        /// Loads the specified manifest resource and returns it as a string,
+        /// scoped by the namespace of the specified type, from this assembly.
+        /// A parameter specifies the text encoding to be used to decode the
         /// resource bytes into text.
         /// </summary>
 

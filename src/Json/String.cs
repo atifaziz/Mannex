@@ -42,7 +42,7 @@ namespace Mannex.Json
         /// Formats string as JSON text string.
         /// </summary>
         /// <remarks>
-        /// String may be <c>null</c>, in which case <c>"null"</c> is 
+        /// String may be <c>null</c>, in which case <c>"null"</c> is
         /// returned.
         /// </remarks>
 
@@ -56,11 +56,11 @@ namespace Mannex.Json
 
 
         /// <summary>
-        /// Formats string as JSON text string, sending output to 
+        /// Formats string as JSON text string, sending output to
         /// <paramref name="writer"/>.
         /// </summary>
         /// <remarks>
-        /// String may be <c>null</c>, in which case <c>"null"</c> is 
+        /// String may be <c>null</c>, in which case <c>"null"</c> is
         /// returned.
         /// </remarks>
 

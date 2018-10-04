@@ -66,7 +66,7 @@ namespace Mannex.Tests.Data
             var record = CreateTable(42).GetRecords().Single();
             Assert.Equal(42, record.GetValue<int>(0));
         }
-        
+
         [Fact]
         public void GetValueByIndexForStructsFailsWithDBNull()
         {
@@ -91,7 +91,7 @@ namespace Mannex.Tests.Data
         {
             var table = new DataTable();
             table.Columns.Add("Value", typeof(T));
-            
+
             foreach (var value in from value in values
                                   select nullPredicate(value)
                                        ? (object) DBNull.Value
@@ -99,7 +99,7 @@ namespace Mannex.Tests.Data
             {
                 table.Rows.Add(value);
             }
-            
+
             return table;
         }
 
@@ -143,7 +143,7 @@ namespace Mannex.Tests.Data
         {
             var table = CreateTable(1, 2, 3);
             using (var reader = table.CreateDataReader())
-            { 
+            {
                 if (read) Assert.True(reader.Read());
                 Assert.True(f(reader) is T[]);
             }

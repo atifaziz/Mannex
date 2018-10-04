@@ -43,7 +43,7 @@ namespace Mannex.Web.Hosting
     static partial class VirtualFileExtensions
     {
         /// <summary>
-        /// Opens the text file, reads and returns all its content as a 
+        /// Opens the text file, reads and returns all its content as a
         /// single string and then closes the file.
         /// </summary>
 
@@ -53,7 +53,7 @@ namespace Mannex.Web.Hosting
         }
 
         /// <summary>
-        /// Opens the text file, reads and returns all its content as a 
+        /// Opens the text file, reads and returns all its content as a
         /// single string and then closes the file. An additional parameter
         /// specified the encoding to convert file bytes to text.
         /// </summary>
@@ -106,7 +106,7 @@ namespace Mannex.Web.Hosting
         static IEnumerable<string> ReadLinesImpl(this VirtualFile file, Encoding encoding)
         {
             using (var stream = file.Open())
-            using (var reader = encoding == null 
+            using (var reader = encoding == null
                               ? new StreamReader(stream)
                               : new StreamReader(stream, encoding))
             using (var e = reader.ReadLines())

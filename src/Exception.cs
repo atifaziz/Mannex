@@ -44,8 +44,8 @@ namespace Mannex
 
         static ExceptionExtensions()
         {
-            var method = typeof(Exception).GetMethod("PrepForRemoting", 
-                             BindingFlags.Instance | BindingFlags.NonPublic, 
+            var method = typeof(Exception).GetMethod("PrepForRemoting",
+                             BindingFlags.Instance | BindingFlags.NonPublic,
                              /* binder */ null, Type.EmptyTypes, null);
 
             PrepForRemoting = method != null
@@ -54,7 +54,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Preserve stack trace for re-throwing. 
+        /// Preserve stack trace for re-throwing.
         /// </summary>
         /// <remarks>
         /// Credit: <a href="http://msdn.microsoft.com/en-us/devlabs/ee794896.aspx">Reactive Extensions for .NET (Rx)</a>
@@ -98,7 +98,7 @@ namespace Mannex
 
         /// <summary>
         /// Gets a sequence containing the <see cref="Exception"/> object
-        /// and its complete chain of nested exceptions via 
+        /// and its complete chain of nested exceptions via
         /// <see cref="Exception.InnerException"/>.
         /// </summary>
         /// <remarks>
@@ -119,8 +119,8 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Determines whether the <c>HRESULT</c> for the 
-        /// <see cref="Exception"/> represents a file or device sharing 
+        /// Determines whether the <c>HRESULT</c> for the
+        /// <see cref="Exception"/> represents a file or device sharing
         /// violation error.
         /// </summary>
 

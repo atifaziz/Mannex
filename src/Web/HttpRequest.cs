@@ -34,14 +34,14 @@ namespace Mannex.Web
     #endregion
 
     /// <summary>
-    /// Extension methods for <see cref="HttpRequest"/> and 
+    /// Extension methods for <see cref="HttpRequest"/> and
     /// <see cref="HttpRequestBase"/>.
     /// </summary>
 
     static partial class HttpRequestExtensions
     {
         /// <summary>
-        /// Determines whether <see cref="HttpRequest.HttpMethod"/> 
+        /// Determines whether <see cref="HttpRequest.HttpMethod"/>
         /// equals an expected value. The comparison is case-insensitive.
         /// </summary>
 
@@ -52,7 +52,7 @@ namespace Mannex.Web
         }
 
         /// <summary>
-        /// Determines whether <see cref="HttpRequestBase.HttpMethod"/> 
+        /// Determines whether <see cref="HttpRequestBase.HttpMethod"/>
         /// equals an expected value. The comparison is case-insensitive.
         /// </summary>
 
@@ -87,7 +87,7 @@ namespace Mannex.Web
             // See "Common non-standard request headers[1]"
             // [1] http://en.wikipedia.org/wiki/List_of_HTTP_header_fields#Common_non-standard_request_headers
 
-            return headers != null 
+            return headers != null
                 && "XMLHttpRequest".Equals(headers["X-Requested-With"], StringComparison.OrdinalIgnoreCase);
         }
     }

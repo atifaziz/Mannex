@@ -37,7 +37,7 @@ namespace Mannex
     static partial class EventHandlerExtensions
     {
         /// <summary>
-        /// Ensures that an <see cref="EventHandler{T}"/> will fire only 
+        /// Ensures that an <see cref="EventHandler{T}"/> will fire only
         /// once given a way to add and remove subscription from the event.
         /// </summary>
 
@@ -59,7 +59,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Ensures that an <see cref="EventHandler"/> will fire only 
+        /// Ensures that an <see cref="EventHandler"/> will fire only
         /// once given a way to add and remove subscription from the event.
         /// </summary>
 
@@ -88,7 +88,7 @@ namespace Mannex
         /// handlers attached.
         /// </returns>
 
-        public static bool Fire<T>(this EventHandler<T> handler, object sender, T args) 
+        public static bool Fire<T>(this EventHandler<T> handler, object sender, T args)
             where T : EventArgs
         {
             if (sender == null) throw new ArgumentNullException(nameof(sender));

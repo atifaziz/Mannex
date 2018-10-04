@@ -37,7 +37,7 @@ namespace Mannex
     static partial class TupleExtensions
     {
         /// <summary>
-        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/> 
+        /// Returns a <see cref="IEnumerable{T}"/> of <see cref="object"/>
         /// whose elements are the items of a given <see cref="Tuple{T}" />.
         /// </summary>
         /// <typeparam name="T">The type of the tuple's only component.</typeparam>
@@ -54,12 +54,12 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Folds items of a <see cref="Tuple{T}" /> into a single element 
+        /// Folds items of a <see cref="Tuple{T}" /> into a single element
         /// of <typeparamref name="TResult"/>.
         /// </summary>
         /// <typeparam name="T">The type of the tuple's only component.</typeparam>
         /// <typeparam name="TResult">The type of the result.</typeparam>
-        /// 
+        ///
         public static TResult Fold<T, TResult>(this Tuple<T> tuple, Func<T, TResult> selector)
         {
             if (tuple == null) throw new ArgumentNullException(nameof(tuple));

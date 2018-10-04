@@ -36,7 +36,7 @@ namespace Mannex
     static partial class BooleanExtensions
     {
         /// <summary>
-        /// Converts a <see cref="bool"/> to a value of type <typeparamref name="T"/> 
+        /// Converts a <see cref="bool"/> to a value of type <typeparamref name="T"/>
         /// with a values for true and false states.
         /// </summary>
 

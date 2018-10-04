@@ -43,7 +43,7 @@ namespace Mannex.Tests.Reflection
         [Fact]
         public void CompileStaticInvokerFailsWithNonStaticMethod()
         {
-            var e = Assert.Throws<ArgumentException>(() => 
+            var e = Assert.Throws<ArgumentException>(() =>
                 ((Func<string>) 1.ToString).Method.CompileStaticInvoker());
             Assert.Equal("method", e.ParamName);
         }
@@ -95,7 +95,7 @@ namespace Mannex.Tests.Reflection
         }
 
         static int FortyTwoFactor(int x = 1) { return 42 * x; }
-        
+
         [Fact]
         public void CompileStaticInvokerOnMethodWithNullForValueTypeParameter()
         {

@@ -33,7 +33,7 @@ namespace Mannex.Tests.Threading.Tasks
 
     /// <summary>
     /// A <see cref="TaskScheduler"/> implementation specifically designed
-    /// for testing purposes and which immediately executes 
+    /// for testing purposes and which immediately executes
     /// <see cref="Task"/> objects as they are queued.
     /// </summary>
 

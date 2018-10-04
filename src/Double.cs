@@ -38,9 +38,9 @@ namespace Mannex
     static partial class DoubleExtensions
     {
         /// <summary>
-        /// Converts <see cref="double.NaN"/> value to a 
-        /// <see cref="Nullable{T}"/> of <see cref="double"/> initialized to 
-        /// the null state. Otherwise the <see cref="Nullable{T}"/> of 
+        /// Converts <see cref="double.NaN"/> value to a
+        /// <see cref="Nullable{T}"/> of <see cref="double"/> initialized to
+        /// the null state. Otherwise the <see cref="Nullable{T}"/> of
         /// <see cref="double"/> returned holds the original input value.
         /// </summary>
 
@@ -49,9 +49,9 @@ namespace Mannex
         {
             return double.IsNaN(value) ? (double?) null : value;
         }
- 
+
         /// <summary>
-        /// Generates a sequence of given count of values between two values 
+        /// Generates a sequence of given count of values between two values
         /// (inclusive).
         /// </summary>
         /// <remarks>

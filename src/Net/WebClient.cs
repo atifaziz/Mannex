@@ -40,7 +40,7 @@ namespace Mannex.Net
     static partial class WebClientExtensions
     {
         /// <summary>
-        /// Gets the values of the HTTP 
+        /// Gets the values of the HTTP
         /// <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.17">Content-Type</a>
         /// response header as an instance of the <see cref="ContentType"/> object.
         /// </summary>

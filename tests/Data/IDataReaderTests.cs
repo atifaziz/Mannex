@@ -72,7 +72,7 @@ namespace Mannex.Tests.Data
                 Assert.True(e.MoveNext());
                 Assert.Equal(78, e.Current);
                 Assert.False(e.MoveNext());
-                Assert.True(disposed);                
+                Assert.True(disposed);
             }
         }
 

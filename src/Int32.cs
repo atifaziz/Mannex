@@ -50,7 +50,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Calculates the quotient and remainder from dividing two numbers 
+        /// Calculates the quotient and remainder from dividing two numbers
         /// and returns a user-defined result.
         /// </summary>
 
@@ -64,11 +64,11 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Returns the digits of the integer encoded in another digital 
-        /// system given as a list of ordered digits. The number of digits 
+        /// Returns the digits of the integer encoded in another digital
+        /// system given as a list of ordered digits. The number of digits
         /// in the list also determines the radix.
         /// </summary>
-        
+
         public static IEnumerable<T> LsDigits<T>(this int number, IList<T> digits)
         {                                                    // ReSharper disable LoopCanBeConvertedToQuery
             foreach (var d in number.LsDigits(digits.Count)) // ReSharper restore LoopCanBeConvertedToQuery
@@ -76,7 +76,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Returns a sequence of the least significant base 10 digits in 
+        /// Returns a sequence of the least significant base 10 digits in
         /// the integer.
         /// </summary>
 
@@ -86,10 +86,10 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Returns a sequence of the least significant digits in the 
+        /// Returns a sequence of the least significant digits in the
         /// integer in a given radix.
         /// </summary>
-        
+
         public static IEnumerable<int> LsDigits(this int number, int radix)
         {
             do
@@ -101,7 +101,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Gets the digit at a specific position of the number (assuming 
+        /// Gets the digit at a specific position of the number (assuming
         /// base 10) with the first position being zero.
         /// </summary>
 
@@ -112,7 +112,7 @@ namespace Mannex
 
         /// <summary>
         /// Gets the digit at a specific position of the number with
-        /// the first position being zero. An additional parameter specifies 
+        /// the first position being zero. An additional parameter specifies
         /// the radix to assume.
         /// </summary>
 

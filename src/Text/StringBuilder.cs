@@ -37,7 +37,7 @@ namespace Mannex.Text
     static partial class StringBuilderExtensions
     {
         /// <summary>
-        /// Appends the string representation of a specified Unicode 
+        /// Appends the string representation of a specified Unicode
         /// character to this instance if it is not <c>null</c>.
         /// </summary>
 

@@ -41,18 +41,18 @@ namespace Mannex.Data
     static partial class DataTableExtensions
     {
         /// <summary>
-        /// Finds columns of <see cref="DataTable"/> instance given their 
-        /// names. 
+        /// Finds columns of <see cref="DataTable"/> instance given their
+        /// names.
         /// </summary>
         /// <returns>
-        /// A sequence of <see cref="DataColumn"/> objects matching the 
-        /// supplied names and in the same order. If there is no column 
-        /// found for a given name, then its corresponding 
-        /// <see cref="DataColumn"/> reference in the sequence will be 
+        /// A sequence of <see cref="DataColumn"/> objects matching the
+        /// supplied names and in the same order. If there is no column
+        /// found for a given name, then its corresponding
+        /// <see cref="DataColumn"/> reference in the sequence will be
         /// <c>null</c>.
         /// </returns>
         /// <remarks>
-        /// This method uses deferred execution. The column names are 
+        /// This method uses deferred execution. The column names are
         /// sought without regard to case sensitivity.
         /// </remarks>
 
@@ -82,10 +82,10 @@ namespace Mannex.Data
         public static void SetColumnsOrder(this DataTable table, params DataColumn[] columns)
         {
             if (table == null) throw new ArgumentNullException(nameof(table));
-            
+
             if (columns == null || columns.Length == 0)
                 return;
-            
+
             foreach (var e in columns.Select((col, ord) => ord.AsKeyTo(col)))
             {
                 var column = e.Value;
@@ -97,7 +97,7 @@ namespace Mannex.Data
                 }
                 if (column.Table != table)
                 {
-                    var message = string.Format(@"Column '{0}' does not belong to the table.", 
+                    var message = string.Format(@"Column '{0}' does not belong to the table.",
                                                 column.ColumnName);
                     throw new ArgumentException(message, nameof(columns));
                 }
@@ -117,7 +117,7 @@ namespace Mannex.Data
             if (table == null) throw new ArgumentNullException(nameof(table));
             return GetRecordsImpl(table);
         }
-        
+
         static IEnumerable<IDataRecord> GetRecordsImpl(DataTable table)
         {
             using (var reader = new DataTableReader(table))
