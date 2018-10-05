@@ -39,19 +39,13 @@ namespace Mannex.Tests.Threading.Tasks
 
     sealed class ImmediateTaskScheduler : TaskScheduler
     {
-        protected override void QueueTask(Task task)
-        {
+        protected override void QueueTask(Task task) =>
             TryExecuteTask(task);
-        }
 
-        protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
-        {
-            return TryExecuteTask(task);
-        }
+        protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued) =>
+            TryExecuteTask(task);
 
-        protected override IEnumerable<Task> GetScheduledTasks()
-        {
+        protected override IEnumerable<Task> GetScheduledTasks() =>
             throw new NotImplementedException();
-        }
     }
 }
