@@ -35,21 +35,9 @@ namespace Mannex.Tests
     public class EnumTests
     {
         [Fact]
-        public void GetFlagsFailsWithNonEnumTypeArgument()
-        {
-            Assert.Throws<NotSupportedException>(() => FileAttributes.Archive.GetFlags<string>());
-        }
-
-        [Fact]
-        public void GetFlagsFailsWithValueMismatchingTypeArgument()
-        {
-            Assert.Throws<ArgumentException>(() => FileAttributes.Archive.GetFlags<Environment.SpecialFolder>());
-        }
-
-        [Fact]
         public void GetFlagsWithSingleFlag()
         {
-            var flags = FileAttributes.Archive.GetFlags<FileAttributes>().ToArray();
+            var flags = FileAttributes.Archive.GetFlags().ToArray();
             Assert.Single(flags);
             Assert.Contains(FileAttributes.Archive, flags);
         }
@@ -57,7 +45,7 @@ namespace Mannex.Tests
         [Fact]
         public void GetFlagsWithMultipleFlags()
         {
-            var flags = (FileAttributes.Archive | FileAttributes.System | FileAttributes.Hidden).GetFlags<FileAttributes>().ToArray();
+            var flags = (FileAttributes.Archive | FileAttributes.System | FileAttributes.Hidden).GetFlags().ToArray();
             Assert.Equal(3, flags.Length);
             Assert.Contains(FileAttributes.Archive, flags);
             Assert.Contains(FileAttributes.System, flags);

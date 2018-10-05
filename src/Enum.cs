@@ -38,7 +38,8 @@ namespace Mannex
         /// current instance.
         /// </summary>
 
-        public static bool HasEitherFlag(this Enum value, Enum flag1, Enum flag2)
+        public static bool HasEitherFlag<T>(this T value, T flag1, T flag2)
+            where T : Enum
         {
             return value.HasFlag(flag1) || value.HasFlag(flag2);
         }
@@ -48,7 +49,8 @@ namespace Mannex
         /// current instance.
         /// </summary>
 
-        public static bool HasEitherFlag(this Enum value, Enum flag1, Enum flag2, Enum flag3)
+        public static bool HasEitherFlag<T>(this T value, T flag1, T flag2, T flag3)
+            where T : Enum
         {
             return value.HasEitherFlag(flag1, flag2) || value.HasFlag(flag3);
         }
@@ -58,7 +60,8 @@ namespace Mannex
         /// current instance.
         /// </summary>
 
-        public static bool HasEitherFlag(this Enum value, Enum flag1, Enum flag2, Enum flag3, Enum flag4)
+        public static bool HasEitherFlag<T>(this T value, T flag1, T flag2, T flag3, T flag4)
+            where T : Enum
         {
             return value.HasEitherFlag(flag1, flag2, flag3) || value.HasFlag(flag4);
         }
@@ -68,11 +71,12 @@ namespace Mannex
         /// current instance.
         /// </summary>
 
-        public static bool HasEitherFlag(this Enum value, Enum flag1, Enum flag2, Enum flag3, Enum flag4, Enum flag5, params Enum[] others)
+        public static bool HasEitherFlag<T>(this T value, T flag1, T flag2, T flag3, T flag4, T flag5, params T[] others)
+            where T : Enum
         {
             return value.HasEitherFlag(flag1, flag2, flag3, flag4)
                 || value.HasFlag(flag5)
-                || others.Any(value.HasFlag);
+                || others.Any(f => value.HasFlag(f));
         }
 
         /// <summary>
@@ -87,26 +91,14 @@ namespace Mannex
         /// the enumeration <typeparamref name="T"/>.
         /// </exception>
 
-        public static IEnumerable<T> GetFlags<T>(this Enum value)
+        public static IEnumerable<T> GetFlags<T>(this T value) where T : Enum
         {
-            var type = value.GetType();
-
-            if (!typeof(T).IsEnum)
-            {
-                throw new NotSupportedException(string.Format(
-                    @"{0} is not an enumeration and therefore an invalid type argument for {1}.",
-                    typeof(T), MethodBase.GetCurrentMethod()));
-            }
-
-            if (!typeof(T).IsEquivalentTo(type))
-                throw new ArgumentException(null, nameof(value));
-
-            return type.IsDefined(typeof(FlagsAttribute), false)
-                 ? from Enum flag in Enum.GetValues(type)
+            return typeof(T).IsDefined(typeof(FlagsAttribute), false)
+                 ? from T flag in Enum.GetValues(typeof(T))
                    where value.HasFlag(flag)
-                   select (T) (object) flag
-                 : Enum.IsDefined(type, value)
-                 ? Enumerable.Repeat((T)(object) value, 1)
+                   select flag
+                 : Enum.IsDefined(typeof(T), value)
+                 ? Enumerable.Repeat(value, 1)
                  : Enumerable.Empty<T>();
         }
     }
