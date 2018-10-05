@@ -219,7 +219,7 @@ namespace Mannex
 
         public static T[,] ToArray2D<T>(this T[] source, int columns)
         {
-            return ToArray2DImpl(source, columns, default(T), fill: false);
+            return ToArray2DImpl(source, columns, default, fill: false);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Mannex
                 target[i / columns, i % columns] = source[i];
 
             if (fill && source.Length < target.Length
-                     && !EqualityComparer<T>.Default.Equals(defaultValue, default(T)))
+                     && !EqualityComparer<T>.Default.Equals(defaultValue, default))
             {
                 for (var i = source.Length; i < target.Length; i++)
                     target[i / columns, i % columns] = defaultValue;

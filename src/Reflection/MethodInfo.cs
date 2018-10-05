@@ -119,13 +119,13 @@ namespace Mannex.Reflection
 
         static RuntimeMethodHandle _genericReqArgHandle;
         static RuntimeMethodHandle _genericOptArgHandle;
-        static MethodInfo MakeReqArgMethod(Type type) { return (_genericReqArgHandle != default(RuntimeMethodHandle) ? _genericReqArgHandle : (_genericReqArgHandle = ((Func<object, object>) ReqArg<object>).Method.GetGenericMethodDefinition().MethodHandle)).GetMethodInfo().MakeGenericMethod(type); }
-        static MethodInfo MakeOptArgMethod(Type type) { return (_genericOptArgHandle != default(RuntimeMethodHandle) ? _genericOptArgHandle : (_genericOptArgHandle = ((Func<object, object, object>) OptArg).Method.GetGenericMethodDefinition().MethodHandle)).GetMethodInfo().MakeGenericMethod(type); }
+        static MethodInfo MakeReqArgMethod(Type type) { return (_genericReqArgHandle != default ? _genericReqArgHandle : (_genericReqArgHandle = ((Func<object, object>) ReqArg<object>).Method.GetGenericMethodDefinition().MethodHandle)).GetMethodInfo().MakeGenericMethod(type); }
+        static MethodInfo MakeOptArgMethod(Type type) { return (_genericOptArgHandle != default ? _genericOptArgHandle : (_genericOptArgHandle = ((Func<object, object, object>) OptArg).Method.GetGenericMethodDefinition().MethodHandle)).GetMethodInfo().MakeGenericMethod(type); }
         static T ReqArg<T>(object arg) { return (T) (arg ?? default(T)); }
         static T OptArg<T>(object arg, T defaultValue) { return (T) (arg == Type.Missing ? defaultValue : arg ?? default(T)); }
 
         static RuntimeMethodHandle _validateArgCountHandle;
-        static MethodInfo ValidateArgCountMethod { get { return (_validateArgCountHandle != default(RuntimeMethodHandle) ? _validateArgCountHandle : (_validateArgCountHandle = ((Action<object[], int>) ValidateArgCount).Method.MethodHandle)).GetMethodInfo(); } }
+        static MethodInfo ValidateArgCountMethod { get { return (_validateArgCountHandle != default ? _validateArgCountHandle : (_validateArgCountHandle = ((Action<object[], int>) ValidateArgCount).Method.MethodHandle)).GetMethodInfo(); } }
         static void ValidateArgCount(object[] args, int count) { if (args.Length != count) throw new ArgumentException(null, nameof(args)); }
     }
 }

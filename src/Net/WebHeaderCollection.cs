@@ -44,7 +44,7 @@ namespace Mannex.Net
 
         public static T Map<T>(this WebHeaderCollection headers, HttpResponseHeader header, Func<string, T> mapper)
         {
-            return Map(headers, header, default(T), mapper);
+            return Map(headers, header, default, mapper);
         }
 
         /// <summary>

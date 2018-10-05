@@ -49,7 +49,7 @@ namespace Mannex.Collections.Specialized
 
         public static T TryGetValue<T>(this NameValueCollection collection, string key, Func<string, T> selector)
         {
-            return collection.TryGetValue(key, default(T), selector);
+            return collection.TryGetValue(key, default, selector);
         }
 
         /// <summary>

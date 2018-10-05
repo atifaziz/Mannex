@@ -83,7 +83,7 @@ namespace Mannex.Collections.Generic
 
         public static T TryRead<T>(this IEnumerator<T> enumerator)
         {
-            return TryRead(enumerator, default(T));
+            return TryRead(enumerator, default);
         }
 
         /// <summary>

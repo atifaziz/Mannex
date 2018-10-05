@@ -58,7 +58,7 @@ namespace Mannex.Data
             if (column == null)
                 return false;
             row[column] = (Nullable.GetUnderlyingType(typeof(T)) != null
-                          && EqualityComparer<T>.Default.Equals(value, default(T)))
+                          && EqualityComparer<T>.Default.Equals(value, default))
                           || (typeof(T).IsClass && (object) value == null)
                         ? (object) DBNull.Value
                         : value;

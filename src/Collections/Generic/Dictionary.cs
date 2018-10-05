@@ -46,7 +46,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key)
         {
-            return Find(dict, key, default(TValue));
+            return Find(dict, key, default);
         }
 
         /// <summary>

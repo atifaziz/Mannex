@@ -96,7 +96,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static T TryPop<T>(this IList<T> list)
         {
-            return list.TryPop(default(T));
+            return list.TryPop(default);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static T TryPeek<T>(this IList<T> list)
         {
-            return list.TryPeek(default(T));
+            return list.TryPeek(default);
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Mannex.Collections.Generic
         public static T TryShift<T>(this IList<T> list)
         {
             if (list == null) throw new ArgumentNullException(nameof(list));
-            return list.TryShift(default(T));
+            return list.TryShift(default);
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace Mannex.Collections.Generic
         [DebuggerStepThrough]
         public static T TryPopAt<T>(this IList<T> list, int index)
         {
-            return TryPopAt(list, index, default(T));
+            return TryPopAt(list, index, default);
         }
 
         /// <summary>

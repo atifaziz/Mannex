@@ -45,7 +45,7 @@ namespace Mannex
         public static T GetDaylightTransitionsInYear<T>(this TimeZoneInfo timeZone, int year,
             Func<DateTime, DateTime, T> selector)
         {
-            return GetDaylightTransitionsInYear(timeZone, year, selector, default(T));
+            return GetDaylightTransitionsInYear(timeZone, year, selector, default);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Mannex
         public static T GetDaylightTransitionsInYear<T>(this TimeZoneInfo timeZone, int year, Calendar calendar,
             Func<DateTime, DateTime, T> selector)
         {
-            return GetDaylightTransitionsInYear(timeZone, year, calendar, selector, default(T));
+            return GetDaylightTransitionsInYear(timeZone, year, calendar, selector, default);
         }
 
         /// <summary>

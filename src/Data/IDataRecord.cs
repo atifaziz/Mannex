@@ -162,7 +162,7 @@ namespace Mannex.Data
 
             static T ReferenceImpl(object value)
             {
-                return !Convert.IsDBNull(value) ? (T) value : default(T);
+                return !Convert.IsDBNull(value) ? (T) value : default;
             }
 
             static T ValueImpl(object value)
