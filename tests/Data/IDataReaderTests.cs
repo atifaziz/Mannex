@@ -91,178 +91,49 @@ namespace Mannex.Tests.Data
         {
             #region Implementation of IDisposable
 
-            public void Dispose()
-            {
-                throw new NotImplementedException();
-            }
+            public void Dispose() => throw new NotImplementedException();
 
             #endregion
 
             #region Implementation of IDataRecord
 
-            public string GetName(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public string GetDataTypeName(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Type GetFieldType(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public object GetValue(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public int GetValues(object[] values)
-            {
-                throw new NotImplementedException();
-            }
-
-            public int GetOrdinal(string name)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool GetBoolean(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public byte GetByte(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public long GetBytes(int i, long fieldOffset, byte[] buffer, int bufferoffset, int length)
-            {
-                throw new NotImplementedException();
-            }
-
-            public char GetChar(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public long GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Guid GetGuid(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public short GetInt16(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public int GetInt32(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public long GetInt64(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public float GetFloat(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public double GetDouble(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public string GetString(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public decimal GetDecimal(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public DateTime GetDateTime(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public IDataReader GetData(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool IsDBNull(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public int FieldCount
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            object IDataRecord.this[int i]
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            object IDataRecord.this[string name]
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public string GetName(int i) => throw new NotImplementedException();
+            public string GetDataTypeName(int i) => throw new NotImplementedException();
+            public Type GetFieldType(int i) => throw new NotImplementedException();
+            public object GetValue(int i) => throw new NotImplementedException();
+            public int GetValues(object[] values) => throw new NotImplementedException();
+            public int GetOrdinal(string name) => throw new NotImplementedException();
+            public bool GetBoolean(int i) => throw new NotImplementedException();
+            public byte GetByte(int i) => throw new NotImplementedException();
+            public long GetBytes(int i, long fieldOffset, byte[] buffer, int bufferoffset, int length) => throw new NotImplementedException();
+            public char GetChar(int i) => throw new NotImplementedException();
+            public long GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length) => throw new NotImplementedException();
+            public Guid GetGuid(int i) => throw new NotImplementedException();
+            public short GetInt16(int i) => throw new NotImplementedException();
+            public int GetInt32(int i) => throw new NotImplementedException();
+            public long GetInt64(int i) => throw new NotImplementedException();
+            public float GetFloat(int i) => throw new NotImplementedException();
+            public double GetDouble(int i) => throw new NotImplementedException();
+            public string GetString(int i) => throw new NotImplementedException();
+            public decimal GetDecimal(int i) => throw new NotImplementedException();
+            public DateTime GetDateTime(int i) => throw new NotImplementedException();
+            public IDataReader GetData(int i) => throw new NotImplementedException();
+            public bool IsDBNull(int i) => throw new NotImplementedException();
+            public int FieldCount => throw new NotImplementedException();
+            object IDataRecord.this[int i] => throw new NotImplementedException();
+            object IDataRecord.this[string name] => throw new NotImplementedException();
 
             #endregion
 
             #region Implementation of IDataReader
 
-            public void Close()
-            {
-                throw new NotImplementedException();
-            }
-
-            public DataTable GetSchemaTable()
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool NextResult()
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool Read()
-            {
-                throw new NotImplementedException();
-            }
-
-            public int Depth
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            public bool IsClosed
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            public int RecordsAffected
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public void Close() => throw new NotImplementedException();
+            public DataTable GetSchemaTable() => throw new NotImplementedException();
+            public bool NextResult() => throw new NotImplementedException();
+            public bool Read() => throw new NotImplementedException();
+            public int Depth => throw new NotImplementedException();
+            public bool IsClosed => throw new NotImplementedException();
+            public int RecordsAffected => throw new NotImplementedException();
 
             #endregion
         }
@@ -282,34 +153,18 @@ namespace Mannex.Tests.Data
 
             #region Implementation of IDisposable
 
-            public void Dispose()
-            {
+            public void Dispose() =>
                 Disposed?.Invoke(this, EventArgs.Empty);
-            }
 
             #endregion
 
             #region Implementation of IDataRecord
 
-            public string GetName(int i)
-            {
-                return string.Empty;
-            }
-
-            public string GetDataTypeName(int i)
-            {
-                return GetFieldType(i).GetType().FullName;
-            }
-
-            public Type GetFieldType(int i)
-            {
-                return typeof(T);
-            }
-
-            public object GetValue(int i)
-            {
-                throw new NotImplementedException();
-            }
+            public int FieldCount => 1;
+            object IDataRecord.this[int i] => _values[_index];
+            public string GetName(int i) => string.Empty;
+            public string GetDataTypeName(int i) => GetFieldType(i).GetType().FullName;
+            public Type GetFieldType(int i) => typeof(T);
 
             public int GetValues(object[] values)
             {
@@ -317,105 +172,25 @@ namespace Mannex.Tests.Data
                 return 1;
             }
 
-            public int GetOrdinal(string name)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool GetBoolean(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public byte GetByte(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public long GetBytes(int i, long fieldOffset, byte[] buffer, int bufferoffset, int length)
-            {
-                throw new NotImplementedException();
-            }
-
-            public char GetChar(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public long GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Guid GetGuid(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public short GetInt16(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public int GetInt32(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public long GetInt64(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public float GetFloat(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public double GetDouble(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public string GetString(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public decimal GetDecimal(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public DateTime GetDateTime(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public IDataReader GetData(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool IsDBNull(int i)
-            {
-                throw new NotImplementedException();
-            }
-
-            public int FieldCount
-            {
-                get { return 1; }
-            }
-
-            object IDataRecord.this[int i]
-            {
-                get { return _values[_index]; }
-            }
-
-            object IDataRecord.this[string name]
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public object GetValue(int i) => throw new NotImplementedException();
+            public int GetOrdinal(string name) => throw new NotImplementedException();
+            public bool GetBoolean(int i) => throw new NotImplementedException();
+            public byte GetByte(int i) => throw new NotImplementedException();
+            public long GetBytes(int i, long fieldOffset, byte[] buffer, int bufferoffset, int length) => throw new NotImplementedException();
+            public char GetChar(int i) => throw new NotImplementedException();
+            public long GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length) => throw new NotImplementedException();
+            public Guid GetGuid(int i) => throw new NotImplementedException();
+            public short GetInt16(int i) => throw new NotImplementedException();
+            public int GetInt32(int i) => throw new NotImplementedException();
+            public long GetInt64(int i) => throw new NotImplementedException();
+            public float GetFloat(int i) => throw new NotImplementedException();
+            public double GetDouble(int i) => throw new NotImplementedException();
+            public string GetString(int i) => throw new NotImplementedException();
+            public decimal GetDecimal(int i) => throw new NotImplementedException();
+            public DateTime GetDateTime(int i) => throw new NotImplementedException();
+            public IDataReader GetData(int i) => throw new NotImplementedException();
+            public bool IsDBNull(int i) => throw new NotImplementedException();
+            object IDataRecord.this[string name] => throw new NotImplementedException();
 
             #endregion
 
@@ -441,20 +216,11 @@ namespace Mannex.Tests.Data
                 return ++_index < _values.Length;
             }
 
-            public int Depth
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public int Depth => throw new NotImplementedException();
 
-            public bool IsClosed
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public bool IsClosed => throw new NotImplementedException();
 
-            public int RecordsAffected
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public int RecordsAffected => throw new NotImplementedException();
 
             #endregion
         }
