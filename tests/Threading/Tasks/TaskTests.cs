@@ -37,10 +37,7 @@ namespace Mannex.Tests.Threading.Tasks
     {
         ImmediateTaskScheduler _immediateTaskScheduler;
 
-        ImmediateTaskScheduler TaskScheduler
-        {
-            get { return _immediateTaskScheduler ?? (_immediateTaskScheduler = new ImmediateTaskScheduler()); }
-        }
+        ImmediateTaskScheduler TaskScheduler => _immediateTaskScheduler ?? (_immediateTaskScheduler = new ImmediateTaskScheduler());
 
         [Fact]
         public void ApmizeNop()

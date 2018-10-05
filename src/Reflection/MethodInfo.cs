@@ -125,7 +125,7 @@ namespace Mannex.Reflection
         static T OptArg<T>(object arg, T defaultValue) { return (T) (arg == Type.Missing ? defaultValue : arg ?? default(T)); }
 
         static RuntimeMethodHandle _validateArgCountHandle;
-        static MethodInfo ValidateArgCountMethod { get { return (_validateArgCountHandle != default ? _validateArgCountHandle : (_validateArgCountHandle = ((Action<object[], int>) ValidateArgCount).Method.MethodHandle)).GetMethodInfo(); } }
+        static MethodInfo ValidateArgCountMethod => (_validateArgCountHandle != default ? _validateArgCountHandle : (_validateArgCountHandle = ((Action<object[], int>) ValidateArgCount).Method.MethodHandle)).GetMethodInfo();
         static void ValidateArgCount(object[] args, int count) { if (args.Length != count) throw new ArgumentException(null, nameof(args)); }
     }
 }
