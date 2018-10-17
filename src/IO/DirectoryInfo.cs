@@ -239,39 +239,6 @@ namespace Mannex.IO
         /// except filters hidden and system entries.
         /// </summary>
 
-        [Obsolete("Use EnumerateVisibleFileSystemInfos instead.")]
-        public static IEnumerable<FileSystemInfo> EnumerateVisibleFileSystemInfo(this DirectoryInfo dir)
-        {
-            return dir.EnumerateVisibleFileSystemInfos();
-        }
-
-        /// <summary>
-        /// Same as <see cref="DirectoryInfo.EnumerateFileSystemInfos(String)"/>
-        /// except filters hidden and system entries.
-        /// </summary>
-
-        [Obsolete("Use EnumerateVisibleFileSystemInfos instead.")]
-        public static IEnumerable<FileSystemInfo> EnumerateVisibleFileSystemInfo(this DirectoryInfo dir, string searchPattern)
-        {
-            return dir.EnumerateVisibleFileSystemInfos(searchPattern);
-        }
-
-        /// <summary>
-        /// Same as <see cref="DirectoryInfo.EnumerateFileSystemInfos(String,SearchOption)"/>
-        /// except filters hidden and system entries.
-        /// </summary>
-
-        [Obsolete("Use EnumerateVisibleFileSystemInfos instead.")]
-        public static IEnumerable<FileSystemInfo> EnumerateVisibleFileSystemInfo(this DirectoryInfo dir, string searchPattern, SearchOption searchOption)
-        {
-            return dir.EnumerateFileSystemInfos(searchPattern, searchOption);
-        }
-
-        /// <summary>
-        /// Same as <see cref="DirectoryInfo.EnumerateFileSystemInfos()"/>
-        /// except filters hidden and system entries.
-        /// </summary>
-
         public static IEnumerable<FileSystemInfo> EnumerateVisibleFileSystemInfos(this DirectoryInfo dir)
         {
             return EnumerateVisibleFileSystemInfos(dir, DefaultSearchPattern);
