@@ -447,6 +447,39 @@ namespace Mannex
             return resultFunc(a, b);
         }
 
+#if NETSTANDARD2_0
+
+        /// <summary>
+        /// Splits a string in two given a separator.
+        /// </summary>
+
+        public static (string, string) Split2(this string str, char separator)
+        {
+            return str.Split(separator, (a, b) => (a, b));
+        }
+
+        /// <summary>
+        /// Splits a string into three parts where a given separator appears
+        /// in the string.
+        /// </summary>
+
+        public static (string, string, string) Split3(this string str, char separator)
+        {
+            return str.Split(separator, (a, b, c) => (a, b, c));
+        }
+
+        /// <summary>
+        /// Splits a string into four parts where a given separator appears
+        /// in the string.
+        /// </summary>
+
+        public static (string, string, string, string) Split4(this string str, char separator)
+        {
+            return str.Split(separator, (a, b, c, d) => (a, b, c, d));
+        }
+
+#endif
+
         /// <summary>
         /// Splits string into lines where a line is terminated
         /// by CR and LF, or just CR or just LF. White space is trimmed off
@@ -486,7 +519,7 @@ namespace Mannex
         }
 
         /// <summary>
-        /// Collapses all sequences of white space (as deifned by Unicode
+        /// Collapses all sequences of white space (as defined by Unicode
         /// and identified by <see cref="char.IsWhiteSpace(char)"/>) to a
         /// single space and trims all leading and trailing white space.
         /// </summary>

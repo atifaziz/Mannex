@@ -545,5 +545,57 @@ namespace Mannex.Tests
                          foo.Repeat(10));
             Assert.Equal(new string('-', 42), "-".Repeat(42));
         }
+
+#if NETCOREAPP2_0
+
+        [Fact]
+        public void Split2WithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Split2(null, ','));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void Split2()
+        {
+            var (foo, rest) = "foo,bar,baz,qux".Split2(',');
+            Assert.Equal("foo", foo);
+            Assert.Equal("bar,baz,qux", rest);
+        }
+
+        [Fact]
+        public void Split3WithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Split2(null, ','));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void Split3()
+        {
+            var (foo, bar, rest) = "foo,bar,baz,qux".Split3(',');
+            Assert.Equal("foo", foo);
+            Assert.Equal("bar", bar);
+            Assert.Equal("baz,qux", rest);
+        }
+
+        [Fact]
+        public void Split4WithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => StringExtensions.Split2(null, ','));
+            Assert.Equal("str", e.ParamName);
+        }
+
+        [Fact]
+        public void Split4()
+        {
+            var (foo, bar, baz, qux) = "foo,bar,baz,qux".Split4(',');
+            Assert.Equal("foo", foo);
+            Assert.Equal("bar", bar);
+            Assert.Equal("baz", baz);
+            Assert.Equal("qux", qux);
+        }
+
+#endif
     }
 }
