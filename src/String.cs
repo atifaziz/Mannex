@@ -233,8 +233,6 @@ namespace Mannex
             if (format == null) throw new ArgumentNullException(nameof(format));
             if (binder == null) throw new ArgumentNullException(nameof(binder));
 
-            Debug.Assert(binder != null);
-
             var result = new StringBuilder(format.Length * 2);
             var token = new StringBuilder();
 
