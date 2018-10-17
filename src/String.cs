@@ -238,7 +238,7 @@ namespace Mannex
             var result = new StringBuilder(format.Length * 2);
             var token = new StringBuilder();
 
-            var e = format.GetEnumerator();
+            using (var e = format.GetEnumerator())
             while (e.MoveNext())
             {
                 var ch = e.Current;
