@@ -377,7 +377,7 @@ namespace Mannex
 
         /// <summary>
         /// Splits a string into a pair using a specified string to
-        /// separate the two. An aditional parameter specifies comparison
+        /// separate the two. An additional parameter specifies comparison
         /// rules used to find the separator string.
         /// </summary>
         /// <remarks>
@@ -393,7 +393,7 @@ namespace Mannex
 
         /// <summary>
         /// Splits a string into three parts using a specified string to
-        /// separate the three.  An aditional parameter specifies comparison
+        /// separate the three.  An additional parameter specifies comparison
         /// rules used to find the separator string.
         /// </summary>
         /// <remarks>
@@ -409,7 +409,7 @@ namespace Mannex
 
         /// <summary>
         /// Splits a string into four parts using a specified string to
-        /// separate the four. An aditional parameter specifies comparison
+        /// separate the four. An additional parameter specifies comparison
         /// rules used to find the separator string.
         /// </summary>
         /// <remarks>
@@ -453,7 +453,7 @@ namespace Mannex
         /// each line and any resulting blank lines are skipped.
         /// </summary>
         /// <remarks>
-        /// This method uses deferred exection.
+        /// This method uses deferred execution.
         /// </remarks>
 
         public static IEnumerable<string> SplitIntoNonBlankLines(this string str)
@@ -469,7 +469,7 @@ namespace Mannex
         /// by CR and LF, or just CR or just LF.
         /// </summary>
         /// <remarks>
-        /// This method uses deferred exection.
+        /// This method uses deferred execution.
         /// </remarks>
 
         public static IEnumerable<string> SplitIntoLines(this string str)
