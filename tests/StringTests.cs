@@ -555,12 +555,15 @@ namespace Mannex.Tests
             Assert.Equal("str", e.ParamName);
         }
 
-        [Fact]
-        public void Split2()
+        [Theory]
+        [InlineData("foo", "foo", "")]
+        [InlineData("foo,bar", "foo", "bar")]
+        [InlineData("foo,bar,baz", "foo", "bar,baz")]
+        public void Split2(string input, string expected1, string expected2)
         {
-            var (foo, rest) = "foo,bar,baz,qux".Split2(',');
-            Assert.Equal("foo", foo);
-            Assert.Equal("bar,baz,qux", rest);
+            var (actual1, actual2) = input.Split2(',');
+            Assert.Equal(expected1, actual1);
+            Assert.Equal(expected2, actual2);
         }
 
         [Fact]
@@ -570,13 +573,17 @@ namespace Mannex.Tests
             Assert.Equal("str", e.ParamName);
         }
 
-        [Fact]
-        public void Split3()
+        [Theory]
+        [InlineData("foo", "foo", "", "")]
+        [InlineData("foo,bar", "foo", "bar", "")]
+        [InlineData("foo,bar,baz", "foo", "bar", "baz")]
+        [InlineData("foo,bar,baz,qux", "foo", "bar", "baz,qux")]
+        public void Split3(string input, string expected1, string expected2, string expected3)
         {
-            var (foo, bar, rest) = "foo,bar,baz,qux".Split3(',');
-            Assert.Equal("foo", foo);
-            Assert.Equal("bar", bar);
-            Assert.Equal("baz,qux", rest);
+            var (actual1, actual2, actual3) = input.Split3(',');
+            Assert.Equal(expected1, actual1);
+            Assert.Equal(expected2, actual2);
+            Assert.Equal(expected3, actual3);
         }
 
         [Fact]
@@ -586,14 +593,19 @@ namespace Mannex.Tests
             Assert.Equal("str", e.ParamName);
         }
 
-        [Fact]
-        public void Split4()
+        [Theory]
+        [InlineData("foo", "foo", "", "", "")]
+        [InlineData("foo,bar", "foo", "bar", "", "")]
+        [InlineData("foo,bar,baz", "foo", "bar", "baz", "")]
+        [InlineData("foo,bar,baz,qux", "foo", "bar", "baz", "qux")]
+        [InlineData("foo,bar,baz,qux,quux", "foo", "bar", "baz", "qux,quux")]
+        public void Split4(string input, string expected1, string expected2, string expected3, string expected4)
         {
-            var (foo, bar, baz, qux) = "foo,bar,baz,qux".Split4(',');
-            Assert.Equal("foo", foo);
-            Assert.Equal("bar", bar);
-            Assert.Equal("baz", baz);
-            Assert.Equal("qux", qux);
+            var (actual1, actual2, actual3, actual4) = input.Split4(',');
+            Assert.Equal(expected1, actual1);
+            Assert.Equal(expected2, actual2);
+            Assert.Equal(expected3, actual3);
+            Assert.Equal(expected4, actual4);
         }
 
 #endif
