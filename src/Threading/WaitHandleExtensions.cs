@@ -82,17 +82,20 @@ namespace Mannex.Threading
             var tcs = new TaskCompletionSource<bool>();
 
             var rwhref = new[] { default(RegisteredWaitHandle) };
-            var rwh = ThreadPool.RegisterWaitForSingleObject(handle,
-                (_, timedOut) =>
-                {
-                    if (tcs.TrySetResult(!timedOut))
-                        lock (rwhref)
-                            rwhref[0].Unregister(null);
-                },
-                null, timeout.ToTimeout(), executeOnlyOnce: true);
-
+            RegisteredWaitHandle rwh;
             lock (rwhref)
-                rwhref[0] = rwh;
+            {
+                rwh = rwhref[0] =
+                    ThreadPool.RegisterWaitForSingleObject(handle,
+                        (_, timedOut) =>
+                        {
+                            if (tcs.TrySetResult(!timedOut))
+                                lock (rwhref)
+                                    rwhref[0].Unregister(null);
+                        },
+                        state: null, timeout.ToTimeout(),
+                        executeOnlyOnce: true);
+            }
 
             try
             {
