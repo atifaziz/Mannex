@@ -91,7 +91,7 @@ namespace Mannex.Threading
                 },
                 null, timeout.ToTimeout(), executeOnlyOnce: true);
 
-            lock (rwhref[0])
+            lock (rwhref)
                 rwhref[0] = rwh;
 
             try
