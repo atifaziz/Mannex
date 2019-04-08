@@ -1,14 +1,16 @@
-﻿using HtmlAgilityPack;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
+using System.Text.RegularExpressions;
+using WebLinq;
+using WebLinq.Sys;
+using WebLinq.Text;
+using static WebLinq.Modules.HttpModule;
+using static WebLinq.Modules.SpawnModule;
 
 namespace src
 {
@@ -17,7 +19,7 @@ namespace src
         const string nugetApiBaseAddress = "https://api.nuget.org/";
         const int packageDownloadCount = 100;
 
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             var tempDirectory = Path.GetTempPath();
             if (!Directory.Exists(tempDirectory))
@@ -27,6 +29,12 @@ namespace src
             }
 
             var tempPackageDirectory = Path.Combine(tempDirectory, Path.GetRandomFileName());
+
+            Console.CancelKeyPress += (e, ea) =>
+            {
+                Directory.Delete(tempPackageDirectory, true);
+            };
+
             try
             {
                 try
@@ -39,26 +47,25 @@ namespace src
                     Console.WriteLine($"Had some trouble creating the temp directory. Going to bail. {e}");
                     return;
                 }
-                var mostDownloadedPackageIds = GetMostDownloadedPackageIds(communityPackagesOnly: true);
+
+                var mostDownloadedPackageIds =
+                    GetMostDownloadedPackageIds(tempPackageDirectory, communityPackagesOnly: true);
 
                 int signedCount = 0;
                 int totalPackageCount = 0;
 
-                foreach (var packageId in mostDownloadedPackageIds)
+                foreach (var (packageId, _, signatures) in
+                    mostDownloadedPackageIds.ToEnumerable())
                 {
                     Console.Write(packageId.PadRight(43));
 
-                    var latestVersion = await GetPackageLatestVersion(packageId);
-                    var packageFilePath = await DownloadPackage(packageId, latestVersion, tempPackageDirectory);
-                    var (output, _) = RunProcessGetStandardOutAndExitCode("nuget", $"verify -Signatures {packageFilePath}");
-
-                    if (!output.Contains("Signature type: Repository"))
+                    if (!signatures.Contains("Repository"))
                     {
                         Console.WriteLine("Something went wrong. These packages should be Repository signed by NuGet. Skipping.");
                         continue;
                     }
                     totalPackageCount++;
-                    if (output.Contains("Signature type: Author"))
+                    if (signatures.Contains("Author"))
                     {
                         signedCount++;
                         Console.WriteLine("SIGNED!");
@@ -86,87 +93,62 @@ namespace src
             Console.ReadLine();
         }
 
-        static (string, int) RunProcessGetStandardOutAndExitCode(string fileName, string arguments)
-        {
-            using (var process = new Process())
-            {
-                var buffer = new StringBuilder();
-                process.StartInfo = new ProcessStartInfo
-                {
-                    FileName = fileName,
-                    UseShellExecute = false,
-                    RedirectStandardInput = true,
-                    RedirectStandardError = true,
-                    RedirectStandardOutput = true,
-                    Arguments = arguments
-                };
-                process.OutputDataReceived += (_, e) => buffer.Append(e.Data);
-                process.Start();
-                process.BeginOutputReadLine();
-                process.WaitForExit();
+        static IObservable<(string Id, string Version, ISet<string> Signatures)>
+            GetMostDownloadedPackageIds(string tempPackageDirectory,
+                                        bool communityPackagesOnly,
+                                        int top = packageDownloadCount) =>
 
-                return (buffer.ToString(), process.ExitCode);
-            }
-        }
+            from e in
+                Observable.Merge(maxConcurrent: 4, sources:
+                    from page in
+                        Http.Get(new Uri("https://www.nuget.org/stats/packages"))
+                            .Html()
+                            .Content()
 
-        static List<string> GetMostDownloadedPackageIds(bool communityPackagesOnly)
-        {
-            var webClient = new WebClient();
-            string page = webClient.DownloadString("https://www.nuget.org/stats/packages");
+                    let prototype = new { versions = default(string[]) }
 
-            var htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(page);
+                    from id in
+                        Enumerable.Take(count: top, source:
+                            from tr in
+                                page.QuerySelectorAll("table[data-bind]")
+                                    .Single(e => e.GetAttributeValue("data-bind") == "visible: " + (communityPackagesOnly ? "!showAllPackageDownloads()" : "showAllPackageDownloads"))
+                                    .QuerySelectorAll("tr")
+                                    .Skip(1)
+                            where tr.QuerySelector("td") != null
+                            select tr.QuerySelectorAll("td")
+                                     .Select(td => td.InnerText.Trim())
+                                     .ElementAt(1)
+                            into id
+                            group id by id.Split('.')[0] into g
+                            select g.First())
 
-            string filter = communityPackagesOnly ? "!showAllPackageDownloads()" : "showAllPackageDownloads";
+                    select
+                        from json in
+                            Http.Get(new Uri($"{nugetApiBaseAddress}v3-flatcontainer/{id}/index.json"))
+                                .Text()
+                                .Content()
+                        let version = JsonConvert.DeserializeAnonymousType(json, prototype)
+                                                 .versions.LastOrDefault()
+                        select new
+                        {
+                            Id = id,
+                            Version = version,
+                            NuPkgFileName = $"{id}.{version}.nupkg"
+                        })
 
-            return htmlDocument.DocumentNode.SelectSingleNode($"//table[@data-bind='visible: {filter}']")
-                        .Descendants("tr")
-                        .Skip(1) // Header
+            let downloadPath = Path.Combine(tempPackageDirectory, e.NuPkgFileName)
 
-                        .Where(tr => tr.Elements("td").Count() > 1)
-                        .Select(tr => tr.Elements("td").Select(td => td.InnerText.Trim()).ToList())
-                        .Select(cell => cell[1])
-                        .GroupBy(id => id.IndexOf('.') < 0 ? id : id.Substring(0, id.IndexOf('.')))
-                        .Select(g => g.First())
-                        .Take(packageDownloadCount)
-                        .ToList();
-        }
+            from nupkg in
+                Http.Get(new Uri($"{nugetApiBaseAddress}v3-flatcontainer/{e.Id}/{e.Version}/{e.NuPkgFileName}"))
+                    .Download(downloadPath)
+                    .Content()
 
-        static async Task<string> GetPackageLatestVersion(string id)
-        {
-            using (var httpClient = new HttpClient())
-            {
-                var response = await httpClient.GetAsync($"{nugetApiBaseAddress}v3-flatcontainer/{id}/index.json");
-                response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
-                var versions = JsonConvert.DeserializeObject<PackageVersions>(responseBody);
-                return versions.Versions.LastOrDefault();
-            }
-        }
-
-        static async Task<string> DownloadPackage(string id, string version, string destinationDirectory)
-        {
-            string nupkgFileName = $"{id}.{version}.nupkg";
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync($"{nugetApiBaseAddress}v3-flatcontainer/{id}/{version}/{nupkgFileName}"))
-                using (Stream streamToReadFrom = await response.Content.ReadAsStreamAsync())
-                {
-                    string fileToWriteTo = Path.Combine(destinationDirectory, nupkgFileName);
-                    using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
-                    {
-                        await streamToReadFrom.CopyToAsync(streamToWriteTo);
-                    }
-
-                    response.Content = null;
-                    return fileToWriteTo;
-                }
-            }
-        }
-    }
-
-    internal class PackageVersions
-    {
-        public string[] Versions { get; set; }
+            from ms in
+                from output in Spawn("nuget", ProgramArguments.Var("verify", "-Signatures", nupkg.Path)).Delimited(Environment.NewLine)
+                select
+                    from m in Regex.Matches(output, @"(?<=\bSignature +type *: *)(Repository|Author)\b",
+                                            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)
+                    select m.Value
+            select (e.Id, e.Version, (ISet<string>)ms.ToHashSet(StringComparer.OrdinalIgnoreCase));
     }
 }
